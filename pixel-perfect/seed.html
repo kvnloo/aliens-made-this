@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seed - The probiotic pioneering the future of gut health</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        :root {
+            /* Seed Color Palette */
+            --seedgreen: #1c3a13;
+            --seedgreen-hover: #334e2b;
+            --seedgreen-pressed: #162e0f;
+            --seedgreen-card: #45663c;
+            --snowwhite: #fcfcf7;
+            --yellowishwhite: #f6f7ef;
+            --foamwhite: #eff1e4;
+            --asparagusgreen: #d0d9b9;
+            --asparagusgreen-hover: #d9e1c7;
+            --asparagusgreen-pressed: #bbc3a6;
+            --lemongrass: #e9f0ca;
+            --olivegreen: #61735e;
+            --frostedglass: rgba(87, 94, 85, 0.95);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: var(--snowwhite);
+            color: var(--seedgreen);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 3rem;
+            background: var(--frostedglass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--seedgreen);
+            color: var(--snowwhite);
+            border-radius: 99px;
+            padding: 14px 32px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease-in-out;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--seedgreen-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:active {
+            background: var(--seedgreen-pressed);
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--asparagusgreen);
+            color: var(--seedgreen);
+            border-radius: 99px;
+            padding: 14px 32px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease-in-out;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            background: var(--asparagusgreen-hover);
+        }
+
+        .btn-secondary:active {
+            background: var(--asparagusgreen-pressed);
+        }
+
+        .btn-ghost {
+            background: var(--snowwhite);
+            color: var(--seedgreen);
+            border-radius: 99px;
+            padding: 14px 32px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease-in-out;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-ghost:hover {
+            background: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        @media (min-width: 768px) {
+            h1 { font-size: 3.5rem; letter-spacing: -0.02em; }
+            h2 { font-size: 2.5rem; }
+            h3 { font-size: 1.75rem; }
+        }
+
+        /* Product Cards */
+        .product-card {
+            background: var(--foamwhite);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(28, 58, 19, 0.1);
+        }
+
+        .product-card-green {
+            background: var(--seedgreen-card);
+        }
+
+        /* Hero Image Container */
+        .hero-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 2rem;
+        }
+
+        /* Grid System */
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.25rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid-4 {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Section Spacing */
+        .section-padding {
+            padding: 4rem 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .section-padding {
+                padding: 6rem 2rem;
+            }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Nav Link Styles */
+        nav a {
+            color: var(--snowwhite);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Orange Dot Indicator */
+        .orange-dot {
+            width: 8px;
+            height: 8px;
+            background: #ff6b35;
+            border-radius: 50%;
+            position: fixed;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+
+        /* Image rounded corners */
+        img {
+            border-radius: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="max-w-[90rem] mx-auto px-4 h-full flex items-center justify-between">
+            <div class="flex items-center gap-8">
+                <div class="text-white font-semibold text-lg">Seed</div>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="#shop">Shop</a>
+                    <a href="#science">Science</a>
+                    <a href="#about">About</a>
+                    <a href="#member">Member</a>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="text-white text-sm font-medium hidden md:block">Login</button>
+                <button class="btn-ghost px-6 py-2 text-xs">Account</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Orange Progress Indicator -->
+    <div class="orange-dot"></div>
+
+    <!-- Hero Section -->
+    <section class="mt-12 section-padding" style="background: var(--seedgreen);">
+        <div class="max-w-[90rem] mx-auto">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h1 class="text-white mb-6">
+                        The probiotic pioneering<br>the future of gut health.
+                    </h1>
+                    <p class="text-white text-lg mb-8 opacity-90">
+                        Seed's DS-01® Daily Synbiotic is formulated with 24 clinically-studied probiotic strains and a polyphenol-based prebiotic.
+                    </p>
+                    <button class="btn-ghost">Shop Now</button>
+                </div>
+                <div>
+                    <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&h=800&fit=crop"
+                         alt="Seed product in hand"
+                         class="hero-image shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Grid Section -->
+    <section class="section-padding" style="background: var(--seedgreen);">
+        <div class="max-w-[90rem] mx-auto">
+            <div class="mb-8">
+                <h2 class="text-white mb-4">Whole body health starts<br>in the gut.</h2>
+                <div class="flex justify-between items-center">
+                    <p class="text-white opacity-80 max-w-2xl">
+                        Our formulations are designed to support your microbiome, which plays a crucial role in digestive health, immune function, and more.
+                    </p>
+                    <a href="#" class="text-white underline text-sm font-medium hidden md:inline">Shop All →</a>
+                </div>
+            </div>
+
+            <div class="grid-4">
+                <!-- Product Card 1 -->
+                <div class="product-card product-card-green">
+                    <img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=400&h=400&fit=crop"
+                         alt="DS-01 Daily Synbiotic"
+                         class="w-full aspect-square object-cover mb-4">
+                    <p class="text-xs text-white opacity-60 mb-2">Probiotic + Prebiotic</p>
+                    <h3 class="text-white mb-1">DS-01® Daily Synbiotic</h3>
+                    <p class="text-sm text-white opacity-80 mb-4">For digestive and gut health</p>
+                    <button class="btn-secondary w-full">Shop Now</button>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="product-card product-card-green">
+                    <img src="https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?w=400&h=400&fit=crop"
+                         alt="PDS-08 Pediatric Daily Synbiotic"
+                         class="w-full aspect-square object-cover mb-4">
+                    <p class="text-xs text-white opacity-60 mb-2">Probiotic + Prebiotic</p>
+                    <h3 class="text-white mb-1">PDS-08® Pediatric<br>Daily Synbiotic</h3>
+                    <p class="text-sm text-white opacity-80 mb-4">For children ages 3+</p>
+                    <button class="btn-secondary w-full">Shop Now</button>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="product-card product-card-green">
+                    <img src="https://images.unsplash.com/photo-1556228994-1364f37d5044?w=400&h=400&fit=crop"
+                         alt="SVG-01 Sexual and Vaginal Health"
+                         class="w-full aspect-square object-cover mb-4">
+                    <p class="text-xs text-white opacity-60 mb-2">Coming Soon</p>
+                    <h3 class="text-white mb-1">SVG-01®<br>Sexual & Vaginal Health</h3>
+                    <p class="text-sm text-white opacity-80 mb-4">For vaginal microbiome support</p>
+                    <button class="btn-secondary w-full">Join the Waitlist</button>
+                </div>
+
+                <!-- Product Card 4 -->
+                <div class="product-card product-card-green">
+                    <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&h=400&fit=crop"
+                         alt="SBO-01 Skin Barrier Optimization"
+                         class="w-full aspect-square object-cover mb-4">
+                    <p class="text-xs text-white opacity-60 mb-2">Coming Soon</p>
+                    <h3 class="text-white mb-1">SBO-01®<br>Skin Barrier Optimization</h3>
+                    <p class="text-sm text-white opacity-80 mb-4">For skin microbiome health</p>
+                    <button class="btn-secondary w-full">Join the Waitlist</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Daily Essentials Section -->
+    <section class="section-padding" style="background: var(--foamwhite);">
+        <div class="max-w-[90rem] mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <p class="text-xs uppercase tracking-wider mb-4" style="color: var(--olivegreen);">SEED DS-01®</p>
+                    <h2 class="mb-6">Daily essentials for nutrition and digestive health.</h2>
+                    <p class="text-lg mb-6 opacity-80">
+                        With 24 clinically and scientifically studied probiotic strains and a polyphenol-based prebiotic, DS-01® Daily Synbiotic is formulated to deliver benefits in and beyond the gut.
+                    </p>
+                    <button class="btn-primary">Learn More About DS-01®</button>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=600&h=600&fit=crop"
+                         alt="Seed product"
+                         class="w-full aspect-square object-cover col-span-2">
+                    <img src="https://images.unsplash.com/photo-1556228994-1364f37d5044?w=300&h=300&fit=crop"
+                         alt="Seed lifestyle"
+                         class="w-full aspect-square object-cover">
+                    <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=300&h=300&fit=crop"
+                         alt="Seed detail"
+                         class="w-full aspect-square object-cover">
+                    <img src="https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?w=300&h=300&fit=crop"
+                         alt="Seed plants"
+                         class="w-full aspect-square object-cover col-span-2">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scientific Section -->
+    <section class="section-padding" style="background: var(--lemongrass);">
+        <div class="max-w-[90rem] mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=800&h=600&fit=crop"
+                         alt="Nature background"
+                         class="w-full h-auto">
+                </div>
+                <div>
+                    <h2 class="mb-6">Most probiotics don't survive digestion—DS-01® does.</h2>
+                    <p class="text-lg mb-6 opacity-80">
+                        Our 2-in-1 capsule-in-capsule technology protects probiotics from stomach acid and delivers them to the colon where they're needed most.
+                    </p>
+                    <div class="grid grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <p class="text-4xl font-bold mb-2">99%</p>
+                            <p class="text-sm opacity-70">Survivability through digestion</p>
+                        </div>
+                        <div>
+                            <p class="text-4xl font-bold mb-2">24</p>
+                            <p class="text-sm opacity-70">Clinically-studied strains</p>
+                        </div>
+                    </div>
+                    <button class="btn-primary">Explore the Science</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Humanity Section -->
+    <section class="section-padding" style="background: var(--snowwhite);">
+        <div class="max-w-[90rem] mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <p class="text-xs uppercase tracking-wider mb-4" style="color: var(--olivegreen);">MICROBIOME</p>
+                    <h2 class="mb-6">You are more than human.</h2>
+                    <p class="text-lg mb-6 opacity-80">
+                        The microbiome is a complex ecosystem of trillions of microorganisms living in and on your body. It plays a crucial role in your overall health and well-being.
+                    </p>
+                    <button class="btn-primary">Discover Your Microbiome</button>
+                </div>
+                <div>
+                    <div class="bg-gray-200 w-full aspect-video rounded-2xl"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section-padding" style="background: var(--foamwhite);">
+        <div class="max-w-[90rem] mx-auto text-center">
+            <h2 class="mb-12">Over 1 million health<br>transformations (and counting).</h2>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div class="bg-white p-8 rounded-2xl">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop"
+                         alt="Member testimonial"
+                         class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
+                    <p class="text-sm italic mb-4 opacity-80">
+                        "Seed has completely transformed my digestive health. I feel more energized and balanced."
+                    </p>
+                    <p class="font-semibold">Sarah K.</p>
+                    <p class="text-xs opacity-60">Seed® Member Experiences</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop"
+                         alt="Member testimonial"
+                         class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
+                    <p class="text-sm italic mb-4 opacity-80">
+                        "The science behind Seed is what convinced me. Real results backed by real research."
+                    </p>
+                    <p class="font-semibold">Michael T.</p>
+                    <p class="text-xs opacity-60">Seed® Member Experiences</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop"
+                         alt="Member testimonial"
+                         class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
+                    <p class="text-sm italic mb-4 opacity-80">
+                        "I love that Seed is backed by actual clinical studies. It's not just marketing hype."
+                    </p>
+                    <p class="font-semibold">Jessica M.</p>
+                    <p class="text-xs opacity-60">Seed® Member Experiences</p>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-2 mb-4">
+                <div class="w-2 h-2 rounded-full bg-gray-400"></div>
+                <div class="w-2 h-2 rounded-full" style="background: var(--seedgreen);"></div>
+                <div class="w-2 h-2 rounded-full bg-gray-400"></div>
+                <div class="w-2 h-2 rounded-full bg-gray-400"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="section-padding" style="background: var(--snowwhite);">
+        <div class="max-w-[90rem] mx-auto text-center mb-12">
+            <h2 class="mb-6">Stories from scientists,<br>innovators, and<br>members like you.</h2>
+        </div>
+
+        <div class="max-w-[90rem] mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+            <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&h=400&fit=crop"
+                 alt="Community member"
+                 class="w-full aspect-square object-cover rounded-2xl">
+            <img src="https://images.unsplash.com/photo-1556228841-bc0e09b3c27b?w=400&h=400&fit=crop"
+                 alt="Community member"
+                 class="w-full aspect-square object-cover rounded-2xl">
+            <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&h=400&fit=crop"
+                 alt="Community member"
+                 class="w-full aspect-square object-cover rounded-2xl">
+            <img src="https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?w=400&h=400&fit=crop"
+                 alt="Community member"
+                 class="w-full aspect-square object-cover rounded-2xl">
+        </div>
+    </section>
+
+    <!-- Call to Action Sections -->
+    <section class="section-padding" style="background: var(--foamwhite);">
+        <div class="max-w-[90rem] mx-auto grid md:grid-cols-2 gap-8">
+            <!-- Seed Labs -->
+            <div class="relative rounded-2xl overflow-hidden h-96">
+                <img src="https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=800&h=600&fit=crop"
+                     alt="Seed Labs"
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-8">
+                    <p class="text-white text-xs mb-2 uppercase tracking-wider">Seed • Labs</p>
+                    <h3 class="text-white text-3xl mb-4">Where science<br>meets the soil.</h3>
+                    <button class="btn-ghost w-fit">Learn More</button>
+                </div>
+            </div>
+
+            <!-- Green Section -->
+            <div class="relative rounded-2xl overflow-hidden h-96" style="background: var(--seedgreen);">
+                <div class="absolute inset-0 flex flex-col justify-end p-8">
+                    <h3 class="text-white text-3xl mb-4">Climate change is<br>too good to ignore.</h3>
+                    <button class="btn-ghost w-fit">Discover</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="section-padding" style="background: var(--seedgreen); color: var(--snowwhite);">
+        <div class="max-w-[90rem] mx-auto">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Seed</h4>
+                    <p class="text-sm opacity-80 mb-6">
+                        A microbial sciences company pioneering<br>the human and planetary health™ since 2016.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Shop</h4>
+                    <ul class="space-y-2 text-sm opacity-80">
+                        <li><a href="#" class="hover:opacity-100">DS-01® Daily Synbiotic</a></li>
+                        <li><a href="#" class="hover:opacity-100">PDS-08® Pediatric Synbiotic</a></li>
+                        <li><a href="#" class="hover:opacity-100">All Products</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Learn</h4>
+                    <ul class="space-y-2 text-sm opacity-80">
+                        <li><a href="#" class="hover:opacity-100">Science</a></li>
+                        <li><a href="#" class="hover:opacity-100">About</a></li>
+                        <li><a href="#" class="hover:opacity-100">Blog</a></li>
+                        <li><a href="#" class="hover:opacity-100">Podcast</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm opacity-80">
+                        <li><a href="#" class="hover:opacity-100">Help Center</a></li>
+                        <li><a href="#" class="hover:opacity-100">Contact</a></li>
+                        <li><a href="#" class="hover:opacity-100">Returns</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-white/20 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center text-sm opacity-60">
+                    <p>© 2025 Seed Health, Inc. All rights reserved.</p>
+                    <div class="flex gap-6 mt-4 md:mt-0">
+                        <a href="#" class="hover:opacity-100">Privacy</a>
+                        <a href="#" class="hover:opacity-100">Terms</a>
+                        <a href="#" class="hover:opacity-100">Accessibility</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Simple scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrollProgress = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+            const dot = document.querySelector('.orange-dot');
+            if (dot) {
+                dot.style.top = `${50 + (scrollProgress * 40)}%`;
+            }
+        });
+    </script>
+</body>
+</html>

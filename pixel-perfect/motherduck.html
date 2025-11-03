@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotherDuck - Making Big Data Feel Small</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --header-mobile: 70px;
+            --header-desktop: 90px;
+            --yellow-primary: #FFE600;
+            --blue-primary: #4DA6FF;
+            --cream-bg: #F5F1E8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .font-mono {
+            font-family: 'Space Mono', monospace;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgb(136, 136, 136);
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgb(241, 241, 241);
+        }
+
+        html {
+            scroll-padding-top: var(--header-mobile);
+            scroll-behavior: smooth;
+        }
+
+        @media (min-width: 768px) {
+            html {
+                scroll-padding-top: var(--header-desktop);
+            }
+        }
+    </style>
+</head>
+<body class="bg-[#F5F1E8] text-gray-900">
+
+    <!-- Yellow Header Banner -->
+    <div class="bg-[#FFE600] py-3 px-4 text-center">
+        <p class="text-sm md:text-base font-medium" style="font-family: 'Space Mono', monospace;">
+            🎉 New: Introducing Collaborative Analytics - <a href="#" class="underline hover:no-underline">Learn More</a>
+        </p>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 bg-white border-b border-gray-200">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-[#FFE600] rounded-full flex items-center justify-center">
+                        <span class="text-xl">🦆</span>
+                    </div>
+                    <span class="text-xl font-bold tracking-tight" style="font-family: 'Space Mono', monospace;">MotherDuck</span>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#product" class="text-sm font-medium hover:text-[#4DA6FF] transition-colors">Product</a>
+                    <a href="#features" class="text-sm font-medium hover:text-[#4DA6FF] transition-colors">Features</a>
+                    <a href="#pricing" class="text-sm font-medium hover:text-[#4DA6FF] transition-colors">Pricing</a>
+                    <a href="#docs" class="text-sm font-medium hover:text-[#4DA6FF] transition-colors">Docs</a>
+                    <a href="#blog" class="text-sm font-medium hover:text-[#4DA6FF] transition-colors">Blog</a>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="flex items-center space-x-4">
+                    <button class="hidden md:block px-4 py-2 text-sm font-medium hover:bg-gray-50 rounded-lg transition-colors">
+                        Sign In
+                    </button>
+                    <button class="px-4 py-2 bg-[#4DA6FF] text-white text-sm font-semibold rounded-lg hover:bg-[#3d95ee] transition-colors">
+                        Get Started
+                    </button>
+                    <!-- Mobile Menu Button -->
+                    <button class="md:hidden">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-[#F5F1E8] py-16 md:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="space-y-6">
+                    <div class="inline-block px-3 py-1 bg-[#FFE600] rounded-full">
+                        <span class="text-xs font-bold uppercase tracking-wide" style="font-family: 'Space Mono', monospace;">Cloud Analytics</span>
+                    </div>
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-none">
+                        MAKING BIG DATA<br/>
+                        <span class="text-[#4DA6FF]">FEEL SMALL</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-600 max-w-xl">
+                        The serverless analytics platform built on DuckDB. Query terabytes of data instantly, right from your laptop.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <button class="px-8 py-4 bg-[#4DA6FF] text-white font-semibold rounded-lg hover:bg-[#3d95ee] transition-all hover:scale-105">
+                            Start for Free
+                        </button>
+                        <button class="px-8 py-4 bg-white border-2 border-gray-900 font-semibold rounded-lg hover:bg-gray-50 transition-colors">
+                            View Demo
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Visual -->
+                <div class="relative">
+                    <div class="bg-white rounded-2xl shadow-2xl p-6 border border-gray-200">
+                        <div class="flex items-center space-x-2 mb-4">
+                            <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                        </div>
+                        <div class="space-y-2 font-mono text-sm">
+                            <div class="text-purple-600">SELECT</div>
+                            <div class="pl-4 text-gray-700">product_name,</div>
+                            <div class="pl-4 text-gray-700">SUM(revenue) as total</div>
+                            <div class="text-purple-600">FROM</div>
+                            <div class="pl-4 text-gray-700">sales_data</div>
+                            <div class="text-purple-600">GROUP BY</div>
+                            <div class="pl-4 text-gray-700">product_name;</div>
+                        </div>
+                        <div class="mt-4 p-3 bg-[#FFE600] rounded-lg">
+                            <div class="text-xs font-mono text-gray-700">⚡ Query executed in 0.03s</div>
+                        </div>
+                    </div>
+                    <!-- Decorative Duck -->
+                    <div class="absolute -bottom-8 -right-8 text-8xl">🦆</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Why Developers Love Us</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Built for speed, designed for simplicity. Analytics that actually feels good to use.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Feature Card 1 -->
+                <div class="bg-[#F5F1E8] rounded-xl p-6 border border-gray-200 hover:border-[#4DA6FF] transition-all hover:scale-105">
+                    <div class="w-12 h-12 bg-[#FFE600] rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="zap" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Blazing Fast</h3>
+                    <p class="text-gray-600 text-sm">
+                        Query gigabytes of data in milliseconds with DuckDB's columnar engine.
+                    </p>
+                </div>
+
+                <!-- Feature Card 2 -->
+                <div class="bg-[#F5F1E8] rounded-xl p-6 border border-gray-200 hover:border-[#4DA6FF] transition-all hover:scale-105">
+                    <div class="w-12 h-12 bg-[#4DA6FF] rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="cloud" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Serverless</h3>
+                    <p class="text-gray-600 text-sm">
+                        No infrastructure to manage. Just write queries and get results.
+                    </p>
+                </div>
+
+                <!-- Feature Card 3 -->
+                <div class="bg-[#F5F1E8] rounded-xl p-6 border border-gray-200 hover:border-[#4DA6FF] transition-all hover:scale-105">
+                    <div class="w-12 h-12 bg-[#FFE600] rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="database" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">SQL Native</h3>
+                    <p class="text-gray-600 text-sm">
+                        Full PostgreSQL compatibility. Use the tools you already know.
+                    </p>
+                </div>
+
+                <!-- Feature Card 4 -->
+                <div class="bg-[#F5F1E8] rounded-xl p-6 border border-gray-200 hover:border-[#4DA6FF] transition-all hover:scale-105">
+                    <div class="w-12 h-12 bg-[#4DA6FF] rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="users" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Collaborative</h3>
+                    <p class="text-gray-600 text-sm">
+                        Share queries, dashboards, and insights with your team instantly.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Integration Section -->
+    <section class="py-20 bg-[#F5F1E8]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Left: Illustration -->
+                <div class="relative">
+                    <div class="bg-white rounded-2xl p-8 shadow-xl border border-gray-200">
+                        <div class="text-6xl mb-4 text-center">📊</div>
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                                <div class="w-8 h-8 bg-[#FFE600] rounded flex items-center justify-center text-sm">📁</div>
+                                <span class="text-sm font-mono">s3://my-bucket/data.parquet</span>
+                            </div>
+                            <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                                <div class="w-8 h-8 bg-[#4DA6FF] rounded flex items-center justify-center text-sm">💾</div>
+                                <span class="text-sm font-mono">postgres://db.company.com</span>
+                            </div>
+                            <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                                <div class="w-8 h-8 bg-[#FFE600] rounded flex items-center justify-center text-sm">☁️</div>
+                                <span class="text-sm font-mono">https://api.service.com</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-4 -left-4 text-5xl">🦆</div>
+                </div>
+
+                <!-- Right: Content -->
+                <div class="space-y-6">
+                    <div class="inline-block px-3 py-1 bg-[#4DA6FF] text-white rounded-full">
+                        <span class="text-xs font-bold uppercase tracking-wide" style="font-family: 'Space Mono', monospace;">Data Integration</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold tracking-tight">
+                        Connect to Anything
+                    </h2>
+                    <p class="text-lg text-gray-600">
+                        Query your data wherever it lives. S3, Postgres, Snowflake, CSV files, APIs - it all works seamlessly together.
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-[#FFE600] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="text-xs">✓</span>
+                            </div>
+                            <div>
+                                <div class="font-semibold">Native S3/GCS Integration</div>
+                                <div class="text-sm text-gray-600">Query Parquet and CSV files directly from cloud storage</div>
+                            </div>
+                        </li>
+                        <li class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-[#FFE600] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="text-xs">✓</span>
+                            </div>
+                            <div>
+                                <div class="font-semibold">Live Database Connections</div>
+                                <div class="text-sm text-gray-600">Connect to Postgres, MySQL, and more in real-time</div>
+                            </div>
+                        </li>
+                        <li class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-[#FFE600] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="text-xs">✓</span>
+                            </div>
+                            <div>
+                                <div class="font-semibold">API & Webhook Support</div>
+                                <div class="text-sm text-gray-600">Pull data from any REST API with built-in connectors</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <button class="px-6 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                        View Integrations →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Left: Content -->
+                <div class="space-y-6 order-2 md:order-1">
+                    <div class="inline-block px-3 py-1 bg-[#FFE600] rounded-full">
+                        <span class="text-xs font-bold uppercase tracking-wide" style="font-family: 'Space Mono', monospace;">Customer-Facing Analytics</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold tracking-tight">
+                        Build Dashboards Your Users Will Love
+                    </h2>
+                    <p class="text-lg text-gray-600">
+                        Embed lightning-fast analytics directly into your application. Sub-second query times at any scale.
+                    </p>
+                    <div class="grid grid-cols-3 gap-4 py-6">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-[#4DA6FF]">10x</div>
+                            <div class="text-sm text-gray-600">Faster Queries</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-[#4DA6FF]">99.9%</div>
+                            <div class="text-sm text-gray-600">Uptime SLA</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-[#4DA6FF]">$0</div>
+                            <div class="text-sm text-gray-600">Infrastructure</div>
+                        </div>
+                    </div>
+                    <button class="px-6 py-3 bg-[#4DA6FF] text-white font-semibold rounded-lg hover:bg-[#3d95ee] transition-colors">
+                        See Performance Benchmarks
+                    </button>
+                </div>
+
+                <!-- Right: Visualization -->
+                <div class="relative order-1 md:order-2">
+                    <div class="bg-gray-50 rounded-2xl p-6 shadow-xl border border-gray-200">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between pb-3 border-b border-gray-200">
+                                <span class="font-semibold">Query Performance</span>
+                                <span class="text-xs text-gray-500">Last 24 hours</span>
+                            </div>
+                            <!-- Simple bar chart visualization -->
+                            <div class="space-y-3">
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-mono text-xs">SELECT * FROM sales</span>
+                                        <span class="text-[#4DA6FF] font-bold">0.03s</span>
+                                    </div>
+                                    <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                                        <div class="h-full bg-[#4DA6FF] rounded-full" style="width: 15%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-mono text-xs">JOIN customers</span>
+                                        <span class="text-[#4DA6FF] font-bold">0.08s</span>
+                                    </div>
+                                    <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                                        <div class="h-full bg-[#4DA6FF] rounded-full" style="width: 40%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-mono text-xs">AGGREGATE 1TB</span>
+                                        <span class="text-[#4DA6FF] font-bold">1.2s</span>
+                                    </div>
+                                    <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                                        <div class="h-full bg-[#FFE600] rounded-full" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -top-4 -right-4 text-4xl">⚡</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ecosystem Diagram Section -->
+    <section class="py-20 bg-[#4DA6FF] text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">The MotherDuck Ecosystem</h2>
+                <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                    A complete data platform that plays well with your existing tools
+                </p>
+            </div>
+
+            <div class="relative max-w-5xl mx-auto">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- Data Sources -->
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 hover:bg-white/20 transition-all">
+                        <div class="text-3xl mb-2">📊</div>
+                        <div class="font-semibold text-sm">Data Sources</div>
+                        <div class="text-xs text-blue-100 mt-1">S3, Postgres, APIs</div>
+                    </div>
+
+                    <!-- DuckDB Core -->
+                    <div class="bg-[#FFE600] text-gray-900 rounded-xl p-4 border-2 border-white hover:scale-105 transition-all">
+                        <div class="text-3xl mb-2">🦆</div>
+                        <div class="font-bold text-sm">DuckDB Engine</div>
+                        <div class="text-xs mt-1">Ultra-fast OLAP</div>
+                    </div>
+
+                    <!-- MotherDuck Cloud -->
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 hover:bg-white/20 transition-all">
+                        <div class="text-3xl mb-2">☁️</div>
+                        <div class="font-semibold text-sm">Cloud Layer</div>
+                        <div class="text-xs text-blue-100 mt-1">Serverless scaling</div>
+                    </div>
+
+                    <!-- Applications -->
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 hover:bg-white/20 transition-all">
+                        <div class="text-3xl mb-2">📱</div>
+                        <div class="font-semibold text-sm">Your Apps</div>
+                        <div class="text-xs text-blue-100 mt-1">SQL, Python, R</div>
+                    </div>
+                </div>
+
+                <!-- Connection Lines -->
+                <div class="absolute top-1/2 left-0 right-0 h-0.5 bg-white/30 -z-10 hidden md:block"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-[#F5F1E8]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Loved by Data Teams</h2>
+                <p class="text-xl text-gray-600">See what developers are saying about MotherDuck</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200">
+                    <div class="flex items-center space-x-1 mb-4">
+                        <span class="text-yellow-400">★★★★★</span>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        "MotherDuck is a game-changer. We went from minutes to milliseconds on our analytics queries."
+                    </p>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                            <span class="text-sm">👤</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-sm">Sarah Chen</div>
+                            <div class="text-xs text-gray-500">Lead Engineer, DataCo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200">
+                    <div class="flex items-center space-x-1 mb-4">
+                        <span class="text-yellow-400">★★★★★</span>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        "The serverless architecture means we spend zero time on infrastructure. It just works."
+                    </p>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                            <span class="text-sm">👤</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-sm">Mike Rodriguez</div>
+                            <div class="text-xs text-gray-500">CTO, Analytics Inc</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200">
+                    <div class="flex items-center space-x-1 mb-4">
+                        <span class="text-yellow-400">★★★★★</span>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        "Finally, a data warehouse that doesn't break the bank. Performance and price are both incredible."
+                    </p>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                            <span class="text-sm">👤</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-sm">Alex Kim</div>
+                            <div class="text-xs text-gray-500">Head of Data, StartupX</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-[#FFE600]">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="text-6xl mb-6">🦆</div>
+            <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+                Ready to Make Big Data Feel Small?
+            </h2>
+            <p class="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">
+                Join thousands of developers building faster analytics with MotherDuck. Start querying in under 60 seconds.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="px-8 py-4 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-all hover:scale-105">
+                    Start Free Trial
+                </button>
+                <button class="px-8 py-4 bg-white border-2 border-gray-900 font-semibold rounded-lg hover:bg-gray-50 transition-colors">
+                    Schedule Demo
+                </button>
+            </div>
+            <p class="text-sm text-gray-600 mt-6">No credit card required • 14-day free trial • Cancel anytime</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-5 gap-8 mb-8">
+                <!-- Brand -->
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-[#FFE600] rounded-full flex items-center justify-center">
+                            <span class="text-xl">🦆</span>
+                        </div>
+                        <span class="text-xl font-bold" style="font-family: 'Space Mono', monospace;">MotherDuck</span>
+                    </div>
+                    <p class="text-sm text-gray-400 max-w-xs">
+                        The serverless analytics platform built on DuckDB. Making big data feel small.
+                    </p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i data-lucide="github" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product -->
+                <div>
+                    <h4 class="font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Security</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Roadmap</a></li>
+                    </ul>
+                </div>
+
+                <!-- Resources -->
+                <div>
+                    <h4 class="font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">API Reference</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Community</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company -->
+                <div>
+                    <h4 class="font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Press</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm text-gray-400">© 2025 MotherDuck Inc. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">Privacy</a>
+                    <a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">Terms</a>
+                    <a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+
+</body>
+</html>

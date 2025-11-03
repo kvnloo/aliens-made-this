@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seed - Daily Synbiotic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <style>
+        :root {
+            /* Font Family */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+
+            /* Colors */
+            --color-seedgreen: #1c3a13;
+            --color-seedgreen-hover: #334e2b;
+            --color-seedgreen-pressed: #162e0f;
+            --color-seedgreen-active: #142f0c;
+            --color-seedgreen-card: #45663c;
+            --color-seedgreen-faded: rgba(28, 58, 19, 0.5);
+            --color-moss-root: #3d5b34;
+            --color-olive-green: #61735e;
+            --color-micronav-green: #58644c;
+
+            --color-snowwhite: #fcfcf7;
+            --color-yellowish-white: #f6f7ef;
+            --color-foam-white: #eff1e4;
+            --color-lemongrass: #e9f0ca;
+            --color-asparagusgreen: #d0d9b9;
+            --color-asparagusgreen-hover: #d9e1c7;
+            --color-asparagusgreen-pressed: #bbc3a6;
+            --color-fluorescent-green: #d3fa99;
+
+            --color-frosted-glass-t55: rgba(87, 94, 85, 0.55);
+            --color-frosted-glass-t35: rgba(87, 94, 85, 0.35);
+            --color-frosted-glass-t8: rgba(87, 94, 85, 0.08);
+
+            /* Spacing */
+            --space-gutter: 1.25rem;
+            --space-outer: 1rem;
+            --space-outer-v: 5rem;
+            --space-inner: 1rem;
+            --space-inner-v: 1.5rem;
+
+            /* Border Radius */
+            --bdrs-pill: 99em;
+            --bdrs-s: 0.5rem;
+            --bdrs-sm: 0.75rem;
+            --bdrs-m: 1rem;
+            --bdrs-l: 2rem;
+
+            /* Navigation */
+            --nav-height: 3rem;
+            --banner-height: 2.5rem;
+
+            /* Transitions */
+            --trs: all 0.3s ease-in-out;
+
+            /* Max Width */
+            --maw: 90rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans) !important;
+            background: var(--color-snowwhite);
+            color: var(--color-seedgreen);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Navigation */
+        .nav-frosted {
+            background: rgba(87, 94, 85, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: var(--nav-height);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--color-seedgreen);
+            color: var(--color-snowwhite);
+            border-radius: var(--bdrs-pill);
+            padding: 14px 32px;
+            font-weight: 600;
+            transition: var(--trs);
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-seedgreen-hover);
+        }
+
+        .btn-primary:active {
+            background: var(--color-seedgreen-pressed);
+        }
+
+        .btn-secondary {
+            background: var(--color-asparagusgreen);
+            color: var(--color-seedgreen);
+            border-radius: var(--bdrs-pill);
+            padding: 14px 32px;
+            font-weight: 600;
+            transition: var(--trs);
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-asparagusgreen-hover);
+        }
+
+        .btn-secondary:active {
+            background: var(--color-asparagusgreen-pressed);
+        }
+
+        /* Product Cards */
+        .product-card {
+            background: var(--color-snowwhite);
+            border-radius: var(--bdrs-l);
+            padding: 2rem;
+            transition: var(--trs);
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(28, 58, 19, 0.1);
+        }
+
+        .product-card img {
+            border-radius: var(--bdrs-l);
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+        }
+
+        /* Hero Video Container */
+        .hero-video-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            overflow: hidden;
+            border-radius: var(--bdrs-l);
+        }
+
+        .hero-video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Grid System */
+        @media (min-width: 37.5em) {
+            :root {
+                --space-outer: 1.5rem;
+                --space-outer-v: 6rem;
+                --space-inner: 1.5rem;
+                --space-inner-v: 2rem;
+            }
+        }
+
+        .container {
+            max-width: var(--maw);
+            margin: 0 auto;
+            padding: 0 var(--space-outer);
+        }
+
+        /* Swiper Customization */
+        .swiper-pagination-bullet {
+            background: var(--color-asparagusgreen);
+        }
+
+        .swiper-pagination-bullet-active {
+            background: var(--color-seedgreen);
+        }
+
+        /* Section Backgrounds */
+        .bg-green-section {
+            background: var(--color-seedgreen);
+            color: var(--color-snowwhite);
+        }
+
+        .bg-yellowish {
+            background: var(--color-yellowish-white);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-seedgreen);
+            color: var(--color-snowwhite);
+            padding: 4rem var(--space-outer);
+        }
+
+        footer a {
+            color: var(--color-snowwhite);
+            text-decoration: none;
+            transition: var(--trs);
+        }
+
+        footer a:hover {
+            opacity: 0.8;
+        }
+
+        /* Newsletter Input */
+        .newsletter-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--bdrs-sm);
+            padding: 12px 16px;
+            color: var(--color-snowwhite);
+            width: 100%;
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ViaCAP Section */
+        .viacap-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .viacap-animation {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-frosted">
+        <div class="container flex items-center justify-between h-full">
+            <div class="flex items-center gap-8">
+                <a href="/" class="text-white font-semibold text-lg">Seed</a>
+                <div class="hidden md:flex gap-6">
+                    <a href="#" class="text-white hover:opacity-80 transition-opacity">Shop</a>
+                    <a href="#" class="text-white hover:opacity-80 transition-opacity">Science</a>
+                    <a href="#" class="text-white hover:opacity-80 transition-opacity">About</a>
+                    <a href="#" class="text-white hover:opacity-80 transition-opacity">Blog</a>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="text-white hover:opacity-80 transition-opacity hidden md:block">Log in</a>
+                <button class="bg-white text-[#1c3a13] px-6 py-2 rounded-full text-sm font-semibold hover:bg-opacity-90 transition-all">
+                    Get Started
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-20 px-4">
+        <div class="container">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6" style="letter-spacing: -0.02em; line-height: 1.1;">
+                        The probiotic pioneering the future of gut health.
+                    </h1>
+                    <p class="text-lg mb-8 opacity-80">
+                        DS-01® Daily Synbiotic is a broad-spectrum, 24-strain probiotic + prebiotic formulated for digestive and systemic health.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <button class="btn-primary">Shop Now</button>
+                        <button class="btn-secondary">Learn More</button>
+                    </div>
+                </div>
+                <div class="hero-video-container">
+                    <img src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=800&h=800&fit=crop" alt="Seed Daily Synbiotic" class="w-full h-full object-cover rounded-3xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="py-20 px-4 bg-yellowish">
+        <div class="container">
+            <h2 class="text-4xl font-bold mb-12 text-center">Our Products</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Product 1: DS-01 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=400&h=400&fit=crop" alt="DS-01 Daily Synbiotic">
+                    <h3 class="text-xl font-semibold mt-6 mb-2">DS-01® Daily Synbiotic</h3>
+                    <p class="text-sm opacity-80 mb-4">For digestive and gut health</p>
+                    <p class="text-2xl font-bold mb-4">$49.99/month</p>
+                    <button class="btn-primary w-full">Add to Cart</button>
+                </div>
+
+                <!-- Product 2: DM-02 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=400&fit=crop" alt="DM-02 Metabolic Daily">
+                    <h3 class="text-xl font-semibold mt-6 mb-2">DM-02™ Metabolic Daily</h3>
+                    <p class="text-sm opacity-80 mb-4">For metabolic health</p>
+                    <p class="text-2xl font-bold mb-4">$54.99/month</p>
+                    <button class="btn-primary w-full">Add to Cart</button>
+                </div>
+
+                <!-- Product 3: AM-02 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=400&h=400&fit=crop" alt="AM-02 Mindful Morning">
+                    <h3 class="text-xl font-semibold mt-6 mb-2">AM-02™ Mindful Morning</h3>
+                    <p class="text-sm opacity-80 mb-4">For cognitive health</p>
+                    <p class="text-2xl font-bold mb-4">$59.99/month</p>
+                    <button class="btn-primary w-full">Add to Cart</button>
+                </div>
+
+                <!-- Product 4: PM-02 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1609107338485-c257bce98627?w=400&h=400&fit=crop" alt="PM-02 Peaceful Night">
+                    <h3 class="text-xl font-semibold mt-6 mb-2">PM-02™ Peaceful Night</h3>
+                    <p class="text-sm opacity-80 mb-4">For sleep and recovery</p>
+                    <p class="text-2xl font-bold mb-4">$59.99/month</p>
+                    <button class="btn-primary w-full">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Whole Body Health Section -->
+    <section class="py-20 px-4 bg-green-section">
+        <div class="container">
+            <div class="text-center max-w-4xl mx-auto">
+                <h2 class="text-5xl font-bold mb-8">Whole body health starts in the gut.</h2>
+                <p class="text-xl opacity-90 mb-12">
+                    Our microbiome—the trillions of bacteria living in and on our body—influences everything from digestion to immunity, metabolism to mood.
+                </p>
+                <button class="btn-secondary">Learn About the Science</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ViaCAP Technology Section -->
+    <section class="py-20 px-4 viacap-section">
+        <div class="container">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="viacap-animation">
+                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=600&fit=crop" alt="ViaCAP Technology" class="w-full rounded-3xl">
+                </div>
+                <div>
+                    <h2 class="text-4xl font-bold mb-6">ViaCAP® Technology</h2>
+                    <p class="text-lg opacity-80 mb-6">
+                        Our proprietary capsule-in-capsule delivery system protects probiotics from harsh stomach acid, ensuring they reach your gut alive and viable.
+                    </p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-[#1c3a13] flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Protects probiotics through stomach acid</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-[#1c3a13] flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Ensures 100% survivability to gut</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-[#1c3a13] flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>No refrigeration required</span>
+                        </li>
+                    </ul>
+                    <button class="btn-primary">Learn More About ViaCAP®</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 px-4 bg-yellowish">
+        <div class="container">
+            <h2 class="text-4xl font-bold mb-12 text-center">What Our Customers Say</h2>
+            <div class="swiper testimonial-swiper">
+                <div class="swiper-wrapper">
+                    <!-- Testimonial 1 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-3xl p-8 max-w-2xl mx-auto">
+                            <div class="aspect-video bg-gray-200 rounded-2xl mb-6 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=450&fit=crop" alt="Customer testimonial" class="w-full h-full object-cover">
+                            </div>
+                            <p class="text-lg mb-4">
+                                "I've noticed a significant improvement in my digestion and overall energy levels since starting DS-01®. It's been a game-changer for my daily routine."
+                            </p>
+                            <p class="font-semibold">— Sarah M.</p>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-3xl p-8 max-w-2xl mx-auto">
+                            <div class="aspect-video bg-gray-200 rounded-2xl mb-6 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&h=450&fit=crop" alt="Customer testimonial" class="w-full h-full object-cover">
+                            </div>
+                            <p class="text-lg mb-4">
+                                "The science-backed approach and quality of Seed products is unmatched. I've tried many probiotics, but this is the only one I've felt real results from."
+                            </p>
+                            <p class="font-semibold">— Michael R.</p>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-3xl p-8 max-w-2xl mx-auto">
+                            <div class="aspect-video bg-gray-200 rounded-2xl mb-6 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=800&h=450&fit=crop" alt="Customer testimonial" class="w-full h-full object-cover">
+                            </div>
+                            <p class="text-lg mb-4">
+                                "As a healthcare professional, I appreciate the rigorous clinical trials and transparency. This is the probiotic I recommend to my patients."
+                            </p>
+                            <p class="font-semibold">— Dr. Jennifer L.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination mt-8"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-20 px-4">
+        <div class="container max-w-2xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-6">Stay Connected</h2>
+            <p class="text-lg opacity-80 mb-8">
+                Get the latest research, product updates, and exclusive offers delivered to your inbox.
+            </p>
+            <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                <input
+                    type="email"
+                    placeholder="Enter your email"
+                    class="flex-1 px-6 py-3 border-2 border-[#1c3a13] rounded-full focus:outline-none focus:border-[#334e2b]"
+                    style="background: transparent;"
+                >
+                <button type="submit" class="btn-primary">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <!-- Column 1: About -->
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">About Seed</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#">Our Mission</a></li>
+                        <li><a href="#">Science</a></li>
+                        <li><a href="#">Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 2: Products -->
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">Products</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#">DS-01® Daily Synbiotic</a></li>
+                        <li><a href="#">DM-02™ Metabolic Daily</a></li>
+                        <li><a href="#">AM-02™ Mindful Morning</a></li>
+                        <li><a href="#">PM-02™ Peaceful Night</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Support -->
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Newsletter -->
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">Stay Updated</h3>
+                    <form class="space-y-4">
+                        <input
+                            type="email"
+                            placeholder="Email address"
+                            class="newsletter-input"
+                        >
+                        <button type="submit" class="btn-secondary w-full">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="border-t border-white border-opacity-20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="opacity-80">© 2024 Seed Health, Inc. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Swiper
+        const swiper = new Swiper('.testimonial-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
