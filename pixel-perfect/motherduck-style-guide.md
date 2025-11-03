@@ -1,241 +1,236 @@
-# MotherDuck Style Guide
+# MotherDuck Brutalist Style Guide v2.0
 
 ## 1. Overview
 
 ### Design Philosophy
-The MotherDuck design system emphasizes a **playful, approachable aesthetic** that makes complex data analytics feel friendly and accessible. The design combines:
+The MotherDuck Brutalist design system embraces a **bold, unapologetic aesthetic** that prioritizes:
 
-- **Light, warm color palette** - Cream backgrounds with bright yellow and blue accents
-- **Whimsical branding** - Duck mascot integrated throughout
-- **Clean, modern layouts** - Card-based components with subtle elevation
-- **Technical credibility** - Monospace fonts for code and technical elements
-- **User-friendly approach** - Clear hierarchy and generous whitespace
+- **Sharp Edges** - Zero border radius on all rectangular components
+- **Hard Shadows** - Offset box shadows with no blur (brutalist depth)
+- **Bold Borders** - Thick 2-3px black borders on everything
+- **High Contrast** - Bright yellows and blues against cream backgrounds
+- **Playful Illustrations** - Duck emoji and icons integrated throughout
+- **Monospace Typography** - Space Mono for technical credibility
+
+### Design Principles
+1. **No Subtlety** - Make every element command attention
+2. **Geometric Purity** - Sharp corners, perfect rectangles, circular elements
+3. **Visual Weight** - Heavy borders and shadows create tactile depth
+4. **Functional Color** - Colors convey meaning and hierarchy
+5. **Developer-First** - Code examples and technical aesthetics
 
 ### Tech Stack
 - **Framework**: HTML5 + Tailwind CSS 3.x
-- **Icons**: Lucide Icons (1.5 strokewidth)
-- **Fonts**: Inter (body text), Space Mono (headings/code)
-- **Responsive**: Mobile-first approach with md: and lg: breakpoints
-
-### Design Principles
-1. **Accessibility First** - High contrast, semantic HTML, ARIA attributes
-2. **Performance** - Minimal dependencies, optimized assets
-3. **Consistency** - Reusable component patterns
-4. **Delight** - Subtle interactions and playful elements
+- **Icons**: Lucide Icons (stroke-width: 2-2.5)
+- **Fonts**: Space Mono (monospace) - 400 (regular), 700 (bold)
+- **Responsive**: Mobile-first with md: (768px) and lg: (1024px) breakpoints
 
 ---
 
 ## 2. Color Palette
 
-### Primary Colors
-| Color Name | Hex Code | Tailwind Class | Usage | Contrast Ratio |
-|------------|----------|----------------|-------|----------------|
-| **Yellow Primary** | `#FFE600` | `bg-[#FFE600]` | CTAs, highlights, accents, badges | 1.89:1 (decorative) |
-| **Blue Primary** | `#4DA6FF` | `bg-[#4DA6FF]` | Primary buttons, links, interactive elements | 3.2:1 |
-| **Cream Background** | `#F5F1E8` | `bg-[#F5F1E8]` | Main page background, card backgrounds | Base color |
-| **White** | `#FFFFFF` | `bg-white` | Card surfaces, navigation, content blocks | 21:1 |
+### Primary Brand Colors
+
+| Color Name | Hex Code | Tailwind Class | Usage | Instances |
+|------------|----------|----------------|-------|-----------|
+| **Yellow Primary** | `#FFE600` | `bg-[#FFE600]` | CTA backgrounds, highlights, badges, icon containers | 25+ |
+| **Blue Primary** | `#4DA6FF` | `bg-[#4DA6FF]` | Primary buttons, hover states, accent sections | 20+ |
+| **Cream Background** | `#F5F1E8` | `bg-[#F5F1E8]` | Main page background, card backgrounds | 15+ |
+| **Black** | `#000000` | `border-black` | All borders, shadows, text emphasis | 100+ |
+| **White** | `#FFFFFF` | `bg-white` | Card surfaces, navigation, content blocks | 30+ |
 
 ### Neutral Palette
+
 | Color Name | Hex Code | Tailwind Class | Usage |
 |------------|----------|----------------|-------|
-| **Gray 900** | `#111827` | `bg-gray-900` | Footer background, dark text, primary CTA alternative |
-| **Gray 700** | `#374151` | `text-gray-700` | Body text on light backgrounds |
-| **Gray 600** | `#4B5563` | `text-gray-600` | Secondary text, descriptions |
-| **Gray 500** | `#6B7280` | `text-gray-500` | Tertiary text, timestamps |
-| **Gray 400** | `#9CA3AF` | `text-gray-400` | Placeholder text, disabled states |
-| **Gray 200** | `#E5E7EB` | `border-gray-200` | Borders, dividers, subtle backgrounds |
-| **Gray 50** | `#F9FAFB` | `bg-gray-50` | Subtle background variations |
+| **Gray 900** | `#111827` | `bg-gray-900` | Code editor background, footer |
+| **Gray 700** | `#374151` | `text-gray-700` | Body text, descriptions |
+| **Gray 400** | `#9CA3AF` | `text-gray-400` | Footer links, secondary text |
+| **Gray 300** | `#D1D5DB` | `border-gray-300` | Navigation border |
+| **Gray 200** | `#E5E7EB` | `bg-gray-200` | Subtle card backgrounds |
+| **Gray 100** | `#F3F4F6` | `hover:bg-gray-100` | Hover states |
 
-### Accent Colors
-| Color Name | Hex Code | Usage |
-|------------|----------|-------|
-| **Yellow 400** | `#FACC15` | Star ratings, warning states |
-| **Blue 100** | `#DBEAFE` | Text on blue backgrounds |
-| **Red 400** | `#F87171` | Traffic light indicator (decorative) |
-| **Green 400** | `#4ADE80` | Traffic light indicator (decorative) |
-| **Purple 600** | `#9333EA` | Code syntax highlighting |
+### Accent Colors (Syntax Highlighting & UI)
 
-### Color Usage Guidelines
+| Color Name | Hex Code | Tailwind Class | Usage |
+|------------|----------|----------------|-------|
+| **Red 500** | `#EF4444` | `bg-red-500` | Traffic light dot (decorative) |
+| **Yellow 400** | `#FACC15` | `bg-yellow-400` | Traffic light dot, stars |
+| **Yellow 300** | `#FDE047` | `text-yellow-300` | SQL function highlighting |
+| **Green 500** | `#22C55E` | `bg-green-500` | Traffic light dot, success indicators |
+| **Green 400** | `#4ADE80` | `text-green-400` | Code text color |
+| **Blue 400** | `#60A5FA` | `text-blue-400` | SQL keyword highlighting |
+| **Orange 400** | `#FB923C` | `text-orange-400` | SQL string highlighting |
+
+### Color Usage Rules
 
 #### Background Hierarchy
 ```
-Level 1 (Page): #F5F1E8 (Cream)
-Level 2 (Cards): #FFFFFF (White)
-Level 3 (Nested): #F9FAFB (Gray 50)
-Level 4 (Accent): #FFE600 (Yellow) or #4DA6FF (Blue)
+Level 1 (Page): #F5F1E8 (Cream) - Base layer
+Level 2 (Sections): #FFFFFF (White) or #4DA6FF (Blue accent)
+Level 3 (Cards): #F5F1E8 (Cream) or #FFFFFF (White)
+Level 4 (Highlights): #FFE600 (Yellow) - Maximum emphasis
+Level 5 (Code): #111827 (Gray 900) - Dark terminal
 ```
 
-#### Text Contrast Rules
-- **Primary text on cream**: Gray 900 (#111827) - Ratio 11.5:1 ✅
-- **Secondary text on cream**: Gray 600 (#4B5563) - Ratio 5.8:1 ✅
-- **White text on blue**: White on #4DA6FF - Ratio 3.2:1 ⚠️ (Minimum for large text)
-- **Dark text on yellow**: Gray 900 on #FFE600 - Ratio 1.89:1 ❌ (Decorative only)
+#### Border Standards
+- **ALL components**: 2px black borders (`border-2 border-black`)
+- **Top banner**: 3px black border (`style="border-width: 3px;"`)
+- **Circular elements**: 2px black borders on rounded-full elements
+- **NO exceptions**: Every visual element has a black border
 
-#### Color Combinations (Verified Pairings)
+#### Shadow System (Brutalist)
+All shadows are **hard offset shadows with NO blur**:
+
 ```css
-/* Primary CTA */
-.btn-primary {
-  background: #4DA6FF;
-  color: #FFFFFF;
-  hover: #3d95ee; /* Darker 15% */
-}
+/* Small Element Shadow */
+shadow-[4px_4px_0_0_rgba(0,0,0,1)]
+/* Standard: 4px right, 4px down, no blur, full opacity black */
 
-/* Secondary CTA */
-.btn-secondary {
-  background: #FFFFFF;
-  color: #111827;
-  border: 2px solid #111827;
-}
+/* Medium Element Shadow */
+shadow-[6px_6px_0_0_rgba(0,0,0,1)]
+/* Standard cards and buttons: 6px offset */
 
-/* Accent Badge */
-.badge-yellow {
-  background: #FFE600;
-  color: #111827;
-}
+/* Large Element Shadow */
+shadow-[8px_8px_0_0_rgba(0,0,0,1)]
+/* Hero elements and important cards: 8px offset */
+```
 
-/* Card Hover State */
-.card:hover {
-  border-color: #4DA6FF;
-  transform: scale(1.05);
-}
+**Hover State**: Shadows reduce by 50% and element translates:
+```css
+/* Hover transformation */
+shadow-[6px_6px_0_0_rgba(0,0,0,1)] → shadow-[3px_3px_0_0_rgba(0,0,0,1)]
+translate-x-[3px] translate-y-[3px]
+/* Element moves toward shadow, creating "press" effect */
 ```
 
 ---
 
 ## 3. Typography System
 
-### Font Families
+### Font Family: Space Mono (Monospace)
 
-#### Primary Font Stack
+**Single Font Philosophy**: The entire design uses Space Mono exclusively for:
+- Technical credibility
+- Developer-friendly aesthetic
+- Consistent character width
+- Retro computing aesthetic
+
 ```css
-/* Body Text - Inter */
-font-family: 'Inter', sans-serif;
-/* Usage: All body copy, UI labels, descriptions */
-
-/* Headings & Code - Space Mono */
-font-family: 'Space Mono', monospace;
-/* Usage: Hero headings, badges, code snippets, technical content */
+body {
+    font-family: 'Space Mono', monospace;
+}
 ```
 
 ### Font Weights
 
-#### Inter Weight Scale
 | Weight | Value | Tailwind Class | Usage | Frequency |
 |--------|-------|----------------|-------|-----------|
-| Light | 300 | `font-light` | Large display text | Rare |
-| Regular | 400 | `font-normal` | Body text, paragraphs | Very common |
-| Medium | 500 | `font-medium` | Navigation links, emphasis | Common |
-| Semibold | 600 | `font-semibold` | Subheadings, buttons | Common |
-| Bold | 700 | `font-bold` | Main headings, hero text | Common |
+| **Regular** | 400 | `font-normal` | Body text, descriptions, paragraphs | Common |
+| **Bold** | 700 | `font-bold` | All headings, buttons, labels, nav links | Very Common |
 
-#### Space Mono Weight Scale
-| Weight | Value | Tailwind Class | Usage |
-|--------|-------|----------------|-------|
-| Regular | 400 | `font-normal` | Code blocks, badges |
-| Bold | 700 | `font-bold` | Emphasized code, technical labels |
+**Critical Rule**: Space Mono only has 2 weights. Use bold for ALL emphasis.
 
 ### Type Scale
 
-#### Desktop Scale (Base: 16px)
+#### Desktop Hierarchy (Base: 16px)
+
 | Element | Size | Line Height | Weight | Tailwind Classes | Usage |
 |---------|------|-------------|--------|------------------|-------|
-| **Hero Heading** | 72px | 1.1 | Bold | `text-7xl font-bold tracking-tight leading-none` | Main page title |
-| **H1** | 60px | 1.1 | Bold | `text-6xl font-bold tracking-tight` | Section headings |
-| **H2** | 48px | 1.2 | Bold | `text-5xl font-bold tracking-tight` | Major sections |
-| **H3** | 36px | 1.2 | Bold | `text-4xl font-bold tracking-tight` | Subsections |
-| **H4** | 24px | 1.3 | Semibold | `text-2xl font-semibold` | Card titles |
-| **H5** | 20px | 1.4 | Semibold | `text-xl font-semibold` | Component headings |
-| **Body Large** | 20px | 1.5 | Regular | `text-xl text-gray-600` | Hero descriptions |
-| **Body** | 18px | 1.6 | Regular | `text-lg text-gray-600` | Standard paragraphs |
-| **Body Small** | 16px | 1.5 | Regular | `text-base` | Secondary content |
-| **Caption** | 14px | 1.4 | Medium | `text-sm font-medium` | Labels, metadata |
-| **Tiny** | 12px | 1.4 | Regular | `text-xs` | Timestamps, footnotes |
+| **Mega Heading** | 72px | 1.0 | Bold | `text-7xl font-bold tracking-tight leading-none` | Hero main title |
+| **H1** | 60px | 1.1 | Bold | `text-6xl font-bold tracking-tight` | Large section headers |
+| **H2** | 48px | 1.2 | Bold | `text-5xl font-bold tracking-tight` | Section headings |
+| **H3** | 36px | 1.2 | Bold | `text-4xl font-bold tracking-tight` | Subsection headings |
+| **H4** | 30px | 1.3 | Bold | `text-3xl font-bold` | Card headings |
+| **H5** | 24px | 1.3 | Bold | `text-2xl font-bold` | Use case titles |
+| **H6** | 20px | 1.4 | Bold | `text-xl font-bold` | Component titles |
+| **Body Large** | 20px | 1.5 | Regular | `text-xl text-gray-700` | Hero descriptions |
+| **Body** | 18px | 1.6 | Regular | `text-lg text-gray-700` | Standard paragraphs |
+| **Body Small** | 14px | 1.5 | Regular | `text-sm` | Card descriptions |
+| **Label** | 14px | 1.4 | Bold | `text-sm font-bold` | Buttons, navigation |
+| **Micro** | 12px | 1.4 | Bold | `text-xs font-bold uppercase tracking-wider` | Badges, tags |
 
-#### Mobile Scale (Adjustments)
-| Element | Size | Tailwind Responsive | Difference |
-|---------|------|---------------------|------------|
-| Hero Heading | 36px → 48px → 72px | `text-5xl md:text-6xl lg:text-7xl` | -50% mobile |
-| H1 | 36px → 48px → 60px | `text-4xl md:text-5xl lg:text-6xl` | -40% mobile |
-| H2 | 28px → 36px → 48px | `text-4xl md:text-5xl` | -42% mobile |
-| H3 | 24px → 28px → 36px | `text-2xl md:text-3xl lg:text-4xl` | -33% mobile |
-| Body Large | 18px → 20px | `text-lg md:text-xl` | -10% mobile |
+#### Mobile Scaling
+
+| Element | Mobile → Desktop | Tailwind Responsive |
+|---------|------------------|---------------------|
+| Mega Heading | 48px → 60px → 72px | `text-5xl md:text-6xl lg:text-7xl` |
+| H1 | 36px → 48px → 60px | `text-4xl md:text-5xl lg:text-6xl` |
+| H2 | 36px → 48px | `text-4xl md:text-5xl` |
+| Body Large | 18px → 20px | `text-lg md:text-xl` |
 
 ### Typography Patterns
 
-#### Hero Section Typography
+#### Hero Title Pattern
 ```html
-<!-- Pattern: Large headline with gradient accent -->
 <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-none">
-  MAKING BIG DATA<br/>
-  <span class="text-[#4DA6FF]">FEEL SMALL</span>
+  MAKING<br/>
+  BIG DATA<br/>
+  <span class="inline-block px-3 bg-[#FFE600] border-2 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
+    FEEL SMALL
+  </span>
 </h1>
-<p class="text-lg md:text-xl text-gray-600 max-w-xl">
-  The serverless analytics platform built on DuckDB.
-</p>
 ```
+
+**Specifications**:
+- All caps for maximum impact
+- Line breaks for dramatic pacing
+- Inline highlight with yellow background
+- Hard shadow on highlight span
+- Tight tracking (`tracking-tight`)
+- No line height (`leading-none`)
 
 #### Section Header Pattern
 ```html
-<!-- Pattern: Eyebrow label + Main heading + Description -->
-<div class="inline-block px-3 py-1 bg-[#FFE600] rounded-full">
-  <span class="text-xs font-bold uppercase tracking-wide" style="font-family: 'Space Mono', monospace;">
-    Cloud Analytics
-  </span>
+<div class="inline-block px-4 py-2 bg-[#4DA6FF] text-white border-2 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)]">
+  <span class="text-xs font-bold uppercase tracking-wider">Data Integration</span>
 </div>
+
 <h2 class="text-4xl md:text-5xl font-bold tracking-tight">
-  Connect to Anything
+  QUERY<br/>
+  ANYTHING,<br/>
+  ANYWHERE
 </h2>
-<p class="text-lg text-gray-600">
-  Query your data wherever it lives.
-</p>
 ```
 
-#### Card Title Pattern
+**Pattern**:
+1. Eyebrow badge (colored, uppercase, micro text)
+2. Large heading (all caps, bold, line breaks)
+3. Description paragraph (sentence case, gray text)
+
+#### Body Text Pattern
 ```html
-<!-- Pattern: Icon + Title + Description -->
-<h3 class="text-xl font-bold mb-2">Blazing Fast</h3>
-<p class="text-gray-600 text-sm">
-  Query gigabytes of data in milliseconds.
+<p class="text-lg md:text-xl text-gray-700 max-w-xl">
+  The cloud analytics platform that brings DuckDB's speed...
 </p>
 ```
 
-### Letter Spacing (Tracking)
+**Specifications**:
+- `text-gray-700` for body text (sufficient contrast)
+- `max-w-xl` (36rem ≈ 576px) for readability
+- Responsive sizing with `md:` breakpoint
+
+### Letter Spacing
 
 | Size Range | Tracking Class | CSS Value | Usage |
 |------------|----------------|-----------|-------|
-| 72px+ | `tracking-tight` | `-0.025em` | Hero headings |
+| 72px+ | `tracking-tight` | `-0.025em` | Mega headings |
 | 48-60px | `tracking-tight` | `-0.025em` | H1, H2 |
-| 12-14px | `tracking-wide` | `0.025em` | Uppercase labels |
-| Default | (none) | `0em` | Body text |
+| 12px (uppercase) | `tracking-wider` | `0.05em` | Badges, labels |
+| Default | (none) | `0em` | Body text, buttons |
 
-### Text Color Hierarchy
+### Text Transformation
 
-```css
-/* Primary Text (Headings) */
-.text-primary {
-  color: #111827; /* gray-900 */
-}
+**Uppercase Usage**:
+- ALL main headings (`MAKING BIG DATA FEEL SMALL`)
+- All section titles (`WHY IT'S BETTER`)
+- All badges (`CLOUD ANALYTICS`)
+- All buttons (`START FOR FREE`)
+- All feature titles (`BLAZING FAST`)
 
-/* Secondary Text (Body) */
-.text-secondary {
-  color: #4B5563; /* gray-600 */
-}
-
-/* Tertiary Text (Captions) */
-.text-tertiary {
-  color: #6B7280; /* gray-500 */
-}
-
-/* Accent Text (Blue) */
-.text-accent {
-  color: #4DA6FF;
-}
-
-/* Inverted Text (On dark) */
-.text-inverted {
-  color: #FFFFFF;
-}
-```
+**Sentence Case**:
+- Body paragraphs only
+- Descriptions under headings
 
 ---
 
@@ -243,89 +238,111 @@ font-family: 'Space Mono', monospace;
 
 ### Base Unit: 4px (0.25rem)
 
-#### Spacing Scale (Tailwind)
+The design uses Tailwind's default spacing scale based on 4px increments.
+
+### Spacing Scale
+
 | Scale | Pixels | Rem | Tailwind Class | Usage |
 |-------|--------|-----|----------------|-------|
-| 0 | 0px | 0 | `p-0`, `m-0` | Reset |
-| 0.5 | 2px | 0.125rem | `p-0.5` | Micro adjustments |
-| 1 | 4px | 0.25rem | `p-1`, `gap-1` | Minimal spacing |
+| 0.5 | 2px | 0.125rem | `p-0.5` | Micro spacing |
+| 1 | 4px | 0.25rem | `p-1` | Minimal spacing |
 | 2 | 8px | 0.5rem | `p-2`, `gap-2` | Tight spacing |
-| 3 | 12px | 0.75rem | `p-3`, `gap-3` | Compact spacing |
+| 3 | 12px | 0.75rem | `p-3`, `space-x-3` | Compact spacing |
 | 4 | 16px | 1rem | `p-4`, `gap-4` | Standard spacing |
-| 5 | 20px | 1.25rem | `p-5` | Medium spacing |
-| 6 | 24px | 1.5rem | `p-6`, `gap-6` | Large spacing |
-| 8 | 32px | 2rem | `p-8`, `gap-8` | Section spacing |
-| 10 | 40px | 2.5rem | `p-10` | Major spacing |
-| 12 | 48px | 3rem | `p-12`, `gap-12` | Extra large |
-| 16 | 64px | 4rem | `py-16` | Section padding |
-| 20 | 80px | 5rem | `py-20` | Large sections |
-| 24 | 96px | 6rem | `py-24` | Hero sections |
+| 6 | 24px | 1.5rem | `p-6`, `gap-6` | Card padding |
+| 8 | 32px | 2rem | `p-8`, `gap-8` | Large card padding |
+| 12 | 48px | 3rem | `gap-12` | Section spacing |
+| 16 | 64px | 4rem | `py-16` | Section padding (mobile) |
+| 20 | 80px | 5rem | `py-20` | Section padding (desktop) |
+| 24 | 96px | 6rem | `py-24` | Hero section padding |
 
 ### Component Spacing Patterns
 
+#### Button Padding
+```html
+<!-- Small Button -->
+<button class="px-4 py-2">  <!-- 16px × 8px -->
+
+<!-- Medium Button (Navigation) -->
+<button class="px-6 py-2">  <!-- 24px × 8px -->
+
+<!-- Large Button (Hero CTAs) -->
+<button class="px-8 py-3">  <!-- 32px × 12px -->
+
+<!-- Extra Large Button (Final CTA) -->
+<button class="px-10 py-4">  <!-- 40px × 16px -->
+```
+
 #### Card Padding
 ```html
-<!-- Small Card -->
-<div class="p-4">  <!-- 16px all sides -->
-
-<!-- Medium Card (Most Common) -->
+<!-- Standard Feature Card -->
 <div class="p-6">  <!-- 24px all sides -->
 
-<!-- Large Card -->
+<!-- Large Card (Data Integration) -->
 <div class="p-8">  <!-- 32px all sides -->
 ```
 
 #### Section Padding (Vertical)
 ```html
-<!-- Mobile: 64px, Desktop: 80px -->
-<section class="py-16 md:py-20">
+<!-- Mobile: 64px, Desktop: 96px -->
+<section class="py-16 md:py-24">
 
-<!-- Mobile: 80px, Desktop: 96px -->
-<section class="py-20 md:py-24">
+<!-- Consistent Desktop: 80px -->
+<section class="py-20">
 ```
 
-#### Content Gaps
+#### Grid Gaps
 ```html
-<!-- Card Grid Gap -->
+<!-- Card Grid -->
 <div class="grid gap-6">  <!-- 24px between items -->
 
-<!-- Feature List Gap -->
-<div class="space-y-3">  <!-- 12px vertical spacing -->
+<!-- Large Content Grid -->
+<div class="grid gap-12">  <!-- 48px between columns -->
 
-<!-- Button Group Gap -->
-<div class="gap-4">  <!-- 16px between buttons -->
+<!-- Use Case Grid -->
+<div class="grid gap-8">  <!-- 32px between cards -->
 ```
 
-#### Container Padding
+#### Stack Spacing
+```html
+<!-- Tight Stack (Hero Content) -->
+<div class="space-y-6">  <!-- 24px vertical spacing -->
+
+<!-- Icon List -->
+<ul class="space-y-3">  <!-- 12px vertical spacing -->
+
+<!-- Horizontal Icons -->
+<div class="space-x-2">  <!-- 8px horizontal spacing -->
+```
+
+### Container System
+
 ```html
 <!-- Standard Container -->
-<div class="px-4 sm:px-6 lg:px-8">
-<!-- Mobile: 16px, Tablet: 24px, Desktop: 32px -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- Max width: 1280px, Padding: 16px → 24px → 32px -->
 
-<!-- Max Width Container -->
-<div class="max-w-7xl mx-auto">  <!-- 1280px max -->
+<!-- Narrow Container (CTA Section) -->
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- Max width: 896px -->
+
+<!-- Extra Wide Container (Stats) -->
+<div class="max-w-5xl mx-auto">
+<!-- Max width: 1024px -->
 ```
 
 ### Layout Spacing Guidelines
 
 #### Vertical Rhythm
 ```
-Hero Section Top: 96px (py-24)
-Hero Section Bottom: 64px (pb-16)
-Major Sections: 80px (py-20)
-Minor Sections: 64px (py-16)
+Top Banner: 8px vertical (py-2)
+Navigation Height: 70px mobile, 90px desktop
+Hero Section: 64px mobile → 96px desktop (py-16 md:py-24)
+Standard Section: 80px (py-20)
 Component Spacing: 48px (mb-12)
-Paragraph Spacing: 24px (mb-6)
-Line Spacing: 12px (space-y-3)
-```
-
-#### Horizontal Spacing
-```
-Container Sides: 16-32px (px-4 sm:px-6 lg:px-8)
-Card Internal: 24px (p-6)
-Button Horizontal: 32px (px-8)
-Icon-Text Gap: 12px (space-x-3)
-Grid Gap: 24px (gap-6)
+Card Internal: 24-32px (p-6, p-8)
+Text Blocks: 24px (space-y-6)
+Paragraphs: 16px (mb-4)
 ```
 
 ---
@@ -334,607 +351,644 @@ Grid Gap: 24px (gap-6)
 
 ### 5.1 Buttons
 
-#### Primary Button
+#### Primary Button (Blue)
 ```html
-<button class="px-8 py-4 bg-[#4DA6FF] text-white font-semibold rounded-lg hover:bg-[#3d95ee] transition-all hover:scale-105">
+<button class="px-8 py-3 bg-[#4DA6FF] text-white font-bold border-2 border-black
+               shadow-[6px_6px_0_0_rgba(0,0,0,1)]
+               hover:shadow-[3px_3px_0_0_rgba(0,0,0,1)]
+               hover:translate-x-[3px] hover:translate-y-[3px]
+               transition-all">
   Start for Free
 </button>
 ```
 
-**Specifications:**
-- Padding: `32px horizontal × 16px vertical`
-- Background: `#4DA6FF`
-- Text: `White, 14-16px, Semibold (600)`
-- Border Radius: `8px` (rounded-lg)
-- Hover: Darken 15%, Scale 1.05
-- Transition: `all 200ms ease`
+**Specifications**:
+- Background: `#4DA6FF` (blue primary)
+- Text: White, bold, uppercase
+- Border: 2px solid black
+- Shadow: 6px offset, hard edge
+- Hover: Reduce shadow to 3px, translate element 3px
+- Padding: 32px × 12px (large)
+- **NO border radius** - sharp corners
 
-#### Secondary Button
+#### Secondary Button (White)
 ```html
-<button class="px-8 py-4 bg-white border-2 border-gray-900 font-semibold rounded-lg hover:bg-gray-50 transition-colors">
+<button class="px-8 py-3 bg-white font-bold border-2 border-black
+               shadow-[6px_6px_0_0_rgba(0,0,0,1)]
+               hover:shadow-[3px_3px_0_0_rgba(0,0,0,1)]
+               hover:translate-x-[3px] hover:translate-y-[3px]
+               transition-all">
   View Demo
 </button>
 ```
 
-**Specifications:**
-- Padding: `32px × 16px`
-- Background: `White`
-- Border: `2px solid #111827`
-- Text: `Gray 900, Semibold`
-- Hover: `bg-gray-50`
+**Specifications**:
+- Background: White
+- Text: Black (default), bold
+- Same shadow and hover behavior
 
-#### Dark CTA Button
+#### Dark Button (Footer CTA)
 ```html
-<button class="px-6 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors">
-  View Integrations →
+<button class="px-10 py-4 bg-black text-white text-lg font-bold border-2 border-black
+               shadow-[8px_8px_0_0_rgba(0,0,0,1)]
+               hover:shadow-[4px_4px_0_0_rgba(0,0,0,1)]
+               hover:translate-x-[4px] hover:translate-y-[4px]
+               transition-all">
+  Start Free Trial
 </button>
 ```
 
-**Specifications:**
-- Padding: `24px × 12px`
-- Background: `#111827`
-- Text: `White, Semibold, 14px`
-- Hover: `#1F2937` (gray-800)
+**Specifications**:
+- Extra large: 40px × 16px padding
+- 8px shadow (maximum emphasis)
+- Larger text: `text-lg`
 
-#### Button Size Variants
-| Variant | Padding | Text Size | Tailwind Classes |
-|---------|---------|-----------|------------------|
-| Small | `px-4 py-2` | `text-sm` | 16px × 8px |
-| Medium | `px-6 py-3` | `text-sm` | 24px × 12px |
-| Large | `px-8 py-4` | `text-base` | 32px × 16px |
+#### Ghost Button (Navigation)
+```html
+<button class="px-4 py-2 text-sm font-bold hover:bg-gray-100 transition-colors">
+  Sign In
+</button>
+```
+
+**Specifications**:
+- No background (transparent)
+- No border
+- No shadow
+- Hover: Light gray background
+- Small size: 16px × 8px
 
 ### 5.2 Cards
 
-#### Feature Card
+#### Feature Card (Cream Background)
 ```html
-<div class="bg-[#F5F1E8] rounded-xl p-6 border border-gray-200 hover:border-[#4DA6FF] transition-all hover:scale-105">
-  <div class="w-12 h-12 bg-[#FFE600] rounded-lg flex items-center justify-center mb-4">
-    <i data-lucide="zap" class="w-6 h-6"></i>
+<div class="bg-[#F5F1E8] border-2 border-black p-6
+            shadow-[6px_6px_0_0_rgba(0,0,0,1)]
+            hover:shadow-[3px_3px_0_0_rgba(0,0,0,1)]
+            hover:translate-x-[3px] hover:translate-y-[3px]
+            transition-all">
+
+  <!-- Icon Container -->
+  <div class="w-12 h-12 bg-[#FFE600] border-2 border-black
+              flex items-center justify-center mb-4">
+    <i data-lucide="zap" class="w-6 h-6" style="stroke-width: 2.5;"></i>
   </div>
-  <h3 class="text-xl font-bold mb-2">Blazing Fast</h3>
-  <p class="text-gray-600 text-sm">
-    Query gigabytes of data in milliseconds.
+
+  <!-- Title -->
+  <h3 class="text-xl font-bold mb-2">BLAZING FAST</h3>
+
+  <!-- Description -->
+  <p class="text-sm text-gray-700">
+    Query gigabytes in milliseconds with DuckDB's vectorized engine.
   </p>
 </div>
 ```
 
-**Specifications:**
-- Background: `#F5F1E8` (cream)
-- Border: `1px solid #E5E7EB`, hover → `#4DA6FF`
-- Border Radius: `12px` (rounded-xl)
-- Padding: `24px` (p-6)
-- Icon Container: `48px × 48px, rounded-lg, bg-[#FFE600]`
-- Hover: `scale(1.05)`, border color change
-- Transition: `all 300ms ease`
+**Specifications**:
+- Background: Cream (`#F5F1E8`)
+- Border: 2px black
+- Shadow: 6px offset
+- Padding: 24px
+- Icon: 48px square, yellow background
+- **NO rounded corners**
+- Hover: Press effect (shadow + translate)
 
-#### White Card
+#### White Card (Hero Code Editor)
 ```html
-<div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200">
+<div class="bg-white border-2 border-black shadow-[8px_8px_0_0_rgba(0,0,0,1)] p-6">
   <!-- Content -->
 </div>
 ```
 
-**Specifications:**
-- Background: `White`
-- Shadow: `shadow-lg` (0 10px 15px -3px rgba(0,0,0,0.1))
-- Border: `1px solid #E5E7EB`
-- Padding: `24px`
+**Specifications**:
+- Background: White
+- Shadow: 8px (larger for emphasis)
+- No hover state (static display)
 
-#### Large Visual Card
+#### Data Source Card (Colored Background)
 ```html
-<div class="bg-white rounded-2xl p-6 shadow-xl border border-gray-200">
-  <!-- SQL Query Display -->
+<div class="flex items-center space-x-3 p-3
+            bg-[#FFE600] border-2 border-black">
+  <!-- Icon + Text + Status Indicator -->
 </div>
 ```
 
-**Specifications:**
-- Border Radius: `16px` (rounded-2xl)
-- Shadow: `shadow-xl` (0 20px 25px -5px rgba(0,0,0,0.1))
-- Padding: `24px`
+**Specifications**:
+- Colored backgrounds: Yellow, Blue, Gray
+- Compact padding: 12px
+- Horizontal layout with flex
 
 ### 5.3 Badges & Labels
 
-#### Eyebrow Badge (Yellow)
+#### Eyebrow Badge (Section Label)
 ```html
-<div class="inline-block px-3 py-1 bg-[#FFE600] rounded-full">
-  <span class="text-xs font-bold uppercase tracking-wide" style="font-family: 'Space Mono', monospace;">
+<!-- White Background -->
+<div class="inline-block px-4 py-2 bg-white border-2 border-black
+            shadow-[4px_4px_0_0_rgba(0,0,0,1)]">
+  <span class="text-xs font-bold uppercase tracking-wider">
     Cloud Analytics
   </span>
 </div>
-```
 
-**Specifications:**
-- Padding: `12px horizontal × 4px vertical`
-- Background: `#FFE600`
-- Border Radius: `9999px` (fully rounded)
-- Text: `12px, Bold, Uppercase, Space Mono`
-- Letter Spacing: `0.025em`
-
-#### Eyebrow Badge (Blue)
-```html
-<div class="inline-block px-3 py-1 bg-[#4DA6FF] text-white rounded-full">
-  <span class="text-xs font-bold uppercase tracking-wide" style="font-family: 'Space Mono', monospace;">
+<!-- Blue Background -->
+<div class="inline-block px-4 py-2 bg-[#4DA6FF] text-white border-2 border-black
+            shadow-[4px_4px_0_0_rgba(0,0,0,1)]">
+  <span class="text-xs font-bold uppercase tracking-wider">
     Data Integration
   </span>
 </div>
 ```
 
+**Specifications**:
+- Always `inline-block`
+- Padding: 16px × 8px
+- Text: 12px, bold, uppercase, wide tracking
+- 4px hard shadow
+- **NO rounded corners** (sharp rectangles)
+
+#### Result Badge (Yellow Highlight)
+```html
+<div class="mt-3 px-3 py-2 bg-[#FFE600] border-2 border-black inline-block">
+  <span class="text-xs font-bold">⚡ Executed in 0.03s • 1.2M rows</span>
+</div>
+```
+
+**Specifications**:
+- Yellow background
+- Emoji prefix
+- Compact padding: 12px × 8px
+
 ### 5.4 Navigation
 
-#### Header Navigation
+#### Sticky Header
 ```html
-<header class="sticky top-0 z-50 bg-white border-b border-gray-200">
+<header class="sticky top-0 z-50 bg-white border-b border-gray-300"
+        style="border-width: 2px;">
   <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16 md:h-20">
-      <!-- Navigation items -->
+    <div class="flex items-center justify-between h-[70px] md:h-[90px]">
+      <!-- Logo | Nav Links | CTAs -->
     </div>
   </nav>
 </header>
 ```
 
-**Specifications:**
-- Position: `sticky top-0`
-- Z-index: `50`
-- Height: `64px mobile, 80px desktop`
-- Border: `1px solid #E5E7EB` (bottom)
-- Background: `White with backdrop-blur`
+**Specifications**:
+- Position: Sticky top
+- Z-index: 50 (above content)
+- Height: 70px mobile, 90px desktop
+- Border: 2px gray bottom border
+- Background: White
 
 #### Navigation Link
 ```html
-<a href="#" class="text-sm font-medium hover:text-[#4DA6FF] transition-colors">
+<a href="#" class="text-sm font-bold hover:text-[#4DA6FF] transition-colors">
   Product
 </a>
 ```
 
-**Specifications:**
-- Font Size: `14px`
-- Weight: `Medium (500)`
-- Hover: Color → `#4DA6FF`
-- Transition: `colors 200ms`
+**Specifications**:
+- Font: 14px, bold
+- Default: Black text
+- Hover: Blue color
+- Transition: Color change only
 
-### 5.5 Icons
+### 5.5 Code Editor Display
 
-#### Icon Container (Feature Cards)
 ```html
-<div class="w-12 h-12 bg-[#FFE600] rounded-lg flex items-center justify-center mb-4">
-  <i data-lucide="zap" class="w-6 h-6"></i>
+<div class="bg-white border-2 border-black shadow-[8px_8px_0_0_rgba(0,0,0,1)] p-6">
+  <!-- Window Controls (Traffic Lights) -->
+  <div class="flex items-center space-x-2 mb-4 pb-3 border-b-2 border-gray-200">
+    <div class="flex space-x-2">
+      <div class="w-3 h-3 rounded-full bg-red-500 border border-black"></div>
+      <div class="w-3 h-3 rounded-full bg-yellow-400 border border-black"></div>
+      <div class="w-3 h-3 rounded-full bg-green-500 border border-black"></div>
+    </div>
+    <div class="flex-1 text-center">
+      <span class="text-xs font-bold">query.sql</span>
+    </div>
+  </div>
+
+  <!-- Code Block -->
+  <div class="bg-gray-900 p-4 border-2 border-black">
+    <pre class="text-sm text-green-400 font-mono leading-relaxed">
+      <span class="text-blue-400">SELECT</span>
+      product_name,
+      <span class="text-yellow-300">SUM</span>(revenue) ...
+    </pre>
+  </div>
+
+  <!-- Result Badge -->
+  <div class="mt-3 px-3 py-2 bg-[#FFE600] border-2 border-black inline-block">
+    <span class="text-xs font-bold">⚡ Executed in 0.03s • 1.2M rows</span>
+  </div>
 </div>
 ```
 
-**Specifications:**
-- Container: `48px × 48px`
-- Background: `#FFE600` or `#4DA6FF`
-- Border Radius: `8px`
-- Icon Size: `24px × 24px`
-- Stroke Width: `1.5` (Lucide default)
+**Syntax Highlighting**:
+- Keywords (SELECT, FROM, WHERE): `text-blue-400`
+- Functions (SUM, COUNT): `text-yellow-300`
+- Values/Strings: `text-orange-400`
+- Default text: `text-green-400`
+- Background: `bg-gray-900` (dark terminal)
 
-#### Icon Sizing Scale
-| Size | Tailwind | Pixels | Usage |
-|------|----------|--------|-------|
-| Small | `w-4 h-4` | 16px | Inline icons |
-| Medium | `w-5 h-5` | 20px | Navigation, footer |
-| Large | `w-6 h-6` | 24px | Card icons, buttons |
-| XL | `w-8 h-8` | 32px | Logo, hero elements |
+### 5.6 Testimonial Card
 
-### 5.6 Forms
-
-#### Input Field
 ```html
-<input type="email" placeholder="Enter your email"
-  class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4DA6FF] focus:border-transparent"
-  aria-label="Email address">
-```
+<div class="bg-white border-2 border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-6">
+  <!-- Star Rating -->
+  <div class="mb-4">
+    <span class="text-[#FFE600] text-2xl">★★★★★</span>
+  </div>
 
-**Specifications:**
-- Padding: `16px × 12px`
-- Border: `1px solid #E5E7EB`
-- Border Radius: `8px`
-- Focus: Ring `2px #4DA6FF`, remove border
+  <!-- Quote -->
+  <p class="text-sm mb-4 leading-relaxed">
+    "We migrated from Snowflake and saw 10x faster queries..."
+  </p>
 
-### 5.7 Code Blocks
-
-#### SQL Code Display
-```html
-<div class="space-y-2 font-mono text-sm">
-  <div class="text-purple-600">SELECT</div>
-  <div class="pl-4 text-gray-700">product_name,</div>
-  <div class="pl-4 text-gray-700">SUM(revenue) as total</div>
+  <!-- Author -->
+  <div class="flex items-center space-x-3 pt-4 border-t-2 border-gray-200">
+    <div class="w-10 h-10 bg-gray-300 border-2 border-black rounded-full
+                flex items-center justify-center font-bold">
+      SC
+    </div>
+    <div>
+      <div class="font-bold text-sm">Sarah Chen</div>
+      <div class="text-xs text-gray-600">Lead Engineer, DataCo</div>
+    </div>
+  </div>
 </div>
 ```
 
-**Specifications:**
-- Font: `Space Mono, monospace`
-- Font Size: `14px`
-- Line Height: `1.6`
-- Keywords: `#9333EA` (purple-600)
-- Values: `#374151` (gray-700)
-- Indentation: `16px` (pl-4)
+**Specifications**:
+- Stars: Yellow (#FFE600), large (24px)
+- Quote: Small text, relaxed leading
+- Avatar: 40px circle, initials, gray background
+- Divider: 2px top border before author
 
 ---
 
 ## 6. Shadows & Elevation
 
+### Brutalist Shadow System
+
+**Core Principle**: All shadows are **hard-edged offsets with NO BLUR**.
+
+```css
+/* Shadow Format */
+shadow-[Xpx_Ypx_BLUR_SPREAD_rgba(R,G,B,ALPHA)]
+
+/* Our Usage: No blur, no spread, full opacity black */
+shadow-[Xpx_Ypx_0_0_rgba(0,0,0,1)]
+```
+
 ### Shadow Scale
 
-#### Tailwind Shadow Utilities (Used in Project)
-| Class | CSS Value | Z-Height | Usage |
-|-------|-----------|----------|-------|
-| `shadow` | `0 1px 3px 0 rgba(0,0,0,0.1)` | 1dp | Subtle card elevation |
-| `shadow-lg` | `0 10px 15px -3px rgba(0,0,0,0.1)` | 8dp | Card elevation |
-| `shadow-xl` | `0 20px 25px -5px rgba(0,0,0,0.1)` | 12dp | Modal, important cards |
-| `shadow-2xl` | `0 25px 50px -12px rgba(0,0,0,0.25)` | 16dp | Hero elements |
+| Elevation | Shadow Class | Offset | Usage | Examples |
+|-----------|-------------|--------|-------|----------|
+| **Level 1** | `shadow-[4px_4px_0_0_rgba(0,0,0,1)]` | 4px | Small elements, badges, small buttons | Eyebrow badges, nav button |
+| **Level 2** | `shadow-[6px_6px_0_0_rgba(0,0,0,1)]` | 6px | Standard cards, main buttons | Feature cards, CTAs |
+| **Level 3** | `shadow-[8px_8px_0_0_rgba(0,0,0,1)]` | 8px | Hero elements, important cards | Code editor, large cards |
 
-### Elevation Hierarchy
+### Hover State Transformation
 
-```
-Level 0 (Base): No shadow - Page background, flat elements
-Level 1 (Resting): shadow-lg - Standard cards
-Level 2 (Raised): shadow-xl - Important cards, navigation
-Level 3 (Floating): shadow-2xl - Hero cards, modals
-```
+**Rule**: Shadows reduce by 50%, element translates by remaining shadow amount.
 
-### Shadow Usage Examples
-
-#### Card with Hover Elevation
 ```html
-<!-- Resting state: shadow-lg -->
-<!-- Hover state: shadow-xl (implied by scale) -->
-<div class="bg-white rounded-xl p-6 shadow-lg hover:scale-105 transition-all">
+<!-- Resting State -->
+shadow-[6px_6px_0_0_rgba(0,0,0,1)]
+
+<!-- Hover State -->
+hover:shadow-[3px_3px_0_0_rgba(0,0,0,1)]
+hover:translate-x-[3px]
+hover:translate-y-[3px]
 ```
 
-#### Hero Card (Maximum Elevation)
-```html
-<div class="bg-white rounded-2xl shadow-2xl p-6 border border-gray-200">
-```
+**Visual Effect**: Element appears to "press down" toward the shadow.
 
-### Custom Shadow Patterns
+### Shadow Examples by Component
 
 ```css
-/* Colored Shadow (Not used, but for reference) */
-.shadow-blue {
-  box-shadow: 0 10px 25px -5px rgba(77, 166, 255, 0.2);
+/* Small Badge */
+.badge {
+  box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 1);
 }
 
-/* Inner Shadow (Not used) */
-.shadow-inner {
-  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+/* Standard Card */
+.card {
+  box-shadow: 6px 6px 0 0 rgba(0, 0, 0, 1);
+}
+.card:hover {
+  box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 1);
+  transform: translate(3px, 3px);
+}
+
+/* Hero Element */
+.hero-card {
+  box-shadow: 8px 8px 0 0 rgba(0, 0, 0, 1);
 }
 ```
 
----
+### Static vs Interactive Shadows
 
-## 7. Border Radius System
+**Static Elements** (No hover):
+- Hero code editor card
+- Section background elements
+- Decorative illustrations
 
-### Border Radius Scale
-
-| Tailwind Class | Pixels | Usage | Frequency |
-|----------------|--------|-------|-----------|
-| `rounded` | 4px | Small elements, badges | Rare |
-| `rounded-md` | 6px | Buttons (small) | Rare |
-| `rounded-lg` | 8px | Buttons, inputs, icon containers | Very Common |
-| `rounded-xl` | 12px | Cards, feature boxes | Very Common |
-| `rounded-2xl` | 16px | Large cards, hero elements | Common |
-| `rounded-full` | 9999px | Badges, avatars, checkboxes | Common |
-
-### Component Border Radius Patterns
-
-```html
-<!-- Button: 8px -->
-<button class="rounded-lg">
-
-<!-- Standard Card: 12px -->
-<div class="rounded-xl">
-
-<!-- Large Feature Card: 16px -->
-<div class="rounded-2xl">
-
-<!-- Badge/Pill: Fully rounded -->
-<div class="rounded-full">
-
-<!-- Avatar: Fully rounded -->
-<div class="w-10 h-10 rounded-full">
-
-<!-- Icon Container: 8px -->
-<div class="w-12 h-12 rounded-lg">
-```
-
-### Border Usage
-
-#### Border Weights
-```html
-<!-- Standard Border: 1px -->
-<div class="border border-gray-200">
-
-<!-- Thick Border: 2px -->
-<button class="border-2 border-gray-900">
-
-<!-- No Border -->
-<div class="border-0">
-```
-
-#### Border Colors (Hierarchy)
-| Color | Tailwind Class | Hex | Usage |
-|-------|----------------|-----|-------|
-| Light | `border-gray-200` | `#E5E7EB` | Default, subtle division |
-| Medium | `border-gray-300` | `#D1D5DB` | Emphasis, focus states |
-| Dark | `border-gray-900` | `#111827` | High contrast, CTAs |
-| Accent | `border-[#4DA6FF]` | `#4DA6FF` | Hover states, active |
+**Interactive Elements** (Hover effect):
+- All buttons
+- Feature cards
+- Testimonial cards
+- Use case cards
 
 ---
 
-## 8. Opacity & Transparency
+## 7. Border Radius
 
-### Opacity Scale (Used in Project)
+### The Golden Rule: **ZERO BORDER RADIUS**
 
-| Opacity | Tailwind Class | CSS Value | Usage |
-|---------|----------------|-----------|-------|
-| 0% | `opacity-0` | 0 | Hidden elements |
-| 5% | `bg-white/5` | 0.05 | Subtle overlays |
-| 10% | `bg-white/10` | 0.1 | Glass morphism backgrounds |
-| 20% | `bg-white/20` | 0.2 | Hover states on dark |
-| 95% | `bg-gray-900/95` | 0.95 | Sticky navigation |
-| 100% | `opacity-100` | 1 | Default |
+**Critical Design Principle**: All rectangular components have **sharp corners (0px radius)**.
 
-### Transparency Patterns
-
-#### Glass Morphism (Blue Section)
-```html
-<div class="bg-white/10 backdrop-blur-sm border border-white/20">
-  <!-- Content with frosted glass effect -->
-</div>
+```css
+/* Default for ALL components */
+border-radius: 0;
 ```
 
-**Specifications:**
-- Background: `rgba(255, 255, 255, 0.1)`
-- Backdrop Filter: `blur(4px)`
-- Border: `1px solid rgba(255, 255, 255, 0.2)`
+### Exceptions: Circular Elements ONLY
 
-#### Sticky Navigation with Transparency
+**Only Elements with `rounded-full`**:
+
+| Element | Tailwind Class | Border Radius | Usage |
+|---------|----------------|---------------|-------|
+| Logo Container | `rounded-full` | 9999px | Duck emoji container |
+| Traffic Light Dots | `rounded-full` | 9999px | Red, yellow, green dots |
+| Status Indicators | `rounded-full` | 9999px | Connection status dots |
+| Avatar/Initials | `rounded-full` | 9999px | Testimonial avatars |
+| Checkmark Containers | `rounded-full` | 9999px | Yellow check circles |
+
+### Component Border Radius
+
 ```html
-<header class="sticky top-0 bg-white/95 backdrop-blur-lg">
+<!-- ❌ WRONG: Rounded corners -->
+<div class="rounded-lg"> <!-- DO NOT USE -->
+
+<!-- ✅ CORRECT: Sharp corners (default) -->
+<div class="border-2 border-black"> <!-- No border-radius class -->
+
+<!-- ✅ CORRECT: Circle -->
+<div class="rounded-full"> <!-- Only for truly circular elements -->
 ```
 
-**Specifications:**
-- Background: `rgba(255, 255, 255, 0.95)`
-- Backdrop Filter: `blur(16px)` (backdrop-blur-lg)
+### Visual Comparison
+
+```
+❌ Soft, rounded design:
+┌─────────────┐
+│             │  ← Rounded corners (NOT our style)
+└─────────────┘
+
+✅ Sharp, brutalist design:
+┌─────────────┐
+│             │  ← 90° angles (OUR STYLE)
+└─────────────┘
+
+✅ Perfect circles:
+    ●           ← rounded-full (ONLY exception)
+```
 
 ---
 
-## 9. Animations & Transitions
+## 8. Animations & Transitions
 
-### Transition Properties
+### Transition System
 
-#### Standard Transition (Most Common)
-```css
-transition: all 200ms ease;
-/* Tailwind: transition-all */
-```
+**Tailwind Classes Used**:
+```html
+<!-- All Properties (Position, Shadow, Color) -->
+transition-all
 
-#### Color Transitions
-```css
-transition: colors 200ms ease;
-/* Tailwind: transition-colors */
-```
-
-#### Transform Transitions
-```css
-transition: transform 300ms ease;
-/* Tailwind: transition-transform */
+<!-- Color Only -->
+transition-colors
 ```
 
 ### Hover Effects
 
-#### Scale on Hover (Cards)
+#### Button Press Effect (Most Common)
 ```html
-<div class="hover:scale-105 transition-all">
-  <!-- Scales to 105% on hover -->
-</div>
+<button class="shadow-[6px_6px_0_0_rgba(0,0,0,1)]
+               hover:shadow-[3px_3px_0_0_rgba(0,0,0,1)]
+               hover:translate-x-[3px] hover:translate-y-[3px]
+               transition-all">
 ```
 
-**Specifications:**
-- Transform: `scale(1.05)`
-- Duration: `300ms`
-- Easing: `ease`
+**Behavior**:
+1. Shadow reduces from 6px → 3px
+2. Element moves right 3px
+3. Element moves down 3px
+4. Creates "pressing into page" effect
 
-#### Color Change on Hover (Links)
+**Duration**: Default Tailwind transition (~300ms)
+
+#### Card Hover Effect
 ```html
-<a class="text-gray-900 hover:text-[#4DA6FF] transition-colors">
+<div class="shadow-[6px_6px_0_0_rgba(0,0,0,1)]
+            hover:shadow-[3px_3px_0_0_rgba(0,0,0,1)]
+            hover:translate-x-[3px] hover:translate-y-[3px]
+            transition-all">
 ```
 
-**Specifications:**
-- From: `#111827`
-- To: `#4DA6FF`
-- Duration: `200ms`
+**Same as buttons** - consistent interaction language.
 
-#### Button Hover States
+#### Color Change (Links, Ghost Buttons)
 ```html
-<!-- Primary Button -->
-<button class="bg-[#4DA6FF] hover:bg-[#3d95ee] transition-all hover:scale-105">
-  <!-- Background darkens 15%, scales 105% -->
-</button>
+<a class="hover:text-[#4DA6FF] transition-colors">Product</a>
 
-<!-- Secondary Button -->
-<button class="bg-white hover:bg-gray-50 transition-colors">
-  <!-- Subtle background change -->
-</button>
+<button class="hover:bg-gray-100 transition-colors">Sign In</button>
 ```
 
-### Interactive States
+**Behavior**:
+- Text color: Black → Blue
+- Background: Transparent → Light gray
+- Duration: ~200ms (faster than position changes)
 
-#### Card Hover State
+### Custom Animations (CSS)
+
+#### Floating Animation (Decorative Elements)
 ```css
-.card {
-  border: 1px solid #E5E7EB;
-  transition: all 300ms ease;
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
 }
 
-.card:hover {
-  border-color: #4DA6FF;
-  transform: scale(1.05);
+.float-animation {
+    animation: float 3s ease-in-out infinite;
 }
 ```
 
-#### Link Underline Animation
+**Usage**: Applied to duck emoji decorations
 ```html
-<a class="underline hover:no-underline">
-  Learn More
-</a>
+<div class="float-animation">🦆</div>
 ```
 
-### Animation Timing Functions
+**Behavior**:
+- Moves up 10px at midpoint
+- 3-second loop
+- Smooth ease-in-out
+- Infinite repeat
 
-| Function | Tailwind | CSS | Usage |
-|----------|----------|-----|-------|
-| Linear | `ease-linear` | `linear` | Constant speed (not used) |
-| Ease | `ease` | `ease` | Default (all transitions) |
-| Ease In | `ease-in` | `ease-in` | Accelerating (not used) |
-| Ease Out | `ease-out` | `ease-out` | Decelerating (not used) |
-| Ease In Out | `ease-in-out` | `ease-in-out` | Smooth (not used) |
+#### Drop Shadow (Illustrations)
+```css
+.illustration-shadow {
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+}
+```
 
-### Duration Scale
+**Usage**: Soft shadow on floating duck emoji
+**Exception**: This is a SOFT shadow (blur) for decorative illustrations only
 
-| Duration | Milliseconds | Tailwind Class | Usage |
-|----------|--------------|----------------|-------|
-| Fast | 150ms | `duration-150` | Micro-interactions |
-| Normal | 200ms | `duration-200` | Default (most common) |
-| Slow | 300ms | `duration-300` | Card hovers |
-| Slower | 500ms | `duration-500` | Large movements |
+### Animation Timing
+
+| Transition | Duration | Easing | Usage |
+|------------|----------|--------|-------|
+| `transition-all` | ~300ms | ease | Button/card hover |
+| `transition-colors` | ~200ms | ease | Link/text color |
+| Float animation | 3000ms | ease-in-out | Decorative motion |
+
+### No JavaScript Animations
+
+**All animations use pure CSS/Tailwind**:
+- Hover states: CSS pseudo-classes
+- Transforms: Tailwind utilities
+- Custom keyframes: Minimal CSS only
 
 ---
 
-## 10. Responsive Design System
+## 9. Opacity & Transparency
 
-### Breakpoint System
+### Opacity Usage
 
-| Breakpoint | Min Width | Tailwind Prefix | Usage |
-|------------|-----------|-----------------|-------|
-| Mobile | 0px | (default) | Base styles |
-| Small | 640px | `sm:` | Small tablets |
-| Medium | 768px | `md:` | Tablets, small laptops |
-| Large | 1024px | `lg:` | Desktops |
-| XL | 1280px | `xl:` | Large desktops |
-| 2XL | 1536px | `2xl:` | Extra large screens |
+**Minimal Transparency Philosophy**: The design favors **solid colors** over transparency.
 
-### Responsive Patterns Used
+| Opacity | Usage | Example |
+|---------|-------|---------|
+| 100% | All UI components | Standard (no opacity class) |
+| 90% | Accent text on colored backgrounds | `text-white/90` (blue section) |
+| 10% | Soft shadows on decorations | `rgba(0, 0, 0, 0.1)` (illustration shadow) |
 
-#### Grid Responsiveness
-```html
-<!-- Mobile: 1 column, Desktop: 2-4 columns -->
-<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-<!-- Mobile: 1 column, Desktop: 3 columns -->
-<div class="grid md:grid-cols-3 gap-8">
-```
-
-#### Typography Scaling
-```html
-<!-- Hero: 36px → 48px → 72px -->
-<h1 class="text-5xl md:text-6xl lg:text-7xl">
-
-<!-- Section Heading: 28px → 36px → 48px -->
-<h2 class="text-4xl md:text-5xl">
-
-<!-- Body: 18px → 20px -->
-<p class="text-lg md:text-xl">
-```
-
-#### Padding Adjustments
-```html
-<!-- Section: 64px mobile → 80px desktop -->
-<section class="py-16 md:py-20">
-
-<!-- Container: 16px → 24px → 32px -->
-<div class="px-4 sm:px-6 lg:px-8">
-
-<!-- Header Height: 64px → 80px -->
-<header class="h-16 md:h-20">
-```
-
-#### Layout Switching
-```html
-<!-- Stack on mobile, side-by-side on desktop -->
-<div class="grid md:grid-cols-2 gap-12">
-
-<!-- Column direction on mobile, row on desktop -->
-<div class="flex flex-col sm:flex-row gap-4">
-
-<!-- Hide on mobile, show on desktop -->
-<div class="hidden md:block">
-
-<!-- Show on mobile, hide on desktop -->
-<div class="md:hidden">
-```
-
-### Mobile-First Approach
-
-All base styles are mobile-first, with breakpoints adding complexity:
+### Text on Backgrounds
 
 ```html
-<!-- Mobile: Vertical stack, Desktop: Horizontal -->
-<div class="flex flex-col md:flex-row">
+<!-- Black text on cream/white (Primary) -->
+<div class="bg-[#F5F1E8] text-gray-900">
 
-<!-- Mobile: Full width, Desktop: Constrained -->
-<div class="w-full md:w-auto">
+<!-- White text on blue (Section Headers) -->
+<div class="bg-[#4DA6FF] text-white">
 
-<!-- Mobile: Hidden, Desktop: Visible -->
-<div class="hidden md:flex">
+<!-- Gray text for descriptions -->
+<p class="text-gray-700">
 ```
+
+**No Semi-Transparent Overlays**: All backgrounds are solid colors.
+
+### Border Opacity
+
+All borders are **100% solid**:
+```html
+border-black  <!-- rgba(0, 0, 0, 1) -->
+border-gray-300  <!-- Solid gray -->
+```
+
+### Shadow Opacity
+
+**Hard shadows**: `rgba(0, 0, 0, 1)` - Full opacity black
+**Soft decoration shadow**: `rgba(0, 0, 0, 0.1)` - 10% opacity (decorative only)
 
 ---
 
-## 11. Common Tailwind CSS Usage Patterns
+## 10. Common Tailwind CSS Usage Patterns
 
 ### Layout Patterns
 
-#### Centered Container (Most Common)
+#### Centered Container (Most Frequent)
 ```html
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
   <!-- Max width 1280px, centered, responsive padding -->
 </div>
 ```
 
-#### Flex Center (Horizontal & Vertical)
-```html
-<div class="flex items-center justify-center">
-  <!-- Centers content both ways -->
-</div>
-```
+**Usage Count**: 10+ sections
+**Padding Breakdown**:
+- Mobile: 16px (px-4)
+- Tablet: 24px (sm:px-6)
+- Desktop: 32px (lg:px-8)
 
-#### Flex Space Between
+#### Flex Layouts
+
 ```html
+<!-- Space Between (Navigation) -->
 <div class="flex items-center justify-between">
-  <!-- Distributes items with space between -->
+  <div>Logo</div>
+  <div>Navigation</div>
+  <div>CTAs</div>
+</div>
+
+<!-- Centered (Vertical + Horizontal) -->
+<div class="flex items-center justify-center">
+
+<!-- Start Aligned with Gap -->
+<div class="flex items-center space-x-3">
+  <div>Icon</div>
+  <div>Text</div>
 </div>
 ```
 
-#### Grid Auto-Fit
+#### Grid Layouts
+
 ```html
+<!-- Two Column (Content + Visual) -->
+<div class="grid md:grid-cols-2 gap-12 items-center">
+
+<!-- Four Column (Features) -->
 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-  <!-- Responsive grid: 1 → 2 → 4 columns -->
-</div>
+
+<!-- Three Column (Testimonials) -->
+<div class="grid md:grid-cols-3 gap-8">
 ```
+
+**Pattern**: Mobile stacks, desktop spreads horizontally.
 
 ### Spacing Patterns
 
-#### Vertical Stack with Gap
+#### Vertical Stack
 ```html
+<!-- Hero Content Stack (24px gaps) -->
 <div class="space-y-6">
-  <!-- Children have 24px vertical spacing -->
+  <div>Badge</div>
+  <h1>Heading</h1>
+  <p>Description</p>
+  <div>Buttons</div>
 </div>
 
-<div class="space-y-3">
-  <!-- Children have 12px vertical spacing -->
-</div>
+<!-- Tight List (12px gaps) -->
+<ul class="space-y-3">
+  <li>Item 1</li>
+  <li>Item 2</li>
+  <li>Item 3</li>
+</ul>
 ```
 
-#### Horizontal Stack with Gap
+#### Horizontal Stack
 ```html
-<div class="flex space-x-4">
-  <!-- Items have 16px horizontal spacing -->
+<!-- Button Group (16px gap) -->
+<div class="flex flex-col sm:flex-row gap-4">
+  <button>Primary</button>
+  <button>Secondary</button>
 </div>
 
-<div class="flex gap-4">
-  <!-- Alternative: gap utility (preferred) -->
+<!-- Icon Row (8px gap) -->
+<div class="flex space-x-2">
+  <div>●</div>
+  <div>●</div>
+  <div>●</div>
 </div>
 ```
 
@@ -942,716 +996,753 @@ All base styles are mobile-first, with breakpoints adding complexity:
 
 #### Heading with Tight Tracking
 ```html
-<h1 class="text-5xl font-bold tracking-tight leading-none">
-  <!-- Large heading, tight letter spacing, tight line height -->
+<h1 class="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-none">
+  MAKING BIG DATA FEEL SMALL
 </h1>
 ```
 
-#### Body Text with Max Width
+**Pattern Breakdown**:
+- Responsive sizes: 48px → 60px → 72px
+- `font-bold` (700 weight)
+- `tracking-tight` (tighter letters)
+- `leading-none` (no line height)
+
+#### Body with Max Width
 ```html
-<p class="text-lg text-gray-600 max-w-xl">
-  <!-- Readable line length (36rem = ~75 characters) -->
+<p class="text-lg md:text-xl text-gray-700 max-w-xl">
+  Description text with optimal reading width
 </p>
 ```
 
+**Pattern**:
+- Responsive: 18px → 20px
+- Gray text for hierarchy
+- Max width: 36rem (~600px)
+
 #### Uppercase Label
 ```html
-<span class="text-xs font-bold uppercase tracking-wide">
+<span class="text-xs font-bold uppercase tracking-wider">
   CLOUD ANALYTICS
 </span>
 ```
 
+**Pattern**: 12px, bold, uppercase, wide tracking
+
 ### Color Patterns
 
-#### Gradient Text
+#### Custom Colors (HEX)
 ```html
-<span class="text-[#4DA6FF]">
-  <!-- Custom blue color -->
-</span>
+<!-- Yellow Accent -->
+<div class="bg-[#FFE600]">
+
+<!-- Blue Primary -->
+<div class="bg-[#4DA6FF]">
+
+<!-- Cream Background -->
+<div class="bg-[#F5F1E8]">
 ```
 
-#### Background with Custom Color
-```html
-<div class="bg-[#FFE600]">
-  <!-- Custom yellow background -->
-</div>
+**Why HEX?**: Custom brand colors not in Tailwind default palette.
 
-<div class="bg-[#F5F1E8]">
-  <!-- Custom cream background -->
-</div>
+#### Standard Colors (Tailwind)
+```html
+<!-- Text Colors -->
+text-gray-900  <!-- Black text -->
+text-gray-700  <!-- Body text -->
+text-gray-600  <!-- Tertiary text -->
+text-gray-400  <!-- Footer text -->
+
+<!-- Borders -->
+border-black  <!-- All component borders -->
+border-gray-300  <!-- Navigation border -->
+border-gray-200  <!-- Subtle dividers -->
 ```
 
 ### Interactive Patterns
 
-#### Hover with Multiple Effects
+#### Button Hover (Standard Pattern)
 ```html
-<div class="hover:scale-105 hover:border-[#4DA6FF] transition-all">
-  <!-- Scale + color change on hover -->
-</div>
+<button class="bg-[#4DA6FF] border-2 border-black
+               shadow-[6px_6px_0_0_rgba(0,0,0,1)]
+               hover:shadow-[3px_3px_0_0_rgba(0,0,0,1)]
+               hover:translate-x-[3px] hover:translate-y-[3px]
+               transition-all">
 ```
 
-#### Focus States (Forms)
+**Always Together**:
+1. Hard shadow (6px)
+2. Hover: Half shadow (3px)
+3. Hover: Translate by difference
+4. `transition-all`
+
+#### Link Hover
 ```html
-<input class="focus:outline-none focus:ring-2 focus:ring-[#4DA6FF] focus:border-transparent">
-  <!-- Remove default outline, add custom ring -->
+<a href="#" class="hover:text-[#4DA6FF] transition-colors">
 ```
 
----
+**Simple Pattern**: Color change only.
 
-## 12. Grid & Layout Systems
+### Responsive Patterns
 
-### Grid Patterns
-
-#### Feature Grid (4 columns)
+#### Show/Hide by Breakpoint
 ```html
-<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-  <!-- Mobile: 1 col, Tablet: 2 cols, Desktop: 4 cols -->
-  <div>Item 1</div>
-  <div>Item 2</div>
-  <div>Item 3</div>
-  <div>Item 4</div>
-</div>
+<!-- Hidden on mobile, visible on desktop -->
+<div class="hidden md:flex">
+
+<!-- Visible on mobile, hidden on desktop -->
+<div class="md:hidden">
+
+<!-- Show inline on mobile, block on desktop -->
+<div class="inline-block md:block">
 ```
 
-#### Testimonial Grid (3 columns)
+#### Responsive Sizing
 ```html
-<div class="grid md:grid-cols-3 gap-8">
-  <!-- Mobile: 1 col, Desktop: 3 cols -->
-  <div>Testimonial 1</div>
-  <div>Testimonial 2</div>
-  <div>Testimonial 3</div>
-</div>
-```
+<!-- Text: 48px → 60px → 72px -->
+<h1 class="text-5xl md:text-6xl lg:text-7xl">
 
-#### Two-Column Content Layout
-```html
-<div class="grid md:grid-cols-2 gap-12 items-center">
-  <!-- Mobile: Stack, Desktop: Side-by-side, vertically centered -->
-  <div>Content Left</div>
-  <div>Content Right</div>
-</div>
-```
+<!-- Padding: 64px → 96px -->
+<section class="py-16 md:py-24">
 
-### Flexbox Patterns
-
-#### Horizontal Pill Layout
-```html
-<div class="flex flex-wrap gap-4">
-  <!-- Pills wrap to next line, 16px gap -->
-  <div class="pill">Item 1</div>
-  <div class="pill">Item 2</div>
-  <div class="pill">Item 3</div>
-</div>
-```
-
-#### Footer Columns
-```html
-<div class="grid md:grid-cols-5 gap-8">
-  <!-- Brand takes 2 columns, others take 1 -->
-  <div class="md:col-span-2">Brand</div>
-  <div>Column 1</div>
-  <div>Column 2</div>
-  <div>Column 3</div>
-  <div>Column 4</div>
-</div>
+<!-- Grid: 1 col → 2 cols → 4 cols -->
+<div class="grid md:grid-cols-2 lg:grid-cols-4">
 ```
 
 ---
 
-## 13. Example Component Reference Designs
+## 11. Icon System
 
-### 13.1 Complete Hero Section
+### Lucide Icons
+
+**Library**: https://lucide.dev/
+**Implementation**: Via unpkg CDN
 
 ```html
-<section class="relative overflow-hidden bg-[#F5F1E8] py-16 md:py-24">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>
+```
+
+### Icon Specifications
+
+| Icon Size | Tailwind Class | Pixels | Stroke Width | Usage |
+|-----------|----------------|--------|--------------|-------|
+| Small | `w-4 h-4` | 16px | 2 | Social icons |
+| Medium | `w-6 h-6` | 24px | 2-2.5 | Feature icons, navigation |
+
+### Icon Styling
+
+```html
+<!-- Feature Card Icon -->
+<i data-lucide="zap" class="w-6 h-6" style="stroke-width: 2.5;"></i>
+
+<!-- Navigation Icon -->
+<i data-lucide="menu" class="w-6 h-6" style="stroke-width: 2;"></i>
+
+<!-- Footer Social Icon -->
+<i data-lucide="twitter" class="w-4 h-4" style="stroke-width: 2;"></i>
+```
+
+**Stroke Weight**: Heavier (2.5) for feature emphasis, standard (2) otherwise.
+
+### Icon Containers
+
+```html
+<!-- Yellow Square Container -->
+<div class="w-12 h-12 bg-[#FFE600] border-2 border-black
+            flex items-center justify-center">
+  <i data-lucide="zap" class="w-6 h-6"></i>
+</div>
+
+<!-- Blue Square Container -->
+<div class="w-12 h-12 bg-[#4DA6FF] border-2 border-black
+            flex items-center justify-center">
+  <i data-lucide="cloud" class="w-6 h-6 text-white"></i>
+</div>
+```
+
+**Specifications**:
+- Container: 48px square
+- Icon: 24px (50% of container)
+- **NO rounded corners** on container
+- 2px black border
+- Centered with flexbox
+
+### Common Icons Used
+
+| Icon Name | Lucide Name | Usage |
+|-----------|-------------|-------|
+| Lightning | `zap` | Speed/performance |
+| Cloud | `cloud` | Serverless/cloud |
+| Dollar | `dollar-sign` | Pricing/cost |
+| Database | `database` | Data/SQL |
+| Menu | `menu` | Mobile navigation |
+| Twitter | `twitter` | Social link |
+| GitHub | `github` | Social link |
+| LinkedIn | `linkedin` | Social link |
+
+---
+
+## 12. Example Component Reference Designs
+
+### 12.1 Complete Hero Section
+
+```html
+<section class="bg-[#F5F1E8] py-16 md:py-24 overflow-hidden">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid md:grid-cols-2 gap-12 items-center">
 
-      <!-- Left Content -->
+      <!-- Left Content Column -->
       <div class="space-y-6">
         <!-- Eyebrow Badge -->
-        <div class="inline-block px-3 py-1 bg-[#FFE600] rounded-full">
-          <span class="text-xs font-bold uppercase tracking-wide"
-                style="font-family: 'Space Mono', monospace;">
+        <div class="inline-block px-4 py-2 bg-white border-2 border-black
+                    shadow-[4px_4px_0_0_rgba(0,0,0,1)]">
+          <span class="text-xs font-bold uppercase tracking-wider">
             Cloud Analytics
           </span>
         </div>
 
-        <!-- Main Heading -->
+        <!-- Main Heading with Highlight -->
         <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-none">
-          MAKING BIG DATA<br/>
-          <span class="text-[#4DA6FF]">FEEL SMALL</span>
+          MAKING<br/>
+          BIG DATA<br/>
+          <span class="inline-block px-3 bg-[#FFE600] border-2 border-black
+                       shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
+            FEEL SMALL
+          </span>
         </h1>
 
         <!-- Description -->
-        <p class="text-lg md:text-xl text-gray-600 max-w-xl">
-          The serverless analytics platform built on DuckDB.
-          Query terabytes of data instantly, right from your laptop.
+        <p class="text-lg md:text-xl text-gray-700 max-w-xl">
+          The cloud analytics platform that brings DuckDB's speed
+          to your data warehouse. Query billions of rows in seconds.
         </p>
 
-        <!-- CTA Buttons -->
+        <!-- CTA Button Group -->
         <div class="flex flex-col sm:flex-row gap-4 pt-4">
-          <button class="px-8 py-4 bg-[#4DA6FF] text-white font-semibold
-                         rounded-lg hover:bg-[#3d95ee] transition-all hover:scale-105">
+          <button class="px-8 py-3 bg-[#4DA6FF] text-white font-bold
+                         border-2 border-black
+                         shadow-[6px_6px_0_0_rgba(0,0,0,1)]
+                         hover:shadow-[3px_3px_0_0_rgba(0,0,0,1)]
+                         hover:translate-x-[3px] hover:translate-y-[3px]
+                         transition-all">
             Start for Free
           </button>
-          <button class="px-8 py-4 bg-white border-2 border-gray-900
-                         font-semibold rounded-lg hover:bg-gray-50 transition-colors">
+          <button class="px-8 py-3 bg-white font-bold
+                         border-2 border-black
+                         shadow-[6px_6px_0_0_rgba(0,0,0,1)]
+                         hover:shadow-[3px_3px_0_0_rgba(0,0,0,1)]
+                         hover:translate-x-[3px] hover:translate-y-[3px]
+                         transition-all">
             View Demo
           </button>
         </div>
       </div>
 
-      <!-- Right Visual -->
+      <!-- Right Visual Column -->
       <div class="relative">
-        <div class="bg-white rounded-2xl shadow-2xl p-6 border border-gray-200">
+        <!-- Code Editor Card -->
+        <div class="bg-white border-2 border-black
+                    shadow-[8px_8px_0_0_rgba(0,0,0,1)] p-6">
+
           <!-- Window Controls -->
-          <div class="flex items-center space-x-2 mb-4">
-            <div class="w-3 h-3 rounded-full bg-red-400"></div>
-            <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
-            <div class="w-3 h-3 rounded-full bg-green-400"></div>
+          <div class="flex items-center space-x-2 mb-4 pb-3
+                      border-b-2 border-gray-200">
+            <div class="flex space-x-2">
+              <div class="w-3 h-3 rounded-full bg-red-500 border border-black"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-400 border border-black"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500 border border-black"></div>
+            </div>
+            <div class="flex-1 text-center">
+              <span class="text-xs font-bold">query.sql</span>
+            </div>
           </div>
 
           <!-- Code Block -->
-          <div class="space-y-2 font-mono text-sm">
-            <div class="text-purple-600">SELECT</div>
-            <div class="pl-4 text-gray-700">product_name,</div>
-            <div class="pl-4 text-gray-700">SUM(revenue) as total</div>
-            <div class="text-purple-600">FROM</div>
-            <div class="pl-4 text-gray-700">sales_data</div>
-            <div class="text-purple-600">GROUP BY</div>
-            <div class="pl-4 text-gray-700">product_name;</div>
+          <div class="bg-gray-900 p-4 border-2 border-black">
+            <pre class="text-sm text-green-400 font-mono leading-relaxed"><span class="text-blue-400">SELECT</span>
+  product_name,
+  <span class="text-yellow-300">SUM</span>(revenue) <span class="text-blue-400">as</span> total_revenue
+<span class="text-blue-400">FROM</span> sales_data
+<span class="text-blue-400">WHERE</span> date >= <span class="text-orange-400">'2024-01-01'</span>
+<span class="text-blue-400">GROUP BY</span> product_name
+<span class="text-blue-400">ORDER BY</span> total_revenue <span class="text-blue-400">DESC</span>;</pre>
           </div>
 
-          <!-- Query Result -->
-          <div class="mt-4 p-3 bg-[#FFE600] rounded-lg">
-            <div class="text-xs font-mono text-gray-700">
-              ⚡ Query executed in 0.03s
-            </div>
+          <!-- Result Badge -->
+          <div class="mt-3 px-3 py-2 bg-[#FFE600] border-2 border-black inline-block">
+            <span class="text-xs font-bold">⚡ Executed in 0.03s • 1.2M rows</span>
           </div>
         </div>
 
-        <!-- Decorative Element -->
-        <div class="absolute -bottom-8 -right-8 text-8xl">🦆</div>
+        <!-- Floating Duck Decoration -->
+        <div class="absolute -bottom-6 -right-6 text-7xl
+                    float-animation illustration-shadow">
+          🦆
+        </div>
       </div>
     </div>
   </div>
 </section>
 ```
 
-**Key Design Elements:**
-- Two-column grid layout (stacks on mobile)
-- Eyebrow badge with Space Mono font
-- Large heading with color accent
-- Two contrasting CTAs (primary/secondary)
-- Visual mockup with code syntax highlighting
-- Decorative emoji element positioned absolutely
+**Key Design Elements**:
+1. Two-column grid (stacks on mobile)
+2. Eyebrow badge with hard shadow
+3. Large heading with inline yellow highlight
+4. Two contrasting CTAs (blue + white)
+5. Code editor mockup with syntax highlighting
+6. Floating animated duck decoration
 
 ---
 
-### 13.2 Feature Card Component
+### 12.2 Feature Card Component
 
 ```html
-<div class="bg-[#F5F1E8] rounded-xl p-6 border border-gray-200
-            hover:border-[#4DA6FF] transition-all hover:scale-105">
-  <!-- Icon Container -->
-  <div class="w-12 h-12 bg-[#FFE600] rounded-lg flex items-center justify-center mb-4">
-    <i data-lucide="zap" class="w-6 h-6"></i>
+<div class="bg-[#F5F1E8] border-2 border-black p-6
+            shadow-[6px_6px_0_0_rgba(0,0,0,1)]
+            hover:shadow-[3px_3px_0_0_rgba(0,0,0,1)]
+            hover:translate-x-[3px] hover:translate-y-[3px]
+            transition-all">
+
+  <!-- Icon Container (Square, No Rounding) -->
+  <div class="w-12 h-12 bg-[#FFE600] border-2 border-black
+              flex items-center justify-center mb-4">
+    <i data-lucide="zap" class="w-6 h-6" style="stroke-width: 2.5;"></i>
   </div>
 
-  <!-- Title -->
-  <h3 class="text-xl font-bold mb-2">Blazing Fast</h3>
+  <!-- Title (Uppercase, Bold) -->
+  <h3 class="text-xl font-bold mb-2">BLAZING FAST</h3>
 
-  <!-- Description -->
-  <p class="text-gray-600 text-sm">
-    Query gigabytes of data in milliseconds with DuckDB's columnar engine.
+  <!-- Description (Small, Gray) -->
+  <p class="text-sm text-gray-700">
+    Query gigabytes in milliseconds with DuckDB's vectorized engine.
   </p>
 </div>
 ```
 
-**Specifications:**
-- Card: `#F5F1E8` background, `12px` border radius
-- Border: `1px #E5E7EB`, hover → `#4DA6FF`
-- Icon: `48px` square container, `#FFE600` background
-- Hover: Scale `1.05`, border color change
-- Transition: `all 300ms ease`
+**Specifications**:
+- Card: Cream background, 2px black border
+- Shadow: 6px hard offset
+- Icon: 48px yellow square, 24px icon inside
+- Hover: Press effect (shadow + translate)
+- **NO rounded corners**
 
 ---
 
-### 13.3 Eyebrow Badge Component
+### 12.3 Stats/Benchmark Card
 
 ```html
-<!-- Yellow Version -->
-<div class="inline-block px-3 py-1 bg-[#FFE600] rounded-full">
-  <span class="text-xs font-bold uppercase tracking-wide"
-        style="font-family: 'Space Mono', monospace;">
-    Cloud Analytics
-  </span>
-</div>
+<div class="bg-white border-2 border-black
+            shadow-[6px_6px_0_0_rgba(0,0,0,1)] p-6 text-center">
+  <!-- Large Number -->
+  <div class="text-5xl font-bold text-[#4DA6FF] mb-2">10x</div>
 
-<!-- Blue Version -->
-<div class="inline-block px-3 py-1 bg-[#4DA6FF] text-white rounded-full">
-  <span class="text-xs font-bold uppercase tracking-wide"
-        style="font-family: 'Space Mono', monospace;">
-    Data Integration
-  </span>
+  <!-- Label -->
+  <div class="font-bold mb-1">FASTER QUERIES</div>
+
+  <!-- Subtitle -->
+  <div class="text-sm text-gray-700">vs. traditional warehouses</div>
 </div>
 ```
 
-**Design Pattern:**
-- Always `inline-block` for proper sizing
-- Fully rounded (`rounded-full`)
-- Text: `12px, Bold, Uppercase, Space Mono`
-- Padding: `12px × 4px`
-- Used to categorize sections
+**Design Pattern**:
+- Large colorful number (48-60px)
+- Bold uppercase label
+- Small gray subtitle
+- Center-aligned
 
 ---
 
-### 13.4 Two-Column Content Section
+### 12.4 Data Connection Row
 
 ```html
-<section class="py-20 bg-[#F5F1E8]">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid md:grid-cols-2 gap-12 items-center">
+<div class="flex items-center space-x-3 p-3
+            bg-[#FFE600] border-2 border-black">
 
-      <!-- Left: Visual -->
-      <div class="relative">
-        <div class="bg-white rounded-2xl p-8 shadow-xl border border-gray-200">
-          <!-- Visual content -->
-        </div>
-        <div class="absolute -bottom-4 -left-4 text-5xl">🦆</div>
-      </div>
-
-      <!-- Right: Content -->
-      <div class="space-y-6">
-        <div class="inline-block px-3 py-1 bg-[#4DA6FF] text-white rounded-full">
-          <span class="text-xs font-bold uppercase tracking-wide">
-            Data Integration
-          </span>
-        </div>
-
-        <h2 class="text-4xl md:text-5xl font-bold tracking-tight">
-          Connect to Anything
-        </h2>
-
-        <p class="text-lg text-gray-600">
-          Query your data wherever it lives...
-        </p>
-
-        <!-- Feature List -->
-        <ul class="space-y-3">
-          <li class="flex items-start space-x-3">
-            <div class="w-6 h-6 bg-[#FFE600] rounded-full
-                        flex items-center justify-center flex-shrink-0 mt-0.5">
-              <span class="text-xs">✓</span>
-            </div>
-            <div>
-              <div class="font-semibold">Native S3/GCS Integration</div>
-              <div class="text-sm text-gray-600">Query files directly</div>
-            </div>
-          </li>
-        </ul>
-
-        <button class="px-6 py-3 bg-gray-900 text-white font-semibold
-                       rounded-lg hover:bg-gray-800 transition-colors">
-          View Integrations →
-        </button>
-      </div>
-    </div>
+  <!-- Icon Badge -->
+  <div class="w-8 h-8 bg-white border-2 border-black
+              flex items-center justify-center text-sm font-bold">
+    S3
   </div>
-</section>
+
+  <!-- Connection String -->
+  <span class="text-sm font-bold flex-1">
+    s3://bucket/data.parquet
+  </span>
+
+  <!-- Status Indicator -->
+  <div class="w-5 h-5 bg-green-500 border border-black rounded-full"></div>
+</div>
 ```
 
-**Layout Pattern:**
-- Alternating left/right layout (use `order-1`/`order-2` to flip)
-- Vertical center alignment (`items-center`)
-- `gap-12` (48px) between columns
-- Absolute positioned decorative element
+**Pattern**:
+- Horizontal flex layout
+- Colored background (yellow, blue, gray variations)
+- Small icon badge on left
+- Connection text in middle
+- Status dot on right (only circular element)
 
 ---
 
-### 13.5 Navigation Header
+### 12.5 Section Header Pattern
 
 ```html
-<header class="sticky top-0 z-50 bg-white border-b border-gray-200">
-  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16 md:h-20">
+<div class="text-center mb-16">
+  <!-- Eyebrow Badge -->
+  <div class="inline-block px-4 py-2 bg-[#FFE600] border-2 border-black
+              shadow-[4px_4px_0_0_rgba(0,0,0,1)] mb-6">
+    <span class="text-xs font-bold uppercase tracking-wider">
+      Use Cases
+    </span>
+  </div>
 
-      <!-- Logo -->
-      <div class="flex items-center space-x-2">
-        <div class="w-8 h-8 bg-[#FFE600] rounded-full flex items-center justify-center">
-          <span class="text-xl">🦆</span>
-        </div>
-        <span class="text-xl font-bold tracking-tight"
-              style="font-family: 'Space Mono', monospace;">
-          MotherDuck
-        </span>
-      </div>
+  <!-- Main Heading -->
+  <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">
+    BUILT FOR<br/>YOUR WORKFLOW
+  </h2>
 
-      <!-- Desktop Navigation -->
-      <div class="hidden md:flex items-center space-x-8">
-        <a href="#" class="text-sm font-medium hover:text-[#4DA6FF] transition-colors">
-          Product
-        </a>
-        <a href="#" class="text-sm font-medium hover:text-[#4DA6FF] transition-colors">
-          Features
-        </a>
-        <!-- More links... -->
-      </div>
+  <!-- Optional Description -->
+  <p class="text-xl text-gray-700 max-w-2xl mx-auto">
+    Supporting text that explains the section
+  </p>
+</div>
+```
 
-      <!-- CTA Buttons -->
-      <div class="flex items-center space-x-4">
-        <button class="hidden md:block px-4 py-2 text-sm font-medium
-                       hover:bg-gray-50 rounded-lg transition-colors">
-          Sign In
-        </button>
-        <button class="px-4 py-2 bg-[#4DA6FF] text-white text-sm font-semibold
-                       rounded-lg hover:bg-[#3d95ee] transition-colors">
-          Get Started
-        </button>
-      </div>
-    </div>
+**Pattern Structure**:
+1. Colored badge (yellow/blue)
+2. Large uppercase heading with line breaks
+3. Optional gray description
+4. Center-aligned
+5. Bottom margin: 64px (mb-16)
+
+---
+
+### 12.6 Top Banner
+
+```html
+<div class="bg-[#FFE600] py-2 px-4 text-center border-b border-black"
+     style="border-width: 3px;">
+  <p class="text-sm font-bold">
+    🎉 Announcing MotherDuck Cloud -
+    <a href="#" class="underline hover:no-underline">Learn More</a>
+  </p>
+</div>
+```
+
+**Specifications**:
+- Yellow background (full width)
+- 3px thick black bottom border
+- Small text (14px)
+- Emoji prefix
+- Underlined link with hover removal
+
+---
+
+## 13. Responsive Design System
+
+### Breakpoint System
+
+| Breakpoint | Min Width | Tailwind Prefix | Usage |
+|------------|-----------|-----------------|-------|
+| Mobile | 0px | (default) | Base mobile styles |
+| Small | 640px | `sm:` | Large phones |
+| Medium | 768px | `md:` | Tablets (MAIN breakpoint) |
+| Large | 1024px | `lg:` | Desktops |
+| XL | 1280px | `xl:` | Large desktops |
+
+**Primary Breakpoint**: `md:` (768px) - Most responsive changes happen here.
+
+### Responsive Patterns
+
+#### Grid Responsiveness
+```html
+<!-- Mobile: 1 col → Desktop: 2 cols → Large: 4 cols -->
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+<!-- Mobile: 1 col → Desktop: 2 cols -->
+<div class="grid md:grid-cols-2 gap-12 items-center">
+
+<!-- Mobile: 1 col → Desktop: 3 cols -->
+<div class="grid md:grid-cols-3 gap-8">
+```
+
+#### Typography Scaling
+```html
+<!-- Hero: 48px → 60px → 72px -->
+<h1 class="text-5xl md:text-6xl lg:text-7xl font-bold">
+
+<!-- Section: 36px → 48px -->
+<h2 class="text-4xl md:text-5xl font-bold">
+
+<!-- Body: 18px → 20px -->
+<p class="text-lg md:text-xl text-gray-700">
+```
+
+#### Padding Adjustments
+```html
+<!-- Container: 16px → 24px → 32px -->
+<div class="px-4 sm:px-6 lg:px-8">
+
+<!-- Section: 64px → 96px -->
+<section class="py-16 md:py-24">
+
+<!-- Navigation: 70px → 90px -->
+<div class="h-[70px] md:h-[90px]">
+```
+
+#### Visibility Control
+```html
+<!-- Hidden on mobile, visible on desktop -->
+<div class="hidden md:flex">
+
+<!-- Visible on mobile, hidden on desktop -->
+<div class="md:hidden">
+
+<!-- Desktop navigation -->
+<nav class="hidden md:flex items-center space-x-8">
+
+<!-- Mobile menu button -->
+<button class="md:hidden">
+```
+
+#### Flex Direction
+```html
+<!-- Mobile: Stack vertical → Desktop: Horizontal -->
+<div class="flex flex-col sm:flex-row gap-4">
+  <button>Primary</button>
+  <button>Secondary</button>
+</div>
+```
+
+---
+
+## 14. Accessibility Standards
+
+### Color Contrast
+
+#### WCAG AA Compliance
+
+| Combination | Ratio | Level | Usage |
+|-------------|-------|-------|-------|
+| Black on Cream (#000 on #F5F1E8) | 16.5:1 | AAA | Body text |
+| Gray 700 on Cream (#374151 on #F5F1E8) | 11.2:1 | AAA | Descriptions |
+| White on Blue (#FFF on #4DA6FF) | 3.1:1 | AA Large | Button text |
+| Black on Yellow (#000 on #FFE600) | 1.8:1 | ⚠️ Decorative | Badges only |
+
+**Note**: Yellow badges with black text are used decoratively, not for essential information.
+
+### Semantic HTML
+
+```html
+<!-- Main Navigation -->
+<header>
+  <nav>
+    <a href="/">Logo</a>
+    <ul>
+      <li><a href="#">Product</a></li>
+    </ul>
   </nav>
 </header>
-```
-
-**Key Features:**
-- Sticky positioning with `z-50`
-- Height: `64px mobile → 80px desktop`
-- Three-section layout: Logo | Nav | CTAs
-- Mobile hamburger menu (hidden on desktop)
-
----
-
-### 13.6 Testimonial Card
-
-```html
-<div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200">
-  <!-- Star Rating -->
-  <div class="flex items-center space-x-1 mb-4">
-    <span class="text-yellow-400">★★★★★</span>
-  </div>
-
-  <!-- Quote -->
-  <p class="text-gray-700 mb-4">
-    "MotherDuck is a game-changer. We went from minutes to milliseconds
-    on our analytics queries."
-  </p>
-
-  <!-- Author -->
-  <div class="flex items-center space-x-3">
-    <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-      <span class="text-sm">👤</span>
-    </div>
-    <div>
-      <div class="font-semibold text-sm">Sarah Chen</div>
-      <div class="text-xs text-gray-500">Lead Engineer, DataCo</div>
-    </div>
-  </div>
-</div>
-```
-
-**Design Pattern:**
-- White card with `shadow-lg`
-- Stars at top (visual hierarchy)
-- Quote in larger text
-- Author info with avatar at bottom
-
----
-
-### 13.7 CTA Section (Full Width)
-
-```html
-<section class="py-20 bg-[#FFE600]">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <!-- Decorative Icon -->
-    <div class="text-6xl mb-6">🦆</div>
-
-    <!-- Heading -->
-    <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-      Ready to Make Big Data Feel Small?
-    </h2>
-
-    <!-- Description -->
-    <p class="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">
-      Join thousands of developers building faster analytics with MotherDuck.
-    </p>
-
-    <!-- Buttons -->
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <button class="px-8 py-4 bg-gray-900 text-white font-semibold
-                     rounded-lg hover:bg-gray-800 transition-all hover:scale-105">
-        Start Free Trial
-      </button>
-      <button class="px-8 py-4 bg-white border-2 border-gray-900 font-semibold
-                     rounded-lg hover:bg-gray-50 transition-colors">
-        Schedule Demo
-      </button>
-    </div>
-
-    <!-- Fine Print -->
-    <p class="text-sm text-gray-600 mt-6">
-      No credit card required • 14-day free trial • Cancel anytime
-    </p>
-  </div>
-</section>
-```
-
-**Design Pattern:**
-- Full-width yellow background
-- Centered content (max-width `896px`)
-- Large decorative icon
-- Button group with two options
-- Trust-building fine print
-
----
-
-## 14. Accessibility Guidelines
-
-### Color Contrast Requirements
-
-#### WCAG AA Standards (Minimum)
-| Text Size | Minimum Ratio | MotherDuck Usage |
-|-----------|---------------|------------------|
-| Body (< 18px) | 4.5:1 | Gray 600 on Cream (5.8:1) ✅ |
-| Large (≥ 18px) | 3:1 | White on Blue (3.2:1) ✅ |
-| UI Components | 3:1 | All borders meet standard ✅ |
-
-#### Exceptions (Decorative)
-- Yellow badges (`#FFE600`) with dark text: **1.89:1** - Used for decorative purposes only, never for essential information
-
-### Semantic HTML Usage
-
-```html
-<!-- Navigation -->
-<nav role="navigation" aria-label="Main navigation">
 
 <!-- Main Content -->
-<main role="main">
+<main>
+  <section>
+    <h1>Page Title</h1>
+  </section>
+</main>
 
 <!-- Footer -->
-<footer role="contentinfo">
-
-<!-- Headings Hierarchy -->
-<h1> → <h2> → <h3> (Never skip levels)
+<footer>
+  <nav>
+    <a href="#">Links</a>
+  </nav>
+</footer>
 ```
 
-### ARIA Attributes
+### Interactive Elements
 
-```html
-<!-- Interactive Elements -->
-<button aria-label="Menu">
-
-<!-- Form Inputs -->
-<input type="email" aria-label="Email address">
-
-<!-- Links -->
-<a href="#" aria-current="page">
-```
-
-### Focus States
-
+#### Focus States
+All interactive elements should have visible focus (browser default):
 ```css
-/* All interactive elements have visible focus */
 :focus {
   outline: 2px solid #4DA6FF;
   outline-offset: 2px;
 }
-
-/* Custom focus ring (forms) */
-.input:focus {
-  ring: 2px #4DA6FF;
-  border-color: transparent;
-}
 ```
 
----
-
-## 15. Performance Considerations
-
-### Image Optimization
-- **Icons**: Use Lucide SVG icons (scalable, small file size)
-- **Emojis**: Native Unicode emojis (no external assets)
-- **Placeholders**: Unsplash URLs for demo purposes
-
-### Font Loading Strategy
+#### Link Clarity
 ```html
-<!-- Preconnect to Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<!-- Load fonts with display=swap -->
-<link href="...&display=swap" rel="stylesheet">
+<!-- Underlined links in prose -->
+<a href="#" class="underline hover:no-underline">Learn More</a>
 ```
-
-### CSS Optimization
-- **Tailwind JIT**: Only includes used classes
-- **No custom CSS**: Everything via Tailwind utilities
-- **Minimal dependencies**: Tailwind CDN + Lucide icons only
 
 ---
 
-## 16. Browser Compatibility
+## 15. Browser Compatibility
 
 ### Supported Browsers
 - Chrome/Edge: 90+
 - Firefox: 88+
 - Safari: 14+
 - Mobile Safari: iOS 14+
-- Chrome Mobile: Android 90+
+- Chrome Android: 90+
 
 ### Fallbacks
-- **Custom colors**: Use hex values, not CSS variables
-- **Backdrop blur**: Graceful degradation (solid color fallback)
-- **Grid**: All layouts have flexbox fallback via Tailwind
+- **Custom colors**: Using hex values (universal support)
+- **Box shadows**: Hard shadows work everywhere
+- **CSS animations**: Smooth degradation
+- **Flexbox/Grid**: Full support in all target browsers
 
 ---
 
-## 17. Design Token Export
+## 16. Design Tokens Export
 
-### CSS Custom Properties (For Integration)
+### CSS Custom Properties
+
+For integration into other frameworks:
 
 ```css
 :root {
-  /* Colors */
-  --color-yellow-primary: #FFE600;
-  --color-blue-primary: #4DA6FF;
-  --color-cream-bg: #F5F1E8;
-  --color-gray-900: #111827;
-  --color-gray-600: #4B5563;
-  --color-gray-200: #E5E7EB;
+  /* Brand Colors */
+  --color-yellow: #FFE600;
+  --color-blue: #4DA6FF;
+  --color-cream: #F5F1E8;
+  --color-black: #000000;
+  --color-white: #FFFFFF;
 
-  /* Typography */
-  --font-body: 'Inter', sans-serif;
-  --font-mono: 'Space Mono', monospace;
+  /* Text Colors */
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --text-tertiary: #6B7280;
 
   /* Spacing */
-  --spacing-xs: 0.5rem;   /* 8px */
-  --spacing-sm: 0.75rem;  /* 12px */
-  --spacing-md: 1rem;     /* 16px */
-  --spacing-lg: 1.5rem;   /* 24px */
-  --spacing-xl: 2rem;     /* 32px */
-  --spacing-2xl: 3rem;    /* 48px */
+  --space-xs: 0.5rem;   /* 8px */
+  --space-sm: 0.75rem;  /* 12px */
+  --space-md: 1rem;     /* 16px */
+  --space-lg: 1.5rem;   /* 24px */
+  --space-xl: 2rem;     /* 32px */
+  --space-2xl: 3rem;    /* 48px */
 
-  /* Border Radius */
-  --radius-sm: 0.5rem;    /* 8px */
-  --radius-md: 0.75rem;   /* 12px */
-  --radius-lg: 1rem;      /* 16px */
-  --radius-full: 9999px;
+  /* Typography */
+  --font-mono: 'Space Mono', monospace;
+  --font-size-xs: 0.75rem;   /* 12px */
+  --font-size-sm: 0.875rem;  /* 14px */
+  --font-size-base: 1rem;    /* 16px */
+  --font-size-lg: 1.125rem;  /* 18px */
+  --font-size-xl: 1.25rem;   /* 20px */
+  --font-size-2xl: 1.5rem;   /* 24px */
+  --font-size-5xl: 3rem;     /* 48px */
+  --font-size-7xl: 4.5rem;   /* 72px */
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  /* Borders */
+  --border-width-thick: 2px;
+  --border-width-thicker: 3px;
+  --border-radius: 0px;         /* Sharp corners */
+  --border-radius-full: 9999px; /* Circles */
+
+  /* Shadows (Brutalist) */
+  --shadow-sm: 4px 4px 0 0 rgba(0, 0, 0, 1);
+  --shadow-md: 6px 6px 0 0 rgba(0, 0, 0, 1);
+  --shadow-lg: 8px 8px 0 0 rgba(0, 0, 0, 1);
 
   /* Transitions */
-  --transition-fast: 150ms ease;
-  --transition-normal: 200ms ease;
-  --transition-slow: 300ms ease;
+  --transition-fast: 200ms ease;
+  --transition-base: 300ms ease;
 }
 ```
 
 ---
 
-## 18. Component Library Mapping
+## 17. Component Frequency Analysis
 
-### Reusable Component Patterns
+### Reusable Component Priority
 
-| Component Name | Frequency | Complexity | Reusability |
-|----------------|-----------|------------|-------------|
-| `Button` (Primary) | 15+ | Low | Very High |
-| `Button` (Secondary) | 10+ | Low | Very High |
-| `Card` (Feature) | 20+ | Medium | Very High |
-| `Badge` (Eyebrow) | 12+ | Low | High |
-| `Section` (Container) | 10+ | Low | Very High |
-| `Navigation` | 1 | High | Medium |
-| `Footer` | 1 | High | Medium |
-| `Testimonial Card` | 3 | Medium | High |
-| `Hero Section` | 1 | High | Low |
-
-### Component Extraction Priority
-
-**High Priority (Extract First):**
-1. Button variants (primary, secondary, dark)
-2. Feature card
-3. Eyebrow badge
-4. Section container
-
-**Medium Priority:**
-5. Navigation header
-6. Testimonial card
-7. Icon container
-8. Code block
-
-**Low Priority (Keep Inline):**
-9. Hero section (unique)
-10. Footer (unique)
-11. CTA sections (unique)
+| Component | Frequency | Reusability | Extract Priority |
+|-----------|-----------|-------------|------------------|
+| Feature Card | 12+ | Very High | ⭐⭐⭐ High |
+| Button (Primary) | 15+ | Very High | ⭐⭐⭐ High |
+| Button (Secondary) | 10+ | Very High | ⭐⭐⭐ High |
+| Eyebrow Badge | 8+ | High | ⭐⭐⭐ High |
+| Section Container | 10+ | Very High | ⭐⭐ Medium |
+| Testimonial Card | 3 | Medium | ⭐⭐ Medium |
+| Stats Card | 3 | Medium | ⭐⭐ Medium |
+| Data Row | 3 | Medium | ⭐ Low |
+| Code Editor | 1 | Low | ⭐ Low |
+| Navigation | 1 | Low | ⭐ Low |
 
 ---
 
-## 19. Future Considerations
+## 18. Future Enhancements
 
-### Dark Mode Support
-While not currently implemented, the design system could support dark mode:
+### Potential Additions
 
+#### Dark Mode Variant
+While not in current design, could add:
 ```css
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-cream-bg: #1a1a1a;
-    --color-gray-900: #ffffff;
-    --color-gray-600: #d1d5db;
+    --color-cream: #1a1a1a;
+    --text-primary: #ffffff;
   }
 }
 ```
 
-### Animation Library
-Consider adding:
-- Scroll-triggered animations (Intersection Observer)
-- Micro-interactions (button press feedback)
-- Page transitions
+#### Animation Library Expansion
+- Slide-in on scroll
+- Stagger animations for cards
+- Hover lift on stats
 
-### Component Framework Integration
-This design system can be ported to:
-- React components with Tailwind
+#### Component Framework
+Port to:
+- React components
 - Vue components
 - Web Components
-- Styled Components
 
 ---
 
-## 20. Maintenance & Updates
+## 19. Maintenance Guidelines
 
 ### Design System Versioning
-- **Current Version**: 1.0.0
-- **Last Updated**: 2025
+- **Current Version**: 2.0.0 (Brutalist Redesign)
+- **Previous Version**: 1.0.0 (Soft Rounded Design)
 - **Review Frequency**: Quarterly
 
 ### Update Checklist
-- [ ] Verify color contrast ratios (WCAG AA)
-- [ ] Test responsive breakpoints
-- [ ] Validate component consistency
-- [ ] Update documentation
-- [ ] Check cross-browser compatibility
+- [ ] Verify all components have sharp corners (0px radius)
+- [ ] Check all shadows are hard-edged (no blur)
+- [ ] Confirm 2px black borders on all elements
+- [ ] Test press effects on all interactive elements
+- [ ] Validate responsive breakpoints
+- [ ] Ensure Space Mono font loads correctly
+- [ ] Check yellow (#FFE600) and blue (#4DA6FF) consistency
 
-### Change Management
-1. **Minor Updates**: Color tweaks, spacing adjustments
-2. **Major Updates**: New components, layout changes
-3. **Breaking Changes**: Typography scale, color palette overhaul
+### Breaking Changes Log
+- v2.0.0: Removed all `rounded-lg` and `rounded` classes
+- v2.0.0: Changed all shadows to hard offset (no blur)
+- v2.0.0: Enforced 2px black borders on all components
 
 ---
 
 ## Conclusion
 
-This style guide provides a comprehensive reference for maintaining design consistency across the MotherDuck platform. All measurements, colors, and patterns have been extracted from the implemented codebase and verified for accuracy.
+This brutalist style guide represents a bold departure from traditional web design, embracing:
 
-**Key Takeaways:**
-- **Color Palette**: Yellow (#FFE600) and Blue (#4DA6FF) on Cream (#F5F1E8)
-- **Typography**: Inter for body, Space Mono for technical content
-- **Spacing**: 4px base unit, generous whitespace
-- **Components**: Card-based design with hover interactions
-- **Responsive**: Mobile-first with 768px and 1024px breakpoints
-- **Brand**: Playful, approachable, technically credible
+- **Sharp geometric forms** (zero border radius)
+- **Hard shadows** (offset with no blur)
+- **High contrast borders** (thick black outlines)
+- **Vibrant accent colors** (yellow and blue)
+- **Monospace typography** (Space Mono everywhere)
+- **Playful illustrations** (duck emojis)
 
-For questions or updates, refer to the HTML source file at `repos/aliens-made-this/pixel-perfect/motherduck.html`.
+**Core Philosophy**: "Make it loud, make it bold, make it unforgettable."
+
+All measurements, colors, and patterns documented here are extracted from the production codebase (`motherduck_2.html`) and verified for pixel-perfect accuracy.
+
+For implementation questions or design updates, refer to the HTML source at:
+`repos/aliens-made-this/pixel-perfect/motherduck_2.html`
+
+---
+
+**Last Updated**: 2025
+**Design System Version**: 2.0.0 Brutalist
+**Maintainer**: MotherDuck Design Team
