@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        * { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-zinc-100">
+    <!-- Main Container: 1066x800 from UIED -->
+    <div class="relative bg-zinc-100" style="width: 1066px; height: 800px; margin: 0 auto;">
+
+        <!-- Header -->
+        <header class="absolute top-0 left-0 right-0 px-16 pt-12 pb-6" style="height: 150px;">
+            <div class="flex items-start justify-between">
+                <!-- Logo and greeting (UIED: component at 68,101) -->
+                <div class="flex items-start gap-8">
+                    <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-emerald-600">
+                            <circle cx="12" cy="12" r="3"/>
+                            <line x1="12" y1="2" x2="12" y2="6"/>
+                            <line x1="12" y1="18" x2="12" y2="22"/>
+                            <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/>
+                            <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/>
+                            <line x1="2" y1="12" x2="6" y2="12"/>
+                            <line x1="18" y1="12" x2="22" y2="12"/>
+                            <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/>
+                            <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-semibold text-zinc-900 mb-1">Hello, Carlic!</h1>
+                        <p class="text-sm text-zinc-500">Explore information and activity about your property</p>
+                    </div>
+                </div>
+
+                <!-- Right side actions (UIED: components at 611,95+) -->
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <input type="text" placeholder="Search..." class="w-56 px-5 py-3 text-sm bg-white border border-zinc-200 rounded-full focus:outline-none focus:ring-2 focus:ring-zinc-900">
+                        <i data-lucide="search" class="absolute right-4 top-3.5 w-4 h-4 text-zinc-900" style="stroke-width: 2;"></i>
+                    </div>
+                    <button class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm hover:bg-zinc-50 relative">
+                        <i data-lucide="share-2" class="w-5 h-5 text-zinc-900" style="stroke-width: 2;"></i>
+                        <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    <button class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm hover:bg-zinc-50">
+                        <i data-lucide="bell" class="w-5 h-5 text-zinc-900" style="stroke-width: 2;"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Left Sidebar (UIED: 63,198 - 51x511) -->
+        <aside class="absolute bg-white rounded-3xl shadow-sm" style="left: 63px; top: 198px; width: 51px; height: 511px;">
+            <div class="flex flex-col items-center gap-5 py-6">
+                <button class="w-11 h-11 bg-zinc-900 rounded-2xl flex items-center justify-center hover:bg-zinc-800">
+                    <i data-lucide="layout-grid" class="w-5 h-5 text-white" style="stroke-width: 2;"></i>
+                </button>
+                <button class="w-11 h-11 bg-white rounded-2xl flex items-center justify-center hover:bg-zinc-50">
+                    <i data-lucide="credit-card" class="w-5 h-5 text-zinc-400" style="stroke-width: 2;"></i>
+                </button>
+                <button class="w-11 h-11 bg-white rounded-2xl flex items-center justify-center hover:bg-zinc-50">
+                    <i data-lucide="bar-chart-3" class="w-5 h-5 text-zinc-400" style="stroke-width: 2;"></i>
+                </button>
+                <button class="w-11 h-11 bg-white rounded-2xl flex items-center justify-center hover:bg-zinc-50">
+                    <i data-lucide="building-2" class="w-5 h-5 text-zinc-400" style="stroke-width: 2;"></i>
+                </button>
+                <button class="w-11 h-11 bg-white rounded-2xl flex items-center justify-center hover:bg-zinc-50">
+                    <i data-lucide="users" class="w-5 h-5 text-zinc-400" style="stroke-width: 2;"></i>
+                </button>
+                <button class="w-11 h-11 bg-white rounded-2xl flex items-center justify-center hover:bg-zinc-50">
+                    <i data-lucide="calendar" class="w-5 h-5 text-zinc-400" style="stroke-width: 2;"></i>
+                </button>
+                <button class="w-11 h-11 bg-white rounded-2xl flex items-center justify-center hover:bg-zinc-50 mt-auto mb-6">
+                    <i data-lucide="settings" class="w-5 h-5 text-zinc-400" style="stroke-width: 2;"></i>
+                </button>
+                <button class="w-11 h-11 bg-zinc-900 rounded-full flex items-center justify-center hover:bg-zinc-800">
+                    <i data-lucide="log-out" class="w-4 h-4 text-white" style="stroke-width: 2;"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content (UIED: starts at 140,192) -->
+        <main class="absolute" style="left: 140px; top: 192px; right: 64px;">
+
+            <!-- Top Row Stats (UIED: 4 cards at row 192) -->
+            <div class="grid grid-cols-12 gap-4 mb-4">
+                <!-- Spent this month -->
+                <div class="col-span-3 bg-white rounded-2xl p-5 shadow-sm">
+                    <p class="text-xs text-zinc-500 mb-1">Spent this month</p>
+                    <div class="flex items-end justify-between">
+                        <h3 class="text-2xl font-semibold text-zinc-900">$682.5</h3>
+                        <div class="flex gap-0.5 items-end h-12">
+                            <div class="w-1.5 bg-emerald-600 rounded-full" style="height: 35%"></div>
+                            <div class="w-1.5 bg-emerald-600 rounded-full" style="height: 55%"></div>
+                            <div class="w-1.5 bg-emerald-600 rounded-full" style="height: 75%"></div>
+                            <div class="w-1.5 bg-emerald-600 rounded-full" style="height: 45%"></div>
+                            <div class="w-1.5 bg-emerald-600 rounded-full" style="height: 65%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New clients -->
+                <div class="col-span-3 bg-white rounded-2xl p-5 shadow-sm">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 bg-zinc-100 rounded-xl flex items-center justify-center">
+                            <i data-lucide="users" class="w-5 h-5 text-zinc-600" style="stroke-width: 2;"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-xs text-zinc-500 mb-1">New clients</p>
+                            <h3 class="text-2xl font-semibold text-zinc-900">321</h3>
+                        </div>
+                        <svg width="40" height="20" viewBox="0 0 40 20" class="mt-4">
+                            <polyline points="0,15 8,12 16,14 24,8 32,10 40,5" fill="none" stroke="#10b981" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Earnings -->
+                <div class="col-span-3 bg-white rounded-2xl p-5 shadow-sm">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2">
+                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs text-zinc-500 mb-1">Earnings</p>
+                            <h3 class="text-2xl font-semibold text-zinc-900">$350.40</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity -->
+                <div class="col-span-3 bg-emerald-600 rounded-2xl p-5 shadow-sm">
+                    <p class="text-xs text-emerald-100 mb-1">Activity</p>
+                    <div class="flex items-end justify-between">
+                        <h3 class="text-2xl font-semibold text-white">$540.50</h3>
+                        <svg width="50" height="30" viewBox="0 0 50 30" class="opacity-60">
+                            <polyline points="0,25 10,20 20,18 30,22 40,15 50,12" fill="none" stroke="white" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle Row -->
+            <div class="grid grid-cols-12 gap-4 mb-4">
+                <!-- Balance Chart (UIED: 425x204 at 140,286) -->
+                <div class="col-span-6 bg-white rounded-2xl p-6 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-base font-semibold text-zinc-900">Balance</h3>
+                            <span class="inline-flex items-center gap-1 text-xs text-emerald-600">
+                                <div class="w-1.5 h-1.5 bg-emerald-600 rounded-full"></div>
+                                On track
+                            </span>
+                        </div>
+                        <button class="text-xs text-zinc-500 flex items-center gap-1">
+                            Monthly
+                            <i data-lucide="chevron-down" class="w-3 h-3" style="stroke-width: 2;"></i>
+                        </button>
+                    </div>
+                    <div class="flex gap-8 mb-4">
+                        <div>
+                            <p class="text-xs text-zinc-500 mb-1">Saves</p>
+                            <div class="flex items-end gap-2">
+                                <span class="text-2xl font-semibold text-zinc-900">43.50%</span>
+                                <span class="text-xs text-emerald-600 mb-1">+2.45%</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-xs text-zinc-500 mb-1">Balance</p>
+                            <div class="flex items-end gap-2">
+                                <span class="text-2xl font-semibold text-zinc-900">$52,422</span>
+                                <span class="text-xs text-red-600 mb-1">-4.75%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="h-24">
+                        <svg width="100%" height="100%" viewBox="0 0 400 80">
+                            <polyline points="0,50 50,45 100,55 150,35 200,40 250,30 300,35 350,25 400,20"
+                                      fill="none" stroke="#d4d4d8" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Earnings -->
+                <div class="col-span-3 bg-white rounded-2xl p-6 shadow-sm">
+                    <h3 class="text-base font-semibold text-zinc-900 mb-1">Earnings</h3>
+                    <p class="text-xs text-zinc-500 mb-4">Total Expense</p>
+                    <h4 class="text-3xl font-semibold text-zinc-900 mb-2">$6078.76</h4>
+                    <p class="text-xs text-zinc-500 mb-6">Profit is 34% More than last Month</p>
+                    <div class="flex items-center justify-center">
+                        <div class="relative w-28 h-28">
+                            <svg class="transform -rotate-90" width="112" height="112">
+                                <circle cx="56" cy="56" r="50" stroke="#e5e7eb" stroke-width="12" fill="none"/>
+                                <circle cx="56" cy="56" r="50" stroke="#10b981" stroke-width="12" fill="none"
+                                        stroke-dasharray="314" stroke-dashoffset="63" stroke-linecap="round"/>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-2xl font-semibold text-zinc-900">80%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile -->
+                <div class="col-span-3 bg-white rounded-2xl p-6 shadow-sm">
+                    <div class="flex flex-col items-center">
+                        <div class="w-20 h-20 bg-amber-100 rounded-full mb-4 flex items-center justify-center text-3xl">
+                            👨
+                        </div>
+                        <h3 class="text-lg font-semibold text-zinc-900 mb-0.5">Carlic Bolomboy</h3>
+                        <p class="text-xs text-zinc-500 mb-6">carlic@gmail.com</p>
+                        <div class="flex gap-6 w-full justify-center">
+                            <div class="text-center">
+                                <p class="text-xs text-zinc-500 mb-1">Projects</p>
+                                <p class="text-xl font-semibold text-zinc-900">26</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-xs text-zinc-500 mb-1">Followers</p>
+                                <p class="text-xl font-semibold text-zinc-900">356</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-xs text-zinc-500 mb-1">Following</p>
+                                <p class="text-xl font-semibold text-zinc-900">68</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Row -->
+            <div class="grid grid-cols-12 gap-4">
+                <!-- Credit Cards (UIED: 425x205 at 141,505) -->
+                <div class="col-span-6 bg-white rounded-2xl p-6 shadow-sm">
+                    <h3 class="text-base font-semibold text-zinc-900 mb-2">Available Credit Card in Wallet</h3>
+                    <p class="text-xs text-zinc-500 mb-6 leading-relaxed">
+                        Lorem ipsum dolor sit amet consectetur. Facilisis id hendrerit eras massa. Sit egestas risus sed sit auctor.
+                    </p>
+                    <div class="relative h-40 mb-4">
+                        <!-- Card stack -->
+                        <div class="absolute" style="left: 50%; top: 0; transform: translateX(-50%) perspective(1000px) rotateX(0deg) rotateY(-8deg);">
+                            <div class="relative w-72">
+                                <!-- Back card -->
+                                <div class="absolute bg-gradient-to-br from-gray-300 to-gray-400 rounded-2xl shadow-xl"
+                                     style="width: 280px; height: 170px; top: -8px; left: 16px; transform: translateZ(-20px);"></div>
+                                <!-- Middle card -->
+                                <div class="absolute bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-2xl shadow-xl"
+                                     style="width: 280px; height: 170px; top: -4px; left: 8px; transform: translateZ(-10px);"></div>
+                                <!-- Front card -->
+                                <div class="relative bg-gradient-to-br from-gray-800 to-gray-950 rounded-2xl p-6 shadow-2xl"
+                                     style="width: 280px; height: 170px;">
+                                    <div class="w-12 h-10 bg-amber-400 rounded-md mb-4"></div>
+                                    <p class="text-white text-lg font-mono tracking-wider mb-6">•••• •••• •••• 1234</p>
+                                    <div class="flex items-end justify-between">
+                                        <div>
+                                            <p class="text-xs text-zinc-400 mb-0.5">Card Holder</p>
+                                            <p class="text-sm text-white font-medium">CARLIC BOLOMBOY</p>
+                                        </div>
+                                        <div class="flex gap-1">
+                                            <div class="w-8 h-8 bg-red-500 rounded-full opacity-80"></div>
+                                            <div class="w-8 h-8 bg-amber-500 rounded-full opacity-80" style="margin-left: -12px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium py-3 rounded-xl flex items-center justify-center gap-2 mt-6">
+                        <i data-lucide="plus" class="w-4 h-4" style="stroke-width: 2;"></i>
+                        Add New Card
+                    </button>
+                </div>
+
+                <!-- Your Transfers -->
+                <div class="col-span-3 bg-white rounded-2xl p-6 shadow-sm">
+                    <h3 class="text-base font-semibold text-zinc-900 mb-4">Your Transfers</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start justify-between border-l-4 border-zinc-900 pl-4">
+                            <div>
+                                <p class="text-sm font-medium text-zinc-900">From Anna Jones</p>
+                                <p class="text-xs text-zinc-400">Today, 14:24</p>
+                            </div>
+                            <span class="text-sm font-semibold text-emerald-600">+2.45%</span>
+                        </div>
+                        <div class="flex items-start justify-between border-l-4 border-zinc-900 pl-4">
+                            <div>
+                                <p class="text-sm font-medium text-zinc-900">To Carlos Brown III</p>
+                                <p class="text-xs text-zinc-400">Today, 12:24</p>
+                            </div>
+                            <span class="text-sm font-semibold text-red-600">-4.75%</span>
+                        </div>
+                        <div class="flex items-start justify-between border-l-4 border-zinc-900 pl-4">
+                            <div>
+                                <p class="text-sm font-medium text-zinc-900">From Joel Cannan</p>
+                                <p class="text-xs text-zinc-400">Today, 17:54</p>
+                            </div>
+                            <span class="text-sm font-semibold text-emerald-600">+2.45%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security -->
+                <div class="col-span-3 bg-white rounded-2xl p-6 shadow-sm flex flex-col items-center">
+                    <div class="w-20 h-20 mb-4 flex items-center justify-center">
+                        <svg width="80" height="80" viewBox="0 0 80 80" class="text-zinc-300">
+                            <circle cx="40" cy="40" r="35" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="40" cy="40" r="28" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="40" cy="40" r="21" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="40" cy="40" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="40" cy="40" r="7" fill="none" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-base font-semibold text-zinc-900 mb-2">Keep you safe!</h3>
+                    <p class="text-xs text-zinc-500 text-center mb-6">Update your security password</p>
+                    <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium py-3 rounded-xl">
+                        Update Your Security
+                    </button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
