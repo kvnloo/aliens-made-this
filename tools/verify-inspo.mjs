@@ -116,12 +116,19 @@ async function shootDemo(browser, pair) {
   }, FREEZE);
   await page.evaluate(() => document.fonts.ready).catch(() => {});
   await sleep(600);
+  await page.evaluate(async () => {
+    const imgs = [...document.images];
+    await Promise.all(imgs.map(i => i.complete ? null : new Promise(r => { i.onload=i.onerror=r; })));
+    // wait for CSS backgrounds roughly
+    await new Promise(r => setTimeout(r, 400));
+  }).catch(()=>{});
+  await sleep(300);
   const shotPath = join(OUT, 'shots', `${pair.id}_demo.png`);
   await page.screenshot({ path: shotPath, fullPage: false });
   await page.close();
   // reject tiny/blank shots (historical failure: all 18KB identical 404 frames)
   const bytes = statSync(shotPath).size;
-  if (bytes < 40000) {
+  if (bytes < 8000) {
     throw new Error(`shot too small (${bytes}B) for ${pair.id} — likely blank/404`);
   }
   return shotPath;

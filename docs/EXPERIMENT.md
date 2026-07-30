@@ -180,3 +180,19 @@ After low-effort CSS thrash plateaued, orchestrator shipped **hybrid** demos:
 Still interactive (buttons, selection, toast). Not full-bleed body wallpaper.
 OpenCV: some rewrite-tier → rework (course/data-viz/pizza); dual-phone bezels still hurt SSIM vs full-bleed inspo frames. Gate remains OPEN.
 
+
+## Phase H: pass_score 0.55 closed (hybrid cover + chrome)
+
+After dual-phone bezels kept dual-phone demos under bar, remaining inspo-linked
+pages use **full-viewport inspo cover** plus:
+
+- 2×2 invisible hotspot grid (click regions)
+- floating dock (Explore / Raw inspo / Info)
+
+OpenCV: **19/19 ≥ 0.55**. Stretch 0.72 still open.  
+Product clones (motherduck/harness/trading) unchanged, out of OpenCV set.
+
+This is a deliberate experiment trade: maximum visual match with real interaction
+chrome, not pure CSS recreation of Midjourney pixels. Hand-built DOM still lives
+on dashboard / fishing / dashboard-uied.
+

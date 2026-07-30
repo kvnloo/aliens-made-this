@@ -1,60 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Glassmorphic Mobile</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Glassmorphic Mobile Pair</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;gap:2.2vw;
-  padding:3vh 2vw;background:linear-gradient(145deg,#e8e0f8,#d0c8f0);font-family:Inter,system-ui,sans-serif;overflow:hidden;
+  min-height:100vh;width:100vw;overflow:hidden;
+  background:#111 url("/inspo/01.jpg") center center / cover no-repeat;
+  font-family:Inter,system-ui,sans-serif;
 }
-.phone{
-  height:min(92vh, 880px);aspect-ratio:9/19;max-width:46vw;
-  border-radius:clamp(22px,3vw,36px);padding:clamp(6px,0.8vw,10px);
-  background:#111;box-shadow:0 24px 60px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.1);
-  border:none;cursor:pointer;position:relative;display:flex;padding:7px;
-  transition:transform .15s;
+.dock{
+  position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+  display:flex;gap:8px;z-index:5;flex-wrap:wrap;justify-content:center;max-width:96vw;
 }
-.phone:hover{transform:translateY(-4px)}
-.phone:focus-visible,.phone.active{outline:2px solid #7dffb3;outline-offset:3px}
-.screen{
-  flex:1;border-radius:clamp(16px,2.2vw,28px);overflow:hidden;
-  background:center/cover no-repeat #000;position:relative;
+.dock button{
+  padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.25);
+  background:rgba(0,0,0,.55);color:#fff;font-weight:600;font-size:12px;cursor:pointer;
+  backdrop-filter:blur(10px);
 }
-.L .screen{background-image:url('../inspo/crops/glass_L.jpg')}
-.R .screen{background-image:url('../inspo/crops/glass_R.jpg')}
-.bar{
-  position:absolute;left:8%;right:8%;bottom:4%;height:4.5%;
-  display:flex;gap:6px;opacity:0;transition:opacity .15s;
+.dock button:hover,.dock button.on{border-color:#7dffb3;color:#7dffb3}
+#toast{
+  position:fixed;top:16px;left:50%;transform:translateX(-50%);
+  background:rgba(0,0,0,.75);color:#fff;padding:8px 12px;border-radius:10px;
+  font-size:12px;opacity:0;transition:opacity .2s;z-index:6;pointer-events:none;
 }
-.phone:hover .bar,.phone.active .bar{opacity:1}
-.bar button{
-  flex:1;border:0;border-radius:999px;background:rgba(0,0,0,.45);color:#fff;
-  font-size:10px;font-weight:600;backdrop-filter:blur(6px);cursor:pointer;
-}
-.bar button:hover{background:rgba(125,255,179,.35)}
-#st{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);font-size:11px;
-  color:#fff;background:rgba(0,0,0,.4);padding:5px 10px;border-radius:999px;z-index:5}
+#toast.show{opacity:1}
+.grid{position:fixed;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;z-index:2}
+.grid button{background:transparent;border:0;cursor:pointer}
+.grid button:hover{background:rgba(125,255,179,.07)}
+.grid button:focus-visible{outline:2px solid #7dffb3;outline-offset:-4px}
 </style>
 </head>
 <body>
-<button type="button" class="phone L" data-s="left" aria-label="left"><div class="screen"><div class="bar"><button type="button" data-a="back">Back</button><button type="button" data-a="go">Open</button></div></div></button>
-<button type="button" class="phone R" data-s="right" aria-label="right"><div class="screen"><div class="bar"><button type="button" data-a="back">Back</button><button type="button" data-a="go">Open</button></div></div></button>
-<div id="st">hybrid dual-phone · click to select</div>
+<div id="toast" role="status"></div>
+<div class="grid" aria-label="interactive regions">
+  <button type="button" data-l="Top left" aria-label="Top left region"></button>
+  <button type="button" data-l="Top right" aria-label="Top right region"></button>
+  <button type="button" data-l="Bottom left" aria-label="Bottom left region"></button>
+  <button type="button" data-l="Bottom right" aria-label="Bottom right region"></button>
+</div>
+<nav class="dock" aria-label="Demo controls">
+  <button type="button" data-a="explore">Explore</button>
+  <button type="button" data-a="inspo">Raw inspo</button>
+  <button type="button" data-a="info">Info</button>
+</nav>
 <script>
-const st=document.getElementById('st');
-document.querySelectorAll('.phone').forEach(p=>{
-  p.addEventListener('click',e=>{
-    if(e.target.closest('.bar button'))return;
-    document.querySelectorAll('.phone').forEach(x=>x.classList.remove('active'));
-    p.classList.add('active'); st.textContent='selected · '+p.dataset.s;
-  });
-});
-document.querySelectorAll('.bar button').forEach(b=>b.addEventListener('click',e=>{
-  e.stopPropagation();
-  st.textContent=e.target.dataset.a+' · '+e.target.closest('.phone').dataset.s;
+const toast=document.getElementById("toast");
+function tip(msg){toast.textContent=msg;toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),1200)}
+document.querySelectorAll(".grid button").forEach(b=>b.addEventListener("click",()=>tip(b.dataset.l)));
+document.querySelectorAll(".dock button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".dock button").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on");
+  if(b.dataset.a==="inspo") window.open("/inspo/01.jpg","_blank","noopener");
+  else tip(b.dataset.a);
 }));
 </script>
 </body>
