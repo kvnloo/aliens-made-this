@@ -365,7 +365,7 @@
       position: fixed;
       inset: 0;
       z-index: 100;
-      background: rgba(4, 5, 8, 0.92);
+      background: rgba(4, 5, 8, 0.94);
       backdrop-filter: blur(10px);
       display: none;
       flex-direction: column;
@@ -378,7 +378,7 @@
       justify-content: space-between;
       gap: 0.75rem;
       flex-wrap: wrap;
-      padding: 0.35rem 0.5rem 0.85rem;
+      padding: 0.35rem 0.5rem 0.75rem;
     }
     .stage-title {
       font-family: Syne, system-ui, sans-serif;
@@ -389,12 +389,16 @@
       display: flex;
       gap: 0.35rem;
       flex-wrap: wrap;
+      align-items: center;
     }
-    .stage-tabs .btn.active {
-      background: rgba(125, 255, 179, 0.15);
-      border-color: rgba(125, 255, 179, 0.4);
-      color: var(--accent);
+    .stage-hint {
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin-right: 0.35rem;
     }
+    .stage-hint strong { color: var(--text); font-weight: 500; }
+
+    /* Compare viewport */
     .stage-body {
       flex: 1;
       min-height: 0;
@@ -402,60 +406,225 @@
       border-radius: 16px;
       overflow: hidden;
       background: #0a0b10;
-      display: grid;
-      grid-template-columns: 1fr;
-    }
-    .stage-body.split { grid-template-columns: 1fr 1fr; }
-    @media (max-width: 900px) {
-      .stage-body.split { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
-    }
-    .stage-pane {
       position: relative;
-      min-height: 0;
+    }
+    .compare {
+      position: absolute;
+      inset: 0;
       overflow: hidden;
+      user-select: none;
+      touch-action: none;
+      cursor: col-resize;
+    }
+    .compare.no-inspo { cursor: default; }
+
+    /* Bottom = live demo, top = inspo (clipped by slider) */
+    .compare-layer {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .compare-layer.demo {
+      z-index: 1;
       background: #111;
     }
-    .stage-pane + .stage-pane { border-left: 1px solid var(--line); }
-    @media (max-width: 900px) {
-      .stage-pane + .stage-pane { border-left: none; border-top: 1px solid var(--line); }
+    .compare-layer.inspo {
+      z-index: 2;
+      /* width set by JS / CSS var --pos */
+      width: var(--pos, 50%);
+      border-right: 0;
     }
-    .stage-pane iframe,
-    .stage-pane img {
+    .compare-layer iframe {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       border: 0;
-      display: block;
       background: #fff;
+      display: block;
+      /* disabled while comparing so drag works over the full stage */
+      pointer-events: none;
     }
-    .stage-pane img {
-      object-fit: contain;
-      background: #0a0b10;
+    .compare.no-inspo .compare-layer iframe {
+      pointer-events: auto;
     }
-    .stage-pane .pane-label {
+    .compare-layer.inspo img {
       position: absolute;
-      top: 0.65rem;
-      left: 0.65rem;
-      z-index: 2;
-      font-size: 0.62rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.28rem 0.5rem;
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.55);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: var(--muted);
-      backdrop-filter: blur(8px);
+      top: 0;
+      left: 0;
+      width: 100vw; /* full stage width so image doesn't squash as clip shrinks */
+      max-width: none;
+      height: 100%;
+      object-fit: contain;
+      object-position: center center;
+      background: #0a0b10;
+      display: block;
+      pointer-events: none;
     }
-    .stage-pane.demo .pane-label { color: var(--accent); }
-    .stage-pane.inspo .pane-label { color: var(--accent-2); }
-    .stage-empty {
+    /* Keep inspo image spanning the full compare box, not the clipped width */
+    .compare-layer.inspo .inspo-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: var(--stage-w, 100vw);
+      height: 100%;
       display: grid;
       place-items: center;
+      background: #0a0b10;
+    }
+    .compare-layer.inspo .inspo-fill img {
+      position: static;
+      width: 100%;
       height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .compare-label {
+      position: absolute;
+      top: 0.75rem;
+      z-index: 5;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.32rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      pointer-events: none;
+    }
+    .compare-label.inspo {
+      left: 0.75rem;
+      color: var(--accent-2);
+    }
+    .compare-label.demo {
+      right: 0.75rem;
+      color: var(--accent);
+    }
+
+    /* Vertical drag handle */
+    .compare-handle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--pos, 50%);
+      width: 0;
+      z-index: 6;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .compare-handle::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      transform: translateX(-50%);
+      background: linear-gradient(
+        180deg,
+        transparent,
+        var(--accent) 12%,
+        var(--accent) 88%,
+        transparent
+      );
+      box-shadow: 0 0 12px rgba(125, 255, 179, 0.45);
+    }
+    .compare-knob {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: rgba(10, 12, 16, 0.9);
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 0 4px rgba(125, 255, 179, 0.15), 0 8px 24px rgba(0, 0, 0, 0.45);
+      display: grid;
+      place-items: center;
+      pointer-events: auto;
+      cursor: col-resize;
+      color: var(--accent);
+      font-size: 0.85rem;
+      letter-spacing: -0.15em;
+      padding-left: 0.1em;
+    }
+    .compare-knob:hover,
+    .compare.dragging .compare-knob {
+      background: rgba(125, 255, 179, 0.15);
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+    .compare.no-inspo .compare-handle,
+    .compare.no-inspo .compare-label.inspo { display: none; }
+    .compare.no-inspo .compare-layer.inspo { display: none; }
+
+    .stage-empty {
+      display: none;
+      position: absolute;
+      inset: 0;
+      place-items: center;
       color: var(--muted);
       font-size: 0.8rem;
       padding: 2rem;
       text-align: center;
+      z-index: 3;
+      background: #0a0b10;
+    }
+    .stage-empty.show { display: grid; }
+
+    /* Bottom range control */
+    .stage-slider-bar {
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.65rem 0.35rem 0.15rem;
+    }
+    .stage-slider-bar.show { display: flex; }
+    .stage-slider-bar span {
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      min-width: 3.5rem;
+    }
+    .stage-slider-bar span.inspo-end { color: var(--accent-2); text-align: left; }
+    .stage-slider-bar span.demo-end { color: var(--accent); text-align: right; }
+    .stage-slider-bar input[type="range"] {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 143, 107, 0.55) 0%,
+        rgba(255, 143, 107, 0.55) var(--pos, 50%),
+        rgba(125, 255, 179, 0.35) var(--pos, 50%),
+        rgba(125, 255, 179, 0.35) 100%
+      );
+      outline: none;
+      cursor: pointer;
+    }
+    .stage-slider-bar input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--text);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 2px rgba(125, 255, 179, 0.5);
+      cursor: grab;
+    }
+    .stage-slider-bar input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--text);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 2px rgba(125, 255, 179, 0.5);
+      cursor: grab;
     }
 
     footer {
@@ -497,8 +666,9 @@
       <p class="lede">
         Static HTML experiments in the spirit of
         <a href="https://alieninterfaces.com/" target="_blank" rel="noreferrer">Alien Interfaces</a>
-        — AI UI mocks turned into real pages. Click a card for a full live preview
-        (and the original inspo when we have one).
+        — AI UI mocks turned into real pages. Open a card and drag the
+        <strong style="color:var(--text);font-weight:500">compare slider</strong>
+        to overlay original inspo vs live HTML.
       </p>
       <div class="hero-actions">
         <a class="btn primary" href="#previews">Browse previews</a>
@@ -517,7 +687,7 @@
         <div class="section-head">
           <div>
             <h2>Previews</h2>
-            <p>Live iframe thumbnails · open for full stage</p>
+            <p>Live iframe thumbnails · open for sliding inspo ↔ demo compare</p>
           </div>
         </div>
         <div class="filters" id="filters" role="tablist" aria-label="Filter demos"></div>
@@ -561,28 +731,41 @@
     </span>
   </footer>
 
-  <!-- Full-screen stage -->
+  <!-- Full-screen compare stage -->
   <div class="stage" id="stage" role="dialog" aria-modal="true" aria-label="Demo preview">
     <div class="stage-bar">
       <div class="stage-title" id="stage-title">Preview</div>
       <div class="stage-tabs">
-        <button type="button" class="btn active" data-mode="demo">Live demo</button>
-        <button type="button" class="btn" data-mode="split">Split with inspo</button>
-        <button type="button" class="btn" data-mode="inspo">Inspo only</button>
-        <a class="btn primary" id="stage-open" href="#" target="_blank" rel="noreferrer">Open in tab ↗</a>
+        <span class="stage-hint" id="stage-hint">Drag handle · left = <strong>inspo</strong> · right = <strong>live</strong></span>
+        <button type="button" class="btn" id="stage-reset" title="Reset slider to 50%">50 / 50</button>
+        <button type="button" class="btn" id="stage-inspo-only" title="Show only inspiration">Inspo</button>
+        <button type="button" class="btn" id="stage-demo-only" title="Show only live demo">Live</button>
+        <a class="btn primary" id="stage-open" href="#" target="_blank" rel="noreferrer">Open raw ↗</a>
         <button type="button" class="btn ghost" id="stage-close">Close ✕</button>
       </div>
     </div>
     <div class="stage-body" id="stage-body">
-      <div class="stage-pane demo" id="pane-demo">
-        <span class="pane-label">Live demo</span>
-        <iframe id="stage-iframe" title="Live demo" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+      <div class="compare" id="compare" style="--pos: 50%">
+        <div class="compare-layer demo">
+          <iframe id="stage-iframe" title="Live demo" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+        </div>
+        <div class="compare-layer inspo" id="layer-inspo">
+          <div class="inspo-fill">
+            <img id="stage-inspo" alt="Inspiration" />
+          </div>
+        </div>
+        <span class="compare-label inspo">Original inspo</span>
+        <span class="compare-label demo">Live demo</span>
+        <div class="compare-handle" id="compare-handle" aria-hidden="true">
+          <div class="compare-knob" id="compare-knob" title="Drag to compare">⟷</div>
+        </div>
+        <div class="stage-empty" id="stage-inspo-empty">No local inspo for this one — showing live demo only.<br/><span style="opacity:.7">Product-style / external reference.</span></div>
       </div>
-      <div class="stage-pane inspo" id="pane-inspo" hidden>
-        <span class="pane-label">Original inspo</span>
-        <img id="stage-inspo" alt="Inspiration" />
-        <div class="stage-empty" id="stage-inspo-empty" hidden>No local inspo image for this one<br/>(product-style / external ref)</div>
-      </div>
+    </div>
+    <div class="stage-slider-bar" id="stage-slider-bar">
+      <span class="inspo-end">Inspo</span>
+      <input type="range" id="stage-range" min="0" max="100" value="50" aria-label="Compare slider: inspiration vs live demo" />
+      <span class="demo-end">Live</span>
     </div>
   </div>
 
@@ -895,28 +1078,32 @@
       scaleAll();
     }
 
-    /* Stage modal */
+    /* Stage modal — sliding window compare (inspo | live) */
     const stage = document.getElementById("stage");
     const stageBody = document.getElementById("stage-body");
+    const compare = document.getElementById("compare");
     const stageIframe = document.getElementById("stage-iframe");
     const stageInspo = document.getElementById("stage-inspo");
     const stageInspoEmpty = document.getElementById("stage-inspo-empty");
-    const paneInspo = document.getElementById("pane-inspo");
     const stageTitle = document.getElementById("stage-title");
     const stageOpen = document.getElementById("stage-open");
+    const stageRange = document.getElementById("stage-range");
+    const stageSliderBar = document.getElementById("stage-slider-bar");
+    const stageHint = document.getElementById("stage-hint");
     let current = null;
-    let mode = "demo";
+    let pos = 50; // % of width showing inspo (left side)
+    let dragging = false;
 
-    function setMode(next) {
-      mode = next;
-      document.querySelectorAll(".stage-tabs [data-mode]").forEach((b) => {
-        b.classList.toggle("active", b.dataset.mode === mode);
-      });
-      const showInspo = mode === "inspo" || mode === "split";
-      const showDemo = mode === "demo" || mode === "split";
-      document.getElementById("pane-demo").hidden = !showDemo;
-      paneInspo.hidden = !showInspo;
-      stageBody.classList.toggle("split", mode === "split");
+    function setStageWidthVar() {
+      const w = stageBody.clientWidth || window.innerWidth;
+      compare.style.setProperty("--stage-w", w + "px");
+    }
+
+    function setPos(pct) {
+      pos = Math.max(0, Math.min(100, pct));
+      compare.style.setProperty("--pos", pos + "%");
+      stageRange.value = String(Math.round(pos));
+      stageSliderBar.style.setProperty("--pos", pos + "%");
     }
 
     function openStage(id) {
@@ -926,36 +1113,91 @@
       stageTitle.textContent = p.title;
       stageOpen.href = p.demo;
       stageIframe.src = p.demo;
-      if (p.inspo) {
-        stageInspo.hidden = false;
-        stageInspoEmpty.hidden = true;
+
+      const hasInspo = Boolean(p.inspo);
+      compare.classList.toggle("no-inspo", !hasInspo);
+      stageSliderBar.classList.toggle("show", hasInspo);
+      stageHint.style.display = hasInspo ? "" : "none";
+      document.getElementById("stage-reset").style.display = hasInspo ? "" : "none";
+      document.getElementById("stage-inspo-only").style.display = hasInspo ? "" : "none";
+      document.getElementById("stage-demo-only").style.display = hasInspo ? "" : "none";
+
+      if (hasInspo) {
+        stageInspoEmpty.classList.remove("show");
         stageInspo.src = p.inspo;
         stageInspo.alt = p.title + " inspiration";
+        setPos(50);
       } else {
-        stageInspo.hidden = true;
+        stageInspoEmpty.classList.add("show");
         stageInspo.removeAttribute("src");
-        stageInspoEmpty.hidden = false;
+        setPos(0);
       }
-      // default: split if inspo, else demo
-      setMode(p.inspo ? "split" : "demo");
+
       stage.classList.add("open");
       document.body.classList.add("stage-open");
+      requestAnimationFrame(setStageWidthVar);
     }
 
     function closeStage() {
       stage.classList.remove("open");
       document.body.classList.remove("stage-open");
       stageIframe.src = "about:blank";
+      stageInspo.removeAttribute("src");
       current = null;
+      dragging = false;
+      compare.classList.remove("dragging");
     }
 
+    function posFromEvent(e) {
+      const rect = compare.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      return ((clientX - rect.left) / rect.width) * 100;
+    }
+
+    function startDrag(e) {
+      if (compare.classList.contains("no-inspo")) return;
+      dragging = true;
+      compare.classList.add("dragging");
+      setPos(posFromEvent(e));
+      e.preventDefault();
+    }
+    function moveDrag(e) {
+      if (!dragging) return;
+      setPos(posFromEvent(e));
+      e.preventDefault();
+    }
+    function endDrag() {
+      dragging = false;
+      compare.classList.remove("dragging");
+    }
+
+    compare.addEventListener("mousedown", startDrag);
+    window.addEventListener("mousemove", moveDrag);
+    window.addEventListener("mouseup", endDrag);
+    compare.addEventListener("touchstart", startDrag, { passive: false });
+    window.addEventListener("touchmove", moveDrag, { passive: false });
+    window.addEventListener("touchend", endDrag);
+
+    stageRange.addEventListener("input", () => {
+      setPos(Number(stageRange.value));
+    });
+
     document.getElementById("stage-close").addEventListener("click", closeStage);
-    document.querySelectorAll(".stage-tabs [data-mode]").forEach((b) => {
-      b.addEventListener("click", () => setMode(b.dataset.mode));
-    });
+    document.getElementById("stage-reset").addEventListener("click", () => setPos(50));
+    document.getElementById("stage-inspo-only").addEventListener("click", () => setPos(100));
+    document.getElementById("stage-demo-only").addEventListener("click", () => setPos(0));
+
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && stage.classList.contains("open")) closeStage();
+      if (!stage.classList.contains("open")) return;
+      if (e.key === "Escape") closeStage();
+      if (compare.classList.contains("no-inspo")) return;
+      if (e.key === "ArrowLeft") setPos(pos - 3);
+      if (e.key === "ArrowRight") setPos(pos + 3);
+      if (e.key === "0" || e.key === "Home") setPos(0);
+      if (e.key === "End") setPos(100);
+      if (e.key === "5") setPos(50);
     });
+
     document.body.addEventListener("click", (e) => {
       const t = e.target.closest("[data-open]");
       if (!t) return;
@@ -963,7 +1205,10 @@
       openStage(t.dataset.open);
     });
 
-    window.addEventListener("resize", scaleAll);
+    window.addEventListener("resize", () => {
+      scaleAll();
+      if (stage.classList.contains("open")) setStageWidthVar();
+    });
 
     document.getElementById("stat-count").textContent = String(PROJECTS.length);
     document.getElementById("stat-inspo").textContent = String(
