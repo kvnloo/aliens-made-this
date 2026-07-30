@@ -10,7 +10,7 @@ This repository demonstrates sophisticated frontend development capabilities usi
 ## 📱 Showcase
 
 ### 1. **Financial Dashboard**
-<img src="inspo/Fjm_dssVIAAq4T2.jpg" width="600" alt="Financial Dashboard Inspiration"/>
+<img src="inspo/Fjm_ePFVEAIb2zq.jpeg" width="600" alt="Financial Dashboard Inspiration"/>
 
 **Design Style:** Modern Analytics Dashboard with Landscape Visuals
 **Tech Stack:** HTML5, Tailwind CSS, Lucide Icons, Custom CSS Variables
@@ -273,7 +273,7 @@ This showcase proves capability in:
 │   └── motherduck-style-guide.md     # Comprehensive design system (48KB)
 ├── inspo/
 │   ├── 01.jpg, 02.jpg, 03.jpg       # Modern UI inspiration
-│   ├── Fjm_dssVIAAq4T2.jpg          # Dashboard inspiration
+│   ├── Fjm_ePFVEAIb2zq.jpeg         # Dashboard inspiration (landscape analytics)
 │   └── [various design inspirations]
 └── README.md                         # This file
 ```
