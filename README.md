@@ -10,15 +10,15 @@ This repository demonstrates sophisticated frontend development capabilities usi
 ## 📱 Showcase
 
 ### 1. **Financial Dashboard**
-<img src="inspo/Fjm_ePFVEAIb2zq.jpeg" width="600" alt="Financial Dashboard Inspiration"/>
+<img src="inspo/original-a16c4c2967229fa52683443ee0c26903.webp" width="600" alt="Financial Dashboard Inspiration"/>
 
-**Design Style:** Modern Analytics Dashboard with Landscape Visuals
+**Design Style:** Light fintech dashboard (Horizon-style) — sage green, cards, credit stack
 **Tech Stack:** HTML5, Tailwind CSS, Lucide Icons, Custom CSS Variables
 **Features:**
-- Responsive grid layout with glassmorphism cards
-- Interactive metric visualizations
-- Custom color theming system
-- Smooth animations and hover states
+- Sidebar nav + metric cards (spend, clients, earnings, activity)
+- Balance chart, earnings ring, profile card
+- Available credit card stack + transfers + security
+- Soft cream background with sage/coral accents
 - Pixel-perfect component spacing
 
 **Implementation:** [`pixel-perfect/dashboard.html`](pixel-perfect/dashboard.html)
@@ -273,7 +273,7 @@ This showcase proves capability in:
 │   └── motherduck-style-guide.md     # Comprehensive design system (48KB)
 ├── inspo/
 │   ├── 01.jpg, 02.jpg, 03.jpg       # Modern UI inspiration
-│   ├── Fjm_ePFVEAIb2zq.jpeg         # Dashboard inspiration (landscape analytics)
+│   ├── original-a16c4c….webp        # Financial dashboard inspiration (Hello, Carlic!)
 │   └── [various design inspirations]
 └── README.md                         # This file
 ```
