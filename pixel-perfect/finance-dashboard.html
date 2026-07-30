@@ -1,266 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Booking Dashboard - BOAHAT</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            font-family: 'Poppins', sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BOAHAT Travel Pair</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      background: linear-gradient(160deg, #c8ddd8 0%, #a8c8c0 40%, #e8d8c0 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .scene { display: flex; gap: 36px; flex-wrap: wrap; justify-content: center; }
+    .phone {
+      width: 280px;
+      height: 580px;
+      border-radius: 40px;
+      overflow: hidden;
+      box-shadow: 0 36px 70px rgba(20,40,50,0.35), 0 0 0 8px rgba(255,255,255,0.2);
+      position: relative;
+      color: #fff;
+    }
 
-        body {
-            background: linear-gradient(135deg, #7dd3c0 0%, #88d4c0 50%, #a0dbc7 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
+    /* LEFT — bus scene */
+    .phone.left {
+      background:
+        linear-gradient(180deg, rgba(10,30,40,0.15) 0%, rgba(10,30,40,0.55) 70%, rgba(10,20,30,0.85) 100%),
+        radial-gradient(ellipse 80% 50% at 50% 30%, #f5e0a8 0%, #88b8b0 40%, #2a5a60 100%);
+    }
+    .phone.left .sky {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 70% 25%, rgba(255,240,200,0.9) 0%, transparent 25%),
+        linear-gradient(180deg, #5a9aaa 0%, #8ab8a8 35%, #c8b898 70%, #3a5a50 100%);
+    }
+    .phone.left .palms {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 30% 50% at 15% 40%, #1a4030 0%, transparent 70%),
+        radial-gradient(ellipse 35% 55% at 85% 35%, #1a4038 0%, transparent 70%);
+      opacity: 0.9;
+    }
+    .phone.left .palm-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .phone.left .bus {
+      position: absolute;
+      bottom: 18%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 72%;
+      height: 28%;
+      background: linear-gradient(180deg, #d4b878 0%, #c4a060 40%, #a88848 100%);
+      border-radius: 40% 40% 18% 18% / 55% 55% 30% 30%;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    }
+    .phone.left .bus::before {
+      content: "";
+      position: absolute;
+      top: 28%;
+      left: 12%;
+      right: 28%;
+      height: 22%;
+      background: linear-gradient(90deg, #4a90a0, #6ab0c0 50%, #4a90a0);
+      border-radius: 6px;
+      opacity: 0.85;
+      box-shadow: 0 0 20px rgba(100,200,220,0.5);
+    }
+    .phone.left .bus::after {
+      content: "";
+      position: absolute;
+      right: 8%;
+      top: 35%;
+      width: 18%;
+      height: 35%;
+      background: linear-gradient(180deg, #3ae0e8, #1a90a0);
+      border-radius: 4px;
+      box-shadow: 0 0 16px rgba(60,220,230,0.6);
+    }
+    .phone.left .road {
+      position: absolute;
+      bottom: 0;
+      left: 0; right: 0;
+      height: 18%;
+      background: linear-gradient(180deg, #4a4a48, #2a2a28);
+    }
+    .phone.left .road::after {
+      content: "";
+      position: absolute;
+      top: 45%;
+      left: 10%;
+      right: 10%;
+      height: 3px;
+      background: repeating-linear-gradient(90deg, #c8c070 0 20px, transparent 20px 36px);
+      opacity: 0.7;
+    }
+    .phone.left .ui-bottom {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      opacity: 0.85;
+      z-index: 2;
+    }
 
-        .card-shadow {
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-shadow:hover {
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
-            transform: translateY(-5px);
-            transition: all 0.3s ease;
-        }
-
-        .overlay-gradient {
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent 50%);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #f4a261 0%, #e76f51 100%);
-            box-shadow: 0 4px 15px rgba(244, 162, 97, 0.4);
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 6px 20px rgba(244, 162, 97, 0.6);
-            transform: translateY(-2px);
-        }
-
-        .glass-effect {
-            background: rgba(26, 58, 74, 0.95);
-            backdrop-filter: blur(10px);
-        }
-
-        input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            height: 4px;
-            background: rgba(125, 211, 192, 0.3);
-            border-radius: 5px;
-            outline: none;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #7dd3c0;
-            cursor: pointer;
-            border-radius: 50%;
-            box-shadow: 0 2px 10px rgba(125, 211, 192, 0.5);
-        }
-
-        input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            background: #7dd3c0;
-            cursor: pointer;
-            border-radius: 50%;
-            box-shadow: 0 2px 10px rgba(125, 211, 192, 0.5);
-        }
-
-        .star-icon {
-            color: #f4a261;
-        }
-
-        .plane-icon {
-            position: absolute;
-            color: #264653;
-            opacity: 0.6;
-        }
-    </style>
+    /* RIGHT — booking */
+    .phone.right {
+      background: #0a1a22;
+      display: flex;
+      flex-direction: column;
+    }
+    .r-hero {
+      height: 55%;
+      position: relative;
+      background:
+        radial-gradient(circle at 20% 45%, rgba(255,200,100,0.5) 0%, transparent 30%),
+        linear-gradient(180deg, #4a90a8 0%, #e8b878 40%, #1a4a58 75%, #0a1a22 100%);
+      overflow: hidden;
+    }
+    .r-hero .top {
+      position: absolute;
+      top: 16px; left: 16px; right: 16px;
+      display: flex;
+      justify-content: space-between;
+      z-index: 2;
+      font-size: 14px;
+    }
+    .r-hero h1 {
+      position: absolute;
+      top: 48px;
+      left: 0; right: 0;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.35);
+      z-index: 2;
+    }
+    .r-hero .mtn {
+      position: absolute;
+      bottom: 0;
+      left: 0; right: 0;
+      height: 70%;
+    }
+    .r-hero .mtn svg { width: 100%; height: 100%; display: block; }
+    .r-body {
+      flex: 1;
+      padding: 16px 18px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .prices {
+      display: flex;
+      justify-content: space-around;
+      text-align: center;
+    }
+    .prices .p .amt {
+      font-size: 22px;
+      font-weight: 700;
+      color: #e8d090;
+    }
+    .prices .p .lbl {
+      font-size: 9px;
+      color: #6a8a90;
+      margin-top: 2px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .stars {
+      display: flex;
+      justify-content: space-around;
+      font-size: 10px;
+      color: #c8a860;
+      opacity: 0.9;
+    }
+    .slider {
+      height: 4px;
+      background: #1a3a42;
+      border-radius: 2px;
+      position: relative;
+      margin: 4px 0;
+    }
+    .slider::after {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 55%;
+      background: linear-gradient(90deg, #3ae0e0, #e8c070);
+      border-radius: 2px;
+    }
+    .slider .knob {
+      position: absolute;
+      left: 55%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(60,220,220,0.5);
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
+    }
+    .actions button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .actions .ghost {
+      background: transparent;
+      border: 1px solid #3ae0e0;
+      color: #3ae0e0;
+    }
+    .actions .fill {
+      background: linear-gradient(135deg, #e8c070, #d4a040);
+      color: #1a2010;
+    }
+  </style>
 </head>
 <body>
-    <div class="flex gap-8 max-w-6xl flex-wrap justify-center">
-        <!-- Left Card - Vintage Bus Scene -->
-        <div class="w-full max-w-sm h-[700px] rounded-[2rem] overflow-hidden card-shadow relative">
-            <div class="absolute inset-0 bg-cover bg-center"
-                 style="background-image: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&auto=format&fit=crop');"></div>
-            <div class="absolute inset-0 overlay-gradient"></div>
-
-            <!-- Bottom Info Bar -->
-            <div class="absolute bottom-0 left-0 right-0 p-6 glass-effect">
-                <div class="flex justify-between items-center text-white">
-                    <div class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                        <span class="text-sm font-medium">LUXURY RESORT TOUR</span>
-                    </div>
-                    <div class="flex gap-3">
-                        <button class="w-8 h-8 rounded-full bg-white/20 backdrop-blur flex items-center justify-center hover:bg-white/30 transition-colors">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
-                            </svg>
-                        </button>
-                        <button class="w-8 h-8 rounded-full bg-white/20 backdrop-blur flex items-center justify-center hover:bg-white/30 transition-colors">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                <div class="mt-4 flex items-center justify-between text-white/80">
-                    <span class="text-xs uppercase tracking-wide">5 Days / 6 Nights</span>
-                    <span class="text-2xl font-bold">$ 010</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Right Card - Travel Booking Interface -->
-        <div class="w-full max-w-sm h-[700px] rounded-[2rem] overflow-hidden card-shadow relative glass-effect">
-            <!-- Header with Menu Icons -->
-            <div class="absolute top-6 left-6 right-6 flex justify-between items-center z-10">
-                <button class="w-10 h-10 rounded-lg bg-white/10 backdrop-blur flex items-center justify-center text-white hover:bg-white/20 transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                </button>
-                <div class="flex gap-2">
-                    <button class="w-10 h-10 rounded-lg bg-white/10 backdrop-blur flex items-center justify-center text-white hover:bg-white/20 transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                        </svg>
-                    </button>
-                    <button class="w-10 h-10 rounded-lg bg-white/10 backdrop-blur flex items-center justify-center text-white hover:bg-white/20 transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Hero Image Section -->
-            <div class="relative h-80 overflow-hidden">
-                <div class="absolute inset-0 bg-cover bg-center"
-                     style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop');"></div>
-                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#1a3a4a]"></div>
-
-                <!-- Decorative Planes -->
-                <svg class="plane-icon w-12 h-12" style="top: 30%; left: 15%;" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
-                </svg>
-                <svg class="plane-icon w-12 h-12" style="top: 35%; right: 15%; transform: scaleX(-1);" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
-                </svg>
-
-                <!-- Location Title -->
-                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-                    <p class="text-white/70 text-xs uppercase tracking-widest mb-2">TODAY PHULAMGUNG</p>
-                    <h1 class="text-white text-5xl font-bold tracking-wide">BOAHAT</h1>
-                    <p class="text-white/70 text-sm mt-2 uppercase tracking-wide">PHAMBOUS</p>
-                </div>
-
-                <!-- Decorative stars/dots -->
-                <div class="absolute top-20 right-20 w-1 h-1 bg-white rounded-full"></div>
-                <div class="absolute top-24 right-28 w-1 h-1 bg-white rounded-full"></div>
-                <div class="absolute top-28 left-16 w-1 h-1 bg-white rounded-full"></div>
-            </div>
-
-            <!-- Content Section -->
-            <div class="p-6 space-y-6">
-                <!-- Price Comparison -->
-                <div class="flex items-center justify-center gap-8">
-                    <div class="text-center">
-                        <p class="text-cyan-400 text-xs uppercase tracking-wide mb-1">$ 149</p>
-                        <p class="text-white/60 text-xs">4 6 HRO</p>
-                        <p class="text-white/50 text-[10px] uppercase mt-1">FROM DUNSE OT</p>
-                        <p class="text-white/50 text-[10px] uppercase">GULLAX DUMONDR</p>
-                    </div>
-
-                    <div class="h-12 w-px bg-white/20"></div>
-
-                    <div class="text-center">
-                        <p class="text-cyan-400 text-xs uppercase tracking-wide mb-1">$ 330</p>
-                        <p class="text-white/60 text-xs">4 I 00</p>
-                        <p class="text-white/50 text-[10px] uppercase mt-1">2OR LUNDRA E</p>
-                        <p class="text-white/50 text-[10px] uppercase">GULLA SHOULD A SUEA</p>
-                    </div>
-                </div>
-
-                <!-- Passenger Icons -->
-                <div class="flex justify-center gap-1">
-                    <svg class="w-6 h-6 text-orange-400" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                    </svg>
-                    <svg class="w-6 h-6 text-orange-400" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                    </svg>
-                    <svg class="w-6 h-6 text-orange-400" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                    </svg>
-                    <svg class="w-6 h-6 text-orange-400" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                    </svg>
-                    <svg class="w-6 h-6 text-orange-400" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                    </svg>
-                    <svg class="w-6 h-6 text-white/20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                    </svg>
-                </div>
-
-                <!-- Slider Section -->
-                <div class="space-y-3">
-                    <div class="flex justify-between text-white text-xs uppercase tracking-wide">
-                        <span>4 CHILD AR</span>
-                        <span>TOBOITNE</span>
-                        <span>ABE 4 CON</span>
-                    </div>
-                    <input type="range" min="0" max="100" value="70" class="w-full">
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex items-center justify-between pt-4">
-                    <div class="flex gap-3">
-                        <button class="w-10 h-10 rounded-full bg-white/10 backdrop-blur flex items-center justify-center text-cyan-400 hover:bg-white/20 transition-colors">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                            </svg>
-                        </button>
-                        <button class="w-10 h-10 rounded-full bg-white/10 backdrop-blur flex items-center justify-center text-cyan-400 hover:bg-white/20 transition-colors">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
-                            </svg>
-                        </button>
-                        <button class="w-10 h-10 rounded-full bg-white/10 backdrop-blur flex items-center justify-center text-cyan-400 hover:bg-white/20 transition-colors">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div class="text-right">
-                        <p class="text-cyan-400 text-xs uppercase tracking-wide mb-1">PRICE</p>
-                        <button class="btn-primary text-white px-8 py-3 rounded-full font-semibold text-sm uppercase tracking-wide transition-all">
-                            $ 6 N DRK
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="scene">
+    <div class="phone left">
+      <div class="sky"></div>
+      <svg class="palm-svg" viewBox="0 0 280 580" preserveAspectRatio="xMidYMid slice">
+        <ellipse cx="40" cy="200" rx="50" ry="120" fill="#1a4030" opacity="0.5" transform="rotate(-20 40 200)"/>
+        <ellipse cx="240" cy="180" rx="55" ry="140" fill="#1a4038" opacity="0.45" transform="rotate(15 240 180)"/>
+        <path d="M30 100 Q50 40 90 80 Q60 70 30 100" fill="#2a5840" opacity="0.7"/>
+        <path d="M200 90 Q230 20 270 70 Q240 60 200 90" fill="#2a5840" opacity="0.65"/>
+        <path d="M0 380 Q140 340 280 380 L280 580 L0 580 Z" fill="#3a5a48" opacity="0.4"/>
+      </svg>
+      <div class="bus"></div>
+      <div class="road"></div>
+      <div class="ui-bottom"><span>◎ Explore</span><span>→</span></div>
     </div>
+
+    <div class="phone right">
+      <div class="r-hero">
+        <div class="top"><span>☰</span><span>‹</span></div>
+        <h1>BOAHAT</h1>
+        <div class="mtn">
+          <svg viewBox="0 0 280 280" preserveAspectRatio="xMidYMax slice">
+            <defs>
+              <linearGradient id="sun" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#ffe8a0"/>
+                <stop offset="100%" stop-color="#ffb050"/>
+              </linearGradient>
+              <linearGradient id="peak" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f5d0a0"/>
+                <stop offset="50%" stop-color="#c07050"/>
+                <stop offset="100%" stop-color="#3a5060"/>
+              </linearGradient>
+              <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#4ac0c8"/>
+                <stop offset="100%" stop-color="#1a4a58"/>
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="140" r="28" fill="url(#sun)" opacity="0.9"/>
+            <path d="M80 200 L140 60 L200 200 Z" fill="url(#peak)"/>
+            <path d="M0 200 L60 140 L100 180 L140 100 L180 160 L220 90 L280 150 L280 280 L0 280 Z" fill="#8a6050" opacity="0.6"/>
+            <path d="M0 220 Q70 200 140 210 T280 200 L280 280 L0 280 Z" fill="url(#sea)"/>
+            <!-- planes -->
+            <g fill="#fff" opacity="0.85">
+              <path d="M40 100 l20 4 -8 6 -4-2 -8 4 z"/>
+              <path d="M220 90 l20 4 -8 6 -4-2 -8 4 z"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <div class="r-body">
+        <div class="prices">
+          <div class="p"><div class="amt">$149</div><div class="lbl">Economy</div></div>
+          <div class="p"><div class="amt">$330</div><div class="lbl">Premium</div></div>
+        </div>
+        <div class="stars">
+          <span>★ ★ ★ ★ ☆</span>
+          <span>★ ★ ★ ★ ★</span>
+        </div>
+        <div class="slider"><div class="knob"></div></div>
+        <div class="actions">
+          <button class="ghost" type="button">Details</button>
+          <button class="fill" type="button">Book</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

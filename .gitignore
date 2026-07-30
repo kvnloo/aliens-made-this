@@ -56,3 +56,8 @@ build/
 # OS files
 Thumbs.db
 Desktop.ini
+# local ui-verify
+.venv-verify/
+tools/verify-out/
+tools/node_modules/
+tools/package-lock.json

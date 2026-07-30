@@ -1,703 +1,371 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitness & Health Tracking App</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-            background: linear-gradient(135deg, #2C2C2E 0%, #1C1C1E 100%);
-            color: #FFFFFF;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-            gap: 40px;
-        }
-
-        .phone-frame {
-            width: 375px;
-            height: 812px;
-            background: #1C1C1E;
-            border-radius: 40px;
-            box-shadow:
-                0 20px 60px rgba(0, 0, 0, 0.3),
-                inset 0 0 0 12px #2C2C2E,
-                inset 0 0 0 14px #000000;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .screen {
-            width: 100%;
-            height: 100%;
-            overflow-y: auto;
-            background: #1C1C1E;
-        }
-
-        /* Header */
-        .header {
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .app-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: #FFFFFF;
-        }
-
-        .header-icons {
-            display: flex;
-            gap: 12px;
-        }
-
-        .icon-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #2C2C2E;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        /* Graph Card */
-        .graph-card {
-            background: #2C2C2E;
-            border-radius: 16px;
-            padding: 16px;
-            margin: 0 20px 16px;
-        }
-
-        .graph-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .graph-title {
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        .graph-value {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .graph-label {
-            font-size: 12px;
-            color: #98989D;
-        }
-
-        .mini-chart {
-            height: 60px;
-        }
-
-        /* Workout List */
-        .workout-list {
-            padding: 0 20px;
-        }
-
-        .workout-item {
-            background: #2C2C2E;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .workout-info {
-            flex: 1;
-        }
-
-        .workout-name {
-            font-size: 15px;
-            font-weight: 500;
-            margin-bottom: 4px;
-        }
-
-        .workout-meta {
-            display: flex;
-            gap: 12px;
-            font-size: 12px;
-            color: #98989D;
-        }
-
-        .workout-stats {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
-
-        .workout-stat {
-            text-align: right;
-        }
-
-        .workout-stat-value {
-            font-size: 16px;
-            font-weight: 600;
-            color: #FFFFFF;
-        }
-
-        .workout-stat-label {
-            font-size: 11px;
-            color: #98989D;
-        }
-
-        /* Detail Header (Screen 2) */
-        .detail-header {
-            padding: 16px 20px;
-        }
-
-        .nav-back {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 16px;
-            margin-bottom: 12px;
-            cursor: pointer;
-        }
-
-        .activity-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .activity-subtitle {
-            font-size: 14px;
-            color: #98989D;
-        }
-
-        /* Date & Tabs */
-        .date-tab-bar {
-            padding: 12px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .date-display {
-            font-size: 14px;
-            color: #98989D;
-        }
-
-        .tab-group {
-            display: flex;
-            gap: 8px;
-        }
-
-        .tab-btn {
-            padding: 6px 16px;
-            border-radius: 16px;
-            background: transparent;
-            border: 1px solid #3A3A3C;
-            color: #98989D;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .tab-btn.active {
-            background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%);
-            border-color: #FF8C42;
-            color: #FFFFFF;
-        }
-
-        /* Circular Progress */
-        .progress-container {
-            padding: 32px 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .circular-progress {
-            position: relative;
-            width: 200px;
-            height: 200px;
-        }
-
-        .progress-ring {
-            transform: rotate(-90deg);
-        }
-
-        .progress-ring-bg {
-            stroke: #2C2C2E;
-            stroke-width: 12;
-            fill: none;
-        }
-
-        .progress-ring-fill {
-            stroke: url(#orangeGradient);
-            stroke-width: 12;
-            fill: none;
-            stroke-linecap: round;
-            stroke-dasharray: 440;
-            stroke-dashoffset: 154;
-            transition: stroke-dashoffset 0.5s ease;
-        }
-
-        .progress-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-        .progress-value {
-            font-size: 48px;
-            font-weight: 700;
-            color: #FF8C42;
-            line-height: 1;
-        }
-
-        .progress-label {
-            font-size: 14px;
-            color: #98989D;
-            margin-top: 4px;
-        }
-
-        /* Metrics Grid */
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            padding: 16px 20px;
-        }
-
-        .metric-item {
-            text-align: center;
-        }
-
-        .metric-icon {
-            width: 40px;
-            height: 40px;
-            margin: 0 auto 8px;
-            background: #2C2C2E;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .metric-value {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .metric-label {
-            font-size: 11px;
-            color: #98989D;
-        }
-
-        /* Activity Stats List */
-        .stats-section {
-            padding: 0 20px 20px;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-
-        .stat-item {
-            background: #2C2C2E;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .stat-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-size: 18px;
-        }
-
-        .stat-content {
-            flex: 1;
-        }
-
-        .stat-name {
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 4px;
-        }
-
-        .stat-detail {
-            font-size: 12px;
-            color: #98989D;
-        }
-
-        .stat-values {
-            text-align: right;
-        }
-
-        .stat-main-value {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .stat-sub-value {
-            font-size: 12px;
-            color: #FF8C42;
-        }
-
-        /* Bottom Input */
-        .bottom-input {
-            background: #FFFFFF;
-            border-radius: 24px 24px 0 0;
-            padding: 16px 20px;
-            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        .input-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .input-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #FFFFFF;
-            flex-shrink: 0;
-            font-size: 20px;
-        }
-
-        .input-field {
-            flex: 1;
-            font-size: 14px;
-            color: #1C1C1E;
-            border: none;
-            background: transparent;
-            outline: none;
-        }
-
-        .input-field::placeholder {
-            color: #98989D;
-        }
-
-        .input-controls {
-            display: flex;
-            gap: 8px;
-        }
-
-        .input-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #F2F2F7;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #1C1C1E;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        /* Scrollbar */
-        .screen::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .screen::-webkit-scrollbar-track {
-            background: #2C2C2E;
-        }
-
-        .screen::-webkit-scrollbar-thumb {
-            background: #3A3A3C;
-            border-radius: 3px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fitness & Health Tracking App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      background: linear-gradient(135deg, #ff9a4a 0%, #ff7a30 35%, #f5f0ea 35%, #f5f0ea 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+    }
+    .scene {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+    .phone {
+      width: 290px;
+      height: 600px;
+      background: #0c0c0e;
+      border-radius: 44px;
+      padding: 12px;
+      box-shadow:
+        0 40px 80px rgba(0,0,0,0.35),
+        0 0 0 3px #1a1a1c,
+        0 0 0 5px #2a2a2e;
+      position: relative;
+      color: #fff;
+      overflow: hidden;
+    }
+    .notch {
+      position: absolute;
+      top: 10px; left: 50%;
+      transform: translateX(-50%);
+      width: 90px; height: 22px;
+      background: #0c0c0e;
+      border-radius: 0 0 14px 14px;
+      z-index: 5;
+    }
+    .status {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 18px 0;
+      font-size: 11px;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+    .screen {
+      height: calc(100% - 28px);
+      margin-top: 8px;
+      border-radius: 34px;
+      background: #121214;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: 16px 16px 14px;
+    }
+
+    /* LEFT — list */
+    .title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin: 8px 0 4px;
+    }
+    .title-row h1 {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    .title-row .lvl {
+      font-size: 11px;
+      color: #8a8a90;
+      margin-top: 2px;
+    }
+    .badge {
+      background: #1e1e22;
+      border-radius: 10px;
+      padding: 6px 10px;
+      font-size: 11px;
+      color: #ff7a30;
+      font-weight: 600;
+    }
+    .spark {
+      height: 56px;
+      margin: 10px 0 16px;
+    }
+    .spark svg { width: 100%; height: 100%; }
+    .list { flex: 1; overflow: hidden; display: flex; flex-direction: column; gap: 10px; }
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #1a1a1e;
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .item .ico {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 2px solid #ff7a30;
+      display: grid; place-items: center;
+      font-size: 14px;
+      color: #ff7a30;
+      flex-shrink: 0;
+    }
+    .item .txt { flex: 1; min-width: 0; }
+    .item .name { font-size: 13px; font-weight: 600; }
+    .item .sub { font-size: 10px; color: #7a7a82; margin-top: 2px; }
+    .item .stat {
+      font-size: 12px;
+      font-weight: 600;
+      color: #ff7a30;
+    }
+    .item .stat span { display: block; font-size: 9px; color: #7a7a82; font-weight: 500; text-align: right; }
+
+    /* RIGHT — detail */
+    .nav-r {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: #9a9aa2;
+    }
+    .nav-r .tabs {
+      display: flex;
+      gap: 4px;
+      background: #1a1a1e;
+      border-radius: 10px;
+      padding: 3px;
+    }
+    .nav-r .tabs b {
+      font-size: 10px;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      color: #7a7a82;
+    }
+    .nav-r .tabs b.on { background: #2a2a30; color: #fff; }
+    .head-r h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 2px;
+    }
+    .head-r .sub { font-size: 11px; color: #7a7a82; margin-bottom: 18px; }
+    .ring-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 8px 0 18px;
+    }
+    .ring {
+      width: 140px; height: 140px;
+      position: relative;
+    }
+    .ring svg { transform: rotate(-90deg); width: 100%; height: 100%; }
+    .ring .center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .ring .center .n {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .ring .center .l {
+      font-size: 10px;
+      color: #8a8a90;
+      margin-top: 4px;
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .metrics .m {
+      text-align: center;
+    }
+    .metrics .m .v {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ff7a30;
+    }
+    .metrics .m .k {
+      font-size: 9px;
+      color: #7a7a82;
+      margin-top: 2px;
+    }
+    .metrics .m .icon {
+      font-size: 12px;
+      margin-bottom: 4px;
+      opacity: 0.8;
+    }
+    .detail-list { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .drow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #1a1a1e;
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+    .drow .ico {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      background: #252528;
+      display: grid; place-items: center;
+      color: #ff7a30;
+      font-size: 12px;
+    }
+    .drow .txt { flex: 1; }
+    .drow .name { font-size: 12px; font-weight: 600; }
+    .drow .sub { font-size: 10px; color: #7a7a82; }
+    .drow .val { font-size: 12px; font-weight: 600; }
+    .input-bar {
+      margin-top: 12px;
+      background: #fff;
+      border-radius: 999px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #3a3a40;
+      font-size: 12px;
+    }
+    .input-bar .mic {
+      margin-left: auto;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: #ff7a30;
+      display: grid; place-items: center;
+      color: #fff;
+      font-size: 12px;
+    }
+  </style>
 </head>
 <body>
-    <!-- Screen 1 - Workout List -->
-    <div class="phone-frame">
-        <div class="screen">
-            <div class="header">
-                <div class="app-title">Burtion</div>
-                <div class="header-icons">
-                    <div class="icon-btn">🔍</div>
-                    <div class="icon-btn">⚙️</div>
-                </div>
-            </div>
-
-            <div class="graph-card">
-                <div class="graph-header">
-                    <div>
-                        <div class="graph-title">Upper 10</div>
-                        <div class="graph-label">Calories Burned</div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div class="graph-value">📈 +25%</div>
-                        <div class="graph-label">vs last week</div>
-                    </div>
-                </div>
-                <svg class="mini-chart" viewBox="0 0 335 60" preserveAspectRatio="none">
-                    <defs>
-                        <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:rgba(255,140,66,0.3);stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:rgba(255,140,66,0);stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <path d="M0,45 L47,30 L94,35 L141,25 L188,30 L235,20 L282,25 L335,18" 
-                          stroke="#FF8C42" stroke-width="2" fill="url(#chartGradient)"/>
-                    <circle cx="188" cy="30" r="4" fill="#FF8C42"/>
-                </svg>
-            </div>
-
-            <div class="workout-list">
-                <div class="workout-item">
-                    <div class="workout-info">
-                        <div class="workout-name">PeroQue bar Coorter</div>
-                        <div class="workout-meta">
-                            <span>🔥 Cardio</span>
-                            <span>⏱️ 25 min</span>
-                        </div>
-                    </div>
-                    <div class="workout-stats">
-                        <div class="workout-stat">
-                            <div class="workout-stat-value">5.2K</div>
-                            <div class="workout-stat-label">Steps</div>
-                        </div>
-                        <div style="font-size: 20px;">▶️</div>
-                    </div>
-                </div>
-
-                <div class="workout-item">
-                    <div class="workout-info">
-                        <div class="workout-name">Iron Breathing</div>
-                        <div class="workout-meta">
-                            <span>🧘 Meditation</span>
-                            <span>⏱️ 15 min</span>
-                        </div>
-                    </div>
-                    <div class="workout-stats">
-                        <div class="workout-stat">
-                            <div class="workout-stat-value">3.5K</div>
-                            <div class="workout-stat-label">Breaths</div>
-                        </div>
-                        <div style="font-size: 20px;">▶️</div>
-                    </div>
-                </div>
-
-                <div class="workout-item">
-                    <div class="workout-info">
-                        <div class="workout-name">NxtropexCoos</div>
-                        <div class="workout-meta">
-                            <span>💪 Strength</span>
-                            <span>⏱️ 40 min</span>
-                        </div>
-                    </div>
-                    <div class="workout-stats">
-                        <div class="workout-stat">
-                            <div class="workout-stat-value">2075</div>
-                            <div class="workout-stat-label">Reps</div>
-                        </div>
-                        <div style="font-size: 20px;">▶️</div>
-                    </div>
-                </div>
-
-                <div class="workout-item">
-                    <div class="workout-info">
-                        <div class="workout-name">FreshZtalued.com</div>
-                        <div class="workout-meta">
-                            <span>🏃 Running</span>
-                            <span>⏱️ 30 min</span>
-                        </div>
-                    </div>
-                    <div class="workout-stats">
-                        <div class="workout-stat">
-                            <div class="workout-stat-value">5.7K</div>
-                            <div class="workout-stat-label">Distance</div>
-                        </div>
-                        <div style="font-size: 20px;">▶️</div>
-                    </div>
-                </div>
-
-                <div class="workout-item">
-                    <div class="workout-info">
-                        <div class="workout-name">Frossoaken Intel</div>
-                        <div class="workout-meta">
-                            <span>🚴 Cycling</span>
-                            <span>⏱️ 45 min</span>
-                        </div>
-                    </div>
-                    <div class="workout-stats">
-                        <div class="workout-stat">
-                            <div class="workout-stat-value">12.5K</div>
-                            <div class="workout-stat-label">Distance</div>
-                        </div>
-                        <div style="font-size: 20px;">▶️</div>
-                    </div>
-                </div>
-            </div>
+  <div class="scene">
+    <!-- LEFT: workout list -->
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="status"><span>9:39</span><span>▁ ▃ ▅  🔋</span></div>
+      <div class="screen">
+        <div class="title-row">
+          <div>
+            <h1>Burtion</h1>
+            <div class="lvl">Level 10 · Active</div>
+          </div>
+          <div class="badge">+25%</div>
         </div>
+        <div class="spark">
+          <svg viewBox="0 0 240 56" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ff7a30" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#ff7a30" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M0 40 L20 36 L40 42 L60 28 L80 32 L100 18 L120 24 L140 12 L160 20 L180 16 L200 22 L220 14 L240 18 L240 56 L0 56 Z" fill="url(#g)"/>
+            <path d="M0 40 L20 36 L40 42 L60 28 L80 32 L100 18 L120 24 L140 12 L160 20 L180 16 L200 22 L220 14 L240 18" fill="none" stroke="#ff7a30" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="list">
+          <div class="item">
+            <div class="ico">◎</div>
+            <div class="txt"><div class="name">PeroQue bar Coorter</div><div class="sub">Cardio · 25 min</div></div>
+            <div class="stat">5.2K<span>cal</span></div>
+          </div>
+          <div class="item">
+            <div class="ico">◐</div>
+            <div class="txt"><div class="name">Iron Breathing</div><div class="sub">Meditation · 15 min</div></div>
+            <div class="stat">3.5K<span>cal</span></div>
+          </div>
+          <div class="item">
+            <div class="ico">◈</div>
+            <div class="txt"><div class="name">Nitropex Coos</div><div class="sub">Strength · 40 min</div></div>
+            <div class="stat">2075<span>rep</span></div>
+          </div>
+          <div class="item">
+            <div class="ico">◉</div>
+            <div class="txt"><div class="name">Fresh Trail run</div><div class="sub">Running · 30 min</div></div>
+            <div class="stat">5.7K<span>cal</span></div>
+          </div>
+          <div class="item">
+            <div class="ico">△</div>
+            <div class="txt"><div class="name">Frossoaken Intel</div><div class="sub">Cycling · 45 min</div></div>
+            <div class="stat">12.5K<span>cal</span></div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Screen 2 - Activity Detail -->
-    <div class="phone-frame">
-        <div class="screen">
-            <div class="detail-header">
-                <div class="nav-back">
-                    <span>←</span>
-                    <span>Back</span>
-                </div>
-                <div class="activity-title">Quantum</div>
-                <div class="activity-subtitle">Active: 10 min | Elapsed: 12m</div>
-            </div>
-
-            <div class="date-tab-bar">
-                <div class="date-display">Sun, 2 July</div>
-                <div class="tab-group">
-                    <button class="tab-btn">Week</button>
-                    <button class="tab-btn active">Month</button>
-                    <button class="tab-btn">Year</button>
-                </div>
-            </div>
-
-            <div class="progress-container">
-                <div class="circular-progress">
-                    <svg class="progress-ring" viewBox="0 0 200 200">
-                        <defs>
-                            <linearGradient id="orangeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#FF8C42;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#FF6B35;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <circle class="progress-ring-bg" cx="100" cy="100" r="70"/>
-                        <circle class="progress-ring-fill" cx="100" cy="100" r="70"/>
-                    </svg>
-                    <div class="progress-text">
-                        <div class="progress-value">65</div>
-                        <div class="progress-label">% Complete</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="metrics-grid">
-                <div class="metric-item">
-                    <div class="metric-icon">🔥</div>
-                    <div class="metric-value">1.2K</div>
-                    <div class="metric-label">Calories</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-icon">❤️</div>
-                    <div class="metric-value">145</div>
-                    <div class="metric-label">Heart Rate</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-icon">⚡</div>
-                    <div class="metric-value">100</div>
-                    <div class="metric-label">Energy</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-icon">👟</div>
-                    <div class="metric-value">8.5K</div>
-                    <div class="metric-label">Steps</div>
-                </div>
-            </div>
-
-            <div class="stats-section">
-                <div class="section-title">Meldolin</div>
-                
-                <div class="stat-item">
-                    <div class="stat-icon">🏃</div>
-                    <div class="stat-content">
-                        <div class="stat-name">Distance</div>
-                        <div class="stat-detail">Total distance covered</div>
-                    </div>
-                    <div class="stat-values">
-                        <div class="stat-main-value">12.5 km</div>
-                        <div class="stat-sub-value">+2.3 km</div>
-                    </div>
-                </div>
-
-                <div class="stat-item">
-                    <div class="stat-icon">⏱️</div>
-                    <div class="stat-content">
-                        <div class="stat-name">Duration</div>
-                        <div class="stat-detail">Active time</div>
-                    </div>
-                    <div class="stat-values">
-                        <div class="stat-main-value">45 min</div>
-                        <div class="stat-sub-value">Target: 60</div>
-                    </div>
-                </div>
-
-                <div class="stat-item">
-                    <div class="stat-icon">📈</div>
-                    <div class="stat-content">
-                        <div class="stat-name">Elevation</div>
-                        <div class="stat-detail">Vertical gain</div>
-                    </div>
-                    <div class="stat-values">
-                        <div class="stat-main-value">285 m</div>
-                        <div class="stat-sub-value">+15 m</div>
-                    </div>
-                </div>
-
-                <div class="stat-item">
-                    <div class="stat-icon">⚡</div>
-                    <div class="stat-content">
-                        <div class="stat-name">Power</div>
-                        <div class="stat-detail">Average output</div>
-                    </div>
-                    <div class="stat-values">
-                        <div class="stat-main-value">245 W</div>
-                        <div class="stat-sub-value">Max: 320W</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bottom-input">
-                <div class="input-container">
-                    <div class="input-icon">🎯</div>
-                    <input type="text" class="input-field" placeholder="Message...">
-                    <div class="input-controls">
-                        <div class="input-btn">📎</div>
-                        <div class="input-btn">▶️</div>
-                    </div>
-                </div>
-            </div>
+    <!-- RIGHT: activity detail -->
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="status"><span>8:40</span><span>▁ ▃ ▅  🔋</span></div>
+      <div class="screen">
+        <div class="nav-r">
+          <span>‹ Back</span>
+          <div class="tabs">
+            <b>Week</b>
+            <b class="on">Month</b>
+            <b>Year</b>
+          </div>
         </div>
+        <div class="head-r">
+          <h1>Quantum</h1>
+          <div class="sub">Active · 15 min elapsed · 12m</div>
+        </div>
+        <div class="ring-wrap">
+          <div class="ring">
+            <svg viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#252528" stroke-width="12"/>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#ff7a30" stroke-width="12"
+                stroke-dasharray="314" stroke-dashoffset="110" stroke-linecap="round"/>
+            </svg>
+            <div class="center">
+              <div class="n">65</div>
+              <div class="l">% Complete</div>
+            </div>
+          </div>
+        </div>
+        <div class="metrics">
+          <div class="m"><div class="icon">🔥</div><div class="v">1.2K</div><div class="k">Cal</div></div>
+          <div class="m"><div class="icon">♥</div><div class="v">145</div><div class="k">BPM</div></div>
+          <div class="m"><div class="icon">⚡</div><div class="v">100</div><div class="k">Energy</div></div>
+          <div class="m"><div class="icon"> cons</div><div class="v">8.5K</div><div class="k">Steps</div></div>
+        </div>
+        <div class="detail-list">
+          <div class="drow">
+            <div class="ico">↗</div>
+            <div class="txt"><div class="name">Distance</div><div class="sub">Total covered</div></div>
+            <div class="val">12.5 km</div>
+          </div>
+          <div class="drow">
+            <div class="ico">⏱</div>
+            <div class="txt"><div class="name">Duration</div><div class="sub">Active time</div></div>
+            <div class="val">45 min</div>
+          </div>
+          <div class="drow">
+            <div class="ico">△</div>
+            <div class="txt"><div class="name">Elevation</div><div class="sub">Vertical gain</div></div>
+            <div class="val">285 m</div>
+          </div>
+        </div>
+        <div class="input-bar">
+          <span>Nessalc…</span>
+          <div class="mic">●</div>
+        </div>
+      </div>
     </div>
+  </div>
 </body>
 </html>
