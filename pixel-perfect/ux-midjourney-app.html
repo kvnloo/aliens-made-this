@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PEZZ2D - Pizza Ordering App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #4a4a5e;
+            --bg-light-section: #f5e6d3;
+            --bg-cream: #f5e6d3;
+            --bg-white: #ffffff;
+            --text-dark: #2c2c3e;
+            --text-light: #ffffff;
+            --text-gray: #7f8c8d;
+            --accent-red: #ff4757;
+            --accent-orange: #ff9f43;
+            --tomato-red: #e84118;
+            --cheese-yellow: #ffd93d;
+            --basil-green: #6ab04c;
+            --border-light: #e8d5c4;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .app-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1200px;
+        }
+
+        .phone-mockup {
+            width: 375px;
+            background: var(--bg-white);
+            border-radius: 40px;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .phone-mockup::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 30px;
+            background: var(--bg-white);
+            border-radius: 0 0 20px 20px;
+            z-index: 100;
+        }
+
+        /* Dark Screen - Product Detail */
+        .screen-dark {
+            background: var(--bg-dark);
+            padding: 50px 24px 0;
+            min-height: 812px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-light);
+            letter-spacing: 1px;
+        }
+
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .menu-icon span {
+            width: 100%;
+            height: 3px;
+            background: var(--text-light);
+            border-radius: 2px;
+        }
+
+        .pizza-hero {
+            position: relative;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .pizza-image {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 40%, #ffd93d 0%, #ffb347 50%, #d4772d 100%);
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .pizza-toppings {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .topping {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .pepperoni {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle at 30% 30%, #c23616, #8b1a1a);
+        }
+
+        .basil {
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle at 30% 30%, #6ab04c, #4a7c3a);
+            border-radius: 60% 40% 60% 40%;
+        }
+
+        .tomato-icon {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 30% 30%, var(--accent-red), var(--tomato-red));
+            border-radius: 50%;
+            box-shadow: 0 4px 16px rgba(255, 71, 87, 0.4);
+        }
+
+        .tomato-1 {
+            top: 20px;
+            left: 20px;
+        }
+
+        .tomato-2 {
+            top: 20px;
+            right: 20px;
+        }
+
+        .utensils {
+            display: flex;
+            justify-content: center;
+            gap: 100px;
+            margin-top: 32px;
+        }
+
+        .utensil {
+            font-size: 32px;
+            opacity: 0.8;
+        }
+
+        .product-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--text-light);
+            letter-spacing: 3px;
+            margin: 24px 0 8px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-subtitle {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 1px;
+        }
+
+        .info-section {
+            background: var(--bg-light-section);
+            border-radius: 32px 32px 0 0;
+            padding: 32px 24px;
+            margin-top: 40px;
+            margin-left: -24px;
+            margin-right: -24px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .tab {
+            padding: 8px 16px;
+            background: transparent;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-gray);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab.active {
+            color: var(--text-dark);
+            border-bottom-color: var(--accent-orange);
+        }
+
+        .nutrition-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .nutrition-item {
+            font-size: 13px;
+            color: var(--text-dark);
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .quantity-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-white);
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .add-btn {
+            padding: 12px 32px;
+            background: var(--accent-orange);
+            color: var(--text-light);
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(255, 159, 67, 0.3);
+        }
+
+        /* Light Screen - Catalog */
+        .screen-light {
+            background: var(--bg-cream);
+            padding: 50px 24px;
+            min-height: 812px;
+        }
+
+        .header-light {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .star-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--accent-orange);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .brand-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            letter-spacing: 1px;
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .pizza-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .pizza-card-image {
+            width: 100%;
+            height: 120px;
+            background: radial-gradient(circle at 40% 40%, #ffd93d 0%, #ffb347 50%, #d4772d 100%);
+            border-radius: 50%;
+            margin-bottom: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .pizza-card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .pizza-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            font-size: 11px;
+            color: var(--text-dark);
+        }
+
+        .tag-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+
+        .icon-green {
+            background: var(--basil-green);
+        }
+
+        .icon-red {
+            background: var(--accent-red);
+        }
+
+        .icon-yellow {
+            background: var(--cheese-yellow);
+        }
+
+        .badge-2d {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--text-dark);
+            color: var(--text-light);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        @media (max-width: 900px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Dark Screen - Product Detail -->
+        <div class="phone-mockup">
+            <div class="screen-dark">
+                <div class="header">
+                    <div class="logo">PEFFIOR</div>
+                    <div class="menu-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="pizza-hero">
+                    <div class="tomato-icon tomato-1"></div>
+                    <div class="tomato-icon tomato-2"></div>
+
+                    <div class="pizza-image">
+                        <div class="pizza-toppings">
+                            <div class="topping pepperoni" style="top: 20%; left: 30%;"></div>
+                            <div class="topping pepperoni" style="top: 35%; right: 25%;"></div>
+                            <div class="topping pepperoni" style="bottom: 30%; left: 35%;"></div>
+                            <div class="topping basil" style="top: 45%; left: 45%;"></div>
+                            <div class="topping basil" style="bottom: 25%; right: 30%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="utensils">
+                        <div class="utensil">🍴</div>
+                        <div class="utensil">🔪</div>
+                    </div>
+
+                    <h1 class="product-title">PEZZ2D</h1>
+                    <p class="product-subtitle">EXQUISITE CHEESE EDITERRATIOR ESTILLO</p>
+                </div>
+
+                <div class="info-section">
+                    <div class="tabs">
+                        <button class="tab active">Utriarly frooth</button>
+                        <button class="tab">Ofmthesis ra lieme</button>
+                        <button class="tab">Bowlro</button>
+                    </div>
+
+                    <div class="nutrition-grid">
+                        <div class="nutrition-item">Er Instireparecolo</div>
+                        <div class="nutrition-item">Oncriziose</div>
+                        <div class="nutrition-item">A Qelvinamb relils</div>
+                        <div class="nutrition-item">Dencolee climeliemo</div>
+                        <div class="nutrition-item">A micords ascol</div>
+                    </div>
+
+                    <div class="actions">
+                        <div class="quantity">
+                            <button class="quantity-btn">-</button>
+                            <span style="font-weight: 600; font-size: 18px;">1</span>
+                            <button class="quantity-btn">+</button>
+                        </div>
+                        <div class="price">€100004</div>
+                        <button class="add-btn">Anin</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Light Screen - Catalog -->
+        <div class="phone-mockup">
+            <div class="screen-light">
+                <div class="header-light">
+                    <div class="brand">
+                        <div class="star-icon">⭐</div>
+                        <div class="brand-name">PLICATE</div>
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <div style="font-size: 12px; color: var(--text-gray);">Remotas za relaco</div>
+                        <div style="font-size: 12px; font-weight: 600;">UNEZO ENERP</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 11px; color: var(--text-gray); margin-bottom: 4px;">
+                        Ecturesevarlite. GRA resoll, prestessem Irmo
+                    </div>
+                    <div style="font-size: 18px; font-weight: 700; color: var(--text-dark);">2D</div>
+                </div>
+
+                <div class="catalog-grid">
+                    <div class="pizza-card" style="position: relative;">
+                        <div class="badge-2d">2D</div>
+                        <div class="pizza-card-image"></div>
+                        <div class="pizza-card-title">Pizza Margherita</div>
+                        <div class="pizza-tag">
+                            <div class="tag-icon icon-green"></div>
+                            <span>Basil Onesset</span>
+                        </div>
+                    </div>
+
+                    <div class="pizza-card" style="position: relative;">
+                        <div class="badge-2d">2D</div>
+                        <div class="pizza-card-image" style="background: radial-gradient(circle at 40% 40%, #ffffff 0%, #f5e6d3 100%);"></div>
+                        <div class="pizza-card-title">Cheese Classic</div>
+                        <div class="pizza-tag">
+                            <div class="tag-icon icon-red"></div>
+                            <span>4 easy flavors</span>
+                        </div>
+                    </div>
+
+                    <div class="pizza-card">
+                        <div class="pizza-card-image"></div>
+                        <div class="pizza-card-title">Slice Supreme</div>
+                        <div class="pizza-tag">
+                            <div class="tag-icon icon-red"></div>
+                            <span>IGA Excillost</span>
+                        </div>
+                    </div>
+
+                    <div class="pizza-card">
+                        <div class="pizza-card-image" style="background: radial-gradient(circle at 40% 40%, #ffd93d 0%, #ffcc00 100%);"></div>
+                        <div class="pizza-card-title">Cheese Delight</div>
+                        <div class="pizza-tag">
+                            <div class="tag-icon icon-red"></div>
+                            <span>Provittiencia</span>
+                        </div>
+                    </div>
+
+                    <div class="pizza-card">
+                        <div class="pizza-card-image"></div>
+                        <div class="pizza-card-title">Pepperoni Plus</div>
+                        <div class="pizza-tag">
+                            <div class="tag-icon icon-yellow"></div>
+                            <span>9 OS Sqossars</span>
+                        </div>
+                    </div>
+
+                    <div class="pizza-card">
+                        <div class="pizza-card-image"></div>
+                        <div class="pizza-card-title">Deluxe Mix</div>
+                        <div class="pizza-tag">
+                            <div class="tag-icon icon-red"></div>
+                            <span>Bisndryes Pizza</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

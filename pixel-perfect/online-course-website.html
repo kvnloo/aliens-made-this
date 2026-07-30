@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DERAAGALARD MULISO - Environmental Education Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #1a2332;
+            --secondary-dark: #2d3e50;
+            --accent-orange: #ff9644;
+            --accent-coral: #ff7b5f;
+            --muted-sage: #7a9d88;
+            --muted-teal: #5a7d7c;
+            --text-light: #e8ebe9;
+            --text-muted: #a0b0b8;
+            --card-bg: rgba(45, 62, 80, 0.6);
+            --overlay-dark: rgba(26, 35, 50, 0.8);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+        }
+
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #2d3e50 0%, #1a2332 100%);
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%232d3e50" width="1200" height="800"/></svg>');
+            opacity: 0.3;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 24px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(26, 35, 50, 0.8);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: var(--text-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-orange);
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 140px 48px 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .hero-text {
+            z-index: 10;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #e8ebe9 0%, #a0b0b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            color: var(--accent-orange);
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .hero-description {
+            color: var(--text-muted);
+            font-size: 16px;
+            margin-bottom: 32px;
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn-primary {
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-coral) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 150, 68, 0.4);
+        }
+
+        .btn-secondary {
+            padding: 16px 32px;
+            background: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--muted-teal);
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--muted-teal);
+            transform: translateY(-2px);
+        }
+
+        .hero-illustration {
+            position: relative;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .building-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .building {
+            position: absolute;
+            width: 200px;
+            height: 300px;
+            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-coral) 100%);
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: perspective(800px) rotateY(-15deg);
+            right: 20%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .building::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .tree {
+            position: absolute;
+            width: 60px;
+            height: 120px;
+            background: var(--muted-sage);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            bottom: 15%;
+            left: 25%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .floating-card {
+            position: absolute;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-1 {
+            top: 10%;
+            right: 10%;
+            width: 180px;
+        }
+
+        .card-2 {
+            bottom: 15%;
+            left: 10%;
+            width: 160px;
+        }
+
+        .courses-section {
+            max-width: 1400px;
+            margin: 80px auto;
+            padding: 0 48px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+        }
+
+        .course-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-coral) 100%);
+            border-radius: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .course-title {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .course-description {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .course-duration {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--muted-teal);
+        }
+
+        .course-students {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin: 16px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-orange) 0%, var(--accent-coral) 100%);
+            border-radius: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                padding: 100px 24px 60px;
+            }
+
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .navbar {
+                padding: 16px 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-section">
+        <div class="hero-background"></div>
+
+        <nav class="navbar">
+            <div class="logo">DERAAGALARD MULISO</div>
+            <ul class="nav-links">
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">DERAAGALARD MULISO</h1>
+                <h2 class="hero-subtitle">ROJTYEA BEST KELITEAFOAS ARAME</h2>
+                <p class="hero-description">
+                    Explore comprehensive environmental education courses designed to empower sustainable
+                    living and ecological awareness. Join thousands of learners in building a greener future.
+                </p>
+                <div class="cta-buttons">
+                    <button class="btn-primary">Explore Courses</button>
+                    <button class="btn-secondary">Learn More</button>
+                </div>
+            </div>
+
+            <div class="hero-illustration">
+                <div class="building-container">
+                    <div class="building"></div>
+                    <div class="tree"></div>
+                    <div class="floating-card card-1">
+                        <div style="font-size: 12px; margin-bottom: 8px; color: var(--accent-orange);">NEW COURSE</div>
+                        <div style="font-size: 14px; font-weight: 600;">Sustainable Architecture</div>
+                    </div>
+                    <div class="floating-card card-2">
+                        <div style="font-size: 12px; color: var(--text-muted);">In Progress</div>
+                        <div class="progress-bar" style="margin: 8px 0;">
+                            <div class="progress-fill" style="width: 65%;"></div>
+                        </div>
+                        <div style="font-size: 12px; font-weight: 600;">65% Complete</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="courses-section" id="courses">
+        <h2 class="section-title">HOA EWIHEA XERSHR RIRFF A XIRHAR</h2>
+
+        <div class="courses-grid">
+            <div class="course-card">
+                <div class="course-icon">🌱</div>
+                <h3 class="course-title">Urban Ecology Fundamentals</h3>
+                <p class="course-description">
+                    Discover the principles of sustainable urban development and green infrastructure
+                    design for modern cities.
+                </p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 45%;"></div>
+                </div>
+                <div class="course-meta">
+                    <span class="course-duration">12 WEEKS</span>
+                    <span class="course-students">2,340 students</span>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-icon">🏗️</div>
+                <h3 class="course-title">Green Building Design</h3>
+                <p class="course-description">
+                    Master the art of sustainable architecture with energy-efficient design
+                    principles and eco-friendly materials.
+                </p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 78%;"></div>
+                </div>
+                <div class="course-meta">
+                    <span class="course-duration">10 WEEKS</span>
+                    <span class="course-students">1,856 students</span>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-icon">♻️</div>
+                <h3 class="course-title">Circular Economy Principles</h3>
+                <p class="course-description">
+                    Learn how to implement circular economy strategies for waste reduction
+                    and resource optimization.
+                </p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 30%;"></div>
+                </div>
+                <div class="course-meta">
+                    <span class="course-duration">8 WEEKS</span>
+                    <span class="course-students">3,125 students</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocean/Whale Dashboard - HOLIHACUIND</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(180deg, #0a1929 0%, #152238 50%, #1a2f42 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .glass-card {
+            background: rgba(10, 25, 41, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+        }
+
+        .glow-cyan {
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.4), 0 0 40px rgba(0, 229, 255, 0.2);
+        }
+
+        .glow-cyan-soft {
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.8), 0 0 20px rgba(0, 229, 255, 0.4);
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(0, 229, 255, 0.6);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #00e5ff;
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+
+        .scan-line {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scan-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #00e5ff, transparent);
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(500px); }
+        }
+
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring circle {
+            transition: stroke-dashoffset 0.5s ease;
+        }
+    </style>
+</head>
+<body class="p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8 flex justify-between items-center">
+            <h1 class="text-white text-4xl font-bold orbitron tracking-widest text-glow">HOLIHACUIND</h1>
+            <div class="flex gap-6 text-white/60 text-sm">
+                <span class="hover:text-cyan-400 cursor-pointer transition-colors">SYSTEMS</span>
+                <span class="hover:text-cyan-400 cursor-pointer transition-colors">METRICS</span>
+                <span class="hover:text-cyan-400 cursor-pointer transition-colors">ANALYTICS</span>
+                <span class="hover:text-cyan-400 cursor-pointer transition-colors">REPORTS</span>
+            </div>
+        </div>
+
+        <!-- Main Dashboard -->
+        <div class="glass-card rounded-3xl p-8 mb-6 scan-line">
+            <!-- Top Stats Row -->
+            <div class="grid grid-cols-6 gap-6 mb-8">
+                <!-- Radial Navigation -->
+                <div class="col-span-1">
+                    <div class="relative w-32 h-32">
+                        <svg class="w-full h-full" viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="1"/>
+                            <circle cx="60" cy="60" r="40" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="1"/>
+                            <circle cx="60" cy="60" r="30" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="1"/>
+                            <circle cx="60" cy="60" r="4" fill="#00e5ff" class="glow-cyan-soft"/>
+                            <circle cx="60" cy="20" r="3" fill="#00e5ff"/>
+                            <circle cx="95" cy="40" r="3" fill="#00e5ff"/>
+                            <circle cx="95" cy="80" r="3" fill="#00e5ff"/>
+                            <circle cx="60" cy="100" r="3" fill="#00e5ff"/>
+                            <circle cx="25" cy="80" r="3" fill="#00e5ff"/>
+                            <circle cx="25" cy="40" r="3" fill="#00e5ff"/>
+                            <line x1="60" y1="60" x2="60" y2="20" stroke="#00e5ff" stroke-width="1" opacity="0.3"/>
+                            <line x1="60" y1="60" x2="95" y2="40" stroke="#00e5ff" stroke-width="1" opacity="0.3"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Main Stats -->
+                <div class="col-span-5 grid grid-cols-5 gap-4">
+                    <!-- Stat 1 -->
+                    <div class="text-center">
+                        <div class="relative w-24 h-24 mx-auto mb-2">
+                            <svg class="w-full h-full progress-ring">
+                                <circle cx="48" cy="48" r="42" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="4"/>
+                                <circle cx="48" cy="48" r="42" fill="none" stroke="#00e5ff" stroke-width="4"
+                                    stroke-dasharray="264" stroke-dashoffset="66" class="glow-cyan-soft"/>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-white text-xs">●</span>
+                            </div>
+                        </div>
+                        <p class="text-white text-2xl font-bold orbitron">388<span class="text-lg">%</span></p>
+                        <p class="text-cyan-400 text-xs mt-1 uppercase tracking-wider">HEXAGONS</p>
+                        <p class="text-white/40 text-xs mt-1">3019 M-16</p>
+                    </div>
+
+                    <!-- Stat 2 -->
+                    <div class="text-center">
+                        <div class="relative w-24 h-24 mx-auto mb-2">
+                            <svg class="w-full h-full progress-ring">
+                                <circle cx="48" cy="48" r="42" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="4"/>
+                                <circle cx="48" cy="48" r="42" fill="none" stroke="#00e5ff" stroke-width="4"
+                                    stroke-dasharray="264" stroke-dashoffset="132" class="glow-cyan-soft"/>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <svg class="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2">
+                                    <path d="M12 2L2 7L12 12L22 7L12 2Z"/>
+                                    <path d="M2 17L12 22L22 17"/>
+                                    <path d="M2 12L12 17L22 12"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-white/60 text-xs uppercase tracking-wider mb-1">DIMENSION</p>
+                        <p class="text-white text-sm">D.O NEPTUNE</p>
+                    </div>
+
+                    <!-- Stat 3 -->
+                    <div class="text-center">
+                        <div class="relative w-24 h-24 mx-auto mb-2">
+                            <svg class="w-full h-full progress-ring">
+                                <circle cx="48" cy="48" r="42" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="4"/>
+                                <circle cx="48" cy="48" r="42" fill="none" stroke="#00e5ff" stroke-width="4"
+                                    stroke-dasharray="264" stroke-dashoffset="79" class="glow-cyan-soft"/>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-white/60 text-xs uppercase tracking-wider mb-1">STREANGTH</p>
+                        <p class="text-white text-sm">D.OO AH-OO</p>
+                    </div>
+
+                    <!-- Stat 4 -->
+                    <div class="text-center">
+                        <div class="relative w-24 h-24 mx-auto mb-2">
+                            <svg class="w-full h-full progress-ring">
+                                <circle cx="48" cy="48" r="42" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="4"/>
+                                <circle cx="48" cy="48" r="42" fill="none" stroke="#00e5ff" stroke-width="4"
+                                    stroke-dasharray="264" stroke-dashoffset="92" class="glow-cyan-soft"/>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M8 12h8M12 8v8"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-white/60 text-xs uppercase tracking-wider mb-1">CENUNOSE</p>
+                        <p class="text-white text-sm">ZH IV OUSS</p>
+                    </div>
+
+                    <!-- Stat 5 -->
+                    <div class="text-center">
+                        <div class="relative w-24 h-24 mx-auto mb-2">
+                            <svg class="w-full h-full progress-ring">
+                                <circle cx="48" cy="48" r="42" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="4"/>
+                                <circle cx="48" cy="48" r="42" fill="none" stroke="#00e5ff" stroke-width="4"
+                                    stroke-dasharray="264" stroke-dashoffset="105" class="glow-cyan-soft"/>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <canvas id="miniChart" width="40" height="40"></canvas>
+                            </div>
+                        </div>
+                        <p class="text-white/60 text-xs uppercase tracking-wider mb-1">SETTLEMENT</p>
+                        <p class="text-white text-sm">31M 82% O.OA</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Whale Visualization -->
+            <div class="relative h-64 mb-8 overflow-hidden rounded-2xl">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/20 to-cyan-900/40"></div>
+                <!-- Whale silhouette placeholder -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="relative">
+                        <!-- Main metric -->
+                        <div class="text-right mb-4 mr-16">
+                            <p class="text-white text-6xl font-bold orbitron text-glow">121: 4<span class="text-3xl">%</span></p>
+                        </div>
+                        <!-- Particles -->
+                        <div class="particle" style="top: 20%; left: 30%;"></div>
+                        <div class="particle" style="top: 40%; left: 50%;"></div>
+                        <div class="particle" style="top: 60%; left: 70%;"></div>
+                        <div class="particle" style="top: 30%; left: 80%;"></div>
+                    </div>
+                </div>
+                <!-- Area chart overlay -->
+                <div class="absolute bottom-0 left-0 right-0 h-32">
+                    <canvas id="waveChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Progress Bars Section -->
+            <div class="glass-card rounded-2xl p-6">
+                <h3 class="text-white text-sm font-semibold mb-4 uppercase tracking-wider">OCEAN ZENISUNG NAPPI/SOORQO</h3>
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between text-xs text-white/60 mb-2">
+                            <span>CURRENT</span>
+                            <span>TARGET</span>
+                        </div>
+                        <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-cyan-500 to-cyan-400 rounded-full" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs text-white/60 mb-2">
+                            <span>PROGRESS</span>
+                            <span>COMPLETE</span>
+                        </div>
+                        <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full" style="width: 60%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs text-white/60 mb-2">
+                            <span>EFFICIENCY</span>
+                            <span>OPTIMAL</span>
+                        </div>
+                        <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-cyan-400 to-teal-400 rounded-full" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs text-white/60 mb-2">
+                            <span>CAPACITY</span>
+                            <span>MAXIMUM</span>
+                        </div>
+                        <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-teal-400 to-cyan-300 rounded-full" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs text-white/60 mb-2">
+                            <span>OUTPUT</span>
+                            <span>PEAK</span>
+                        </div>
+                        <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-cyan-300 to-teal-300 rounded-full" style="width: 70%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Circular Gauges Section -->
+            <div class="glass-card rounded-2xl p-6">
+                <h3 class="text-white text-sm font-semibold mb-6 uppercase tracking-wider">SAORU15A/SOURYENRASHUE/AH31ISHONHIH</h3>
+                <div class="grid grid-cols-4 gap-4">
+                    <!-- Gauge 1 -->
+                    <div class="text-center">
+                        <div class="relative w-20 h-20 mx-auto mb-2">
+                            <svg class="w-full h-full progress-ring">
+                                <circle cx="40" cy="40" r="36" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="3"/>
+                                <circle cx="40" cy="40" r="36" fill="none" stroke="#00e5ff" stroke-width="3"
+                                    stroke-dasharray="226" stroke-dashoffset="20" class="glow-cyan-soft"/>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-white text-xl font-bold orbitron">911</span>
+                            </div>
+                        </div>
+                        <p class="text-cyan-400 text-xs">%</p>
+                    </div>
+                    <!-- Gauge 2 -->
+                    <div class="text-center">
+                        <div class="relative w-20 h-20 mx-auto mb-2">
+                            <svg class="w-full h-full progress-ring">
+                                <circle cx="40" cy="40" r="36" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="3"/>
+                                <circle cx="40" cy="40" r="36" fill="none" stroke="#00e5ff" stroke-width="3"
+                                    stroke-dasharray="226" stroke-dashoffset="113" class="glow-cyan-soft"/>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-white text-xl font-bold orbitron">O.477</span>
+                            </div>
+                        </div>
+                        <p class="text-cyan-400 text-xs">RATIO</p>
+                    </div>
+                    <!-- Gauge 3 -->
+                    <div class="text-center">
+                        <div class="relative w-20 h-20 mx-auto mb-2">
+                            <svg class="w-full h-full progress-ring">
+                                <circle cx="40" cy="40" r="36" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="3"/>
+                                <circle cx="40" cy="40" r="36" fill="none" stroke="#00e5ff" stroke-width="3"
+                                    stroke-dasharray="226" stroke-dashoffset="90" class="glow-cyan-soft"/>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-white text-xl font-bold orbitron">SO</span>
+                            </div>
+                        </div>
+                        <p class="text-cyan-400 text-xs">%</p>
+                    </div>
+                    <!-- Gauge 4 -->
+                    <div class="text-center">
+                        <div class="relative w-20 h-20 mx-auto mb-2">
+                            <svg class="w-full h-full progress-ring">
+                                <circle cx="40" cy="40" r="36" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="3"/>
+                                <circle cx="40" cy="40" r="36" fill="none" stroke="#00e5ff" stroke-width="3"
+                                    stroke-dasharray="226" stroke-dashoffset="147" class="glow-cyan-soft"/>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-white text-xl font-bold orbitron">39</span>
+                            </div>
+                        </div>
+                        <p class="text-cyan-400 text-xs">%</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bar Chart Section -->
+            <div class="glass-card rounded-2xl p-6">
+                <h3 class="text-white text-sm font-semibold mb-4 uppercase tracking-wider flex justify-between items-center">
+                    <span>LR WAVES</span>
+                    <span class="text-cyan-400">HALHA NISASUOUUSA.R</span>
+                </h3>
+                <div class="relative h-40">
+                    <canvas id="barChart"></canvas>
+                </div>
+                <div class="mt-4 grid grid-cols-5 gap-2">
+                    <div class="text-center">
+                        <p class="text-white/40 text-xs">TARGET</p>
+                        <p class="text-white text-sm font-semibold">100%</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-white/40 text-xs">CURRENT</p>
+                        <p class="text-white text-sm font-semibold">87%</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-white/40 text-xs">AVERAGE</p>
+                        <p class="text-white text-sm font-semibold">92%</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-white/40 text-xs">PEAK</p>
+                        <p class="text-white text-sm font-semibold">98%</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-white/40 text-xs">LOW</p>
+                        <p class="text-white text-sm font-semibold">76%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Wave Chart
+        const waveCtx = document.getElementById('waveChart').getContext('2d');
+        new Chart(waveCtx, {
+            type: 'line',
+            data: {
+                labels: Array(20).fill(''),
+                datasets: [{
+                    data: [30, 35, 38, 42, 45, 48, 52, 50, 48, 45, 42, 40, 38, 42, 45, 48, 50, 52, 55, 58],
+                    borderColor: '#00e5ff',
+                    backgroundColor: 'rgba(0, 229, 255, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 2,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { display: false },
+                    y: { display: false }
+                }
+            }
+        });
+
+        // Bar Chart
+        const barCtx = document.getElementById('barChart').getContext('2d');
+        new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: ['', '', '', '', '', '', '', '', '', '', '', ''],
+                datasets: [{
+                    data: [65, 75, 82, 88, 92, 95, 98, 94, 90, 85, 88, 92],
+                    backgroundColor: '#00e5ff',
+                    borderRadius: 2,
+                    barThickness: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(0, 229, 255, 0.1)' },
+                        ticks: { display: false }
+                    },
+                    y: {
+                        grid: { color: 'rgba(0, 229, 255, 0.1)' },
+                        ticks: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Mini Chart in stat circle
+        const miniCtx = document.getElementById('miniChart').getContext('2d');
+        new Chart(miniCtx, {
+            type: 'line',
+            data: {
+                labels: ['', '', '', '', ''],
+                datasets: [{
+                    data: [20, 30, 25, 35, 40],
+                    borderColor: '#00e5ff',
+                    backgroundColor: 'transparent',
+                    tension: 0.4,
+                    borderWidth: 1,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { display: false },
+                    y: { display: false }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

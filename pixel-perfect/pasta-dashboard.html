@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canary Comifig - Food Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #F5F3ED;
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .sidebar {
+            background: linear-gradient(135deg, #F9F5E8 0%, #F5F1E4 100%);
+        }
+
+        .progress-bar {
+            height: 6px;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 999px;
+            transition: width 0.3s ease;
+        }
+
+        .metric-card {
+            transition: transform 0.2s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .food-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .food-card img {
+            transition: transform 0.3s ease;
+        }
+
+        .food-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .color-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="flex h-screen">
+        <!-- Left Sidebar -->
+        <div class="sidebar w-80 p-8 rounded-r-[32px] flex flex-col">
+            <!-- Logo -->
+            <div class="mb-12">
+                <h1 class="text-2xl font-bold text-[#2B2520]">Cosmo app</h1>
+                <p class="text-sm text-[#8B7E74]">Commetrics</p>
+            </div>
+
+            <!-- Nutrition Metrics -->
+            <div class="space-y-6 mb-12">
+                <div class="metric-card">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm text-[#8B7E74]">kcal/gram</span>
+                        <span class="text-sm text-[#8B7E74]">carbs</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <div class="text-3xl font-bold text-[#2B2520]">20</div>
+                        <div class="text-3xl font-bold text-[#2B2520]">20</div>
+                    </div>
+                    <div class="flex justify-between mt-1">
+                        <span class="text-xs text-[#8B7E74]">fats/gram</span>
+                        <span class="text-xs text-[#8B7E74]">sugars</span>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm text-[#8B7E74]">fat / gram</span>
+                        <span class="text-sm text-[#8B7E74]">carb / gram</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <div class="text-3xl font-bold text-[#2B2520]">22g</div>
+                        <div class="text-3xl font-bold text-[#2B2520]">28g</div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="mb-2">
+                        <span class="text-sm text-[#8B7E74]">Cassava</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <div class="text-3xl font-bold text-[#2B2520]">22l</div>
+                        <div class="text-3xl font-bold text-[#2B2520]">22a</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Color Palette -->
+            <div class="mb-8">
+                <h3 class="text-sm text-[#8B7E74] mb-3">Cannara confiva</h3>
+                <div class="flex gap-3">
+                    <div class="color-dot bg-[#C87850]"></div>
+                    <div class="color-dot bg-[#D4A574]"></div>
+                    <div class="color-dot bg-[#9BC4A8]"></div>
+                    <div class="color-dot bg-[#F4D35E]"></div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="space-y-3 mb-8">
+                <button class="w-full bg-white py-3 rounded-full text-sm font-medium text-[#2B2520] card-shadow hover:shadow-lg transition">
+                    <span class="text-[#8B7E74]">carbo</span> <span class="font-semibold">mooving</span>
+                </button>
+                <button class="w-full bg-[#D4A574] py-3 rounded-full text-sm font-medium text-white hover:bg-[#C89564] transition">
+                    <span class="opacity-80">opern</span>
+                </button>
+            </div>
+
+            <!-- Bottom Slider -->
+            <div class="mt-auto">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-xs text-[#8B7E74]">€ 0.004/ag</div>
+                    <div class="flex gap-2">
+                        <div class="w-8 h-8 rounded-full bg-[#D4A574] flex items-center justify-center text-white text-xs">1</div>
+                        <div class="w-8 h-8 rounded-full bg-white card-shadow flex items-center justify-center text-xs">+</div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="h-2 bg-[#E8E4DC] rounded-full">
+                        <div class="h-full w-2/3 bg-[#D4A574] rounded-full"></div>
+                    </div>
+                    <div class="absolute -top-1 left-2/3 w-4 h-4 bg-[#D4A574] rounded-full border-4 border-white"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-12 overflow-y-auto">
+            <!-- Header -->
+            <div class="mb-12">
+                <div class="flex justify-between items-start mb-8">
+                    <div>
+                        <h2 class="text-4xl font-bold text-[#2B2520] mb-2">Canary Comifig</h2>
+                        <p class="text-[#8B7E74] max-w-2xl leading-relaxed">
+                            Milk knowledger peanestered canno ornasio lactose free pocafella
+                            javelle anassi danominnaa navella alonsani baserasa
+                        </p>
+                    </div>
+                    <div class="flex gap-3">
+                        <button class="w-12 h-12 bg-[#D4A574] rounded-2xl flex items-center justify-center text-white card-shadow hover:shadow-lg transition">
+                            →
+                        </button>
+                        <button class="w-12 h-12 bg-[#D4A574] rounded-2xl flex items-center justify-center text-white card-shadow hover:shadow-lg transition">
+                            ☰
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Food Image Card -->
+                <div class="bg-white rounded-[32px] p-12 card-shadow mb-12 relative overflow-hidden">
+                    <div class="grid grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h3 class="text-6xl font-bold text-[#2B2520] mb-8">52g</h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-sm text-[#8B7E74]">carbohydrates</span>
+                                        <span class="text-sm font-semibold text-[#2B2520]">52g</span>
+                                    </div>
+                                    <p class="text-xs text-[#8B7E74]">lacto-vegetables</p>
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-sm text-[#8B7E74]">calcium</span>
+                                        <span class="text-sm font-semibold text-[#2B2520]">52g</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4 mt-8">
+                                <div class="bg-[#9BC4A8] rounded-3xl p-6 text-center">
+                                    <div class="text-3xl font-bold text-white mb-1">8.178</div>
+                                    <div class="text-sm text-white/80">lacoses</div>
+                                </div>
+                                <div class="bg-[#D4A574] rounded-3xl p-6 text-center">
+                                    <div class="text-3xl font-bold text-white mb-1">5.38</div>
+                                    <div class="text-sm text-white/80">fav</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="relative">
+                            <!-- Hero Food Image Placeholder -->
+                            <div class="aspect-square rounded-3xl bg-gradient-to-br from-[#F9F5E8] to-[#F5F1E4] flex items-center justify-center">
+                                <div class="text-center">
+                                    <div class="text-8xl mb-4">🍝</div>
+                                    <p class="text-[#8B7E74] text-sm">Canary Comifig</p>
+                                </div>
+                            </div>
+                            <!-- Floating Icons -->
+                            <div class="absolute -top-4 -right-4 w-16 h-16 bg-[#D4A574] rounded-2xl flex items-center justify-center text-2xl card-shadow">
+                                🌿
+                            </div>
+                            <div class="absolute top-1/2 -left-8 w-16 h-16 bg-[#D4A574] rounded-2xl flex items-center justify-center text-2xl card-shadow">
+                                🧈
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 text-xs text-[#8B7E74]">
+                        <p>Pasta energy: 62 km</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Food Product Grid -->
+            <div class="grid grid-cols-4 gap-6 mb-12">
+                <!-- Product Card 1 -->
+                <div class="bg-white rounded-[28px] p-6 card-shadow food-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="font-semibold text-[#2B2520]">Bambooginal</h4>
+                        <button class="w-10 h-10 bg-[#F5F3ED] rounded-xl flex items-center justify-center">
+                            <span class="text-sm">→</span>
+                        </button>
+                    </div>
+                    <div class="aspect-square rounded-2xl bg-gradient-to-br from-[#F9F5E8] to-[#F5F1E4] flex items-center justify-center mb-4 overflow-hidden">
+                        <div class="text-6xl">🥣</div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="w-2 h-2 bg-[#C87850] rounded-full"></span>
+                        <span class="w-2 h-2 bg-[#D4A574] rounded-full"></span>
+                        <span class="w-2 h-2 bg-[#9BC4A8] rounded-full"></span>
+                        <span class="text-xs text-[#8B7E74] ml-auto">350 cal</span>
+                    </div>
+                    <button class="w-full py-2 border border-[#E8E4DC] rounded-xl text-xs text-[#8B7E74] hover:border-[#D4A574] transition">
+                        Add to cart
+                    </button>
+                    <p class="text-xs text-[#8B7E74] mt-3">€ 1.59/€ kilobytes</p>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="bg-white rounded-[28px] p-6 card-shadow food-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="font-semibold text-[#2B2520]">Sermonevretes</h4>
+                        <button class="w-10 h-10 bg-[#F5F3ED] rounded-xl flex items-center justify-center">
+                            <span class="text-sm">→</span>
+                        </button>
+                    </div>
+                    <div class="aspect-square rounded-2xl bg-gradient-to-br from-[#F9F5E8] to-[#F5F1E4] flex items-center justify-center mb-4">
+                        <div class="text-6xl">🍝</div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="w-2 h-2 bg-[#9BC4A8] rounded-full"></span>
+                        <span class="w-2 h-2 bg-[#D4A574] rounded-full"></span>
+                        <span class="w-2 h-2 bg-[#C87850] rounded-full"></span>
+                        <span class="text-xs text-[#8B7E74] ml-auto">280 cal</span>
+                    </div>
+                    <button class="w-full py-2 border border-[#E8E4DC] rounded-xl text-xs text-[#8B7E74] hover:border-[#D4A574] transition">
+                        Add to cart
+                    </button>
+                    <p class="text-xs text-[#8B7E74] mt-3">€ 2.10/€ serving</p>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="bg-white rounded-[28px] p-6 card-shadow food-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="font-semibold text-[#2B2520]">Ditey-intensite</h4>
+                        <button class="w-10 h-10 bg-[#F5F3ED] rounded-xl flex items-center justify-center">
+                            <span class="text-sm">→</span>
+                        </button>
+                    </div>
+                    <div class="aspect-square rounded-2xl bg-gradient-to-br from-[#F9F5E8] to-[#F5F1E4] flex items-center justify-center mb-4">
+                        <div class="text-6xl">🫐</div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="w-2 h-2 bg-[#9BC4A8] rounded-full"></span>
+                        <span class="w-2 h-2 bg-[#D4A574] rounded-full"></span>
+                        <span class="w-2 h-2 bg-[#C87850] rounded-full"></span>
+                        <span class="text-xs text-[#8B7E74] ml-auto">180 cal</span>
+                    </div>
+                    <button class="w-full py-2 border border-[#E8E4DC] rounded-xl text-xs text-[#8B7E74] hover:border-[#D4A574] transition">
+                        Add to cart
+                    </button>
+                    <p class="text-xs text-[#8B7E74] mt-3">€ 3.20/€ bowl</p>
+                </div>
+
+                <!-- Product Card 4 -->
+                <div class="bg-white rounded-[28px] p-6 card-shadow food-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="font-semibold text-[#2B2520]">Ravon Chase</h4>
+                        <button class="w-10 h-10 bg-[#F5F3ED] rounded-xl flex items-center justify-center">
+                            <span class="text-sm">→</span>
+                        </button>
+                    </div>
+                    <div class="aspect-square rounded-2xl bg-gradient-to-br from-[#F9F5E8] to-[#F5F1E4] flex items-center justify-center mb-4">
+                        <div class="text-6xl">🥗</div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="w-2 h-2 bg-[#9BC4A8] rounded-full"></span>
+                        <span class="w-2 h-2 bg-[#D4A574] rounded-full"></span>
+                        <span class="w-2 h-2 bg-[#C87850] rounded-full"></span>
+                        <span class="text-xs text-[#8B7E74] ml-auto">220 cal</span>
+                    </div>
+                    <button class="w-full py-2 border border-[#E8E4DC] rounded-xl text-xs text-[#8B7E74] hover:border-[#D4A574] transition">
+                        Add to cart
+                    </button>
+                    <p class="text-xs text-[#8B7E74] mt-3">€ 1.80/€ plate</p>
+                </div>
+            </div>
+
+            <!-- Nutrition Charts Section -->
+            <div class="bg-white rounded-[32px] p-8 card-shadow">
+                <h3 class="text-xl font-bold text-[#2B2520] mb-8">Nutrition Breakdown</h3>
+
+                <div class="grid grid-cols-4 gap-12">
+                    <!-- Chart 1 -->
+                    <div>
+                        <h4 class="text-sm font-semibold text-[#2B2520] mb-6">Cortina flour ingredients</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex items-center gap-3 mb-2">
+                                    <div class="text-2xl">🌾</div>
+                                    <div class="flex-1">
+                                        <div class="progress-bar bg-[#E8E4DC]">
+                                            <div class="progress-fill bg-[#D4A574]" style="width: 80%"></div>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-[#8B7E74]">320g</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-3 mb-2">
+                                    <div class="text-2xl">🌾</div>
+                                    <div class="flex-1">
+                                        <div class="progress-bar bg-[#E8E4DC]">
+                                            <div class="progress-fill bg-[#C87850]" style="width: 45%"></div>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-[#8B7E74]">180g</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-3 mb-2">
+                                    <div class="text-2xl">🌾</div>
+                                    <div class="flex-1">
+                                        <div class="progress-bar bg-[#E8E4DC]">
+                                            <div class="progress-fill bg-[#D4A574]" style="width: 60%"></div>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-[#8B7E74]">240g</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chart 2 -->
+                    <div>
+                        <h4 class="text-sm font-semibold text-[#2B2520] mb-6">Cortina baking/s cannabrium conf...</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex items-center gap-3 mb-2">
+                                    <div class="text-2xl">🍝</div>
+                                    <div class="flex-1">
+                                        <div class="progress-bar bg-[#E8E4DC]">
+                                            <div class="progress-fill bg-[#C87850]" style="width: 70%"></div>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-[#8B7E74]">280g</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-3 mb-2">
+                                    <div class="text-2xl">🍝</div>
+                                    <div class="flex-1">
+                                        <div class="progress-bar bg-[#E8E4DC]">
+                                            <div class="progress-fill bg-[#C87850]" style="width: 50%"></div>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-[#8B7E74]">200g</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chart 3 -->
+                    <div>
+                        <h4 class="text-sm font-semibold text-[#2B2520] mb-6">clearosure fonto</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex items-center gap-3 mb-2">
+                                    <div class="text-2xl">🥬</div>
+                                    <div class="flex-1">
+                                        <div class="progress-bar bg-[#E8E4DC]">
+                                            <div class="progress-fill bg-[#9BC4A8]" style="width: 85%"></div>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-[#8B7E74]">340g</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-3 mb-2">
+                                    <div class="text-2xl">🥬</div>
+                                    <div class="flex-1">
+                                        <div class="progress-bar bg-[#E8E4DC]">
+                                            <div class="progress-fill bg-[#9BC4A8]" style="width: 55%"></div>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-[#8B7E74]">220g</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chart 4 -->
+                    <div>
+                        <h4 class="text-sm font-semibold text-[#2B2520] mb-6">feel sloga warm drinkarma</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex items-center gap-3 mb-2">
+                                    <div class="text-2xl">☕</div>
+                                    <div class="flex-1">
+                                        <div class="progress-bar bg-[#E8E4DC]">
+                                            <div class="progress-fill bg-[#D4A574]" style="width: 90%"></div>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-[#8B7E74]">360g</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-3 mb-2">
+                                    <div class="text-2xl">☕</div>
+                                    <div class="flex-1">
+                                        <div class="progress-bar bg-[#E8E4DC]">
+                                            <div class="progress-fill bg-[#D4A574]" style="width: 65%"></div>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-[#8B7E74]">260g</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="flex justify-center gap-3 mt-8">
+                    <button class="w-8 h-1 bg-[#2B2520] rounded-full"></button>
+                    <button class="w-8 h-1 bg-[#E8E4DC] rounded-full hover:bg-[#D4A574] transition"></button>
+                    <button class="w-8 h-1 bg-[#E8E4DC] rounded-full hover:bg-[#D4A574] transition"></button>
+                    <button class="w-8 h-1 bg-[#E8E4DC] rounded-full hover:bg-[#D4A574] transition"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

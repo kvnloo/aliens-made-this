@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhigyan Mobile App - Pixel Perfect Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #6B4C9A 0%, #8B5A8B 25%, #C87B8B 75%, #E8A89B 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 900px;
+        }
+
+        .phone-device {
+            width: 375px;
+            height: 812px;
+            background: #000;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            position: relative;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: #1A2332;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .status-bar {
+            height: 44px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            color: white;
+        }
+
+        .time {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .status-icons {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .app-header {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .app-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .header-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .orb-container {
+            position: relative;
+            height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: visible;
+        }
+
+        .main-orb {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.6) 0%, #FFB366 15%, #FF8B5A 40%, #FF6B94 100%);
+            box-shadow:
+                0 12px 40px rgba(0,0,0,0.3),
+                0 0 60px rgba(255, 107, 148, 0.4);
+            position: relative;
+            z-index: 10;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-12px) scale(1.02); }
+        }
+
+        .small-orb {
+            position: absolute;
+            border-radius: 50%;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb-blue {
+            width: 48px;
+            height: 48px;
+            background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #5E8FE8 20%, #4B7CD6);
+            box-shadow: 0 0 40px rgba(94, 143, 232, 0.4);
+            top: 30px;
+            right: 40px;
+            animation-delay: 1s;
+        }
+
+        .orb-purple {
+            width: 56px;
+            height: 56px;
+            background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #9B88ED 20%, #7B68CD);
+            box-shadow: 0 0 45px rgba(155, 136, 237, 0.4);
+            bottom: 40px;
+            left: 30px;
+            animation-delay: 2s;
+        }
+
+        .info-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin: 0 20px 16px;
+            backdrop-filter: blur(20px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: white;
+        }
+
+        .percentage-change {
+            font-size: 11px;
+            color: #FF6B94;
+            font-weight: 500;
+        }
+
+        .color-dots {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .color-dot {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .color-dot:hover {
+            transform: scale(1.1);
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-top: 12px;
+        }
+
+        .stat-badge {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .chart-container {
+            height: 120px;
+            position: relative;
+            margin: 16px 0;
+        }
+
+        .chart-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+        }
+
+        .chart-wave {
+            stroke-width: 3;
+            fill: none;
+            filter: drop-shadow(0 0 20px rgba(255, 107, 148, 0.3));
+        }
+
+        .bottom-nav {
+            position: absolute;
+            bottom: 34px;
+            left: 0;
+            right: 0;
+            height: 80px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .nav-dot {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-dot:hover {
+            transform: scale(1.1);
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.5); }
+        }
+
+        .price-display {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .price-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .description-text {
+            font-size: 12px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.6);
+            margin-top: 8px;
+        }
+
+        /* Card 2 Specific Styles */
+        .wave-chart {
+            height: 80px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .icon-button {
+            width: 56px;
+            height: 56px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .icon-button:hover {
+            background: rgba(255,255,255,0.12);
+            transform: scale(1.05);
+        }
+
+        .data-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Phone 1 - Left Screen -->
+        <div class="phone-device">
+            <div class="phone-screen">
+                <div class="particles">
+                    <div class="particle" style="top: 10%; left: 15%; animation-delay: 0s;"></div>
+                    <div class="particle" style="top: 20%; left: 70%; animation-delay: 0.5s;"></div>
+                    <div class="particle" style="top: 35%; left: 25%; animation-delay: 1s;"></div>
+                    <div class="particle" style="top: 50%; left: 80%; animation-delay: 1.5s;"></div>
+                    <div class="particle" style="top: 65%; left: 40%; animation-delay: 2s;"></div>
+                    <div class="particle" style="top: 75%; left: 60%; animation-delay: 2.5s;"></div>
+                </div>
+
+                <div class="status-bar">
+                    <div class="time">15:41</div>
+                    <div class="status-icons">
+                        <i data-lucide="signal" style="width: 14px; height: 14px;"></i>
+                        <i data-lucide="wifi" style="width: 14px; height: 14px;"></i>
+                        <i data-lucide="battery-full" style="width: 20px; height: 14px;"></i>
+                    </div>
+                </div>
+
+                <div class="app-header">
+                    <div class="app-title">Laledo</div>
+                    <div class="header-icon">
+                        <i data-lucide="search" style="width: 20px; height: 20px; color: white;"></i>
+                    </div>
+                </div>
+
+                <div class="orb-container">
+                    <div class="main-orb"></div>
+                    <div class="small-orb orb-blue"></div>
+                    <div class="small-orb orb-purple"></div>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-title">Placean Lodo</div>
+                        <i data-lucide="heart" style="width: 18px; height: 18px; color: rgba(255,255,255,0.5);"></i>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-title">Loweck Dorgeon</div>
+                        <div class="percentage-change">-9%</div>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat-badge" style="background: rgba(78, 205, 196, 0.15); color: #4ECDC4;">2:40am | 12 Oct</div>
+                    </div>
+
+                    <div class="color-dots">
+                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #5E8FE8 20%, #4B7CD6);"></div>
+                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #FF8B94 20%, #E85A8A);"></div>
+                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #9B88ED 20%, #7B68CD);"></div>
+                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #4ECDC4 20%, #36A89D);"></div>
+                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #FFB366 20%, #FF8B5A);"></div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 0 20px; margin-top: 16px;">
+                    <div class="icon-button" style="background: rgba(155, 136, 237, 0.2);">
+                        <i data-lucide="sun" style="width: 24px; height: 24px; color: #9B88ED;"></i>
+                    </div>
+                    <div class="icon-button">
+                        <i data-lucide="star" style="width: 24px; height: 24px; color: rgba(255,255,255,0.5);"></i>
+                    </div>
+                    <div class="icon-button" style="background: rgba(94, 143, 232, 0.2);">
+                        <i data-lucide="zap" style="width: 24px; height: 24px; color: #5E8FE8;"></i>
+                    </div>
+                    <div class="icon-button">
+                        <i data-lucide="activity" style="width: 24px; height: 24px; color: rgba(255,255,255,0.5);"></i>
+                    </div>
+                </div>
+
+                <div class="bottom-nav">
+                    <div class="nav-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #5E8FE8 20%, #4B7CD6);"></div>
+                    <div class="nav-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #FF8B94 20%, #E85A8A);"></div>
+                    <div class="nav-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #9B88ED 20%, #7B68CD);"></div>
+                    <div class="nav-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #4ECDC4 20%, #36A89D);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phone 2 - Right Screen -->
+        <div class="phone-device">
+            <div class="phone-screen">
+                <div class="particles">
+                    <div class="particle" style="top: 12%; left: 18%; animation-delay: 0.2s;"></div>
+                    <div class="particle" style="top: 22%; left: 68%; animation-delay: 0.7s;"></div>
+                    <div class="particle" style="top: 38%; left: 28%; animation-delay: 1.2s;"></div>
+                    <div class="particle" style="top: 52%; left: 75%; animation-delay: 1.7s;"></div>
+                    <div class="particle" style="top: 68%; left: 45%; animation-delay: 2.2s;"></div>
+                    <div class="particle" style="top: 78%; left: 65%; animation-delay: 2.7s;"></div>
+                </div>
+
+                <div class="status-bar">
+                    <div class="time">15:41</div>
+                    <div class="status-icons">
+                        <i data-lucide="signal" style="width: 14px; height: 14px;"></i>
+                        <i data-lucide="wifi" style="width: 14px; height: 14px;"></i>
+                        <i data-lucide="battery-full" style="width: 20px; height: 14px;"></i>
+                    </div>
+                </div>
+
+                <div class="app-header">
+                    <div class="app-title">Laloch</div>
+                    <div class="header-icon">
+                        <i data-lucide="search" style="width: 20px; height: 20px; color: white;"></i>
+                    </div>
+                </div>
+
+                <div class="orb-container" style="height: 180px;">
+                    <div style="width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.6), #9B88ED 15%, #7B68CD 40%, #5E4B8C); box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 60px rgba(155, 136, 237, 0.4); animation: float 6s ease-in-out infinite;"></div>
+                    <div style="position: absolute; top: 40px; right: 50px; width: 52px; height: 52px; border-radius: 50%; background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #4ECDC4 20%, #36A89D); box-shadow: 0 0 40px rgba(78, 205, 196, 0.4); animation: float 8s ease-in-out infinite; animation-delay: 1s;"></div>
+                </div>
+
+                <div class="wave-chart">
+                    <svg width="100%" height="80" viewBox="0 0 335 80" style="overflow: visible;">
+                        <path d="M0,40 Q50,20 100,35 T200,30 T335,45" class="chart-wave" stroke="#FF6B94" />
+                        <path d="M0,50 Q50,30 100,45 T200,40 T335,55" class="chart-wave" stroke="#4ECDC4" style="opacity: 0.6;" />
+                    </svg>
+                </div>
+
+                <div class="info-card">
+                    <div class="price-display">205.30</div>
+                    <div class="price-label">Bitcoin/cryptocurrency</div>
+
+                    <div class="color-dots" style="margin-top: 16px;">
+                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #4ECDC4 20%, #36A89D);"></div>
+                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #FF8B94 20%, #E85A8A);"></div>
+                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #5E8FE8 20%, #4B7CD6);"></div>
+                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #FF6B94 20%, #D14977);"></div>
+                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #FFB366 20%, #FF8B5A);"></div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-title">Looket ijust fun</div>
+                        <i data-lucide="bar-chart-2" style="width: 18px; height: 18px; color: rgba(255,255,255,0.5);"></i>
+                    </div>
+                    <p class="description-text">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod.</p>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-title">Proonega</div>
+                        <i data-lucide="trending-up" style="width: 18px; height: 18px; color: #4ECDC4;"></i>
+                    </div>
+                    <p class="description-text">Ut enim ad minim veniam quis nostrud exercitation ullamco laboris.</p>
+
+                    <div class="color-dots" style="margin-top: 12px;">
+                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #5E8FE8 20%, #4B7CD6);"></div>
+                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #FF8B94 20%, #E85A8A);"></div>
+                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #9B88ED 20%, #7B68CD);"></div>
+                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #4ECDC4 20%, #36A89D);"></div>
+                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #FFB366 20%, #FF8B5A);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

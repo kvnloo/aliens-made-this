@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SweeDly - Food Delivery App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #FFE4C4 0%, #FFDAB9 100%);
+        }
+
+        .custom-shadow {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .food-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .food-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .scroll-container {
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4">
+    <!-- Main Container - Mobile Screens Layout -->
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- Screen 1: Main Menu -->
+        <div class="bg-[#FFECD9] rounded-3xl p-6 custom-shadow max-w-md mx-auto w-full">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <button class="w-10 h-10 bg-white rounded-xl flex items-center justify-center custom-shadow">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                    <h1 class="text-2xl font-bold text-[#2D2419]">SweeDly</h1>
+                </div>
+                <button class="w-10 h-10 bg-white rounded-xl flex items-center justify-center custom-shadow">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
+                </button>
+            </div>
+
+            <!-- Stars Rating -->
+            <div class="flex gap-1 mb-4">
+                <span class="text-yellow-500">★★★★★</span>
+            </div>
+
+            <!-- Menu Items -->
+            <div class="space-y-3 mb-6">
+                <div class="bg-white rounded-2xl p-4 flex items-center justify-between custom-shadow">
+                    <div class="flex items-center gap-3">
+                        <div class="w-3 h-3 bg-[#FF9B5E] rounded-full"></div>
+                        <span class="font-semibold text-[#2D2419]">Breakfast</span>
+                    </div>
+                    <span class="text-sm text-[#8B7355]">120</span>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 flex items-center justify-between custom-shadow">
+                    <div class="flex items-center gap-3">
+                        <div class="w-3 h-3 bg-transparent border-2 border-gray-300 rounded-full"></div>
+                        <span class="font-semibold text-[#2D2419]">Lunch</span>
+                    </div>
+                    <span class="text-sm text-[#8B7355]">60</span>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 flex items-center justify-between custom-shadow">
+                    <div class="flex items-center gap-3">
+                        <div class="w-3 h-3 bg-transparent border-2 border-gray-300 rounded-full"></div>
+                        <span class="font-semibold text-[#2D2419]">Dinner</span>
+                    </div>
+                    <span class="text-sm text-[#8B7355]">90</span>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 flex items-center justify-between custom-shadow">
+                    <div class="flex items-center gap-3">
+                        <div class="w-3 h-3 bg-transparent border-2 border-gray-300 rounded-full"></div>
+                        <span class="font-semibold text-[#2D2419]">Day coffee</span>
+                    </div>
+                    <span class="text-sm text-[#8B7355]">100</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 2: Product List -->
+        <div class="bg-[#FFECD9] rounded-3xl p-6 custom-shadow max-w-md mx-auto w-full">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-bold text-[#2D2419]">Product</h2>
+                <button class="w-10 h-10 bg-white rounded-xl flex items-center justify-center custom-shadow">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Product Cards -->
+            <div class="space-y-4">
+                <!-- Pizza Card -->
+                <div class="bg-white rounded-3xl p-4 custom-shadow food-card">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="font-bold text-[#2D2419]">Pizza</h3>
+                        <button class="w-8 h-8 bg-[#FFECD9] rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="bg-[#FFF5E6] rounded-2xl h-32 flex items-center justify-center mb-3 overflow-hidden">
+                        <div class="text-6xl">🍕</div>
+                    </div>
+                </div>
+
+                <!-- Croissant Card -->
+                <div class="bg-white rounded-3xl p-4 custom-shadow food-card">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="font-bold text-[#2D2419]">Korean Pizza</h3>
+                        <button class="w-8 h-8 bg-[#FFECD9] rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="bg-[#FF9B5E] rounded-2xl h-32 flex items-center justify-center mb-3">
+                        <div class="text-white text-sm font-semibold">Image</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 3: Pizza Detail -->
+        <div class="bg-[#FFECD9] rounded-3xl p-6 custom-shadow max-w-md mx-auto w-full">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-bold text-[#2D2419]">Seafood Python..</h2>
+                <div class="flex gap-2">
+                    <button class="w-10 h-10 bg-white rounded-xl flex items-center justify-center custom-shadow">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                    </button>
+                    <button class="w-10 h-10 bg-white rounded-xl flex items-center justify-center custom-shadow">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Large Pizza Image -->
+            <div class="bg-white rounded-3xl p-8 mb-6 custom-shadow">
+                <div class="text-9xl text-center">🍕</div>
+            </div>
+
+            <!-- Quick Info -->
+            <div class="space-y-3">
+                <div class="bg-white rounded-2xl p-4 custom-shadow">
+                    <h3 class="font-semibold text-[#2D2419] mb-2">Quick Info</h3>
+                    <p class="text-sm text-[#8B7355]">Delicious pizza with seafood toppings</p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 custom-shadow">
+                    <div class="flex items-center justify-between">
+                        <span class="font-semibold text-[#2D2419]">Check or Fry</span>
+                        <span class="text-sm text-[#8B7355]">→ 23 tM</span>
+                    </div>
+                </div>
+
+                <!-- Orange Pizza Circle -->
+                <div class="flex justify-center my-6">
+                    <div class="w-32 h-32 bg-[#FF9B5E] rounded-full flex items-center justify-center text-5xl">
+                        🍕
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 4: Dark Theme Menu -->
+        <div class="bg-[#4A3728] rounded-3xl p-6 custom-shadow max-w-md mx-auto w-full">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-bold text-white">Food Menu</h2>
+                <div class="flex gap-2">
+                    <button class="px-4 py-2 bg-transparent border border-[#FF9B5E] text-[#FF9B5E] rounded-full text-sm font-semibold">
+                        Stacks
+                    </button>
+                    <button class="px-4 py-2 bg-[#FF9B5E] text-white rounded-full text-sm font-semibold">
+                        Pancake
+                    </button>
+                </div>
+            </div>
+
+            <!-- Menu Items -->
+            <div class="space-y-3">
+                <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-white/10 transition cursor-pointer">
+                    <div class="text-3xl">🍕</div>
+                    <div class="flex-1">
+                        <h4 class="text-white font-semibold">Pizza</h4>
+                    </div>
+                    <span class="text-[#FF9B5E] font-semibold">$12</span>
+                </div>
+
+                <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-white/10 transition cursor-pointer">
+                    <div class="text-3xl">🍕</div>
+                    <div class="flex-1">
+                        <h4 class="text-white font-semibold">Italian</h4>
+                    </div>
+                    <span class="text-[#FF9B5E] font-semibold">$15</span>
+                </div>
+
+                <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-white/10 transition cursor-pointer">
+                    <div class="text-3xl">🥖</div>
+                    <div class="flex-1">
+                        <h4 class="text-white font-semibold">Baguette</h4>
+                    </div>
+                    <span class="text-[#FF9B5E] font-semibold">$8</span>
+                </div>
+
+                <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-white/10 transition cursor-pointer">
+                    <div class="text-3xl">🥐</div>
+                    <div class="flex-1">
+                        <h4 class="text-white font-semibold">Croissant</h4>
+                    </div>
+                    <span class="text-[#FF9B5E] font-semibold">$6</span>
+                </div>
+
+                <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-white/10 transition cursor-pointer">
+                    <div class="text-3xl">🍞</div>
+                    <div class="flex-1">
+                        <h4 class="text-white font-semibold">Bread</h4>
+                    </div>
+                    <span class="text-[#FF9B5E] font-semibold">$4</span>
+                </div>
+            </div>
+
+            <!-- Cart Summary (Bottom Card) -->
+            <div class="mt-8 bg-[#FFF5E6] rounded-3xl p-6">
+                <h3 class="text-lg font-bold text-[#2D2419] mb-4">Catalogue</h3>
+
+                <div class="space-y-3 mb-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-[#8B7355]">Croissant</span>
+                        <span class="font-semibold text-[#2D2419]">$6.00</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-[#8B7355]">Carrot</span>
+                        <span class="font-semibold text-[#2D2419]">$10.00</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-[#8B7355]">Bread</span>
+                        <span class="font-semibold text-[#2D2419]">$8.50</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-[#8B7355]">Bread</span>
+                        <span class="font-semibold text-[#2D2419]">$12.50</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-[#8B7355]">Carrot</span>
+                        <span class="font-semibold text-[#2D2419]">$20.00</span>
+                    </div>
+                </div>
+
+                <button class="w-full bg-[#FF9B5E] text-white py-4 rounded-full font-semibold hover:bg-[#FF8A4D] transition">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
