@@ -1,473 +1,1165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canary Comifig - Food Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            font-family: 'Poppins', sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Codye Comig — Pasta Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #a9a9b2;
+      --shell: #fbfaf7;
+      --sidebar: #f3ebda;
+      --ink: #2a241e;
+      --muted: #9a8f84;
+      --muted-2: #b5aaa0;
+      --line: #e8e2d6;
+      --mint: #9fc4ae;
+      --mint-d: #7eaa90;
+      --gold: #d4a574;
+      --gold-d: #c4924a;
+      --pasta: #e8b84a;
+      --pasta-d: #d4922a;
+    }
 
-        body {
-            background: #F5F3ED;
-        }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Poppins', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        .card-shadow {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
+    .stage {
+      position: relative;
+      width: min(1280px, 98vw);
+      height: min(860px, 96vh);
+      display: grid;
+      place-items: center;
+    }
 
-        .sidebar {
-            background: linear-gradient(135deg, #F9F5E8 0%, #F5F1E4 100%);
-        }
+    /* —— Floating props outside shell —— */
+    .prop { position: absolute; pointer-events: none; z-index: 3; }
 
-        .progress-bar {
-            height: 6px;
-            border-radius: 999px;
-            overflow: hidden;
-        }
+    .prop-citrus {
+      left: 2px; top: 52%;
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 38% 38%, #ffb88a 0%, #f07a42 42%, #c84a20 100%);
+      box-shadow: inset -12px -10px 0 rgba(0,0,0,0.08), 0 10px 22px rgba(0,0,0,0.14);
+      overflow: hidden;
+    }
+    .prop-citrus::before {
+      content: '';
+      position: absolute; inset: 11px;
+      border-radius: 50%;
+      background: repeating-conic-gradient(from 0deg, #ffe4c0 0deg 14deg, #ffc898 14deg 28deg);
+      opacity: 0.9;
+    }
+    .prop-citrus::after {
+      content: '';
+      position: absolute; inset: 30px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff6d0 0%, #ffd98a 75%);
+    }
 
-        .progress-fill {
-            height: 100%;
-            border-radius: 999px;
-            transition: width 0.3s ease;
-        }
+    .prop-leaf-tl {
+      left: 18px; top: 26%;
+      width: 52px; height: 68px;
+      background: linear-gradient(145deg, #6db37a, #3d7a4a);
+      border-radius: 60% 40% 55% 45%;
+      transform: rotate(-28deg);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+    }
+    .prop-leaf-tl::after {
+      content: '';
+      position: absolute; left: 22px; top: 8px;
+      width: 2px; height: 48px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 2px;
+      transform: rotate(8deg);
+    }
 
-        .metric-card {
-            transition: transform 0.2s ease;
-        }
+    .prop-bloom {
+      left: 8px; top: 38%;
+      width: 44px; height: 44px;
+      background:
+        radial-gradient(circle at 50% 50%, #f0d060 0 8px, transparent 9px),
+        radial-gradient(circle at 30% 40%, #e8b84a 0 10px, transparent 11px),
+        radial-gradient(circle at 70% 45%, #f5c84a 0 9px, transparent 10px),
+        radial-gradient(circle at 45% 70%, #d4a040 0 11px, transparent 12px),
+        radial-gradient(circle at 55% 30%, #f0c45a 0 8px, transparent 9px);
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.12));
+      transform: rotate(-12deg);
+    }
 
-        .metric-card:hover {
-            transform: translateY(-2px);
-        }
+    .prop-leaf-bl {
+      left: 28px; bottom: 10%;
+      width: 48px; height: 62px;
+      background: linear-gradient(160deg, #5aa868, #2f6b3c);
+      border-radius: 55% 45% 50% 50%;
+      transform: rotate(18deg);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
 
-        .food-card {
-            position: relative;
-            overflow: hidden;
-        }
+    .prop-caviar {
+      right: 18px; top: 14%;
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(160deg, #4a4038, #1a1614 55%, #0a0807);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.22), inset 0 2px 4px rgba(255,255,255,0.1);
+      overflow: hidden;
+    }
+    .prop-caviar::before {
+      content: '';
+      position: absolute; inset: 9px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 28% 30%, #666 0 2.2px, transparent 3px),
+        radial-gradient(circle at 58% 38%, #555 0 2px, transparent 2.8px),
+        radial-gradient(circle at 42% 62%, #777 0 2.4px, transparent 3.2px),
+        radial-gradient(circle at 72% 68%, #444 0 1.8px, transparent 2.6px),
+        radial-gradient(circle at 22% 55%, #333 0 2px, transparent 2.8px),
+        radial-gradient(circle at 50% 48%, #2a2a2a 0 2px, transparent 2.8px),
+        #12100e;
+    }
 
-        .food-card img {
-            transition: transform 0.3s ease;
-        }
+    .prop-crumbs {
+      right: 12px; top: 28%;
+      width: 72px; height: 100px;
+    }
+    .prop-crumbs span {
+      position: absolute; display: block; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #f0c86a, #c98a28);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.14);
+    }
+    .prop-crumbs span:nth-child(1) { width: 15px; height: 15px; left: 8px; top: 6px; }
+    .prop-crumbs span:nth-child(2) { width: 11px; height: 11px; left: 38px; top: 20px; }
+    .prop-crumbs span:nth-child(3) { width: 18px; height: 13px; left: 2px; top: 38px; border-radius: 40%; }
+    .prop-crumbs span:nth-child(4) { width: 10px; height: 10px; left: 42px; top: 48px; }
+    .prop-crumbs span:nth-child(5) { width: 13px; height: 13px; left: 20px; top: 66px; }
+    .prop-crumbs span:nth-child(6) { width: 9px; height: 9px; left: 48px; top: 78px; }
 
-        .food-card:hover img {
-            transform: scale(1.05);
-        }
+    .prop-leaf-r {
+      right: 36px; top: 48%;
+      width: 34px; height: 46px;
+      background: linear-gradient(160deg, #5aa868, #2f6b3c);
+      border-radius: 55% 45% 50% 50%;
+      transform: rotate(40deg);
+    }
 
-        .color-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-    </style>
+    .prop-pasta-nest {
+      right: -4px; bottom: 4%;
+      width: 150px; height: 128px;
+      background:
+        radial-gradient(ellipse at 50% 55%, #f2c85e 0%, #d4922a 48%, #b07018 100%);
+      border-radius: 48% 52% 45% 55%;
+      box-shadow: 0 14px 32px rgba(0,0,0,0.18);
+      transform: rotate(6deg);
+      overflow: hidden;
+    }
+    .prop-pasta-nest::before,
+    .prop-pasta-nest::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      border: 3px solid rgba(160, 95, 18, 0.4);
+    }
+    .prop-pasta-nest::before {
+      width: 96px; height: 74px; left: 22px; top: 22px;
+      transform: rotate(-22deg);
+    }
+    .prop-pasta-nest::after {
+      width: 74px; height: 58px; left: 44px; top: 42px;
+      transform: rotate(28deg);
+      border-color: rgba(140, 80, 10, 0.35);
+    }
+    .prop-pasta-nest .strand {
+      position: absolute;
+      height: 4px;
+      border-radius: 99px;
+      background: linear-gradient(90deg, #f5d078, #c88828);
+      opacity: 0.7;
+    }
+    .prop-pasta-nest .strand:nth-child(1) { width: 70px; left: 30px; top: 30px; transform: rotate(-18deg); }
+    .prop-pasta-nest .strand:nth-child(2) { width: 80px; left: 25px; top: 48px; transform: rotate(12deg); }
+    .prop-pasta-nest .strand:nth-child(3) { width: 60px; left: 40px; top: 66px; transform: rotate(-8deg); }
+    .prop-pasta-nest .strand:nth-child(4) { width: 75px; left: 28px; top: 84px; transform: rotate(22deg); }
+
+    /* —— Shell —— */
+    .shell {
+      position: relative;
+      z-index: 1;
+      width: min(1120px, 90%);
+      height: min(720px, 86%);
+      background: var(--shell);
+      border-radius: 38px;
+      box-shadow:
+        0 42px 90px rgba(40, 35, 30, 0.24),
+        0 10px 28px rgba(40, 35, 30, 0.1);
+      display: grid;
+      grid-template-columns: 198px 1fr;
+      overflow: hidden;
+    }
+
+    /* —— Sidebar —— */
+    .sidebar {
+      background: linear-gradient(180deg, #f7f0de 0%, #f0e6cf 50%, #e9dfc4 100%);
+      padding: 26px 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      border-right: 1px solid rgba(220, 210, 190, 0.55);
+    }
+
+    .brand {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 10px;
+    }
+    .stat .n {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+    .stat .l {
+      font-size: 8.5px;
+      color: var(--muted);
+      margin-top: 2px;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+    }
+
+    .side-block h4 {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .side-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .side-pair .n { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; }
+    .side-pair .l { font-size: 8.5px; color: var(--muted); margin-top: 2px; }
+
+    .cook-card {
+      background: rgba(255,255,255,0.42);
+      border-radius: 16px;
+      padding: 12px 12px 14px;
+      border: 1px solid rgba(230, 220, 200, 0.75);
+      margin-top: 2px;
+    }
+    .cook-card .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .cook-card .t { font-size: 11px; font-weight: 500; color: var(--ink); }
+    .cook-card .sub { font-size: 9px; color: var(--muted); }
+    .dots {
+      display: flex;
+      gap: 6px;
+      margin: 6px 0 10px;
+    }
+    .dots i {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      display: block;
+    }
+    .dots i:nth-child(1) { background: #d45a4a; }
+    .dots i:nth-child(2) { background: #d4922a; }
+    .dots i:nth-child(3) { background: #6db37a; }
+    .dots i:nth-child(4) { background: #e8c45a; }
+
+    .mini-bars { display: flex; flex-direction: column; gap: 7px; }
+    .mini-bars .bar {
+      height: 5px;
+      border-radius: 99px;
+      background: #e4dcc8;
+      overflow: hidden;
+    }
+    .mini-bars .bar > span {
+      display: block;
+      height: 100%;
+      border-radius: 99px;
+    }
+
+    .toggle-block { margin-top: auto; padding-top: 6px; }
+    .toggle-block .label {
+      font-size: 10px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .toggle {
+      width: 40px; height: 22px;
+      background: #e0d6c0;
+      border-radius: 99px;
+      position: relative;
+      border: none;
+      flex-shrink: 0;
+    }
+    .toggle::after {
+      content: '';
+      position: absolute;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      top: 3px; left: 3px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    .toggle.on { background: linear-gradient(90deg, #e0b85a, #c89840); }
+    .toggle.on::after { left: 21px; }
+    .toggle-meta {
+      font-size: 8.5px;
+      color: var(--muted);
+      line-height: 1.3;
+    }
+
+    .side-footer {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .pill-btn {
+      flex: 1;
+      height: 28px;
+      border-radius: 99px;
+      border: none;
+      background: linear-gradient(90deg, #e8c45a, #d4a040);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 500;
+      font-family: inherit;
+      box-shadow: 0 4px 10px rgba(200, 150, 40, 0.25);
+    }
+    .icon-btn {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 1px solid #ddd2bc;
+      background: rgba(255,255,255,0.55);
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    /* —— Main —— */
+    .main {
+      background: linear-gradient(180deg, #ffffff 0%, #faf9f6 100%);
+      padding: 24px 28px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      min-width: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      position: relative;
+      z-index: 2;
+      min-height: 210px;
+    }
+    .top-left { width: 42%; min-width: 0; }
+    .eyebrow {
+      font-size: 10px;
+      color: var(--muted-2);
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+    .title {
+      font-size: 30px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      line-height: 1.12;
+    }
+
+    .metrics {
+      display: flex;
+      align-items: flex-end;
+      gap: 32px;
+      margin-top: 18px;
+    }
+    .metric .val {
+      font-size: 38px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--ink);
+    }
+    .metric .meta {
+      font-size: 9.5px;
+      color: var(--muted);
+      margin-top: 5px;
+      max-width: 100px;
+      line-height: 1.35;
+    }
+    .metric-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 9.5px;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+    .metric-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #c8c0b4;
+    }
+
+    .tile-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .tile {
+      width: 74px; height: 56px;
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 600;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+      color: #fff;
+    }
+    .tile.mint {
+      background: linear-gradient(145deg, #b5d4c0, #8fb89e);
+    }
+    .tile.gold {
+      background: linear-gradient(145deg, #edd4a8, #d8b47a);
+    }
+    .tile small {
+      font-size: 8px;
+      font-weight: 400;
+      opacity: 0.92;
+      margin-top: 2px;
+    }
+
+    /* Hero food area — top right of main */
+    .hero-foods {
+      position: absolute;
+      top: 8px;
+      right: 20px;
+      width: 460px;
+      height: 230px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .top-actions {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      display: flex;
+      gap: 8px;
+      z-index: 4;
+    }
+    .top-actions .chip {
+      height: 26px;
+      padding: 0 14px;
+      border-radius: 99px;
+      border: none;
+      font-family: inherit;
+      font-size: 10px;
+      font-weight: 500;
+      background: linear-gradient(90deg, #e8c45a, #d4a040);
+      color: #fff;
+      box-shadow: 0 3px 8px rgba(200,150,40,0.2);
+    }
+    .top-actions .chip.ghost {
+      background: #fff;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      box-shadow: none;
+    }
+    .float-icon {
+      position: absolute;
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      color: var(--muted);
+      z-index: 4;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .float-icon.a { top: 56px; right: 200px; }
+    .float-icon.b { top: 72px; right: 36px; }
+
+    /* Mint leaves */
+    .mint-leaf {
+      position: absolute;
+      left: 18px; top: 6px;
+      width: 72px; height: 80px;
+      z-index: 3;
+      filter: drop-shadow(0 6px 10px rgba(40,80,40,0.18));
+    }
+    .mint-leaf .blade {
+      position: absolute;
+      background: linear-gradient(160deg, #7cbc8a 0%, #3d8a55 100%);
+      border-radius: 60% 40% 55% 45% / 70% 30% 70% 30%;
+    }
+    .mint-leaf .blade.a {
+      width: 38px; height: 60px; left: 6px; top: 2px; transform: rotate(-20deg);
+    }
+    .mint-leaf .blade.b {
+      width: 34px; height: 54px; left: 28px; top: 14px; transform: rotate(24deg);
+      background: linear-gradient(160deg, #6aaf78 0%, #357a48 100%);
+    }
+    .mint-leaf .vein {
+      position: absolute;
+      width: 1.5px;
+      background: rgba(255,255,255,0.35);
+      height: 42px;
+      left: 24px; top: 14px;
+      transform: rotate(-16deg);
+      border-radius: 2px;
+    }
+
+    /* Plate of cracked flat pasta / focaccia chips */
+    .plate {
+      position: absolute;
+      left: 70px; top: 28px;
+      width: 168px; height: 168px;
+      border-radius: 50%;
+      background: linear-gradient(160deg, #a88868 0%, #7a5a42 55%, #5c4230 100%);
+      box-shadow:
+        0 18px 36px rgba(60,40,20,0.28),
+        inset 0 2px 6px rgba(255,255,255,0.12);
+      z-index: 2;
+      overflow: hidden;
+    }
+    .plate::before {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border-radius: 50%;
+      background: linear-gradient(160deg, #8a6a4c, #6a4a32);
+      box-shadow: inset 0 0 0 3px rgba(90,60,40,0.35);
+    }
+    .chip-piece {
+      position: absolute;
+      background:
+        linear-gradient(145deg, #f0c86a 0%, #e0a848 40%, #d4922a 100%);
+      border-radius: 28% 40% 32% 38%;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    }
+    .chip-piece .seed {
+      position: absolute;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #2a2018;
+      box-shadow:
+        12px 8px 0 #1a1410,
+        22px -4px 0 #2c2218,
+        6px 18px 0 #241c14,
+        28px 14px 0 #1e1812,
+        16px 22px 0 #2a2018,
+        34px 4px 0 #18120e;
+    }
+    .chip-piece.c1 {
+      width: 78px; height: 62px;
+      left: 28px; top: 36px;
+      transform: rotate(-12deg);
+      z-index: 3;
+    }
+    .chip-piece.c2 {
+      width: 70px; height: 56px;
+      left: 58px; top: 58px;
+      transform: rotate(18deg);
+      background: linear-gradient(145deg, #ecc25a 0%, #d49838 50%, #c08028 100%);
+      z-index: 2;
+    }
+    .chip-piece.c3 {
+      width: 64px; height: 52px;
+      left: 40px; top: 78px;
+      transform: rotate(-4deg);
+      background: linear-gradient(145deg, #f2cc70 0%, #dca040 55%, #c88828 100%);
+      z-index: 4;
+    }
+    .chip-piece.c4 {
+      width: 48px; height: 40px;
+      left: 78px; top: 42px;
+      transform: rotate(32deg);
+      z-index: 1;
+    }
+    .chip-piece .seed { left: 10px; top: 12px; }
+
+    /* Flowing spaghetti / tagliatelle */
+    .spaghetti {
+      position: absolute;
+      right: 8px; top: 10px;
+      width: 210px; height: 200px;
+      z-index: 2;
+      filter: drop-shadow(0 12px 20px rgba(180,120,20,0.28));
+    }
+    .spaghetti svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    /* Product cards row */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 8px;
+      position: relative;
+      z-index: 2;
+    }
+    .product {
+      background: #fff;
+      border-radius: 18px;
+      padding: 12px 12px 14px;
+      border: 1px solid rgba(232, 226, 214, 0.9);
+      box-shadow: 0 8px 22px rgba(40,35,30,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .product .ph {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .product h3 {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .product .tag {
+      font-size: 8px;
+      color: var(--muted);
+      background: #f5f2ea;
+      padding: 2px 7px;
+      border-radius: 99px;
+    }
+    .bowl-wrap {
+      height: 92px;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+    .product .dots-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 2px;
+    }
+    .product .dots-row .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+    }
+    .product .dots-row .bar {
+      flex: 1;
+      height: 4px;
+      border-radius: 99px;
+      background: #ece6da;
+      overflow: hidden;
+    }
+    .product .dots-row .bar > i {
+      display: block;
+      height: 100%;
+      border-radius: 99px;
+    }
+    .product .meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 8px;
+      color: var(--muted);
+    }
+
+    /* Bowl graphics */
+    .bowl {
+      width: 100px; height: 72px;
+      position: relative;
+    }
+    .bowl .base {
+      position: absolute;
+      left: 8px; right: 8px; bottom: 0;
+      height: 36px;
+      border-radius: 0 0 48% 48% / 0 0 80% 80%;
+      background: linear-gradient(180deg, #e8e4dc 0%, #d4cec2 100%);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+    }
+    .bowl .rim {
+      position: absolute;
+      left: 4px; right: 4px; bottom: 28px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #f4f0e8, #ddd6c8);
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.6);
+    }
+    .bowl .fill {
+      position: absolute;
+      left: 10px; right: 10px; bottom: 18px;
+      height: 42px;
+      border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
+      overflow: hidden;
+    }
+
+    /* Grain fill */
+    .fill.grain {
+      background:
+        radial-gradient(circle at 20% 40%, #e8c45a 0 3px, transparent 3.5px),
+        radial-gradient(circle at 40% 55%, #d4a040 0 2.5px, transparent 3px),
+        radial-gradient(circle at 60% 35%, #f0cc60 0 3px, transparent 3.5px),
+        radial-gradient(circle at 75% 60%, #c89838 0 2.8px, transparent 3.2px),
+        radial-gradient(circle at 30% 70%, #e0b850 0 2.5px, transparent 3px),
+        radial-gradient(circle at 55% 75%, #d4a848 0 3px, transparent 3.5px),
+        radial-gradient(circle at 85% 40%, #e8c050 0 2.5px, transparent 3px),
+        linear-gradient(180deg, #f0c85a, #d4922a);
+      background-size: 100% 100%;
+    }
+    .fill.grain::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle, #c88828 1.2px, transparent 1.4px);
+      background-size: 7px 7px;
+      opacity: 0.45;
+    }
+
+    /* Swirled pasta nest */
+    .fill.swirl {
+      background: radial-gradient(ellipse at 50% 55%, #f0c45a 0%, #d4922a 55%, #b87820 100%);
+    }
+    .fill.swirl::before {
+      content: '';
+      position: absolute;
+      inset: 6px 10px;
+      border-radius: 50%;
+      border: 3px solid rgba(160, 90, 15, 0.35);
+      transform: rotate(-20deg);
+    }
+    .fill.swirl::after {
+      content: '';
+      position: absolute;
+      inset: 14px 18px;
+      border-radius: 50%;
+      border: 2.5px solid rgba(140, 80, 10, 0.3);
+      transform: rotate(35deg);
+    }
+
+    /* Mixed beans / berries */
+    .fill.mix {
+      background: linear-gradient(180deg, #4a3828 0%, #2a2018 100%);
+    }
+    .fill.mix span {
+      position: absolute;
+      border-radius: 50%;
+      box-shadow: inset -1px -1px 2px rgba(0,0,0,0.3);
+    }
+    .fill.mix span:nth-child(1) { width: 14px; height: 14px; left: 18%; top: 30%; background: #2a1810; }
+    .fill.mix span:nth-child(2) { width: 12px; height: 12px; left: 40%; top: 22%; background: #c45a28; }
+    .fill.mix span:nth-child(3) { width: 11px; height: 11px; left: 58%; top: 38%; background: #1a1008; }
+    .fill.mix span:nth-child(4) { width: 13px; height: 13px; left: 28%; top: 52%; background: #d46830; }
+    .fill.mix span:nth-child(5) { width: 10px; height: 10px; left: 52%; top: 58%; background: #2c1c12; }
+    .fill.mix span:nth-child(6) { width: 12px; height: 12px; left: 70%; top: 28%; background: #e07838; }
+    .fill.mix span:nth-child(7) { width: 9px; height: 9px; left: 72%; top: 52%; background: #1e140c; }
+    .fill.mix span:nth-child(8) { width: 11px; height: 11px; left: 42%; top: 42%; background: #b85020; }
+
+    /* Pasta salad with tomato/basil */
+    .fill.salad {
+      background: linear-gradient(180deg, #f0c45a 0%, #d4a040 100%);
+    }
+    .fill.salad .bit {
+      position: absolute;
+      border-radius: 40%;
+    }
+    .fill.salad .bit.t { width: 16px; height: 14px; background: #e04030; border-radius: 50%; box-shadow: 0 0 0 1px rgba(160,30,20,0.3); }
+    .fill.salad .bit.g { width: 14px; height: 18px; background: linear-gradient(145deg, #5ab868, #2e7a40); border-radius: 60% 40% 55% 45%; }
+    .fill.salad .bit.p {
+      width: 28px; height: 8px;
+      background: linear-gradient(90deg, #f5d078, #d4922a);
+      border-radius: 99px;
+      transform: rotate(-20deg);
+    }
+    .fill.salad .bit:nth-child(1) { left: 20%; top: 28%; }
+    .fill.salad .bit:nth-child(2) { left: 48%; top: 22%; transform: rotate(25deg); }
+    .fill.salad .bit:nth-child(3) { left: 35%; top: 48%; }
+    .fill.salad .bit:nth-child(4) { left: 60%; top: 42%; transform: rotate(-10deg); }
+    .fill.salad .bit:nth-child(5) { left: 25%; top: 55%; width: 22px; }
+    .fill.salad .bit:nth-child(6) { left: 55%; top: 58%; }
+    .fill.salad .bit:nth-child(7) { left: 70%; top: 30%; width: 12px; height: 12px; }
+
+    /* Bottom nutrition bars */
+    .bottom {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px 20px;
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      align-content: start;
+      padding-top: 4px;
+    }
+    .bottom-col h5 {
+      font-size: 9px;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nbar {
+      display: grid;
+      grid-template-columns: 16px 1fr;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .nbar .ico {
+      width: 16px; height: 16px;
+      border-radius: 4px;
+      display: grid;
+      place-items: center;
+      font-size: 9px;
+      overflow: hidden;
+    }
+    .nbar .track {
+      height: 5px;
+      border-radius: 99px;
+      background: #ece6da;
+      overflow: hidden;
+    }
+    .nbar .track > span {
+      display: block;
+      height: 100%;
+      border-radius: 99px;
+    }
+
+    .ico.g { background: radial-gradient(circle at 40% 40%, #f0c86a, #d4922a); }
+    .ico.r { background: radial-gradient(circle at 40% 40%, #e87850, #c05030); }
+    .ico.m { background: radial-gradient(circle at 40% 40%, #6db37a, #3d7a4a); }
+    .ico.b { background: radial-gradient(circle at 40% 40%, #5a4030, #2a1c14); }
+
+    /* Soft ambient light on main */
+    .main::after {
+      content: '';
+      position: absolute;
+      top: -40px; right: -20px;
+      width: 320px; height: 280px;
+      background: radial-gradient(ellipse, rgba(255,250,240,0.9) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+  </style>
 </head>
-<body class="min-h-screen">
-    <div class="flex h-screen">
-        <!-- Left Sidebar -->
-        <div class="sidebar w-80 p-8 rounded-r-[32px] flex flex-col">
-            <!-- Logo -->
-            <div class="mb-12">
-                <h1 class="text-2xl font-bold text-[#2B2520]">Cosmo app</h1>
-                <p class="text-sm text-[#8B7E74]">Commetrics</p>
-            </div>
-
-            <!-- Nutrition Metrics -->
-            <div class="space-y-6 mb-12">
-                <div class="metric-card">
-                    <div class="flex justify-between mb-2">
-                        <span class="text-sm text-[#8B7E74]">kcal/gram</span>
-                        <span class="text-sm text-[#8B7E74]">carbs</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <div class="text-3xl font-bold text-[#2B2520]">20</div>
-                        <div class="text-3xl font-bold text-[#2B2520]">20</div>
-                    </div>
-                    <div class="flex justify-between mt-1">
-                        <span class="text-xs text-[#8B7E74]">fats/gram</span>
-                        <span class="text-xs text-[#8B7E74]">sugars</span>
-                    </div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="flex justify-between mb-2">
-                        <span class="text-sm text-[#8B7E74]">fat / gram</span>
-                        <span class="text-sm text-[#8B7E74]">carb / gram</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <div class="text-3xl font-bold text-[#2B2520]">22g</div>
-                        <div class="text-3xl font-bold text-[#2B2520]">28g</div>
-                    </div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="mb-2">
-                        <span class="text-sm text-[#8B7E74]">Cassava</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <div class="text-3xl font-bold text-[#2B2520]">22l</div>
-                        <div class="text-3xl font-bold text-[#2B2520]">22a</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Color Palette -->
-            <div class="mb-8">
-                <h3 class="text-sm text-[#8B7E74] mb-3">Cannara confiva</h3>
-                <div class="flex gap-3">
-                    <div class="color-dot bg-[#C87850]"></div>
-                    <div class="color-dot bg-[#D4A574]"></div>
-                    <div class="color-dot bg-[#9BC4A8]"></div>
-                    <div class="color-dot bg-[#F4D35E]"></div>
-                </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="space-y-3 mb-8">
-                <button class="w-full bg-white py-3 rounded-full text-sm font-medium text-[#2B2520] card-shadow hover:shadow-lg transition">
-                    <span class="text-[#8B7E74]">carbo</span> <span class="font-semibold">mooving</span>
-                </button>
-                <button class="w-full bg-[#D4A574] py-3 rounded-full text-sm font-medium text-white hover:bg-[#C89564] transition">
-                    <span class="opacity-80">opern</span>
-                </button>
-            </div>
-
-            <!-- Bottom Slider -->
-            <div class="mt-auto">
-                <div class="flex items-center justify-between mb-3">
-                    <div class="text-xs text-[#8B7E74]">€ 0.004/ag</div>
-                    <div class="flex gap-2">
-                        <div class="w-8 h-8 rounded-full bg-[#D4A574] flex items-center justify-center text-white text-xs">1</div>
-                        <div class="w-8 h-8 rounded-full bg-white card-shadow flex items-center justify-center text-xs">+</div>
-                    </div>
-                </div>
-                <div class="relative">
-                    <div class="h-2 bg-[#E8E4DC] rounded-full">
-                        <div class="h-full w-2/3 bg-[#D4A574] rounded-full"></div>
-                    </div>
-                    <div class="absolute -top-1 left-2/3 w-4 h-4 bg-[#D4A574] rounded-full border-4 border-white"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Main Content -->
-        <div class="flex-1 p-12 overflow-y-auto">
-            <!-- Header -->
-            <div class="mb-12">
-                <div class="flex justify-between items-start mb-8">
-                    <div>
-                        <h2 class="text-4xl font-bold text-[#2B2520] mb-2">Canary Comifig</h2>
-                        <p class="text-[#8B7E74] max-w-2xl leading-relaxed">
-                            Milk knowledger peanestered canno ornasio lactose free pocafella
-                            javelle anassi danominnaa navella alonsani baserasa
-                        </p>
-                    </div>
-                    <div class="flex gap-3">
-                        <button class="w-12 h-12 bg-[#D4A574] rounded-2xl flex items-center justify-center text-white card-shadow hover:shadow-lg transition">
-                            →
-                        </button>
-                        <button class="w-12 h-12 bg-[#D4A574] rounded-2xl flex items-center justify-center text-white card-shadow hover:shadow-lg transition">
-                            ☰
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Main Food Image Card -->
-                <div class="bg-white rounded-[32px] p-12 card-shadow mb-12 relative overflow-hidden">
-                    <div class="grid grid-cols-2 gap-12 items-center">
-                        <div>
-                            <h3 class="text-6xl font-bold text-[#2B2520] mb-8">52g</h3>
-                            <div class="space-y-6">
-                                <div>
-                                    <div class="flex justify-between mb-2">
-                                        <span class="text-sm text-[#8B7E74]">carbohydrates</span>
-                                        <span class="text-sm font-semibold text-[#2B2520]">52g</span>
-                                    </div>
-                                    <p class="text-xs text-[#8B7E74]">lacto-vegetables</p>
-                                </div>
-
-                                <div>
-                                    <div class="flex justify-between mb-2">
-                                        <span class="text-sm text-[#8B7E74]">calcium</span>
-                                        <span class="text-sm font-semibold text-[#2B2520]">52g</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-4 mt-8">
-                                <div class="bg-[#9BC4A8] rounded-3xl p-6 text-center">
-                                    <div class="text-3xl font-bold text-white mb-1">8.178</div>
-                                    <div class="text-sm text-white/80">lacoses</div>
-                                </div>
-                                <div class="bg-[#D4A574] rounded-3xl p-6 text-center">
-                                    <div class="text-3xl font-bold text-white mb-1">5.38</div>
-                                    <div class="text-sm text-white/80">fav</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="relative">
-                            <!-- Hero Food Image Placeholder -->
-                            <div class="aspect-square rounded-3xl bg-gradient-to-br from-[#F9F5E8] to-[#F5F1E4] flex items-center justify-center">
-                                <div class="text-center">
-                                    <div class="text-8xl mb-4">🍝</div>
-                                    <p class="text-[#8B7E74] text-sm">Canary Comifig</p>
-                                </div>
-                            </div>
-                            <!-- Floating Icons -->
-                            <div class="absolute -top-4 -right-4 w-16 h-16 bg-[#D4A574] rounded-2xl flex items-center justify-center text-2xl card-shadow">
-                                🌿
-                            </div>
-                            <div class="absolute top-1/2 -left-8 w-16 h-16 bg-[#D4A574] rounded-2xl flex items-center justify-center text-2xl card-shadow">
-                                🧈
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-8 text-xs text-[#8B7E74]">
-                        <p>Pasta energy: 62 km</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Food Product Grid -->
-            <div class="grid grid-cols-4 gap-6 mb-12">
-                <!-- Product Card 1 -->
-                <div class="bg-white rounded-[28px] p-6 card-shadow food-card">
-                    <div class="flex justify-between items-start mb-4">
-                        <h4 class="font-semibold text-[#2B2520]">Bambooginal</h4>
-                        <button class="w-10 h-10 bg-[#F5F3ED] rounded-xl flex items-center justify-center">
-                            <span class="text-sm">→</span>
-                        </button>
-                    </div>
-                    <div class="aspect-square rounded-2xl bg-gradient-to-br from-[#F9F5E8] to-[#F5F1E4] flex items-center justify-center mb-4 overflow-hidden">
-                        <div class="text-6xl">🥣</div>
-                    </div>
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="w-2 h-2 bg-[#C87850] rounded-full"></span>
-                        <span class="w-2 h-2 bg-[#D4A574] rounded-full"></span>
-                        <span class="w-2 h-2 bg-[#9BC4A8] rounded-full"></span>
-                        <span class="text-xs text-[#8B7E74] ml-auto">350 cal</span>
-                    </div>
-                    <button class="w-full py-2 border border-[#E8E4DC] rounded-xl text-xs text-[#8B7E74] hover:border-[#D4A574] transition">
-                        Add to cart
-                    </button>
-                    <p class="text-xs text-[#8B7E74] mt-3">€ 1.59/€ kilobytes</p>
-                </div>
-
-                <!-- Product Card 2 -->
-                <div class="bg-white rounded-[28px] p-6 card-shadow food-card">
-                    <div class="flex justify-between items-start mb-4">
-                        <h4 class="font-semibold text-[#2B2520]">Sermonevretes</h4>
-                        <button class="w-10 h-10 bg-[#F5F3ED] rounded-xl flex items-center justify-center">
-                            <span class="text-sm">→</span>
-                        </button>
-                    </div>
-                    <div class="aspect-square rounded-2xl bg-gradient-to-br from-[#F9F5E8] to-[#F5F1E4] flex items-center justify-center mb-4">
-                        <div class="text-6xl">🍝</div>
-                    </div>
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="w-2 h-2 bg-[#9BC4A8] rounded-full"></span>
-                        <span class="w-2 h-2 bg-[#D4A574] rounded-full"></span>
-                        <span class="w-2 h-2 bg-[#C87850] rounded-full"></span>
-                        <span class="text-xs text-[#8B7E74] ml-auto">280 cal</span>
-                    </div>
-                    <button class="w-full py-2 border border-[#E8E4DC] rounded-xl text-xs text-[#8B7E74] hover:border-[#D4A574] transition">
-                        Add to cart
-                    </button>
-                    <p class="text-xs text-[#8B7E74] mt-3">€ 2.10/€ serving</p>
-                </div>
-
-                <!-- Product Card 3 -->
-                <div class="bg-white rounded-[28px] p-6 card-shadow food-card">
-                    <div class="flex justify-between items-start mb-4">
-                        <h4 class="font-semibold text-[#2B2520]">Ditey-intensite</h4>
-                        <button class="w-10 h-10 bg-[#F5F3ED] rounded-xl flex items-center justify-center">
-                            <span class="text-sm">→</span>
-                        </button>
-                    </div>
-                    <div class="aspect-square rounded-2xl bg-gradient-to-br from-[#F9F5E8] to-[#F5F1E4] flex items-center justify-center mb-4">
-                        <div class="text-6xl">🫐</div>
-                    </div>
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="w-2 h-2 bg-[#9BC4A8] rounded-full"></span>
-                        <span class="w-2 h-2 bg-[#D4A574] rounded-full"></span>
-                        <span class="w-2 h-2 bg-[#C87850] rounded-full"></span>
-                        <span class="text-xs text-[#8B7E74] ml-auto">180 cal</span>
-                    </div>
-                    <button class="w-full py-2 border border-[#E8E4DC] rounded-xl text-xs text-[#8B7E74] hover:border-[#D4A574] transition">
-                        Add to cart
-                    </button>
-                    <p class="text-xs text-[#8B7E74] mt-3">€ 3.20/€ bowl</p>
-                </div>
-
-                <!-- Product Card 4 -->
-                <div class="bg-white rounded-[28px] p-6 card-shadow food-card">
-                    <div class="flex justify-between items-start mb-4">
-                        <h4 class="font-semibold text-[#2B2520]">Ravon Chase</h4>
-                        <button class="w-10 h-10 bg-[#F5F3ED] rounded-xl flex items-center justify-center">
-                            <span class="text-sm">→</span>
-                        </button>
-                    </div>
-                    <div class="aspect-square rounded-2xl bg-gradient-to-br from-[#F9F5E8] to-[#F5F1E4] flex items-center justify-center mb-4">
-                        <div class="text-6xl">🥗</div>
-                    </div>
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="w-2 h-2 bg-[#9BC4A8] rounded-full"></span>
-                        <span class="w-2 h-2 bg-[#D4A574] rounded-full"></span>
-                        <span class="w-2 h-2 bg-[#C87850] rounded-full"></span>
-                        <span class="text-xs text-[#8B7E74] ml-auto">220 cal</span>
-                    </div>
-                    <button class="w-full py-2 border border-[#E8E4DC] rounded-xl text-xs text-[#8B7E74] hover:border-[#D4A574] transition">
-                        Add to cart
-                    </button>
-                    <p class="text-xs text-[#8B7E74] mt-3">€ 1.80/€ plate</p>
-                </div>
-            </div>
-
-            <!-- Nutrition Charts Section -->
-            <div class="bg-white rounded-[32px] p-8 card-shadow">
-                <h3 class="text-xl font-bold text-[#2B2520] mb-8">Nutrition Breakdown</h3>
-
-                <div class="grid grid-cols-4 gap-12">
-                    <!-- Chart 1 -->
-                    <div>
-                        <h4 class="text-sm font-semibold text-[#2B2520] mb-6">Cortina flour ingredients</h4>
-                        <div class="space-y-4">
-                            <div>
-                                <div class="flex items-center gap-3 mb-2">
-                                    <div class="text-2xl">🌾</div>
-                                    <div class="flex-1">
-                                        <div class="progress-bar bg-[#E8E4DC]">
-                                            <div class="progress-fill bg-[#D4A574]" style="width: 80%"></div>
-                                        </div>
-                                    </div>
-                                    <span class="text-xs text-[#8B7E74]">320g</span>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex items-center gap-3 mb-2">
-                                    <div class="text-2xl">🌾</div>
-                                    <div class="flex-1">
-                                        <div class="progress-bar bg-[#E8E4DC]">
-                                            <div class="progress-fill bg-[#C87850]" style="width: 45%"></div>
-                                        </div>
-                                    </div>
-                                    <span class="text-xs text-[#8B7E74]">180g</span>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex items-center gap-3 mb-2">
-                                    <div class="text-2xl">🌾</div>
-                                    <div class="flex-1">
-                                        <div class="progress-bar bg-[#E8E4DC]">
-                                            <div class="progress-fill bg-[#D4A574]" style="width: 60%"></div>
-                                        </div>
-                                    </div>
-                                    <span class="text-xs text-[#8B7E74]">240g</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Chart 2 -->
-                    <div>
-                        <h4 class="text-sm font-semibold text-[#2B2520] mb-6">Cortina baking/s cannabrium conf...</h4>
-                        <div class="space-y-4">
-                            <div>
-                                <div class="flex items-center gap-3 mb-2">
-                                    <div class="text-2xl">🍝</div>
-                                    <div class="flex-1">
-                                        <div class="progress-bar bg-[#E8E4DC]">
-                                            <div class="progress-fill bg-[#C87850]" style="width: 70%"></div>
-                                        </div>
-                                    </div>
-                                    <span class="text-xs text-[#8B7E74]">280g</span>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex items-center gap-3 mb-2">
-                                    <div class="text-2xl">🍝</div>
-                                    <div class="flex-1">
-                                        <div class="progress-bar bg-[#E8E4DC]">
-                                            <div class="progress-fill bg-[#C87850]" style="width: 50%"></div>
-                                        </div>
-                                    </div>
-                                    <span class="text-xs text-[#8B7E74]">200g</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Chart 3 -->
-                    <div>
-                        <h4 class="text-sm font-semibold text-[#2B2520] mb-6">clearosure fonto</h4>
-                        <div class="space-y-4">
-                            <div>
-                                <div class="flex items-center gap-3 mb-2">
-                                    <div class="text-2xl">🥬</div>
-                                    <div class="flex-1">
-                                        <div class="progress-bar bg-[#E8E4DC]">
-                                            <div class="progress-fill bg-[#9BC4A8]" style="width: 85%"></div>
-                                        </div>
-                                    </div>
-                                    <span class="text-xs text-[#8B7E74]">340g</span>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex items-center gap-3 mb-2">
-                                    <div class="text-2xl">🥬</div>
-                                    <div class="flex-1">
-                                        <div class="progress-bar bg-[#E8E4DC]">
-                                            <div class="progress-fill bg-[#9BC4A8]" style="width: 55%"></div>
-                                        </div>
-                                    </div>
-                                    <span class="text-xs text-[#8B7E74]">220g</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Chart 4 -->
-                    <div>
-                        <h4 class="text-sm font-semibold text-[#2B2520] mb-6">feel sloga warm drinkarma</h4>
-                        <div class="space-y-4">
-                            <div>
-                                <div class="flex items-center gap-3 mb-2">
-                                    <div class="text-2xl">☕</div>
-                                    <div class="flex-1">
-                                        <div class="progress-bar bg-[#E8E4DC]">
-                                            <div class="progress-fill bg-[#D4A574]" style="width: 90%"></div>
-                                        </div>
-                                    </div>
-                                    <span class="text-xs text-[#8B7E74]">360g</span>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex items-center gap-3 mb-2">
-                                    <div class="text-2xl">☕</div>
-                                    <div class="flex-1">
-                                        <div class="progress-bar bg-[#E8E4DC]">
-                                            <div class="progress-fill bg-[#D4A574]" style="width: 65%"></div>
-                                        </div>
-                                    </div>
-                                    <span class="text-xs text-[#8B7E74]">260g</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pagination -->
-                <div class="flex justify-center gap-3 mt-8">
-                    <button class="w-8 h-1 bg-[#2B2520] rounded-full"></button>
-                    <button class="w-8 h-1 bg-[#E8E4DC] rounded-full hover:bg-[#D4A574] transition"></button>
-                    <button class="w-8 h-1 bg-[#E8E4DC] rounded-full hover:bg-[#D4A574] transition"></button>
-                    <button class="w-8 h-1 bg-[#E8E4DC] rounded-full hover:bg-[#D4A574] transition"></button>
-                </div>
-            </div>
-        </div>
+<body>
+  <div class="stage">
+    <!-- Outer food props -->
+    <div class="prop prop-leaf-tl" aria-hidden="true"></div>
+    <div class="prop prop-bloom" aria-hidden="true"></div>
+    <div class="prop prop-citrus" aria-hidden="true"></div>
+    <div class="prop prop-leaf-bl" aria-hidden="true"></div>
+    <div class="prop prop-caviar" aria-hidden="true"></div>
+    <div class="prop prop-crumbs" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
     </div>
+    <div class="prop prop-leaf-r" aria-hidden="true"></div>
+    <div class="prop prop-pasta-nest" aria-hidden="true">
+      <i class="strand"></i><i class="strand"></i><i class="strand"></i><i class="strand"></i>
+    </div>
+
+    <div class="shell">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="brand">Cœdre spe</div>
+
+        <div class="stat-grid">
+          <div class="stat"><div class="n">20</div><div class="l">Lebstus</div></div>
+          <div class="stat"><div class="n">70</div><div class="l">cмrce</div></div>
+          <div class="stat"><div class="n">278</div><div class="l">Doserci</div></div>
+          <div class="stat"><div class="n">283</div><div class="l">Someri</div></div>
+        </div>
+
+        <div class="side-block">
+          <h4>Crocate · Glanate</h4>
+          <div class="side-pair">
+            <div><div class="n">221</div><div class="l">di fero</div></div>
+            <div><div class="n">284</div><div class="l">someri</div></div>
+          </div>
+        </div>
+
+        <div class="cook-card">
+          <div class="row">
+            <span class="t">Cooking</span>
+            <span class="sub">Bne</span>
+          </div>
+          <div class="dots"><i></i><i></i><i></i><i></i></div>
+          <div class="mini-bars">
+            <div class="bar"><span style="width:72%;background:linear-gradient(90deg,#e8a050,#d47840)"></span></div>
+            <div class="bar"><span style="width:48%;background:linear-gradient(90deg,#e0b860,#c89840)"></span></div>
+            <div class="bar"><span style="width:85%;background:linear-gradient(90deg,#8fbf9a,#6da87e)"></span></div>
+            <div class="bar"><span style="width:36%;background:linear-gradient(90deg,#e8c45a,#d4a040)"></span></div>
+          </div>
+        </div>
+
+        <div class="toggle-block">
+          <div class="label">S alleng</div>
+          <div class="toggle-row">
+            <button class="toggle on" type="button" aria-label="toggle"></button>
+            <div class="toggle-meta">Amont seli<br/>cire nate</div>
+          </div>
+          <div class="toggle-row">
+            <button class="toggle" type="button" aria-label="toggle"></button>
+            <div class="toggle-meta">Frane sel<br/>coini</div>
+          </div>
+        </div>
+
+        <div class="side-footer">
+          <button class="pill-btn" type="button">Create</button>
+          <div class="icon-btn">⊕</div>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <section class="main">
+        <div class="top-actions">
+          <button class="chip ghost" type="button">Edit</button>
+          <button class="chip" type="button">Share</button>
+        </div>
+        <div class="float-icon a">⌂</div>
+        <div class="float-icon b">◎</div>
+
+        <div class="top-bar">
+          <div class="top-left">
+            <div class="eyebrow">Culinates</div>
+            <h1 class="title">Codye Comig</h1>
+
+            <div class="metrics">
+              <div class="metric">
+                <div class="metric-badge">kcal</div>
+                <div class="val">578</div>
+                <div class="meta">Protein dense pasta plate</div>
+              </div>
+              <div class="metric">
+                <div class="metric-badge">score</div>
+                <div class="val">526</div>
+                <div class="meta">Daily balance index</div>
+              </div>
+            </div>
+
+            <div class="tile-row">
+              <div class="tile mint">e·70<small>carbs</small></div>
+              <div class="tile gold">·30<small>fat</small></div>
+            </div>
+          </div>
+
+          <div class="hero-foods" aria-hidden="true">
+            <div class="mint-leaf">
+              <div class="blade a"></div>
+              <div class="blade b"></div>
+              <div class="vein"></div>
+            </div>
+
+            <div class="plate">
+              <div class="chip-piece c1"><span class="seed"></span></div>
+              <div class="chip-piece c2"><span class="seed"></span></div>
+              <div class="chip-piece c3"><span class="seed"></span></div>
+              <div class="chip-piece c4"><span class="seed"></span></div>
+            </div>
+
+            <div class="spaghetti">
+              <svg viewBox="0 0 220 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="sg1" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#f5d078"/>
+                    <stop offset="50%" stop-color="#e8b84a"/>
+                    <stop offset="100%" stop-color="#c88828"/>
+                  </linearGradient>
+                  <linearGradient id="sg2" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#f0c45a"/>
+                    <stop offset="100%" stop-color="#b87820"/>
+                  </linearGradient>
+                </defs>
+                <!-- flowing ribbon strands -->
+                <path d="M40 20 C80 10, 100 60, 90 100 C80 140, 120 160, 160 120 C190 90, 200 40, 170 20"
+                      stroke="url(#sg1)" stroke-width="14" stroke-linecap="round" fill="none" opacity="0.95"/>
+                <path d="M55 30 C90 25, 105 70, 95 105 C85 138, 125 155, 155 125"
+                      stroke="url(#sg2)" stroke-width="11" stroke-linecap="round" fill="none" opacity="0.9"/>
+                <path d="M30 40 C70 30, 95 75, 88 115 C80 150, 110 170, 150 145 C175 125, 190 80, 175 50"
+                      stroke="#e0a838" stroke-width="9" stroke-linecap="round" fill="none" opacity="0.85"/>
+                <path d="M70 15 C100 40, 110 80, 100 120 C95 145, 130 165, 165 140"
+                      stroke="#f2cc68" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.8"/>
+                <path d="M48 55 C85 50, 100 90, 92 125 C88 150, 120 168, 155 150"
+                      stroke="#d4922a" stroke-width="7" stroke-linecap="round" fill="none" opacity="0.75"/>
+                <path d="M100 10 C130 25, 145 70, 130 110 C120 140, 150 155, 185 130 C200 115, 205 70, 190 45"
+                      stroke="url(#sg1)" stroke-width="12" stroke-linecap="round" fill="none" opacity="0.92"/>
+                <path d="M115 25 C140 45, 150 85, 138 120 C132 145, 160 160, 190 140"
+                      stroke="#e8b040" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.88"/>
+                <path d="M130 8 C160 20, 175 65, 160 105 C150 135, 175 155, 200 125"
+                      stroke="#f5d070" stroke-width="9" stroke-linecap="round" fill="none" opacity="0.85"/>
+                <!-- top highlight bundle -->
+                <path d="M150 5 C175 15, 190 50, 175 85 C165 110, 185 125, 205 100"
+                      stroke="#ffe08a" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.7"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 product bowls -->
+        <div class="products">
+          <article class="product">
+            <div class="ph">
+              <h3>Beensbaginet</h3>
+              <span class="tag">grain</span>
+            </div>
+            <div class="bowl-wrap">
+              <div class="bowl">
+                <div class="fill grain"></div>
+                <div class="rim"></div>
+                <div class="base"></div>
+              </div>
+            </div>
+            <div class="dots-row">
+              <span class="dot" style="background:#d4a040"></span>
+              <div class="bar"><i style="width:70%;background:#e0b860"></i></div>
+            </div>
+            <div class="meta-row"><span>122 kcal</span><span>4.2g</span></div>
+          </article>
+
+          <article class="product">
+            <div class="ph">
+              <h3>Søønnestolee</h3>
+              <span class="tag">pasta</span>
+            </div>
+            <div class="bowl-wrap">
+              <div class="bowl">
+                <div class="fill swirl"></div>
+                <div class="rim"></div>
+                <div class="base"></div>
+              </div>
+            </div>
+            <div class="dots-row">
+              <span class="dot" style="background:#c89840"></span>
+              <div class="bar"><i style="width:55%;background:#d4a050"></i></div>
+            </div>
+            <div class="meta-row"><span>186 kcal</span><span>6.1g</span></div>
+          </article>
+
+          <article class="product">
+            <div class="ph">
+              <h3>Piborg·salvo</h3>
+              <span class="tag">mix</span>
+            </div>
+            <div class="bowl-wrap">
+              <div class="bowl">
+                <div class="fill mix">
+                  <span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span>
+                </div>
+                <div class="rim"></div>
+                <div class="base"></div>
+              </div>
+            </div>
+            <div class="dots-row">
+              <span class="dot" style="background:#5a4030"></span>
+              <div class="bar"><i style="width:40%;background:#8a6a50"></i></div>
+            </div>
+            <div class="meta-row"><span>98 kcal</span><span>3.4g</span></div>
+          </article>
+
+          <article class="product">
+            <div class="ph">
+              <h3>Posati Cucce</h3>
+              <span class="tag">fresh</span>
+            </div>
+            <div class="bowl-wrap">
+              <div class="bowl">
+                <div class="fill salad">
+                  <span class="bit t"></span>
+                  <span class="bit g"></span>
+                  <span class="bit p"></span>
+                  <span class="bit t"></span>
+                  <span class="bit p"></span>
+                  <span class="bit g"></span>
+                  <span class="bit t"></span>
+                </div>
+                <div class="rim"></div>
+                <div class="base"></div>
+              </div>
+            </div>
+            <div class="dots-row">
+              <span class="dot" style="background:#6db37a"></span>
+              <div class="bar"><i style="width:62%;background:#8fbf9a"></i></div>
+            </div>
+            <div class="meta-row"><span>154 kcal</span><span>5.0g</span></div>
+          </article>
+        </div>
+
+        <!-- Bottom bar grid -->
+        <div class="bottom">
+          <div class="bottom-col">
+            <h5>Getting beer vegetables</h5>
+            <div class="nbar"><div class="ico g"></div><div class="track"><span style="width:85%;background:#2a241e"></span></div></div>
+            <div class="nbar"><div class="ico r"></div><div class="track"><span style="width:55%;background:#d46840"></span></div></div>
+            <div class="nbar"><div class="ico g"></div><div class="track"><span style="width:70%;background:#e0b050"></span></div></div>
+          </div>
+          <div class="bottom-col">
+            <h5>Sifting baking cream·oil</h5>
+            <div class="nbar"><div class="ico g"></div><div class="track"><span style="width:60%;background:#d46840"></span></div></div>
+            <div class="nbar"><div class="ico r"></div><div class="track"><span style="width:40%;background:#c05030"></span></div></div>
+            <div class="nbar"><div class="ico g"></div><div class="track"><span style="width:75%;background:#e0a848"></span></div></div>
+          </div>
+          <div class="bottom-col">
+            <h5>Illustrated farro</h5>
+            <div class="nbar"><div class="ico m"></div><div class="track"><span style="width:80%;background:#6db37a"></span></div></div>
+            <div class="nbar"><div class="ico m"></div><div class="track"><span style="width:50%;background:#5aa868"></span></div></div>
+            <div class="nbar"><div class="ico m"></div><div class="track"><span style="width:65%;background:#7cbc8a"></span></div></div>
+          </div>
+          <div class="bottom-col">
+            <h5>Next deep wave shinning</h5>
+            <div class="nbar"><div class="ico g"></div><div class="track"><span style="width:45%;background:#e0b050"></span></div></div>
+            <div class="nbar"><div class="ico b"></div><div class="track"><span style="width:72%;background:#c89840"></span></div></div>
+            <div class="nbar"><div class="ico b"></div><div class="track"><span style="width:38%;background:#d4a050"></span></div></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
 </body>
 </html>
