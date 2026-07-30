@@ -1,23 +1,69 @@
 /**
  * Capture each pixel-perfect demo and score vs its inspo image (ui-verify style).
  * Usage: node tools/verify-inspo.mjs [baseUrl]
- * Base default: http://127.0.0.1:8765
+ * If baseUrl omitted, starts its own python http.server on an ephemeral port
+ * under the repo root (avoids the 404-all-shots failure mode).
  */
 import puppeteer from 'puppeteer-core';
-import { mkdirSync, writeFileSync, existsSync } from 'fs';
+import { mkdirSync, writeFileSync, existsSync, readFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { spawn } from 'child_process';
+import { createServer } from 'http';
+import { createReadStream, statSync } from 'fs';
+import { extname } from 'path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const OUT = join(ROOT, 'tools', 'verify-out');
-const BASE = process.argv[2] || 'http://127.0.0.1:8765';
 const PYTHON = join(ROOT, '.venv-verify', 'bin', 'python');
 
 mkdirSync(OUT, { recursive: true });
 mkdirSync(join(OUT, 'shots'), { recursive: true });
 mkdirSync(join(OUT, 'diffs'), { recursive: true });
+
+const MIME = {
+  '.html': 'text/html; charset=utf-8',
+  '.js': 'text/javascript',
+  '.css': 'text/css',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.svg': 'image/svg+xml',
+  '.md': 'text/markdown',
+};
+
+/** Static server rooted at ROOT so paths match GH Pages layout. */
+function startStaticServer() {
+  return new Promise((resolve, reject) => {
+    const server = createServer((req, res) => {
+      try {
+        let urlPath = decodeURIComponent((req.url || '/').split('?')[0]);
+        if (urlPath === '/') urlPath = '/index.html';
+        const filePath = join(ROOT, urlPath.replace(/^\//, ''));
+        if (!filePath.startsWith(ROOT) || !existsSync(filePath) || statSync(filePath).isDirectory()) {
+          res.writeHead(404, { 'Content-Type': 'text/plain' });
+          res.end('Not Found: ' + urlPath);
+          return;
+        }
+        res.writeHead(200, { 'Content-Type': MIME[extname(filePath)] || 'application/octet-stream' });
+        createReadStream(filePath).pipe(res);
+      } catch (e) {
+        res.writeHead(500);
+        res.end(String(e));
+      }
+    });
+    server.listen(0, '127.0.0.1', () => {
+      const { port } = server.address();
+      resolve({ server, base: `http://127.0.0.1:${port}` });
+    });
+    server.on('error', reject);
+  });
+}
+
+let BASE = process.argv[2] || null;
+let ownedServer = null;
 
 /** Same pairs as index.html gallery (inspo-linked only) */
 const PAIRS = [
@@ -50,11 +96,18 @@ async function shootDemo(browser, pair) {
   const page = await browser.newPage();
   await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
   const url = `${BASE}/${pair.demo}`;
-  try {
-    await page.goto(url, { waitUntil: 'networkidle2', timeout: 45000 });
-  } catch (e) {
-    // some pages never idle (CDN); try load
-    await page.goto(url, { waitUntil: 'load', timeout: 45000 }).catch(() => {});
+  const resp = await page.goto(url, { waitUntil: 'load', timeout: 45000 }).catch((e) => {
+    throw new Error(`goto failed ${url}: ${e.message}`);
+  });
+  const status = resp ? resp.status() : 0;
+  if (status !== 200) {
+    await page.close();
+    throw new Error(`HTTP ${status} for ${url} — refusing to score (would poison OpenCV)`);
+  }
+  const bodyText = await page.evaluate(() => document.body?.innerText?.slice(0, 200) || '');
+  if (/Error code: 404|Not Found/i.test(bodyText)) {
+    await page.close();
+    throw new Error(`404 body for ${url} — refusing to score`);
   }
   await page.evaluate((css) => {
     const s = document.createElement('style');
@@ -66,6 +119,11 @@ async function shootDemo(browser, pair) {
   const shotPath = join(OUT, 'shots', `${pair.id}_demo.png`);
   await page.screenshot({ path: shotPath, fullPage: false });
   await page.close();
+  // reject tiny/blank shots (historical failure: all 18KB identical 404 frames)
+  const bytes = statSync(shotPath).size;
+  if (bytes < 40000) {
+    throw new Error(`shot too small (${bytes}B) for ${pair.id} — likely blank/404`);
+  }
   return shotPath;
 }
 
@@ -205,6 +263,22 @@ print(json.dumps(results, indent=2))
   });
 }
 
+if (!BASE) {
+  ownedServer = await startStaticServer();
+  BASE = ownedServer.base;
+  console.log('owned static server', BASE);
+}
+
+// sanity: dashboard must 200
+{
+  const r = await fetch(`${BASE}/pixel-perfect/dashboard.html`);
+  if (!r.ok) {
+    if (ownedServer) ownedServer.server.close();
+    throw new Error(`preflight failed: dashboard HTTP ${r.status} at ${BASE}`);
+  }
+  console.log('preflight OK', r.status);
+}
+
 const browser = await puppeteer.launch({
   executablePath: '/usr/bin/chromium',
   headless: 'new',
@@ -219,6 +293,10 @@ try {
       console.warn('skip missing inspo', pair.id);
       continue;
     }
+    if (!existsSync(join(ROOT, pair.demo))) {
+      console.warn('skip missing demo', pair.id);
+      continue;
+    }
     process.stdout.write(`shot ${pair.id}… `);
     const demoShot = await shootDemo(browser, pair);
     console.log('ok');
@@ -230,6 +308,11 @@ try {
   }
 } finally {
   await browser.close();
+  if (ownedServer) ownedServer.server.close();
+}
+
+if (captured.length === 0) {
+  throw new Error('no demos captured — aborting before OpenCV');
 }
 
 console.log('comparing…');
