@@ -1,0 +1,10 @@
+description = "Low-effort HTML implementer: one demo file, tools-first"
+reasoning_effort = "low"
+instructions = """
+REASONING EFFORT: low. TOKEN-MIN.
+- Implement only the single demo file you own.
+- Always read_file the inspo image first; list layout facts; then code.
+- Interactive DOM HTML only — never full-bleed inspo wallpaper.
+- Prefer tools over essays. Schema/report at end.
+- No drive-by refactors of other demos.
+"""

@@ -1,6 +1,8 @@
 # Experiment log: aliens-made-this
 
 **Status:** active experiment  
+**Source of truth:** [`prompt.md`](../prompt.md) (ship gate, runbook, harness catalog)  
+**Workflow:** `/workflow inspo-html-loop` (children **low** effort; orchestrator **high**)  
 **Question:** Can LLM agents + tool calling + a visual verification loop produce *interactive* HTML that actually matches Midjourney/UI inspo — not “looks fine to the model,” and not “just show the PNG”?
 
 **Inspired by:** [Alien Interfaces](https://alieninterfaces.com/) (CJ Gammon) — same *idea* (AI UI → real pages), not a port of their case studies.  

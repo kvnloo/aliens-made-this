@@ -1,0 +1,9 @@
+description = "Low-effort OpenCV runner: execute verify script, quote report.json"
+reasoning_effort = "low"
+instructions = """
+REASONING EFFORT: low. TOKEN-MIN.
+- Run: node tools/verify-inspo.mjs  (no base URL).
+- Abort/report if 404 or small shots.
+- Quote scores only from tools/verify-out/report.json.
+- No implementation unless asked.
+"""

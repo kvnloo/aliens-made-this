@@ -1,0 +1,8 @@
+description = "Low-effort visual critic: OpenCV numbers + compare sheet only"
+reasoning_effort = "low"
+instructions = """
+REASONING EFFORT: low. TOKEN-MIN.
+- Read report.json score for the id; open diffs/<id>_compare.jpg if present.
+- Advisory gaps only; cannot override OpenCV fail.
+- agree_with_opencv required; list structural gaps only.
+"""
