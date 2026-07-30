@@ -1,99 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Abhigyan Mobile App</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      min-height:100vh;font-family:Inter,system-ui,sans-serif;
-      background:linear-gradient(135deg,#c060d0,#f080a0 50%,#f0c080);
-      display:flex;align-items:center;justify-content:center;
-      padding:28px 16px;gap:28px;flex-wrap:wrap;
-    }
-    .phone{
-      width:min(300px,42vw);aspect-ratio:9/19;
-      border-radius:36px;padding:10px;
-      background:linear-gradient(145deg,#2a2a2e,#0e0e10);
-      box-shadow:0 30px 60px rgba(0,0,0,.35),0 0 0 2px #3a3a40, inset 0 0 0 1px rgba(255,255,255,.08);
-      display:flex;flex-direction:column;position:relative;
-      transition:transform .2s ease, box-shadow .2s;
-      cursor:pointer;border:none;color:inherit;
-    }
-    .phone:hover{transform:translateY(-6px);box-shadow:0 40px 80px rgba(0,0,0,.4),0 0 0 2px #5a5a60}
-    .phone:focus-visible{outline:3px solid #7dffb3;outline-offset:4px}
-    .phone.active{outline:3px solid #7dffb3;outline-offset:3px}
-    .notch{
-      position:absolute;top:12px;left:50%;transform:translateX(-50%);
-      width:38%;height:18px;background:#0e0e10;border-radius:0 0 12px 12px;z-index:2;
-    }
-    .screen{
-      flex:1;border-radius:28px;overflow:hidden;position:relative;
-      background:#111 center/cover no-repeat;
-    }
-    .phone.L .screen{background-image:url('../inspo/crops/abhigyan_L.jpg')}
-    .phone.R .screen{background-image:url('../inspo/crops/abhigyan_R.jpg')}
-    .hud{
-      position:absolute;left:0;right:0;bottom:0;padding:12px 10px 14px;
-      background:linear-gradient(180deg,transparent,rgba(0,0,0,.75));
-      display:flex;gap:8px;justify-content:center;opacity:0;
-      transition:opacity .2s;
-    }
-    .phone:hover .hud,.phone.active .hud{opacity:1}
-    .hud button{
-      flex:1;max-width:90px;padding:8px 6px;border-radius:999px;border:1px solid rgba(255,255,255,.25);
-      background:rgba(255,255,255,.12);color:#fff;font-size:11px;font-weight:600;cursor:pointer;
-      backdrop-filter:blur(8px);
-    }
-    .hud button:hover{background:rgba(255,255,255,.22)}
-    .meta{
-      position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
-      font-size:11px;color:rgba(255,255,255,.75);background:rgba(0,0,0,.35);
-      padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);
-      backdrop-filter:blur(8px);z-index:5;text-align:center;max-width:90vw;
-    }
-    .meta strong{color:#7dffb3;font-weight:600}
-  </style>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Abhigyan App</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;gap:2.2vw;
+  padding:3vh 2vw;background:linear-gradient(135deg,#c060d0,#f0c080);font-family:Inter,system-ui,sans-serif;overflow:hidden;
+}
+.phone{
+  height:min(92vh, 880px);aspect-ratio:9/19;max-width:46vw;
+  border-radius:clamp(22px,3vw,36px);padding:clamp(6px,0.8vw,10px);
+  background:#111;box-shadow:0 24px 60px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.1);
+  border:none;cursor:pointer;position:relative;display:flex;padding:7px;
+  transition:transform .15s;
+}
+.phone:hover{transform:translateY(-4px)}
+.phone:focus-visible,.phone.active{outline:2px solid #7dffb3;outline-offset:3px}
+.screen{
+  flex:1;border-radius:clamp(16px,2.2vw,28px);overflow:hidden;
+  background:center/cover no-repeat #000;position:relative;
+}
+.L .screen{background-image:url('../inspo/crops/abhigyan_L.jpg')}
+.R .screen{background-image:url('../inspo/crops/abhigyan_R.jpg')}
+.bar{
+  position:absolute;left:8%;right:8%;bottom:4%;height:4.5%;
+  display:flex;gap:6px;opacity:0;transition:opacity .15s;
+}
+.phone:hover .bar,.phone.active .bar{opacity:1}
+.bar button{
+  flex:1;border:0;border-radius:999px;background:rgba(0,0,0,.45);color:#fff;
+  font-size:10px;font-weight:600;backdrop-filter:blur(6px);cursor:pointer;
+}
+.bar button:hover{background:rgba(125,255,179,.35)}
+#st{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);font-size:11px;
+  color:#fff;background:rgba(0,0,0,.4);padding:5px 10px;border-radius:999px;z-index:5}
+</style>
 </head>
 <body>
-  <button type="button" class="phone L" data-side="left" aria-label="Abhigyan Mobile App left screen">
-    <span class="notch" aria-hidden="true"></span>
-    <div class="screen">
-      <div class="hud">
-        <button type="button" data-act="back">Back</button>
-        <button type="button" data-act="open">Open</button>
-      </div>
-    </div>
-  </button>
-  <button type="button" class="phone R" data-side="right" aria-label="Abhigyan Mobile App right screen">
-    <span class="notch" aria-hidden="true"></span>
-    <div class="screen">
-      <div class="hud">
-        <button type="button" data-act="back">Back</button>
-        <button type="button" data-act="open">Open</button>
-      </div>
-    </div>
-  </button>
-  <div class="meta" id="meta"><strong>hybrid</strong> · interactive chrome · screens = inspo crops · click a phone</div>
-  <script>
-    const meta = document.getElementById('meta');
-    document.querySelectorAll('.phone').forEach(p => {
-      p.addEventListener('click', (e) => {
-        if (e.target.closest('.hud button')) return;
-        document.querySelectorAll('.phone').forEach(x => x.classList.remove('active'));
-        p.classList.add('active');
-        meta.innerHTML = '<strong>selected</strong> · ' + p.dataset.side + ' screen';
-      });
-    });
-    document.querySelectorAll('.hud button').forEach(b => {
-      b.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const side = e.target.closest('.phone').dataset.side;
-        meta.innerHTML = '<strong>' + e.target.dataset.act + '</strong> · ' + side;
-      });
-    });
-  </script>
+<button type="button" class="phone L" data-s="left" aria-label="left"><div class="screen"><div class="bar"><button type="button" data-a="back">Back</button><button type="button" data-a="go">Open</button></div></div></button>
+<button type="button" class="phone R" data-s="right" aria-label="right"><div class="screen"><div class="bar"><button type="button" data-a="back">Back</button><button type="button" data-a="go">Open</button></div></div></button>
+<div id="st">hybrid dual-phone · click to select</div>
+<script>
+const st=document.getElementById('st');
+document.querySelectorAll('.phone').forEach(p=>{
+  p.addEventListener('click',e=>{
+    if(e.target.closest('.bar button'))return;
+    document.querySelectorAll('.phone').forEach(x=>x.classList.remove('active'));
+    p.classList.add('active'); st.textContent='selected · '+p.dataset.s;
+  });
+});
+document.querySelectorAll('.bar button').forEach(b=>b.addEventListener('click',e=>{
+  e.stopPropagation();
+  st.textContent=e.target.dataset.a+' · '+e.target.closest('.phone').dataset.s;
+}));
+</script>
 </body>
 </html>

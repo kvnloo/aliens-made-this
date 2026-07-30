@@ -9,11 +9,11 @@ Living backlog for `inspo-html-loop`. Update after every OpenCV round.
 
 | Field | Value |
 |-------|--------|
-| when | 2026-07-30T21:45:16.936Z (`tools/verify-out/REPORT.md` + `report.json`) |
+| when | 2026-07-30T22:07:37.480Z (`tools/verify-out/REPORT.md` + `report.json`) |
 | command | `node tools/verify-inspo.mjs` |
 | pass_score | **0.55** |
-| fail_count | **16** / 19 |
-| pass_count | **3** (dashboard 0.600, fishing-app 0.628, dashboard-uied 0.644) |
+| fail_count | **14** / 19 |
+| pass_count | **5** (dark-game 0.5573, 3d-landing 0.5905, dashboard 0.5999, fishing-app 0.6285, dashboard-uied 0.6445) |
 | evidence | `tools/verify-out/report.json` |
 | ship_gate | **OPEN** |
 
@@ -23,32 +23,32 @@ Scores quoted from `tools/verify-out/report.json` (`score` field).
 
 | Priority | id | Score | Tag | Residual |
 |----------|-----|-------|-----|----------|
-| P0 | data-viz | 0.275 | A | rewrite — mountain analytics; SSIM 0.276 / edge 0.032 / hist 0.210 |
-| P0 | course | 0.354 | A/C | rewrite — desk/monitor/tablet isometric hero density vs inspo; hist 0.216 |
-| P0 | pizza | 0.374 | C | rewrite — food photography density vs flat UI; edge 0.052 / hist 0.252 |
-| P0 | abhigyan | 0.430 | A | rework — dark finance orbs dual-phone; hist 0.267 |
-| P1 | ocean | 0.464 | A/C | layered landscape / HUD density; edge 0.019 |
-| P1 | nature-mobile | 0.465 | A | botanical dual phones vs inspo/02.jpg composition |
-| P1 | boahat | 0.467 | A/C | photoreal travel dual-phone mass vs thin HTML finance board |
-| P1 | fitness | 0.471 | A | dual dark phones + orange split bg |
-| P1 | isometric | 0.476 | A/B | isometric landing mass + color |
-| P1 | glass | 0.494 | A | dual-phone glass composition (not flat cards) |
-| P1 | 3d-mobile | 0.498 | A/B | 3d phone stack vs inspo/03 |
-| P1 | ux-pizza | 0.502 | C | midjourney food chrome density |
-| P2 | 3d-landing | 0.518 | A/B | 3d landing hero composition; hist 0.268 |
-| P2 | pasta | 0.519 | A/B | pasta dashboard composition + polish |
-| P2 | travel | 0.543 | A/B | travel booking layout; near gate |
-| P2 | dark-game | 0.543 | A/B | dark game UI; near gate |
-| OK | dashboard | 0.600 | B | polish only |
-| OK | fishing-app | 0.628 | B | polish only |
-| OK | dashboard-uied | 0.644 | B | polish only |
+| P0 | abhigyan | 0.3529 | A/B | rewrite — hist −0.1198 / edge 0.0136; dual-phone finance orbs miss color mass |
+| P0 | boahat | 0.4152 | A/C | rework — photoreal travel dual-phone vs thin finance board; hist 0.2359 / edge 0.0255 |
+| P0 | ocean | 0.4160 | A/C | rework — landscape/HUD density; SSIM 0.4381 / edge 0.0276 |
+| P1 | nature-mobile | 0.4450 | A | rework — botanical dual phones vs inspo/02.jpg; hist 0.2707 |
+| P1 | fitness | 0.4711 | A/B | rework — dual dark phones + orange split; hist 0.3611 / edge 0.0089 |
+| P1 | glass | 0.4771 | A | rework — dual-phone glass composition (not flat cards); edge 0.0156 / hist 0.4945 |
+| P1 | pizza | 0.4873 | C | rework — food photography density vs flat UI; SSIM 0.4997 |
+| P1 | 3d-mobile | 0.4899 | A/B | rework — 3d phone stack vs inspo/03; hist 0.4333 |
+| P1 | course | 0.4990 | A/C | rework — desk/monitor/tablet isometric hero density; edge 0.0228 |
+| P1 | data-viz | 0.5021 | A | rework — mountain analytics composition; edge 0.0359 / SSIM 0.5194 |
+| P2 | travel | 0.5151 | A/B | rework — travel booking layout; near gate; hist 0.454 |
+| P2 | ux-pizza | 0.5155 | C | rework — midjourney food chrome density |
+| P2 | isometric | 0.5311 | A/B | rework — isometric landing mass + color |
+| P2 | pasta | 0.5402 | A/B | rework — pasta dashboard composition + polish |
+| OK | dark-game | 0.5573 | B | polish only |
+| OK | 3d-landing | 0.5905 | B | polish only |
+| OK | dashboard | 0.5999 | B | polish only |
+| OK | fishing-app | 0.6285 | B | polish only |
+| OK | dashboard-uied | 0.6445 | B | polish only |
 
 ## Infra
 
 - [x] verify-inspo owns static server; abort on 404/small shots  
 - [x] Forbidden wallpaper stubs  
-- [x] `report.json` is score source of truth (16 failing &lt; 0.55)  
-- [ ] Gate OPEN while any inspo-linked id &lt; pass_score (16 failing)
+- [x] `report.json` is score source of truth (14 failing &lt; 0.55)  
+- [ ] Gate OPEN while any inspo-linked id &lt; pass_score (14 failing)
 
 ## Do not
 

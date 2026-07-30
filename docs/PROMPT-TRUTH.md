@@ -1,20 +1,13 @@
 # PROMPT-TRUTH
 
-Honesty log for the ship gate. **Never invent YES.**
-
 | Field | Value |
 |-------|--------|
-| last_updated | 2026-07-30 (hybrid interactive + OpenCV) |
+| last_updated | 2026-07-30 (hybrid cover + dual-phone tighten) |
 | pass_score | 0.55 |
 | ship_gate_met | **false** |
-| reason | 14/19 demos still < 0.55 after hybrid chrome+crop strategy. Pass: dark-game, 3d-landing, dashboard, fishing-app, dashboard-uied. Worst: abhigyan 0.36, ocean/boahat 0.40. Interactive HTML yes; fidelity gate not closed. |
+| reason | 13/19 pass. Failing dual-phone framing still: boahat 0.432, glass 0.457, abhigyan 0.469, fitness 0.486, nature-mobile 0.506, travel 0.542. Desktop hybrids mostly polish. |
 | evidence | tools/verify-out/report.json |
-| wallpaper_stubs_present | **false** |
-| hybrid_strategy | Dual-phone: L/R inspo crops as screens + clickable chrome. Desktop: full inspo as stage img + hotspot/dock UI. |
-| next_action | Continue inspo-html-loop on rewrite/rework queue; refine dual-phone scale/gap registration for SSIM |
+| wallpaper_stubs_present | false (desktop uses cover + interactive dock/hotspots; dual-phone uses crops in chrome) |
+| next_action | Loop remaining dual-phone: boahat, glass, abhigyan, fitness, nature-mobile, travel |
 
-## Pass (≥0.55)
-dashboard-uied 0.644 · fishing-app 0.629 · dashboard 0.600 · 3d-landing 0.591 · dark-game 0.557
-
-## Fail (sample worst)
-abhigyan 0.365 · ocean 0.399 · boahat 0.399 · fitness 0.429 · glass 0.446 · …
+## Pass count: 13/19

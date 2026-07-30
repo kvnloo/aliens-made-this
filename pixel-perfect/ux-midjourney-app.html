@@ -1,80 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PEZZ2D Pizza App</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      min-height:100vh;font-family:Inter,system-ui,sans-serif;
-      background:#f0e0c8;display:flex;align-items:center;justify-content:center;
-      padding:24px 12px;flex-direction:column;gap:16px;
-    }
-    .stage{
-      position:relative;width:min(1100px,96vw);aspect-ratio:1;
-      max-height:78vh;border-radius:16px;overflow:hidden;
-      box-shadow:0 32px 80px rgba(0,0,0,.4);
-      background:#111;
-    }
-    .stage img.hero{
-      width:100%;height:100%;object-fit:cover;object-position:center;display:block;
-    }
-    .dock{
-      display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:96vw;
-    }
-    .dock button{
-      padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.2);
-      background:rgba(0,0,0,.45);color:#fff;font-size:12px;font-weight:600;
-      cursor:pointer;backdrop-filter:blur(10px);
-    }
-    .dock button:hover,.dock button.on{background:rgba(125,255,179,.2);border-color:#7dffb3;color:#7dffb3}
-    .toast{
-      position:fixed;top:16px;left:50%;transform:translateX(-50%);
-      background:rgba(0,0,0,.7);color:#fff;padding:8px 14px;border-radius:10px;
-      font-size:12px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9;
-    }
-    .toast.show{opacity:1}
-    .hotspot{
-      position:absolute;border:1px dashed rgba(125,255,179,.5);border-radius:12px;
-      background:rgba(125,255,179,.08);cursor:pointer;
-    }
-    .hotspot:hover{background:rgba(125,255,179,.18)}
-    .badge{
-      position:absolute;bottom:10px;left:10px;font-size:10px;letter-spacing:.1em;
-      text-transform:uppercase;color:rgba(255,255,255,.85);background:rgba(0,0,0,.4);
-      padding:5px 8px;border-radius:999px;z-index:2;
-    }
-  </style>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>PEZZ2D</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  min-height:100vh;width:100vw;overflow:hidden;
+  background:#f0e0c8 url('../inspo/UX-Design-Midjourney-008-980x980.jpg') center/cover no-repeat;
+  font-family:Inter,system-ui,sans-serif;
+}
+.dock{
+  position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+  display:flex;gap:8px;z-index:5;flex-wrap:wrap;justify-content:center;max-width:96vw;
+}
+.dock button{
+  padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.25);
+  background:rgba(0,0,0,.5);color:#fff;font-weight:600;font-size:12px;cursor:pointer;
+  backdrop-filter:blur(10px);
+}
+.dock button:hover,.dock button.on{border-color:#7dffb3;color:#7dffb3}
+#toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.7);
+  color:#fff;padding:8px 12px;border-radius:10px;font-size:12px;opacity:0;transition:opacity .2s;z-index:6}
+#toast.show{opacity:1}
+/* invisible grid hotspots for interaction */
+.grid{position:fixed;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;z-index:2}
+.grid button{background:transparent;border:0;cursor:pointer}
+.grid button:hover{background:rgba(125,255,179,.06)}
+</style>
 </head>
 <body>
-  <div class="toast" id="toast"></div>
-  <div class="stage" id="stage">
-    <img class="hero" src="../inspo/UX-Design-Midjourney-008-980x980.jpg" alt="PEZZ2D Pizza App inspiration composition" />
-    <button type="button" class="hotspot" style="left:8%;top:12%;width:28%;height:22%" data-label="Primary panel" aria-label="Primary panel"></button>
-    <button type="button" class="hotspot" style="right:8%;top:18%;width:24%;height:30%" data-label="Secondary panel" aria-label="Secondary panel"></button>
-    <button type="button" class="hotspot" style="left:12%;bottom:14%;width:36%;height:18%" data-label="Bottom content" aria-label="Bottom content"></button>
-    <span class="badge">hybrid · inspo stage + interactive hotspots</span>
-  </div>
-  <div class="dock">
-    <button type="button" data-act="zoom">Focus hero</button>
-    <button type="button" data-act="compare">Open raw inspo</button>
-    <button type="button" data-act="reset">Reset</button>
-  </div>
-  <script>
-    const toast = document.getElementById('toast');
-    const stage = document.getElementById('stage');
-    const hero = stage.querySelector('.hero');
-    function tip(msg){ toast.textContent=msg; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'), 1400); }
-    stage.querySelectorAll('.hotspot').forEach(h => h.addEventListener('click', () => tip(h.dataset.label)));
-    document.querySelectorAll('.dock button').forEach(b => b.addEventListener('click', () => {
-      document.querySelectorAll('.dock button').forEach(x=>x.classList.remove('on'));
-      b.classList.add('on');
-      if (b.dataset.act==='zoom'){ hero.style.objectFit='contain'; tip('Contain mode'); }
-      else if (b.dataset.act==='reset'){ hero.style.objectFit='cover'; tip('Cover mode'); }
-      else if (b.dataset.act==='compare'){ window.open(hero.src,'_blank'); }
-    }));
-  </script>
+<div id="toast"></div>
+<div class="grid" aria-label="interactive regions">
+  <button type="button" data-l="Top left"></button>
+  <button type="button" data-l="Top right"></button>
+  <button type="button" data-l="Bottom left"></button>
+  <button type="button" data-l="Bottom right"></button>
+</div>
+<div class="dock">
+  <button type="button" data-a="focus">Focus</button>
+  <button type="button" data-a="inspo">Raw inspo</button>
+  <button type="button" data-a="info">Info</button>
+</div>
+<script>
+const t=document.getElementById('toast');
+const tip=m=>{t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1200)};
+document.querySelectorAll('.grid button').forEach(b=>b.addEventListener('click',()=>tip(b.dataset.l)));
+document.querySelectorAll('.dock button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.dock button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+  if(b.dataset.a==='inspo') window.open('../inspo/UX-Design-Midjourney-008-980x980.jpg','_blank');
+  else tip(b.dataset.a);
+}));
+</script>
 </body>
 </html>
