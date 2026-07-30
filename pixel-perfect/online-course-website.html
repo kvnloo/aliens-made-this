@@ -3,25 +3,1294 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Online Course Platform</title>
+  <title>DERAAGALARD MULISO — Online Course Scene</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet" />
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{
-      min-height:100vh;width:100vw;overflow:hidden;
-      background:#000 url('../inspo/Ds_Beautiful_online_course_website_ui_ux_ui_ux_website_shallow__2a8acff8-57de-4994-a426-5a39ec7acf04.png') center center / cover no-repeat;
-      font-family:Inter,system-ui,sans-serif;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #050403;
+      font-family: 'DM Sans', system-ui, sans-serif;
     }
-    .badge{
-      position:fixed;bottom:14px;left:14px;z-index:2;
-      font-size:10px;letter-spacing:.12em;text-transform:uppercase;
-      color:rgba(255,255,255,.85);background:rgba(0,0,0,.4);
-      backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);
-      padding:6px 10px;border-radius:999px;
+
+    /* ========== FULL PRODUCT SHOT ========== */
+    .scene {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 48% 62% at 92% 38%, rgba(255, 168, 58, 0.72) 0%, transparent 58%),
+        radial-gradient(ellipse 28% 36% at 96% 30%, rgba(255, 210, 120, 0.45) 0%, transparent 50%),
+        radial-gradient(ellipse 70% 55% at 18% 42%, #12100e 0%, transparent 62%),
+        linear-gradient(102deg,
+          #060504 0%,
+          #0d0b09 28%,
+          #17130f 52%,
+          #3a2814 74%,
+          #c47822 100%);
+    }
+
+    .scene::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 60;
+      background:
+        radial-gradient(ellipse 88% 78% at 48% 42%, transparent 42%, rgba(0,0,0,0.55) 100%);
+    }
+
+    .lamp {
+      position: absolute;
+      right: -8%;
+      top: 8%;
+      width: 52%;
+      height: 78%;
+      background: radial-gradient(ellipse at 62% 36%,
+        rgba(255, 200, 100, 0.62) 0%,
+        rgba(255, 150, 50, 0.28) 32%,
+        rgba(180, 90, 20, 0.08) 55%,
+        transparent 72%);
+      filter: blur(6px);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ========== DESK ========== */
+    .desk {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 27%;
+      z-index: 5;
+      background:
+        linear-gradient(180deg,
+          #d2b07a 0%,
+          #c49a62 12%,
+          #b88952 38%,
+          #a67542 70%,
+          #8f6238 100%);
+      box-shadow:
+        inset 0 14px 28px rgba(255, 230, 170, 0.16),
+        inset 0 1px 0 rgba(255, 245, 210, 0.4),
+        0 -24px 70px rgba(0,0,0,0.55);
+    }
+
+    .desk::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.4;
+      background:
+        repeating-linear-gradient(90deg,
+          transparent 0, transparent 48px,
+          rgba(70, 40, 15, 0.07) 48px, rgba(70, 40, 15, 0.07) 50px),
+        repeating-linear-gradient(0deg,
+          transparent 0, transparent 2px,
+          rgba(50, 30, 10, 0.05) 2px, rgba(50, 30, 10, 0.05) 3px);
+    }
+
+    .desk-edge {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 5.5%;
+      z-index: 6;
+      background: linear-gradient(180deg, #7a5830 0%, #4e361c 100%);
+    }
+
+    /* Soft desk reflection under devices */
+    .desk-glow {
+      position: absolute;
+      left: 18%;
+      right: 18%;
+      bottom: 22%;
+      height: 10%;
+      z-index: 7;
+      background: radial-gradient(ellipse at 50% 0%,
+        rgba(255, 220, 160, 0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ========== iMAC ========== */
+    .imac-wrap {
+      position: absolute;
+      left: 50%;
+      top: 3.8%;
+      transform: translateX(-51%);
+      width: min(74vw, 980px);
+      z-index: 10;
+      filter: drop-shadow(0 28px 48px rgba(0,0,0,0.58));
+    }
+
+    .imac-bezel {
+      background: linear-gradient(180deg, #ececef 0%, #c9c9ce 42%, #b2b2b8 100%);
+      border-radius: 16px 16px 3px 3px;
+      padding: 12px 12px 0;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.9),
+        inset 0 -1px 0 rgba(0,0,0,0.06),
+        0 1px 3px rgba(0,0,0,0.18);
+    }
+
+    .imac-screen {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10.05;
+      border-radius: 3px;
+      overflow: hidden;
+      background: #26342c;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.45), inset 0 0 50px rgba(0,0,0,0.22);
+    }
+
+    .imac-chin {
+      height: 26px;
+      margin: 0 -12px;
+      background: linear-gradient(180deg, #d8d8dc 0%, #bcbcc2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0 0 3px 3px;
+      position: relative;
+    }
+
+    .imac-camera {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #222;
+      box-shadow: inset 0 0 2px #000, 0 0 0 1px rgba(255,255,255,0.12);
+    }
+
+    .imac-logo {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #d4d4d8, #8e8e96);
+      opacity: 0.65;
+    }
+
+    .imac-neck {
+      width: 88px;
+      height: 50px;
+      margin: 0 auto;
+      background: linear-gradient(90deg, #9a9aa0 0%, #d0d0d4 28%, #ececf0 50%, #c4c4ca 72%, #909098 100%);
+      clip-path: polygon(27% 0%, 73% 0%, 100% 100%, 0% 100%);
+    }
+
+    .imac-base {
+      width: 176px;
+      height: 11px;
+      margin: -1px auto 0;
+      background: linear-gradient(180deg, #dadade 0%, #aeaea4 100%);
+      border-radius: 2px 2px 42% 42%;
+      box-shadow: 0 5px 14px rgba(0,0,0,0.4);
+    }
+
+    /* ========== DESKTOP UI ========== */
+    .ui-d {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      color: #d6e0d8;
+      background:
+        radial-gradient(ellipse 55% 50% at 58% 48%, rgba(90, 120, 100, 0.55) 0%, transparent 60%),
+        radial-gradient(ellipse 35% 40% at 78% 28%, rgba(120, 150, 120, 0.25) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 35% at 20% 75%, rgba(30, 45, 38, 0.5) 0%, transparent 50%),
+        linear-gradient(148deg, #24332b 0%, #354840 38%, #2c3c33 68%, #1e2a24 100%);
+    }
+
+    .ui-d::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 48% 38% at 62% 42%, rgba(200, 220, 190, 0.1) 0%, transparent 62%),
+        radial-gradient(ellipse 80% 60% at 50% 100%, rgba(0,0,0,0.25) 0%, transparent 50%);
+    }
+
+    /* soft floating dust / light streaks */
+    .ui-d::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.35;
+      background:
+        radial-gradient(circle at 72% 22%, rgba(255,255,220,0.35) 0 1px, transparent 2px),
+        radial-gradient(circle at 40% 30%, rgba(255,255,220,0.25) 0 1px, transparent 2px),
+        radial-gradient(circle at 55% 18%, rgba(255,255,220,0.2) 0 1px, transparent 2px);
+      background-size: 100% 100%;
+    }
+
+    .ui-nav {
+      position: relative;
+      z-index: 8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2.8% 4.2% 0;
+    }
+
+    .ui-logo {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: clamp(7px, 1.05vw, 12px);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #eef3ef;
+    }
+
+    .ui-nav ul {
+      display: flex;
+      gap: clamp(10px, 1.7vw, 22px);
+      list-style: none;
+    }
+
+    .ui-nav a {
+      color: rgba(195, 210, 200, 0.72);
+      text-decoration: none;
+      font-size: clamp(5.5px, 0.78vw, 9.5px);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+
+    .ui-body {
+      position: relative;
+      z-index: 6;
+      display: grid;
+      grid-template-columns: 0.95fr 1.4fr 0.82fr;
+      gap: 1.5%;
+      padding: 2% 4% 2.5%;
+      height: calc(100% - 11%);
+      align-items: center;
+    }
+
+    .ui-copy h1 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: clamp(10px, 1.55vw, 20px);
+      line-height: 1.12;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: #f2f6f3;
+      margin-bottom: 5%;
+    }
+
+    .ui-copy p {
+      font-size: clamp(5px, 0.62vw, 8px);
+      line-height: 1.55;
+      color: #8fa094;
+      margin-bottom: 7%;
+      max-width: 92%;
+    }
+
+    .cards {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .gcard {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      background: rgba(35, 48, 42, 0.58);
+      border: 1px solid rgba(175, 195, 180, 0.14);
+      border-radius: 9px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+    }
+
+    .gcard .ic {
+      width: clamp(16px, 1.85vw, 26px);
+      height: clamp(16px, 1.85vw, 26px);
+      border-radius: 6px;
+      background: linear-gradient(145deg, #556b60, #364840);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .gcard .ic svg { width: 55%; height: 55%; opacity: 0.85; }
+
+    .gcard strong {
+      display: block;
+      font-size: clamp(5px, 0.68vw, 8.5px);
+      font-weight: 600;
+      color: #e3ebe5;
+      margin-bottom: 1px;
+    }
+
+    .gcard span {
+      font-size: clamp(4px, 0.5vw, 6.5px);
+      color: #8a9a8e;
+    }
+
+    /* Center isometric stage */
+    .stage {
+      position: relative;
+      height: 96%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .iso {
+      position: relative;
+      width: 96%;
+      height: 92%;
+    }
+
+    .iso-ground {
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      bottom: 16%;
+      height: 24%;
+      background: linear-gradient(180deg, #4e6558 0%, #364a40 100%);
+      border-radius: 45% / 50%;
+      transform: rotateX(52deg) scaleY(0.5);
+      box-shadow:
+        0 10px 24px rgba(0,0,0,0.4),
+        inset 0 2px 0 rgba(255,255,255,0.07);
+    }
+
+    .iso-mist {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      bottom: 22%;
+      height: 35%;
+      background: radial-gradient(ellipse at 50% 70%, rgba(160, 180, 150, 0.18) 0%, transparent 65%);
+      filter: blur(4px);
+      z-index: 1;
+    }
+
+    /* Main orange building */
+    .iso-b1 {
+      position: absolute;
+      left: 30%;
+      bottom: 30%;
+      width: 20%;
+      height: 40%;
+      z-index: 5;
+      background: linear-gradient(145deg, #f4b25a 0%, #e89235 42%, #c56a18 100%);
+      border-radius: 3px 5px 2px 2px;
+      transform: skewY(-5deg);
+      box-shadow:
+        5px 7px 0 #a35416,
+        10px 6px 18px rgba(0,0,0,0.32),
+        inset 2px 2px 0 rgba(255,255,255,0.28),
+        inset -3px 0 0 rgba(0,0,0,0.12);
+    }
+
+    .iso-b1::before {
+      content: '';
+      position: absolute;
+      top: 14%;
+      left: 16%;
+      width: 26%;
+      height: 16%;
+      background: rgba(35, 48, 42, 0.55);
+      border-radius: 2px;
+      box-shadow:
+        28px 0 0 rgba(35, 48, 42, 0.55),
+        0 26px 0 rgba(35, 48, 42, 0.35),
+        28px 26px 0 rgba(35, 48, 42, 0.3);
+    }
+
+    .iso-b1::after {
+      content: '';
+      position: absolute;
+      top: -12%;
+      left: 8%;
+      right: 8%;
+      height: 14%;
+      background: linear-gradient(90deg, #f7c86e, #e89235);
+      border-radius: 2px;
+      transform: skewX(-18deg);
+      box-shadow: 0 -2px 0 rgba(255,255,255,0.22);
+    }
+
+    /* Teal mid block */
+    .iso-b2 {
+      position: absolute;
+      left: 48%;
+      bottom: 29%;
+      width: 13%;
+      height: 24%;
+      z-index: 4;
+      background: linear-gradient(145deg, #5f7f70, #3d564c);
+      border-radius: 2px;
+      transform: skewY(-4deg);
+      box-shadow: 3px 4px 0 #2a3a32, 5px 8px 14px rgba(0,0,0,0.28);
+    }
+
+    .iso-b2::before {
+      content: '';
+      position: absolute;
+      top: 18%;
+      left: 22%;
+      width: 28%;
+      height: 22%;
+      background: rgba(25, 35, 30, 0.45);
+      border-radius: 1px;
+      box-shadow: 18px 0 0 rgba(25, 35, 30, 0.4);
+    }
+
+    /* Short yellow block */
+    .iso-b3 {
+      position: absolute;
+      left: 20%;
+      bottom: 28%;
+      width: 12%;
+      height: 16%;
+      z-index: 6;
+      background: linear-gradient(145deg, #f0c050, #d89028);
+      border-radius: 2px;
+      transform: skewY(-3deg) rotate(-2deg);
+      box-shadow: 2px 3px 0 #a86818, 3px 5px 10px rgba(0,0,0,0.25);
+    }
+
+    /* Book stack */
+    .iso-books {
+      position: absolute;
+      left: 16%;
+      bottom: 27%;
+      width: 11%;
+      z-index: 7;
+    }
+
+    .iso-books i {
+      display: block;
+      height: 7px;
+      margin-bottom: 3px;
+      border-radius: 1px;
+      box-shadow: 1px 2px 3px rgba(0,0,0,0.25);
+    }
+
+    .iso-books i:nth-child(1) {
+      width: 100%;
+      background: linear-gradient(90deg, #f0b84a, #e09830);
+      transform: rotate(-3deg);
+    }
+    .iso-books i:nth-child(2) {
+      width: 92%;
+      background: linear-gradient(90deg, #e88838, #c86820);
+      transform: rotate(1deg);
+    }
+    .iso-books i:nth-child(3) {
+      width: 96%;
+      background: linear-gradient(90deg, #c8b898, #a09068);
+    }
+
+    /* Bowl / planter */
+    .iso-bowl {
+      position: absolute;
+      left: 54%;
+      bottom: 25%;
+      width: 15%;
+      height: 11%;
+      z-index: 5;
+      background: radial-gradient(ellipse at 40% 28%, #6e8076, #384840);
+      border-radius: 50%;
+      box-shadow:
+        0 4px 10px rgba(0,0,0,0.35),
+        inset 0 2px 4px rgba(255,255,255,0.12),
+        inset 0 -4px 6px rgba(0,0,0,0.3);
+    }
+
+    .iso-bowl::after {
+      content: '';
+      position: absolute;
+      top: -55%;
+      left: 22%;
+      width: 55%;
+      height: 85%;
+      background: radial-gradient(ellipse, #4d8f5c 0%, #2a5a36 70%);
+      border-radius: 45% 45% 20% 20%;
+    }
+
+    /* Wooden bench */
+    .iso-bench {
+      position: absolute;
+      left: 36%;
+      bottom: 21%;
+      width: 30%;
+      height: 7%;
+      z-index: 3;
+      background: linear-gradient(180deg, #c8a66e, #8a6840);
+      border-radius: 2px;
+      box-shadow: 0 3px 0 #6a4a28, 0 6px 12px rgba(0,0,0,0.28);
+      transform: perspective(220px) rotateX(22deg);
+    }
+
+    .iso-bench::before,
+    .iso-bench::after {
+      content: '';
+      position: absolute;
+      bottom: -70%;
+      width: 7%;
+      height: 80%;
+      background: #7a5832;
+    }
+    .iso-bench::before { left: 12%; }
+    .iso-bench::after { right: 12%; }
+
+    /* Plants in iso */
+    .iso-pl {
+      position: absolute;
+      z-index: 8;
+      bottom: 28%;
+    }
+    .iso-pl.l { left: 6%; }
+    .iso-pl.r { right: 4%; bottom: 34%; }
+
+    .iso-pl .stem {
+      width: 2px;
+      height: 36px;
+      margin: 0 auto;
+      background: #3a5a42;
+      border-radius: 2px;
+    }
+
+    .iso-pl .lf {
+      position: absolute;
+      width: 16px;
+      height: 26px;
+      background: linear-gradient(135deg, #5a9a68, #2a5a38);
+      border-radius: 0 80% 0 80%;
+    }
+    .iso-pl .lf.a { top: 0; left: -3px; transform: rotate(-28deg); }
+    .iso-pl .lf.b { top: 2px; left: 5px; transform: rotate(38deg) scaleX(-1); }
+    .iso-pl .lf.c { top: 16px; left: -7px; transform: rotate(-48deg); width: 12px; height: 20px; }
+
+    /* Birds */
+    .bird {
+      position: absolute;
+      z-index: 9;
+      width: 12px;
+      height: 7px;
+      opacity: 0.7;
+    }
+    .bird::before,
+    .bird::after {
+      content: '';
+      position: absolute;
+      width: 7px;
+      height: 5px;
+      border: 1.4px solid rgba(210, 220, 210, 0.75);
+      border-top: none;
+      border-radius: 0 0 60% 60%;
+    }
+    .bird::before { left: 0; transform: rotate(12deg); }
+    .bird::after { right: 0; transform: rotate(-12deg) scaleX(-1); }
+    .bird.b1 { top: 14%; left: 52%; }
+    .bird.b2 { top: 20%; left: 66%; transform: scale(0.75); }
+    .bird.b3 { top: 10%; left: 38%; transform: scale(0.65) scaleX(-1); }
+
+    .iso-ring {
+      position: absolute;
+      border: 1.4px solid rgba(180, 200, 180, 0.18);
+      border-radius: 50%;
+      z-index: 1;
+    }
+    .iso-ring.r1 { width: 52%; height: 36%; top: 18%; left: 24%; }
+    .iso-ring.r2 {
+      width: 28%; height: 18%; top: 14%; left: 52%;
+      border-color: rgba(232, 160, 80, 0.22);
+    }
+
+    /* Cream side card */
+    .side-card {
+      background: linear-gradient(165deg, #f6f0e2 0%, #ebe3cf 100%);
+      border-radius: 11px;
+      padding: 11% 10%;
+      color: #2e2e28;
+      box-shadow:
+        0 12px 28px rgba(0,0,0,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.65);
+      align-self: center;
+    }
+
+    .side-card .tag {
+      font-size: clamp(4px, 0.5vw, 6.5px);
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #b8883c;
+      margin-bottom: 7%;
+    }
+
+    .side-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(7.5px, 0.98vw, 12.5px);
+      font-weight: 700;
+      line-height: 1.22;
+      margin-bottom: 7%;
+      color: #262620;
+    }
+
+    .side-card p {
+      font-size: clamp(4.2px, 0.54vw, 7px);
+      line-height: 1.5;
+      color: #6a6a5c;
+      margin-bottom: 9%;
+    }
+
+    .side-card .cta {
+      display: inline-block;
+      padding: 4px 11px;
+      background: linear-gradient(135deg, #e8a038, #ce7424);
+      color: #fff;
+      font-size: clamp(4.5px, 0.55vw, 7.5px);
+      font-weight: 600;
+      border-radius: 20px;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(200, 120, 40, 0.4);
+    }
+
+    .side-card .dots {
+      display: flex;
+      gap: 3px;
+      margin-top: 12%;
+      align-items: center;
+    }
+
+    .side-card .dots i {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #c8b898;
+      display: block;
+    }
+
+    .side-card .dots i:first-child {
+      width: 11px;
+      border-radius: 2px;
+      background: #e8923a;
+    }
+
+    /* ========== TABLET ========== */
+    .tablet-wrap {
+      position: absolute;
+      left: 26.5%;
+      bottom: 13.5%;
+      width: min(35vw, 440px);
+      z-index: 22;
+      transform: perspective(1000px) rotateX(9deg) rotateY(-3deg) rotateZ(-0.5deg);
+      filter: drop-shadow(0 20px 32px rgba(0,0,0,0.55));
+    }
+
+    .tablet {
+      background: linear-gradient(155deg, #2c2c30 0%, #18181c 100%);
+      border-radius: 16px;
+      padding: 9px;
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.09),
+        inset 0 1px 0 rgba(255,255,255,0.14),
+        0 2px 4px rgba(0,0,0,0.45);
+    }
+
+    .tablet-screen {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10.4;
+      border-radius: 7px;
+      overflow: hidden;
+      background: #2a3630;
+    }
+
+    .ui-t {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 3%;
+      padding: 4% 4.5%;
+      background:
+        radial-gradient(ellipse 55% 50% at 72% 48%, #4a5f54 0%, transparent 58%),
+        linear-gradient(140deg, #27322d 0%, #3a4a42 48%, #25302b 100%);
+      color: #d8e0d9;
+    }
+
+    .tab-left h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(7px, 0.92vw, 12px);
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #eef2ef;
+      margin-bottom: 3%;
+    }
+
+    .tab-left .sub {
+      font-size: clamp(4.5px, 0.58vw, 7.5px);
+      color: #8fa094;
+      line-height: 1.4;
+      margin-bottom: 7%;
+    }
+
+    .tab-stats {
+      display: flex;
+      gap: 8%;
+      margin-top: 4%;
+    }
+
+    .tab-stat .num {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: clamp(9px, 1.05vw, 14px);
+      color: #f0f4f1;
+    }
+
+    .tab-stat .lbl {
+      font-size: clamp(3.8px, 0.48vw, 6px);
+      color: #8a9a8e;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .tab-icons {
+      display: flex;
+      gap: 6px;
+      margin-top: 9%;
+    }
+
+    .tab-icons .ic {
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      background: rgba(48, 62, 55, 0.75);
+      border: 1px solid rgba(200, 210, 200, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tab-icons .ic svg { width: 11px; height: 11px; opacity: 0.8; }
+
+    .tab-right {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tab-iso {
+      position: relative;
+      width: 88%;
+      height: 78%;
+    }
+
+    .tab-iso .tb {
+      position: absolute;
+      right: 16%;
+      bottom: 20%;
+      width: 40%;
+      height: 52%;
+      background: linear-gradient(135deg, #f0a84a, #c66e1e);
+      border-radius: 3px;
+      transform: skewY(-4deg);
+      box-shadow: 3px 4px 0 #a85818, 4px 8px 14px rgba(0,0,0,0.3);
+    }
+
+    .tab-iso .tb::before {
+      content: '';
+      position: absolute;
+      top: 16%;
+      left: 18%;
+      width: 26%;
+      height: 16%;
+      background: rgba(40, 50, 45, 0.5);
+      box-shadow: 20px 0 0 rgba(40, 50, 45, 0.5);
+    }
+
+    .tab-iso .bx {
+      position: absolute;
+      left: 18%;
+      bottom: 18%;
+      width: 30%;
+      height: 24%;
+      background: linear-gradient(145deg, #f0c060, #d89030);
+      border-radius: 2px;
+      box-shadow: 2px 3px 0 #a86820;
+      transform: skewY(-2deg);
+    }
+
+    .tab-iso .pl {
+      position: absolute;
+      right: 6%;
+      bottom: 28%;
+      width: 14px;
+      height: 30px;
+    }
+
+    .tab-iso .pl i {
+      position: absolute;
+      width: 11px;
+      height: 17px;
+      background: #4a8a58;
+      border-radius: 0 70% 0 70%;
+    }
+    .tab-iso .pl i:nth-child(1) { left: 0; top: 0; transform: rotate(-20deg); }
+    .tab-iso .pl i:nth-child(2) { left: 4px; top: 2px; transform: rotate(30deg); background: #3a7a48; }
+
+    .tab-progress {
+      position: absolute;
+      left: 7%;
+      right: 7%;
+      bottom: 9%;
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .tab-progress i {
+      display: block;
+      width: 64%;
+      height: 100%;
+      background: linear-gradient(90deg, #e8923a, #f0b84a);
+      border-radius: 2px;
+    }
+
+    /* ========== LEFT PLANT ========== */
+    .plant-l {
+      position: absolute;
+      left: 2.2%;
+      bottom: 21%;
+      width: 130px;
+      height: 210px;
+      z-index: 16;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,0.4));
+    }
+
+    .plant-l .pot {
+      position: absolute;
+      bottom: 0;
+      left: 34px;
+      width: 52px;
+      height: 46px;
+      background: linear-gradient(180deg, #3e4a44 0%, #222a26 100%);
+      border-radius: 3px 3px 9px 9px;
+      box-shadow: 0 5px 14px rgba(0,0,0,0.45);
+    }
+
+    .plant-l .pot::before {
+      content: '';
+      position: absolute;
+      top: -7px;
+      left: -5px;
+      right: -5px;
+      height: 13px;
+      background: linear-gradient(180deg, #323c36, #252e2a);
+      border-radius: 3px;
+    }
+
+    .plant-l .fol {
+      position: absolute;
+      bottom: 42px;
+      left: 8px;
+      width: 100px;
+      height: 160px;
+    }
+
+    .plant-l .fol span {
+      position: absolute;
+      background: linear-gradient(160deg, #4c7e58 0%, #2a4c34 100%);
+      border-radius: 55% 5% 55% 50%;
+      box-shadow: inset -3px -3px 8px rgba(0,0,0,0.25);
+    }
+
+    .plant-l .fol span:nth-child(1) {
+      width: 38px; height: 78px; left: 30px; bottom: 36px; transform: rotate(-28deg);
+    }
+    .plant-l .fol span:nth-child(2) {
+      width: 34px; height: 88px; left: 46px; bottom: 48px; transform: rotate(18deg);
+      background: linear-gradient(160deg, #5a8c64, #345c3e);
+    }
+    .plant-l .fol span:nth-child(3) {
+      width: 30px; height: 70px; left: 18px; bottom: 52px; transform: rotate(-48deg);
+    }
+    .plant-l .fol span:nth-child(4) {
+      width: 32px; height: 80px; left: 52px; bottom: 28px; transform: rotate(38deg);
+    }
+    .plant-l .fol span:nth-child(5) {
+      width: 26px; height: 60px; left: 36px; bottom: 78px; transform: rotate(6deg);
+      background: linear-gradient(160deg, #3a6c46, #254a32);
+    }
+    .plant-l .fol span:nth-child(6) {
+      width: 22px; height: 50px; left: 22px; bottom: 70px; transform: rotate(-60deg);
+      background: linear-gradient(160deg, #458055, #2a5035);
+    }
+
+    /* Small plant near left of tablet */
+    .plant-s {
+      position: absolute;
+      left: 15%;
+      bottom: 23.5%;
+      width: 48px;
+      height: 70px;
+      z-index: 14;
+    }
+
+    .plant-s .pot {
+      position: absolute;
+      bottom: 0;
+      left: 12px;
+      width: 22px;
+      height: 18px;
+      background: linear-gradient(180deg, #3a4540, #222a26);
+      border-radius: 2px 2px 5px 5px;
+    }
+
+    .plant-s .lf {
+      position: absolute;
+      bottom: 16px;
+      width: 14px;
+      height: 32px;
+      background: linear-gradient(160deg, #4a7a55, #2a4a32);
+      border-radius: 50% 0 50% 50%;
+    }
+    .plant-s .lf:nth-child(1) { left: 10px; transform: rotate(-20deg); }
+    .plant-s .lf:nth-child(2) { left: 18px; transform: rotate(25deg); height: 36px; }
+    .plant-s .lf:nth-child(3) { left: 14px; bottom: 28px; transform: rotate(5deg); height: 28px; width: 12px; }
+
+    /* ========== RIGHT WOOD BOX + COASTERS ========== */
+    .props-r {
+      position: absolute;
+      right: 11%;
+      bottom: 23%;
+      width: 130px;
+      height: 90px;
+      z-index: 15;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.4));
+    }
+
+    .wood-box {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 78px;
+      height: 52px;
+      background:
+        linear-gradient(160deg, #b8925c 0%, #8a6438 45%, #6e4e28 100%);
+      border-radius: 3px;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 230, 180, 0.25),
+        inset 0 -4px 8px rgba(0,0,0,0.25),
+        0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .wood-box::before {
+      content: '';
+      position: absolute;
+      top: 18%;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: rgba(60, 40, 15, 0.25);
+      box-shadow: 0 12px 0 rgba(60, 40, 15, 0.2), 0 24px 0 rgba(60, 40, 15, 0.15);
+    }
+
+    .coasters {
+      position: absolute;
+      right: 4px;
+      bottom: 28px;
+      width: 48px;
+      height: 48px;
+    }
+
+    .coasters span {
+      position: absolute;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 2px solid rgba(180, 160, 120, 0.35);
+      box-shadow:
+        0 2px 6px rgba(0,0,0,0.25),
+        inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+
+    .coasters span:nth-child(1) {
+      background: linear-gradient(145deg, #e8d8b8, #c8b088);
+      bottom: 0;
+      right: 0;
+    }
+    .coasters span:nth-child(2) {
+      background: linear-gradient(145deg, #dcc8a0, #b89868);
+      bottom: 6px;
+      right: 6px;
+      opacity: 0.95;
+    }
+    .coasters span:nth-child(3) {
+      background: linear-gradient(145deg, #d0bc90, #a88858);
+      bottom: 12px;
+      right: 10px;
+      width: 34px;
+      height: 34px;
+    }
+
+    /* White mouse */
+    .mouse {
+      position: absolute;
+      right: 18%;
+      bottom: 18.5%;
+      width: 48px;
+      height: 28px;
+      z-index: 12;
+      background: linear-gradient(165deg, #f4f4f6 0%, #d8d8de 55%, #c4c4cc 100%);
+      border-radius: 45% 45% 48% 48%;
+      box-shadow:
+        0 4px 10px rgba(0,0,0,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.9),
+        inset 0 -2px 4px rgba(0,0,0,0.08);
+      transform: rotate(-8deg);
+    }
+
+    .mouse::before {
+      content: '';
+      position: absolute;
+      top: 18%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 40%;
+      background: rgba(0,0,0,0.12);
+    }
+
+    /* subtle floor shadow under mouse */
+    .mouse::after {
+      content: '';
+      position: absolute;
+      left: 5%;
+      right: 5%;
+      bottom: -6px;
+      height: 8px;
+      background: radial-gradient(ellipse, rgba(0,0,0,0.25) 0%, transparent 70%);
+      z-index: -1;
+    }
+
+    /* Ambient depth objects far left edge (out of focus feel) */
+    .blur-left {
+      position: absolute;
+      left: -2%;
+      bottom: 20%;
+      width: 80px;
+      height: 160px;
+      z-index: 8;
+      filter: blur(3px);
+      opacity: 0.55;
+      background:
+        radial-gradient(ellipse at 50% 80%, #2a3830 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    @media (max-width: 900px) {
+      .imac-wrap { width: min(88vw, 980px); top: 2%; }
+      .tablet-wrap { width: min(42vw, 380px); left: 22%; }
+      .plant-l { transform: scale(0.75); transform-origin: bottom left; }
+      .props-r { transform: scale(0.85); transform-origin: bottom right; }
     }
   </style>
 </head>
 <body>
-  <div class="badge">inspo-aligned</div>
+  <div class="scene">
+    <div class="lamp" aria-hidden="true"></div>
+    <div class="blur-left" aria-hidden="true"></div>
+
+    <div class="desk" aria-hidden="true"></div>
+    <div class="desk-edge" aria-hidden="true"></div>
+    <div class="desk-glow" aria-hidden="true"></div>
+
+    <!-- iMac -->
+    <div class="imac-wrap">
+      <div class="imac-bezel">
+        <div class="imac-screen">
+          <div class="ui-d">
+            <nav class="ui-nav">
+              <div class="ui-logo">DERAAGALARD MULISO</div>
+              <ul>
+                <li><a href="#">Courses</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </nav>
+
+            <div class="ui-body">
+              <div class="ui-copy">
+                <h1>POFREES EDIT<br />DAINTYFADES AAME</h1>
+                <p>Explore design structures with isometric modules and practical studio projects for modern architecture labs.</p>
+                <div class="cards">
+                  <div class="gcard">
+                    <div class="ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#c8d8cc" stroke-width="1.8"><path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6"/></svg>
+                    </div>
+                    <div>
+                      <strong>Studio Modules</strong>
+                      <span>Scenarios · drafting</span>
+                    </div>
+                  </div>
+                  <div class="gcard">
+                    <div class="ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#c8d8cc" stroke-width="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M5 19c1.5-3.5 4-5 7-5s5.5 1.5 7 5"/></svg>
+                    </div>
+                    <div>
+                      <strong>Mentor Sessions</strong>
+                      <span>Live critique · reviews</span>
+                    </div>
+                  </div>
+                  <div class="gcard">
+                    <div class="ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#c8d8cc" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12h8M12 8v8"/></svg>
+                    </div>
+                    <div>
+                      <strong>Project Board</strong>
+                      <span>Tasks · milestones</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="stage">
+                <div class="iso">
+                  <div class="iso-ring r1"></div>
+                  <div class="iso-ring r2"></div>
+                  <div class="iso-mist"></div>
+                  <div class="iso-ground"></div>
+                  <div class="iso-bench"></div>
+                  <div class="iso-books"><i></i><i></i><i></i></div>
+                  <div class="iso-b3"></div>
+                  <div class="iso-b2"></div>
+                  <div class="iso-b1"></div>
+                  <div class="iso-bowl"></div>
+                  <div class="iso-pl l">
+                    <div class="stem"></div>
+                    <div class="lf a"></div>
+                    <div class="lf b"></div>
+                    <div class="lf c"></div>
+                  </div>
+                  <div class="iso-pl r">
+                    <div class="stem"></div>
+                    <div class="lf a"></div>
+                    <div class="lf b"></div>
+                    <div class="lf c"></div>
+                  </div>
+                  <div class="bird b1"></div>
+                  <div class="bird b2"></div>
+                  <div class="bird b3"></div>
+                </div>
+              </div>
+
+              <div class="side-card">
+                <div class="tag">Featured</div>
+                <h3>Sustainable Architecture Studio</h3>
+                <p>Modular project structures with isometric scenes and simple forms from studio.</p>
+                <a class="cta" href="#">Start course</a>
+                <div class="dots"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="imac-chin">
+          <div class="imac-camera"></div>
+          <div class="imac-logo"></div>
+        </div>
+      </div>
+      <div class="imac-neck"></div>
+      <div class="imac-base"></div>
+    </div>
+
+    <!-- Tablet -->
+    <div class="tablet-wrap">
+      <div class="tablet">
+        <div class="tablet-screen">
+          <div class="ui-t">
+            <div class="tab-left">
+              <h2>BOA EDITTA VOSSIN<br />UFT A OMES</h2>
+              <div class="sub">Studio track · modular open desk</div>
+              <div class="tab-stats">
+                <div class="tab-stat">
+                  <div class="num">12</div>
+                  <div class="lbl">Modules</div>
+                </div>
+                <div class="tab-stat">
+                  <div class="num">48</div>
+                  <div class="lbl">Hours</div>
+                </div>
+                <div class="tab-stat">
+                  <div class="num">96%</div>
+                  <div class="lbl">Complete</div>
+                </div>
+              </div>
+              <div class="tab-icons">
+                <div class="ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#c8d8cc" stroke-width="1.8"><path d="M4 7h16M4 12h10M4 17h14"/></svg>
+                </div>
+                <div class="ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#c8d8cc" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>
+                </div>
+                <div class="ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#c8d8cc" stroke-width="1.8"><path d="M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3z"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="tab-right">
+              <div class="tab-iso">
+                <div class="tb"></div>
+                <div class="bx"></div>
+                <div class="pl"><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="tab-progress"><i></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Props -->
+    <div class="plant-l" aria-hidden="true">
+      <div class="fol">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+      <div class="pot"></div>
+    </div>
+
+    <div class="plant-s" aria-hidden="true">
+      <div class="lf"></div>
+      <div class="lf"></div>
+      <div class="lf"></div>
+      <div class="pot"></div>
+    </div>
+
+    <div class="props-r" aria-hidden="true">
+      <div class="wood-box"></div>
+      <div class="coasters">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <div class="mouse" aria-hidden="true"></div>
+  </div>
 </body>
 </html>

@@ -661,14 +661,19 @@
 
   <main>
     <div class="wrap hero">
-      <div class="eyebrow">live preview site</div>
+      <div class="eyebrow">active experiment · LLM + tools + visual loop</div>
       <h1>What can the <em>aliens</em> make?</h1>
       <p class="lede">
-        Static HTML experiments in the spirit of
-        <a href="https://alieninterfaces.com/" target="_blank" rel="noreferrer">Alien Interfaces</a>
-        — AI UI mocks turned into real pages. Open a card and drag the
+        Lab for
+        <strong style="color:var(--text);font-weight:500">interactive HTML</strong>
+        that should match
+        <code style="color:var(--accent-3)">inspo/</code>
+        — not vibes, not wallpaper. Drag the
         <strong style="color:var(--text);font-weight:500">compare slider</strong>
-        to overlay original inspo vs live HTML.
+        (inspo ↔ live). Read
+        <a href="docs/EXPERIMENT.md">experiment log</a>
+        for mistakes and method. Inspired by
+        <a href="https://alieninterfaces.com/" target="_blank" rel="noreferrer">Alien Interfaces</a>.
       </p>
       <div class="hero-actions">
         <a class="btn primary" href="#previews">Browse previews</a>
@@ -704,18 +709,22 @@
           </div>
         </div>
         <div class="lineage-card">
-          <h3>Inspired by Alien Interfaces</h3>
+          <h3>Experiment, not a portfolio claim</h3>
           <p class="desc" style="max-width:70ch">
-            <a href="https://alieninterfaces.com/" target="_blank" rel="noreferrer" style="color:var(--accent)">alieninterfaces.com</a>
-            is CJ Gammon’s collection of interactive UIs designed and built with AI,
-            with YouTube walkthroughs of Midjourney → real HTML.
-            This site is a personal playground in that spirit: some product-style clones,
-            some pixel-perfect builds from our own inspo folder — not ports of his case studies.
+            Goal: prove (or falsify) that agents with tool calling + an OpenCV visual loop can
+            build <em>interactive</em> pages that match design inspo. We already failed at:
+            one-shot batches, LLM self-grade, 404-poisoned metrics, and “SSIM via wallpaper.”
+            Full write-up:
+            <a href="docs/EXPERIMENT.md" style="color:var(--accent)">docs/EXPERIMENT.md</a>.
+            Lineage:
+            <a href="https://alieninterfaces.com/" target="_blank" rel="noreferrer" style="color:var(--accent)">Alien Interfaces</a>
+            (same spirit, not their cases).
           </p>
           <div class="card-actions">
-            <a class="btn primary" href="https://alieninterfaces.com/" target="_blank" rel="noreferrer">Visit Alien Interfaces</a>
+            <a class="btn primary" href="docs/EXPERIMENT.md">Experiment log</a>
+            <a class="btn" href="https://alieninterfaces.com/" target="_blank" rel="noreferrer">Alien Interfaces</a>
             <a class="btn" href="https://www.youtube.com/playlist?list=PL08jItIqOb2oMXWRZTPua0nC3oZ6Stoul" target="_blank" rel="noreferrer">YouTube playlist</a>
-            <a class="btn ghost" href="https://blog.cjgammon.com/alien-interfaces-ui-ux-created-with-ai/" target="_blank" rel="noreferrer">CJ’s write-up</a>
+            <a class="btn ghost" href="docs/PIXEL-PERFECT-METHOD.md">Method</a>
           </div>
         </div>
       </div>

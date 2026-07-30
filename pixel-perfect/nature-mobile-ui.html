@@ -1,27 +1,559 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nature Mobile UI</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{
-      min-height:100vh;width:100vw;overflow:hidden;
-      background:#000 url('../inspo/02.jpg') center center / cover no-repeat;
-      font-family:Inter,system-ui,sans-serif;
-    }
-    .badge{
-      position:fixed;bottom:14px;left:14px;z-index:2;
-      font-size:10px;letter-spacing:.12em;text-transform:uppercase;
-      color:rgba(255,255,255,.85);background:rgba(0,0,0,.4);
-      backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);
-      padding:6px 10px;border-radius:999px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nature Mobile UI - Pixel Perfect Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #4a3f6b 0%, #6b4a6b 50%, #8b6b4a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+        }
+
+        .phone-card {
+            width: 320px;
+            height: 640px;
+            border-radius: 32px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        /* Left Card - Teal Theme */
+        .card-left {
+            background: linear-gradient(180deg, #2F4F4F 0%, #1C3333 100%);
+        }
+
+        /* Right Card - Coral Theme */
+        .card-right {
+            background: linear-gradient(180deg, #F5E6E8 0%, #FFFFFF 100%);
+        }
+
+        .header {
+            padding: 16px 20px;
+            background: rgba(232, 213, 196, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 24px 24px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 20;
+        }
+
+        .card-right .header {
+            background: rgba(255, 139, 148, 0.3);
+        }
+
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .menu-icon span {
+            width: 100%;
+            height: 2px;
+            background: white;
+            border-radius: 2px;
+        }
+
+        .card-right .menu-icon span {
+            background: #2C2C2C;
+        }
+
+        .status-pill {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 11px;
+            font-weight: 500;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-right .status-pill {
+            color: #2C2C2C;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #FF6B6B;
+            border-radius: 50%;
+        }
+
+        .illustration-container {
+            height: 280px;
+            position: relative;
+            margin: 16px 20px;
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        .illustration {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* Left Card Illustration */
+        .left-illustration {
+            background: linear-gradient(180deg, rgba(232, 213, 196, 0.4) 0%, rgba(45, 122, 110, 0.3) 100%);
+        }
+
+        .plant-layer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60%;
+            background: linear-gradient(180deg, transparent 0%, #2D7A6E 100%);
+        }
+
+        .yellow-bush {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 100px;
+            background: radial-gradient(circle at 50% 50%, #FFD966 0%, #FFB84D 100%);
+            border-radius: 50% 50% 0 0;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+        }
+
+        .green-plants {
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            width: 80px;
+            height: 120px;
+            background: #2D7A6E;
+            border-radius: 40px 40px 0 0;
+        }
+
+        .small-sun {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #FFD966 0%, #FFB84D 100%);
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(255, 217, 102, 0.4);
+        }
+
+        .fish {
+            position: absolute;
+            top: 100px;
+            left: 30px;
+            width: 24px;
+            height: 24px;
+            background: #FF6B6B;
+            border-radius: 50% 50% 0 50%;
+            transform: rotate(-45deg);
+        }
+
+        /* Right Card Illustration */
+        .right-illustration {
+            background: linear-gradient(180deg, rgba(255, 139, 148, 0.3) 0%, rgba(255, 255, 255, 0.5) 100%);
+        }
+
+        .butterfly {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 40px;
+            background: #6B5B8E;
+            border-radius: 50%;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+        }
+
+        .cloud {
+            position: absolute;
+            top: 60px;
+            right: 40px;
+            width: 60px;
+            height: 30px;
+            background: #F5E6D3;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .pink-hills {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 50%;
+        }
+
+        .hill {
+            position: absolute;
+            bottom: 0;
+            border-radius: 50% 50% 0 0;
+        }
+
+        .hill-1 {
+            left: 0;
+            width: 120px;
+            height: 80px;
+            background: #E85A8A;
+        }
+
+        .hill-2 {
+            left: 80px;
+            width: 100px;
+            height: 100px;
+            background: #D14977;
+        }
+
+        .hill-3 {
+            right: 20px;
+            width: 90px;
+            height: 70px;
+            background: #FF8B94;
+        }
+
+        .teal-plants {
+            position: absolute;
+            bottom: 0;
+            right: 40px;
+            width: 60px;
+            height: 80px;
+            background: #4ECDC4;
+            border-radius: 30px 30px 0 0;
+        }
+
+        .content-section {
+            padding: 0 20px;
+            color: white;
+        }
+
+        .card-right .content-section {
+            color: #2C2C2C;
+        }
+
+        .card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .card-subtitle {
+            font-size: 14px;
+            font-weight: 400;
+            color: #B8D4D4;
+            margin-bottom: 16px;
+        }
+
+        .card-right .card-subtitle {
+            color: #8B8B8B;
+        }
+
+        .stats-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .rating {
+            display: flex;
+            gap: 4px;
+        }
+
+        .star {
+            width: 8px;
+            height: 8px;
+            background: #FFD966;
+            border-radius: 50%;
+        }
+
+        .time-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+        }
+
+        .description {
+            font-size: 12px;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 16px;
+        }
+
+        .card-right .description {
+            color: rgba(44, 44, 44, 0.6);
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .color-dot {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 4px;
+        }
+
+        .card-right .stat-label {
+            color: rgba(44, 44, 44, 0.5);
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .action-button {
+            background: #4ECDC4;
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(78, 205, 196, 0.3);
+        }
+
+        .action-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(78, 205, 196, 0.4);
+        }
+
+        .card-right .action-button {
+            background: #FF8B94;
+            box-shadow: 0 4px 12px rgba(255, 139, 148, 0.3);
+        }
+
+        .card-right .action-button:hover {
+            box-shadow: 0 6px 16px rgba(255, 139, 148, 0.4);
+        }
+    </style>
 </head>
 <body>
-  <div class="badge">inspo-aligned</div>
+    <div class="container">
+        <!-- Left Card - Teal Theme -->
+        <div class="phone-card card-left">
+            <div class="header">
+                <div class="menu-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="status-pill">
+                    <div class="status-dot"></div>
+                    <span>Bornfuul Serilca</span>
+                </div>
+            </div>
+
+            <div class="illustration-container">
+                <div class="illustration left-illustration">
+                    <div class="small-sun"></div>
+                    <div class="fish"></div>
+                    <div class="plant-layer">
+                        <div class="green-plants"></div>
+                        <div class="yellow-bush"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="card-title">Ostptel rd</h2>
+                <p class="card-subtitle">Ommntal natant</p>
+
+                <div class="stats-row">
+                    <div class="rating">
+                        <div class="star"></div>
+                        <div class="star"></div>
+                        <div class="star"></div>
+                    </div>
+                    <div class="time-info">
+                        <i data-lucide="clock" style="width: 14px; height: 14px;"></i>
+                        <span>3:13</span>
+                    </div>
+                </div>
+
+                <p class="description">
+                    Lorem sit id eos maxime adipisci quasi consectetur trnsta eist.
+                </p>
+
+                <div class="color-palette">
+                    <div class="color-dot" style="background: radial-gradient(circle at 30% 30%, #FF9999, #FF6B6B);"></div>
+                    <div class="color-dot" style="background: radial-gradient(circle at 30% 30%, #FFB384, #FF9966);"></div>
+                    <div class="color-dot" style="background: radial-gradient(circle at 30% 30%, #FFE699, #FFD966);"></div>
+                    <div class="color-dot" style="background: radial-gradient(circle at 30% 30%, #FFF0B3, #FFEB99);"></div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-label">001</div>
+                        <div class="stat-number">25</div>
+                        <div class="stat-label" style="font-size: 9px;">BONUSLT</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">006</div>
+                        <div class="stat-number">05</div>
+                        <div class="stat-label" style="font-size: 9px;">ICOUROMA</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">016</div>
+                        <div class="stat-number">21</div>
+                        <div class="stat-label" style="font-size: 9px;">OCOPIMMA</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">EO5</div>
+                        <div class="stat-number">0</div>
+                        <div class="stat-label" style="font-size: 9px;">OUGO</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="action-button">Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Card - Coral Theme -->
+        <div class="phone-card card-right">
+            <div class="header">
+                <div class="menu-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="status-pill">
+                    <i data-lucide="heart" style="width: 12px; height: 12px;"></i>
+                    <i data-lucide="share-2" style="width: 12px; height: 12px;"></i>
+                </div>
+            </div>
+
+            <div class="illustration-container">
+                <div class="illustration right-illustration">
+                    <div class="butterfly"></div>
+                    <div class="cloud"></div>
+                    <div class="pink-hills">
+                        <div class="hill hill-1"></div>
+                        <div class="hill hill-2"></div>
+                        <div class="hill hill-3"></div>
+                        <div class="teal-plants"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="card-title">leMcon ocde</h2>
+                <p class="card-subtitle">Noohar y u haddort</p>
+
+                <div class="stats-row">
+                    <div class="rating">
+                        <div class="star"></div>
+                        <div class="star"></div>
+                    </div>
+                    <div class="time-info">
+                        <span style="background: #FFE6E6; padding: 4px 8px; border-radius: 8px; font-size: 11px;">220.1%</span>
+                        <span style="background: #E8F5E9; padding: 4px 8px; border-radius: 8px; font-size: 11px;">190</span>
+                    </div>
+                </div>
+
+                <p class="description">
+                    urta lorem amet pariatur in consectatus cum tristis Am telus thur.
+                </p>
+
+                <div class="color-palette">
+                    <div class="color-dot" style="background: radial-gradient(circle at 30% 30%, #FFB384, #FF8B94);"></div>
+                    <div class="color-dot" style="background: radial-gradient(circle at 30% 30%, #B89FED, #9B88ED);"></div>
+                    <div class="color-dot" style="background: radial-gradient(circle at 30% 30%, #6EDFD8, #4ECDC4);"></div>
+                    <div class="color-dot" style="background: radial-gradient(circle at 30% 30%, #FFB384, #FF9966);"></div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-label">ORO</div>
+                        <div class="stat-number" style="color: #FF6B94;">52</div>
+                        <div class="stat-label" style="font-size: 9px;">AGO</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">3/0C</div>
+                        <div class="stat-number">25</div>
+                        <div class="stat-label" style="font-size: 9px;">ORST</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">0/0</div>
+                        <div class="stat-number" style="color: #4ECDC4;">7</div>
+                        <div class="stat-label" style="font-size: 9px;">SOPO</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">OOMIe</div>
+                        <div class="stat-number" style="background: #FF8B94; color: white; padding: 4px 8px; border-radius: 12px; font-size: 16px;">01</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="action-button">Start</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>

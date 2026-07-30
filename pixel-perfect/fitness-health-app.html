@@ -3,25 +3,369 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fitness Health App</title>
+  <title>Fitness & Health Tracking App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{
-      min-height:100vh;width:100vw;overflow:hidden;
-      background:#000 url('../inspo/Francesco.Svara_A_side_by_side_UIUx_design_screens_of_an_app_wh_8a755e3d-d655-4ee6-8520-4d542a66ff5b.png') center center / cover no-repeat;
-      font-family:Inter,system-ui,sans-serif;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      background: linear-gradient(135deg, #ff9a4a 0%, #ff7a30 35%, #f5f0ea 35%, #f5f0ea 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
     }
-    .badge{
-      position:fixed;bottom:14px;left:14px;z-index:2;
-      font-size:10px;letter-spacing:.12em;text-transform:uppercase;
-      color:rgba(255,255,255,.85);background:rgba(0,0,0,.4);
-      backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);
-      padding:6px 10px;border-radius:999px;
+    .scene {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+    .phone {
+      width: 290px;
+      height: 600px;
+      background: #0c0c0e;
+      border-radius: 44px;
+      padding: 12px;
+      box-shadow:
+        0 40px 80px rgba(0,0,0,0.35),
+        0 0 0 3px #1a1a1c,
+        0 0 0 5px #2a2a2e;
+      position: relative;
+      color: #fff;
+      overflow: hidden;
+    }
+    .notch {
+      position: absolute;
+      top: 10px; left: 50%;
+      transform: translateX(-50%);
+      width: 90px; height: 22px;
+      background: #0c0c0e;
+      border-radius: 0 0 14px 14px;
+      z-index: 5;
+    }
+    .status {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 18px 0;
+      font-size: 11px;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+    .screen {
+      height: calc(100% - 28px);
+      margin-top: 8px;
+      border-radius: 34px;
+      background: #121214;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: 16px 16px 14px;
+    }
+
+    /* LEFT — list */
+    .title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin: 8px 0 4px;
+    }
+    .title-row h1 {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    .title-row .lvl {
+      font-size: 11px;
+      color: #8a8a90;
+      margin-top: 2px;
+    }
+    .badge {
+      background: #1e1e22;
+      border-radius: 10px;
+      padding: 6px 10px;
+      font-size: 11px;
+      color: #ff7a30;
+      font-weight: 600;
+    }
+    .spark {
+      height: 56px;
+      margin: 10px 0 16px;
+    }
+    .spark svg { width: 100%; height: 100%; }
+    .list { flex: 1; overflow: hidden; display: flex; flex-direction: column; gap: 10px; }
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #1a1a1e;
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .item .ico {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 2px solid #ff7a30;
+      display: grid; place-items: center;
+      font-size: 14px;
+      color: #ff7a30;
+      flex-shrink: 0;
+    }
+    .item .txt { flex: 1; min-width: 0; }
+    .item .name { font-size: 13px; font-weight: 600; }
+    .item .sub { font-size: 10px; color: #7a7a82; margin-top: 2px; }
+    .item .stat {
+      font-size: 12px;
+      font-weight: 600;
+      color: #ff7a30;
+    }
+    .item .stat span { display: block; font-size: 9px; color: #7a7a82; font-weight: 500; text-align: right; }
+
+    /* RIGHT — detail */
+    .nav-r {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: #9a9aa2;
+    }
+    .nav-r .tabs {
+      display: flex;
+      gap: 4px;
+      background: #1a1a1e;
+      border-radius: 10px;
+      padding: 3px;
+    }
+    .nav-r .tabs b {
+      font-size: 10px;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      color: #7a7a82;
+    }
+    .nav-r .tabs b.on { background: #2a2a30; color: #fff; }
+    .head-r h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 2px;
+    }
+    .head-r .sub { font-size: 11px; color: #7a7a82; margin-bottom: 18px; }
+    .ring-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 8px 0 18px;
+    }
+    .ring {
+      width: 140px; height: 140px;
+      position: relative;
+    }
+    .ring svg { transform: rotate(-90deg); width: 100%; height: 100%; }
+    .ring .center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .ring .center .n {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .ring .center .l {
+      font-size: 10px;
+      color: #8a8a90;
+      margin-top: 4px;
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .metrics .m {
+      text-align: center;
+    }
+    .metrics .m .v {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ff7a30;
+    }
+    .metrics .m .k {
+      font-size: 9px;
+      color: #7a7a82;
+      margin-top: 2px;
+    }
+    .metrics .m .icon {
+      font-size: 12px;
+      margin-bottom: 4px;
+      opacity: 0.8;
+    }
+    .detail-list { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .drow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #1a1a1e;
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+    .drow .ico {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      background: #252528;
+      display: grid; place-items: center;
+      color: #ff7a30;
+      font-size: 12px;
+    }
+    .drow .txt { flex: 1; }
+    .drow .name { font-size: 12px; font-weight: 600; }
+    .drow .sub { font-size: 10px; color: #7a7a82; }
+    .drow .val { font-size: 12px; font-weight: 600; }
+    .input-bar {
+      margin-top: 12px;
+      background: #fff;
+      border-radius: 999px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #3a3a40;
+      font-size: 12px;
+    }
+    .input-bar .mic {
+      margin-left: auto;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: #ff7a30;
+      display: grid; place-items: center;
+      color: #fff;
+      font-size: 12px;
     }
   </style>
 </head>
 <body>
-  <div class="badge">inspo-aligned</div>
+  <div class="scene">
+    <!-- LEFT: workout list -->
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="status"><span>9:39</span><span>▁ ▃ ▅  🔋</span></div>
+      <div class="screen">
+        <div class="title-row">
+          <div>
+            <h1>Burtion</h1>
+            <div class="lvl">Level 10 · Active</div>
+          </div>
+          <div class="badge">+25%</div>
+        </div>
+        <div class="spark">
+          <svg viewBox="0 0 240 56" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ff7a30" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#ff7a30" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M0 40 L20 36 L40 42 L60 28 L80 32 L100 18 L120 24 L140 12 L160 20 L180 16 L200 22 L220 14 L240 18 L240 56 L0 56 Z" fill="url(#g)"/>
+            <path d="M0 40 L20 36 L40 42 L60 28 L80 32 L100 18 L120 24 L140 12 L160 20 L180 16 L200 22 L220 14 L240 18" fill="none" stroke="#ff7a30" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="list">
+          <div class="item">
+            <div class="ico">◎</div>
+            <div class="txt"><div class="name">PeroQue bar Coorter</div><div class="sub">Cardio · 25 min</div></div>
+            <div class="stat">5.2K<span>cal</span></div>
+          </div>
+          <div class="item">
+            <div class="ico">◐</div>
+            <div class="txt"><div class="name">Iron Breathing</div><div class="sub">Meditation · 15 min</div></div>
+            <div class="stat">3.5K<span>cal</span></div>
+          </div>
+          <div class="item">
+            <div class="ico">◈</div>
+            <div class="txt"><div class="name">Nitropex Coos</div><div class="sub">Strength · 40 min</div></div>
+            <div class="stat">2075<span>rep</span></div>
+          </div>
+          <div class="item">
+            <div class="ico">◉</div>
+            <div class="txt"><div class="name">Fresh Trail run</div><div class="sub">Running · 30 min</div></div>
+            <div class="stat">5.7K<span>cal</span></div>
+          </div>
+          <div class="item">
+            <div class="ico">△</div>
+            <div class="txt"><div class="name">Frossoaken Intel</div><div class="sub">Cycling · 45 min</div></div>
+            <div class="stat">12.5K<span>cal</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: activity detail -->
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="status"><span>8:40</span><span>▁ ▃ ▅  🔋</span></div>
+      <div class="screen">
+        <div class="nav-r">
+          <span>‹ Back</span>
+          <div class="tabs">
+            <b>Week</b>
+            <b class="on">Month</b>
+            <b>Year</b>
+          </div>
+        </div>
+        <div class="head-r">
+          <h1>Quantum</h1>
+          <div class="sub">Active · 15 min elapsed · 12m</div>
+        </div>
+        <div class="ring-wrap">
+          <div class="ring">
+            <svg viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#252528" stroke-width="12"/>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#ff7a30" stroke-width="12"
+                stroke-dasharray="314" stroke-dashoffset="110" stroke-linecap="round"/>
+            </svg>
+            <div class="center">
+              <div class="n">65</div>
+              <div class="l">% Complete</div>
+            </div>
+          </div>
+        </div>
+        <div class="metrics">
+          <div class="m"><div class="icon">🔥</div><div class="v">1.2K</div><div class="k">Cal</div></div>
+          <div class="m"><div class="icon">♥</div><div class="v">145</div><div class="k">BPM</div></div>
+          <div class="m"><div class="icon">⚡</div><div class="v">100</div><div class="k">Energy</div></div>
+          <div class="m"><div class="icon"> cons</div><div class="v">8.5K</div><div class="k">Steps</div></div>
+        </div>
+        <div class="detail-list">
+          <div class="drow">
+            <div class="ico">↗</div>
+            <div class="txt"><div class="name">Distance</div><div class="sub">Total covered</div></div>
+            <div class="val">12.5 km</div>
+          </div>
+          <div class="drow">
+            <div class="ico">⏱</div>
+            <div class="txt"><div class="name">Duration</div><div class="sub">Active time</div></div>
+            <div class="val">45 min</div>
+          </div>
+          <div class="drow">
+            <div class="ico">△</div>
+            <div class="txt"><div class="name">Elevation</div><div class="sub">Vertical gain</div></div>
+            <div class="val">285 m</div>
+          </div>
+        </div>
+        <div class="input-bar">
+          <span>Nessalc…</span>
+          <div class="mic">●</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

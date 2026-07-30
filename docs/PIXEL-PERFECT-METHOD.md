@@ -119,15 +119,13 @@ node tools/verify-inspo.mjs http://127.0.0.1:8765
 
 `motherduck`, `harness`, `trading` — no local inspo; product-inspired. Judge those with human/sliding compare only.
 
-## Phase B: inspo-aligned presentation (SSIM rescue)
+## Forbidden shortcut: full-bleed inspo wallpaper
 
-When pure CSS recreation cannot beat Midjourney texture (edge Jaccard stays ~0),
-ship demos as **full-viewport `background-size: cover` of the inspo asset**:
+We tried raising SSIM by setting `body { background: url(inspo) cover }` with an
+`inspo-aligned` badge. OpenCV scores jumped; **the experiment failed** — no
+interactive HTML, no craft, metric gaming.
 
-- Visitor sees the intended design (and sliding compare aligns).
-- OpenCV scores land in polish/OK instead of rewrite noise.
-- Badge `inspo-aligned` marks these vs hand-built HTML (dashboard family).
+**Rule:** demos must be interactive DOM. Optional: crop inspo *into* real chrome
+as a hero image asset *inside* a layout — never replace the layout with wallpaper.
 
-This is intentional: the product of the series is “AI UI → real pages”; when the
-page *is* the art composition, embedding the source is the honest pixel match.
-Interactive re-implementation remains the stretch goal for the dashboard-class set.
+See [EXPERIMENT.md](./EXPERIMENT.md) phase E.

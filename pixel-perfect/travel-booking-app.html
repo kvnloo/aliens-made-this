@@ -1,27 +1,475 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Travel Booking App</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{
-      min-height:100vh;width:100vw;overflow:hidden;
-      background:#000 url('../inspo/FjtjXt6aMAAKt_U.jpeg') center center / cover no-repeat;
-      font-family:Inter,system-ui,sans-serif;
-    }
-    .badge{
-      position:fixed;bottom:14px;left:14px;z-index:2;
-      font-size:10px;letter-spacing:.12em;text-transform:uppercase;
-      color:rgba(255,255,255,.85);background:rgba(0,0,0,.4);
-      backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);
-      padding:6px 10px;border-radius:999px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Booking App - 3D Glassmorphic Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #F5D5B8 0%, #F0C4A8 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            gap: 40px;
+        }
+
+        .phone-frame {
+            width: 375px;
+            height: 812px;
+            background: #F5D5B8;
+            border-radius: 40px;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.15),
+                inset 0 0 0 12px #2C2C2E,
+                inset 0 0 0 14px #000000;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .phone-frame.screen-2 {
+            background: linear-gradient(180deg, #B8B3E6 0%, #F0B3C1 50%, #6FB8B0 100%);
+        }
+
+        .screen {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .menu-icon span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 2px;
+        }
+
+        .header-title {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .weather-icon {
+            width: 28px;
+            height: 28px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* 3D Visual Hero */
+        .hero-visual {
+            position: relative;
+            height: 450px;
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .airplane {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-5deg);
+            width: 280px;
+            height: auto;
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.2));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) rotate(-5deg) translateY(0); }
+            50% { transform: translateX(-50%) rotate(-5deg) translateY(-10px); }
+        }
+
+        .cloud {
+            position: absolute;
+            width: 60px;
+            height: 35px;
+            background: white;
+            border-radius: 50px;
+            opacity: 0.9;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+
+        .cloud::before,
+        .cloud::after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .cloud::before {
+            width: 40px;
+            height: 40px;
+            top: -18px;
+            left: 10px;
+        }
+
+        .cloud::after {
+            width: 50px;
+            height: 50px;
+            top: -20px;
+            right: 10px;
+        }
+
+        .cloud-1 { top: 80px; left: 30px; animation: drift 15s ease-in-out infinite; }
+        .cloud-2 { top: 140px; right: 40px; width: 50px; animation: drift 20s ease-in-out infinite reverse; }
+        .cloud-3 { top: 200px; left: 20px; width: 45px; animation: drift 18s ease-in-out infinite; }
+
+        @keyframes drift {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(20px); }
+        }
+
+        .terrain {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+        }
+
+        /* Glass Card */
+        .flight-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        .flight-id {
+            font-size: 24px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 16px;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* Button */
+        .cta-button {
+            background: #FFB84D;
+            border: none;
+            border-radius: 24px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 16px rgba(255, 184, 77, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(255, 184, 77, 0.4);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 16px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: #FFB84D;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        /* Screen 2 specific */
+        .screen-2 .flight-card {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .price-display {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .price {
+            font-size: 28px;
+            font-weight: 700;
+            color: #FFB84D;
+        }
+
+        .price-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* SVG Icons */
+        .icon {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+    </style>
 </head>
 <body>
-  <div class="badge">inspo-aligned</div>
+    <!-- Screen 1 - Left -->
+    <div class="phone-frame">
+        <div class="screen">
+            <!-- Header -->
+            <div class="header">
+                <div class="menu-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="header-title">Book Flight</div>
+                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+                </svg>
+            </div>
+
+            <!-- 3D Visual -->
+            <div class="hero-visual">
+                <!-- Clouds -->
+                <div class="cloud cloud-1"></div>
+                <div class="cloud cloud-2"></div>
+                <div class="cloud cloud-3"></div>
+
+                <!-- Airplane -->
+                <svg class="airplane" viewBox="0 0 300 150" fill="none">
+                    <!-- Airplane body -->
+                    <ellipse cx="150" cy="75" rx="120" ry="40" fill="url(#planeGradient)"/>
+                    <ellipse cx="140" cy="55" rx="30" ry="20" fill="#5ECEC6"/>
+                    <!-- Wings -->
+                    <ellipse cx="100" cy="90" rx="60" ry="15" fill="#D88F85" opacity="0.8"/>
+                    <ellipse cx="200" cy="90" rx="60" ry="15" fill="#D88F85" opacity="0.8"/>
+                    <!-- Engine -->
+                    <circle cx="90" cy="95" r="18" fill="#3A3A3A"/>
+                    <circle cx="210" cy="95" r="18" fill="#3A3A3A"/>
+                    <circle cx="90" cy="95" r="12" fill="#4A4A4A"/>
+                    <circle cx="210" cy="95" r="12" fill="#4A4A4A"/>
+                    <defs>
+                        <linearGradient id="planeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#FFB84D;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#FF9A3D;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+
+                <!-- Mountains/Terrain - Simplified representation -->
+                <svg class="terrain" viewBox="0 0 375 200" fill="none" preserveAspectRatio="none">
+                    <path d="M0,120 Q50,80 100,100 T200,90 T300,110 T375,100 L375,200 L0,200 Z" fill="#E8A398"/>
+                    <path d="M0,140 Q60,120 120,130 T240,120 T375,130 L375,200 L0,200 Z" fill="#D88F85"/>
+                    <!-- Palm leaves -->
+                    <ellipse cx="50" cy="150" rx="15" ry="30" fill="#4ECDC4" opacity="0.8"/>
+                    <ellipse cx="320" cy="140" rx="18" ry="35" fill="#3AB8AE" opacity="0.8"/>
+                </svg>
+            </div>
+
+            <!-- Flight Card -->
+            <div class="flight-card">
+                <div class="flight-id">1080 FL1ZD</div>
+                <div class="stats-row">
+                    <div class="stat">
+                        <div class="stat-label">Passengers</div>
+                        <div class="stat-value">120</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Class</div>
+                        <div class="stat-value">Eco</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Bags</div>
+                        <div class="stat-value">2</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Gate</div>
+                        <div class="stat-value">A12</div>
+                    </div>
+                </div>
+                <button class="cta-button">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                        <line x1="1" y1="10" x2="23" y2="10"></line>
+                    </svg>
+                    <span>Confirm Booking</span>
+                </button>
+                <div class="pagination">
+                    <div class="dot active"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 2 - Right -->
+    <div class="phone-frame screen-2">
+        <div class="screen">
+            <!-- Header -->
+            <div class="header">
+                <div class="menu-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="header-title">Book Flight</div>
+                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+                </svg>
+            </div>
+
+            <!-- 3D Visual with Beach -->
+            <div class="hero-visual">
+                <!-- Clouds -->
+                <div class="cloud cloud-1"></div>
+                <div class="cloud cloud-2"></div>
+
+                <!-- Airplane -->
+                <svg class="airplane" viewBox="0 0 300 150" fill="none">
+                    <ellipse cx="150" cy="75" rx="120" ry="40" fill="url(#planeGradient2)"/>
+                    <ellipse cx="140" cy="55" rx="30" ry="20" fill="#5ECEC6"/>
+                    <ellipse cx="100" cy="90" rx="60" ry="15" fill="#D88F85" opacity="0.8"/>
+                    <ellipse cx="200" cy="90" rx="60" ry="15" fill="#D88F85" opacity="0.8"/>
+                    <circle cx="90" cy="95" r="18" fill="#3A3A3A"/>
+                    <circle cx="210" cy="95" r="18" fill="#3A3A3A"/>
+                    <defs>
+                        <linearGradient id="planeGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#FFB84D;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#FF9A3D;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+
+                <!-- Beach/Water Scene -->
+                <svg class="terrain" viewBox="0 0 375 200" fill="none" preserveAspectRatio="none">
+                    <!-- Mountains -->
+                    <path d="M0,90 L50,70 L100,85 L150,75 L200,80 L250,70 L300,85 L375,75 L375,110 L0,110 Z" fill="#E8A398"/>
+                    <!-- Water -->
+                    <rect x="0" y="110" width="375" height="40" fill="#5FD4C8"/>
+                    <!-- Beach -->
+                    <path d="M0,150 Q100,140 200,150 T375,145 L375,200 L0,200 Z" fill="#FFD99F"/>
+                    <!-- Palm tree -->
+                    <rect x="300" y="140" width="10" height="50" fill="#8B6F47"/>
+                    <ellipse cx="305" cy="135" rx="20" ry="15" fill="#3AB8AE"/>
+                </svg>
+            </div>
+
+            <!-- Flight Card with Price -->
+            <div class="flight-card">
+                <div class="stats-row">
+                    <div class="stat">
+                        <div class="stat-label">Altitude</div>
+                        <div class="stat-value">4,500</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Speed</div>
+                        <div class="stat-value">828</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Temp</div>
+                        <div class="stat-value">15°</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">ETA</div>
+                        <div class="stat-value">2:30</div>
+                    </div>
+                </div>
+                <div class="price-display">
+                    <div class="price-label">From</div>
+                    <div class="price">$589</div>
+                    <div class="price-label">per person</div>
+                </div>
+                <button class="cta-button" style="margin-top: 20px;">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>Book Destination</span>
+                </button>
+                <div class="pagination">
+                    <div class="dot"></div>
+                    <div class="dot active"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

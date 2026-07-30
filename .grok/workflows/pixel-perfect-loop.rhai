@@ -229,7 +229,9 @@ while round < max_rounds {
         p += "4) Do NOT claim pixel-perfect. Implement closest structural match to inspo.\n";
         p += "5) Do NOT edit other demos. Do NOT edit index.html unless paths change.\n";
         p += "6) Known LLM failure: washing out into generic glass cards; wrong framing; ignoring background scene.\n";
-        p += "7) After write, re-read your HTML and check for incomplete tags.\n\n";
+        p += "7) FORBIDDEN: full-bleed body { background: url(inspo) } wallpaper stubs (inspo-aligned). That gamifies SSIM and kills the experiment.\n";
+        p += "8) REQUIRED: interactive DOM — real layout, cards, buttons, structure. Optional: use a cropped inspo region as an <img> hero *inside* chrome.\n";
+        p += "9) After write, re-read your HTML and check for incomplete tags. File must be substantially longer than a wallpaper stub.\n\n";
         p += "Return schema: id, demo_path, changed (bool), summary of what you matched from inspo.\n";
 
         jobs.push(#{

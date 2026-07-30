@@ -1,27 +1,423 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Landscape Data Viz</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{
-      min-height:100vh;width:100vw;overflow:hidden;
-      background:#000 url('../inspo/Fjm_ePFVEAIb2zq.jpeg') center center / cover no-repeat;
-      font-family:Inter,system-ui,sans-serif;
-    }
-    .badge{
-      position:fixed;bottom:14px;left:14px;z-index:2;
-      font-size:10px;letter-spacing:.12em;text-transform:uppercase;
-      color:rgba(255,255,255,.85);background:rgba(0,0,0,.4);
-      backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);
-      padding:6px 10px;border-radius:999px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Visualization Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #2d2a3e 0%, #1a1625 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(45, 42, 62, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-card:hover {
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(255, 138, 101, 0.1) 0%, rgba(125, 87, 194, 0.1) 100%);
+        }
+
+        .glow-orange {
+            box-shadow: 0 0 20px rgba(255, 138, 101, 0.3);
+        }
+
+        .glow-teal {
+            box-shadow: 0 0 20px rgba(77, 208, 225, 0.3);
+        }
+
+        .stat-number {
+            font-variant-numeric: tabular-nums;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .pulse {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+    </style>
 </head>
-<body>
-  <div class="badge">inspo-aligned</div>
+<body class="p-6">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="mb-6 flex justify-between items-center">
+            <div>
+                <h1 class="text-white text-3xl font-bold mb-2">Dashboard Overview</h1>
+                <p class="text-white/50 text-sm">EXPLORER DASHBOARD • 3 DAYS</p>
+            </div>
+            <div class="text-white/70 text-sm">13:08</div>
+        </div>
+
+        <!-- Top Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+            <!-- Main Stats Display -->
+            <div class="lg:col-span-2 glass-card rounded-2xl p-6 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-orange-500/10 to-transparent pointer-events-none"></div>
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <p class="text-white/60 text-xs uppercase tracking-wider mb-1">Total Value</p>
+                        <h2 class="text-white text-5xl font-bold stat-number">13K</h2>
+                    </div>
+                    <div class="text-white/40 text-xs">OCTOBER 8</div>
+                </div>
+                <div class="grid grid-cols-5 gap-3 mt-6">
+                    <div class="text-center">
+                        <div class="w-12 h-12 rounded-full bg-orange-500/20 mx-auto mb-2 flex items-center justify-center glow-orange">
+                            <div class="w-6 h-6 rounded-full bg-orange-500"></div>
+                        </div>
+                        <p class="text-white/60 text-xs mb-1">ENERGY</p>
+                        <p class="text-white text-sm font-semibold">12,324</p>
+                        <p class="text-green-400 text-xs">↑ 2.3%</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 rounded-full bg-purple-500/20 mx-auto mb-2 flex items-center justify-center">
+                            <div class="w-6 h-6 rounded-full bg-purple-500"></div>
+                        </div>
+                        <p class="text-white/60 text-xs mb-1">FINANCE</p>
+                        <p class="text-white text-sm font-semibold">8,547</p>
+                        <p class="text-red-400 text-xs">↓ 1.2%</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 rounded-full bg-yellow-500/20 mx-auto mb-2 flex items-center justify-center">
+                            <div class="w-6 h-6 rounded-full bg-yellow-500"></div>
+                        </div>
+                        <p class="text-white/60 text-xs mb-1">RESOURCES</p>
+                        <p class="text-white text-sm font-semibold">5,123</p>
+                        <p class="text-green-400 text-xs">↑ 4.8%</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 rounded-full bg-pink-500/20 mx-auto mb-2 flex items-center justify-center">
+                            <div class="w-6 h-6 rounded-full bg-pink-500"></div>
+                        </div>
+                        <p class="text-white/60 text-xs mb-1">RESEARCH</p>
+                        <p class="text-white text-sm font-semibold">3,891</p>
+                        <p class="text-green-400 text-xs">↑ 3.1%</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 rounded-full bg-teal-500/20 mx-auto mb-2 flex items-center justify-center glow-teal">
+                            <div class="w-6 h-6 rounded-full bg-teal-500"></div>
+                        </div>
+                        <p class="text-white/60 text-xs mb-1">BUSINESS</p>
+                        <p class="text-white text-sm font-semibold">2,654</p>
+                        <p class="text-green-400 text-xs">↑ 5.7%</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compact Value Card -->
+            <div class="glass-card rounded-2xl p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <p class="text-white/60 text-xs uppercase tracking-wider">Value Base</p>
+                    <p class="text-white/40 text-xs">TODAY</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center glow-orange">
+                        <span class="text-white text-2xl font-bold">$</span>
+                    </div>
+                    <div>
+                        <h3 class="text-white text-4xl font-bold stat-number">$729</h3>
+                        <p class="text-green-400 text-sm mt-1">↑ 12.5% from last week</p>
+                    </div>
+                </div>
+                <div class="mt-4 flex justify-between text-xs text-white/60">
+                    <span>LOW: $698</span>
+                    <span>HIGH: $742</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Middle Section - Progress Card -->
+        <div class="glass-card rounded-2xl p-6 mb-4">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h3 class="text-white text-xl font-semibold mb-1">Progress & Earnings Tracker</h3>
+                    <p class="text-white/60 text-sm">PROGRAM 01 • EXAMINATION</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-white/60 text-xs mb-1">WEEK 2 OF 5</p>
+                    <p class="text-white text-2xl font-bold stat-number">13/37</p>
+                </div>
+            </div>
+            <div class="relative h-32">
+                <canvas id="areaChart"></canvas>
+            </div>
+            <div class="grid grid-cols-5 gap-4 mt-6">
+                <div class="text-center">
+                    <p class="text-white/40 text-xs mb-1">MONDAY</p>
+                    <p class="text-white text-lg font-bold stat-number">2,324</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-white/40 text-xs mb-1">TUESDAY</p>
+                    <p class="text-white text-lg font-bold stat-number">3,127</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-white/40 text-xs mb-1">WEDNESDAY</p>
+                    <p class="text-white text-lg font-bold stat-number">2,891</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-white/40 text-xs mb-1">THURSDAY</p>
+                    <p class="text-white text-lg font-bold stat-number">3,456</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-white/40 text-xs mb-1">FRIDAY</p>
+                    <p class="text-white text-lg font-bold stat-number">2,987</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Donut Chart Card -->
+            <div class="glass-card rounded-2xl p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-white text-sm font-semibold">ENERGY THERMODYNAMICS</h3>
+                    <span class="text-orange-400 text-xs">+8%</span>
+                </div>
+                <div class="relative h-40 flex items-center justify-center">
+                    <canvas id="donutChart"></canvas>
+                </div>
+                <div class="mt-4 space-y-2">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-orange-500"></div>
+                            <span class="text-white/70 text-xs">THERMAL</span>
+                        </div>
+                        <span class="text-white text-xs font-semibold">42%</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-purple-500"></div>
+                            <span class="text-white/70 text-xs">KINETIC</span>
+                        </div>
+                        <span class="text-white text-xs font-semibold">31%</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-teal-500"></div>
+                            <span class="text-white/70 text-xs">POTENTIAL</span>
+                        </div>
+                        <span class="text-white text-xs font-semibold">27%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Planets/Space Card -->
+            <div class="glass-card rounded-2xl p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-white text-sm font-semibold">EXPLORATION UPDATES</h3>
+                    <span class="text-white/40 text-xs">LIVE</span>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-orange-700 flex-shrink-0"></div>
+                        <div class="flex-1">
+                            <p class="text-white text-xs font-semibold">CODEX 04 - AUKASUS</p>
+                            <div class="flex items-center gap-2 mt-1">
+                                <span class="text-white/60 text-xs">DISCOVERED</span>
+                                <div class="flex-1 h-1 bg-white/10 rounded-full">
+                                    <div class="h-full bg-orange-500 rounded-full" style="width: 75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex-shrink-0"></div>
+                        <div class="flex-1">
+                            <p class="text-white text-xs font-semibold">TERRITORY RESEARCH</p>
+                            <div class="flex items-center gap-2 mt-1">
+                                <span class="text-white/60 text-xs">IN PROGRESS</span>
+                                <div class="flex-1 h-1 bg-white/10 rounded-full">
+                                    <div class="h-full bg-purple-500 rounded-full" style="width: 45%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-teal-500 to-teal-700 flex-shrink-0"></div>
+                        <div class="flex-1">
+                            <p class="text-white text-xs font-semibold">THE ZONE - MARS/EARTH</p>
+                            <div class="flex items-center gap-2 mt-1">
+                                <span class="text-white/60 text-xs">ANALYZING</span>
+                                <div class="flex-1 h-1 bg-white/10 rounded-full">
+                                    <div class="h-full bg-teal-500 rounded-full" style="width: 60%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-pink-700 flex-shrink-0"></div>
+                        <div class="flex-1">
+                            <p class="text-white text-xs font-semibold">GALAXY - EXPLORATION</p>
+                            <div class="flex items-center gap-2 mt-1">
+                                <span class="text-white/60 text-xs">PENDING</span>
+                                <div class="flex-1 h-1 bg-white/10 rounded-full">
+                                    <div class="h-full bg-pink-500 rounded-full" style="width: 25%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Landscape/Nature Card -->
+            <div class="glass-card rounded-2xl overflow-hidden relative">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60"></div>
+                <div class="relative h-full p-6 flex flex-col justify-between" style="min-height: 300px;">
+                    <div>
+                        <h3 class="text-white text-sm font-semibold mb-1">S MOTIONS</h3>
+                        <div class="flex gap-4 text-xs text-white/70">
+                            <span>+3M</span>
+                            <span>+10%</span>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-white text-3xl font-bold stat-number">37</p>
+                                <p class="text-white/60 text-xs mt-1">MOTION N</p>
+                            </div>
+                            <div>
+                                <p class="text-white text-3xl font-bold stat-number">570</p>
+                                <p class="text-white/60 text-xs mt-1">UP N SHOW</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-white text-3xl font-bold stat-number">30</p>
+                                <p class="text-white/60 text-xs mt-1">SUMMONS</p>
+                            </div>
+                            <div>
+                                <p class="text-white text-3xl font-bold stat-number">30</p>
+                                <p class="text-white/60 text-xs mt-1">SUMMONS</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metrics Grid Card -->
+            <div class="glass-card rounded-2xl p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-white text-sm font-semibold">GRID OPERATIONS</h3>
+                    <span class="text-white/40 text-xs">+89%</span>
+                </div>
+                <div class="relative h-32 mb-4">
+                    <canvas id="barChart"></canvas>
+                </div>
+                <div class="grid grid-cols-2 gap-3 mt-4">
+                    <div class="bg-white/5 rounded-lg p-3">
+                        <p class="text-white/60 text-xs mb-1">EFFICIENCY</p>
+                        <p class="text-white text-xl font-bold stat-number">94%</p>
+                    </div>
+                    <div class="bg-white/5 rounded-lg p-3">
+                        <p class="text-white/60 text-xs mb-1">OUTPUT</p>
+                        <p class="text-white text-xl font-bold stat-number">87%</p>
+                    </div>
+                    <div class="bg-white/5 rounded-lg p-3">
+                        <p class="text-white/60 text-xs mb-1">CAPACITY</p>
+                        <p class="text-white text-xl font-bold stat-number">91%</p>
+                    </div>
+                    <div class="bg-white/5 rounded-lg p-3">
+                        <p class="text-white/60 text-xs mb-1">UPTIME</p>
+                        <p class="text-white text-xl font-bold stat-number">99%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Area Chart
+        const areaCtx = document.getElementById('areaChart').getContext('2d');
+        new Chart(areaCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    data: [25, 35, 30, 45, 38, 50, 42],
+                    borderColor: '#ff8a65',
+                    backgroundColor: 'rgba(255, 138, 101, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 2,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { display: false },
+                    y: { display: false }
+                }
+            }
+        });
+
+        // Donut Chart
+        const donutCtx = document.getElementById('donutChart').getContext('2d');
+        new Chart(donutCtx, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [42, 31, 27],
+                    backgroundColor: ['#ff8a65', '#7e57c2', '#4dd0e1'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // Bar Chart
+        const barCtx = document.getElementById('barChart').getContext('2d');
+        new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: ['1', '2', '3', '4', '5'],
+                datasets: [{
+                    data: [65, 75, 85, 95, 88],
+                    backgroundColor: '#ff8a65',
+                    borderRadius: 4,
+                    barThickness: 12
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { display: false },
+                    y: { display: false }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
