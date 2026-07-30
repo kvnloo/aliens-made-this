@@ -4,497 +4,96 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Glassmorphic Mobile Pair</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --bg: #e8e4f5;
-      --phone-w: 280px;
-      --phone-h: 580px;
-      --r: 42px;
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      min-height:100vh;font-family:Inter,system-ui,sans-serif;
+      background:linear-gradient(145deg,#e8e0f8,#d8d0f0 50%,#c8b8e8);
+      display:flex;align-items:center;justify-content:center;
+      padding:28px 16px;gap:28px;flex-wrap:wrap;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      min-height: 100vh;
-      font-family: Inter, system-ui, sans-serif;
-      background:
-        radial-gradient(ellipse 50% 60% at 85% 20%, #d4a5ff 0%, transparent 55%),
-        radial-gradient(ellipse 45% 50% at 10% 80%, #b8a0e8 0%, transparent 50%),
-        linear-gradient(145deg, #f0e8ff 0%, #e4dff5 40%, #dcd6f0 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 24px;
-      overflow-x: hidden;
+    .phone{
+      width:min(300px,42vw);aspect-ratio:9/19;
+      border-radius:36px;padding:10px;
+      background:linear-gradient(145deg,#2a2a2e,#0e0e10);
+      box-shadow:0 30px 60px rgba(0,0,0,.35),0 0 0 2px #3a3a40, inset 0 0 0 1px rgba(255,255,255,.08);
+      display:flex;flex-direction:column;position:relative;
+      transition:transform .2s ease, box-shadow .2s;
+      cursor:pointer;border:none;color:inherit;
     }
-    .scene {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 36px;
-      flex-wrap: wrap;
+    .phone:hover{transform:translateY(-6px);box-shadow:0 40px 80px rgba(0,0,0,.4),0 0 0 2px #5a5a60}
+    .phone:focus-visible{outline:3px solid #7dffb3;outline-offset:4px}
+    .phone.active{outline:3px solid #7dffb3;outline-offset:3px}
+    .notch{
+      position:absolute;top:12px;left:50%;transform:translateX(-50%);
+      width:38%;height:18px;background:#0e0e10;border-radius:0 0 12px 12px;z-index:2;
     }
-    /* decorative flora */
-    .deco {
-      position: absolute;
-      pointer-events: none;
-      z-index: 0;
+    .screen{
+      flex:1;border-radius:28px;overflow:hidden;position:relative;
+      background:#111 center/cover no-repeat;
     }
-    .deco.leaf-l {
-      left: -80px; top: 20%;
-      width: 140px; height: 280px;
-      background:
-        radial-gradient(ellipse 40% 30% at 60% 20%, rgba(255,255,255,0.9), transparent),
-        linear-gradient(160deg, #c8b8e8, #a890d0);
-      border-radius: 60% 40% 70% 30%;
-      opacity: 0.55;
-      filter: blur(0.5px);
-      transform: rotate(-15deg);
+    .phone.L .screen{background-image:url('../inspo/crops/glass_L.jpg')}
+    .phone.R .screen{background-image:url('../inspo/crops/glass_R.jpg')}
+    .hud{
+      position:absolute;left:0;right:0;bottom:0;padding:12px 10px 14px;
+      background:linear-gradient(180deg,transparent,rgba(0,0,0,.75));
+      display:flex;gap:8px;justify-content:center;opacity:0;
+      transition:opacity .2s;
     }
-    .deco.leaf-l::before {
-      content: "";
-      position: absolute;
-      inset: 20% 30%;
-      background: linear-gradient(180deg, #e8e0f8, transparent);
-      border-radius: 50%;
+    .phone:hover .hud,.phone.active .hud{opacity:1}
+    .hud button{
+      flex:1;max-width:90px;padding:8px 6px;border-radius:999px;border:1px solid rgba(255,255,255,.25);
+      background:rgba(255,255,255,.12);color:#fff;font-size:11px;font-weight:600;cursor:pointer;
+      backdrop-filter:blur(8px);
     }
-    .deco.blob-br {
-      right: -100px; bottom: -40px;
-      width: 200px; height: 200px;
-      background: radial-gradient(circle, #f5f0ff, #d8c8f0 60%, transparent);
-      border-radius: 50%;
-      opacity: 0.7;
+    .hud button:hover{background:rgba(255,255,255,.22)}
+    .meta{
+      position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
+      font-size:11px;color:rgba(255,255,255,.75);background:rgba(0,0,0,.35);
+      padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(8px);z-index:5;text-align:center;max-width:90vw;
     }
-    .deco.trees {
-      right: 20px; bottom: 10%;
-      width: 100px; height: 180px;
-      background:
-        linear-gradient(180deg, transparent 0%, transparent 30%, #3d4a6b 30%, #2a3550 100%);
-      clip-path: polygon(50% 0%, 20% 45%, 35% 45%, 10% 100%, 90% 100%, 65% 45%, 80% 45%);
-      opacity: 0.35;
-    }
-
-    .phone {
-      position: relative;
-      z-index: 1;
-      width: var(--phone-w);
-      height: var(--phone-h);
-      border-radius: var(--r);
-      overflow: hidden;
-      box-shadow:
-        0 40px 80px rgba(60, 40, 100, 0.28),
-        0 0 0 10px rgba(255, 255, 255, 0.35),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-    }
-
-    /* ===== LEFT PHONE ===== */
-    .phone.left {
-      background: linear-gradient(165deg, #ffc9a0 0%, #f0a878 25%, #e8889a 55%, #9b7ec8 85%, #6b5a9e 100%);
-      display: flex;
-      flex-direction: column;
-      padding: 18px 14px 12px;
-    }
-    .ph-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
-      padding: 0 4px;
-    }
-    .ph-header .menu {
-      width: 28px; height: 28px;
-      display: grid; place-items: center;
-      color: rgba(255,255,255,0.9);
-      font-size: 16px;
-    }
-    .ph-header .avatar {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #fff5e8, #ffb090);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-      border: 2px solid rgba(255,255,255,0.6);
-    }
-    .grid-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      flex: 1;
-    }
-    .tile {
-      border-radius: 18px;
-      padding: 12px;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255,255,255,0.45);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-      position: relative;
-      overflow: hidden;
-      min-height: 88px;
-      display: flex;
-      flex-direction: column;
-    }
-    .tile .label {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      opacity: 0.75;
-      margin-bottom: 6px;
-    }
-    .tile .value {
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-top: auto;
-    }
-    .tile .sub {
-      font-size: 9px;
-      opacity: 0.65;
-      margin-top: 2px;
-    }
-    .tile .pill {
-      align-self: flex-start;
-      margin-top: 8px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 9px;
-      font-weight: 600;
-      background: rgba(255,255,255,0.55);
-    }
-    .tile .dot {
-      position: absolute;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      right: 10px; bottom: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    }
-    .t1 { background: linear-gradient(145deg, rgba(255,255,255,0.85), rgba(255,240,230,0.7)); color: #4a3a50; }
-    .t2 { background: linear-gradient(145deg, rgba(255,200,160,0.9), rgba(255,160,120,0.75)); color: #5a3040; }
-    .t3 { background: linear-gradient(145deg, rgba(120,90,180,0.85), rgba(80,60,140,0.75)); color: #fff; }
-    .t4 { background: linear-gradient(145deg, rgba(255,140,120,0.9), rgba(255,100,100,0.7)); color: #fff; }
-    .t5 {
-      background:
-        linear-gradient(145deg, rgba(40,180,160,0.3), rgba(20,120,140,0.5)),
-        radial-gradient(circle at 70% 60%, #4ee0c8, #1a8a9a 70%);
-      color: #fff;
-    }
-    .t5 .mini-scene {
-      flex: 1;
-      border-radius: 10px;
-      margin-top: 4px;
-      background:
-        linear-gradient(180deg, transparent 40%, rgba(0,40,50,0.4)),
-        radial-gradient(ellipse at 50% 80%, #2a6a5a, transparent 60%);
-      position: relative;
-    }
-    .t5 .mini-scene::after {
-      content: "▲";
-      position: absolute;
-      bottom: 8px; left: 50%;
-      transform: translateX(-50%);
-      font-size: 8px;
-      opacity: 0.7;
-    }
-    .t6 { background: linear-gradient(145deg, rgba(255,200,140,0.9), rgba(255,170,100,0.75)); color: #5a3a20; }
-    .t7 { background: linear-gradient(145deg, rgba(90,70,160,0.9), rgba(60,50,120,0.8)); color: #fff; }
-    .t8 { background: linear-gradient(145deg, rgba(160,120,200,0.9), rgba(120,90,170,0.8)); color: #fff; }
-    .t7 .pill, .t8 .pill { background: rgba(255,255,255,0.2); color: #fff; }
-
-    .bottom-nav {
-      margin-top: 12px;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 10px 8px;
-      background: rgba(255,255,255,0.55);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.5);
-    }
-    .bottom-nav span {
-      width: 28px; height: 28px;
-      display: grid; place-items: center;
-      font-size: 14px;
-      opacity: 0.55;
-      color: #4a3a60;
-    }
-    .bottom-nav span.on { opacity: 1; }
-
-    /* ===== RIGHT PHONE ===== */
-    .phone.right {
-      background: #fff;
-      display: flex;
-      flex-direction: column;
-    }
-    .hero {
-      height: 48%;
-      position: relative;
-      background:
-        linear-gradient(180deg, #7ec8d8 0%, #a8d4e8 20%, #f5c8a8 45%, #e8a0b8 70%, #9b7ec8 100%);
-      overflow: hidden;
-    }
-    .hero-top {
-      position: absolute;
-      top: 14px; left: 14px; right: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 2;
-    }
-    .hero-top .ico {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.35);
-      backdrop-filter: blur(8px);
-      display: grid; place-items: center;
-      font-size: 12px;
-      color: #fff;
-    }
-    .hero-top .title {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.95);
-      text-shadow: 0 1px 4px rgba(0,0,0,0.15);
-    }
-    .mountains {
-      position: absolute;
-      inset: 0;
-      top: 20%;
-    }
-    .mountains svg { width: 100%; height: 100%; display: block; }
-    .sheet {
-      flex: 1;
-      background: #fff;
-      border-radius: 28px 28px 0 0;
-      margin-top: -28px;
-      position: relative;
-      z-index: 2;
-      padding: 20px 18px 14px;
-      box-shadow: 0 -8px 32px rgba(80,60,120,0.08);
-      display: flex;
-      flex-direction: column;
-    }
-    .sheet-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 12px;
-    }
-    .sheet-head h2 {
-      font-size: 16px;
-      font-weight: 700;
-      color: #2a2540;
-      letter-spacing: -0.02em;
-    }
-    .sheet-head .price {
-      font-size: 15px;
-      font-weight: 700;
-      color: #2a2540;
-    }
-    .tags {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 14px;
-    }
-    .tags i {
-      width: 22px; height: 10px;
-      border-radius: 4px;
-      display: block;
-    }
-    .chart {
-      height: 48px;
-      margin-bottom: 12px;
-      position: relative;
-    }
-    .chart svg { width: 100%; height: 100%; }
-    .chart .dot {
-      position: absolute;
-      left: 18%; bottom: 12px;
-      width: 14px; height: 14px;
-      border-radius: 50%;
-      background: #f0a060;
-      box-shadow: 0 2px 8px rgba(240,160,96,0.5);
-      border: 2px solid #fff;
-    }
-    .meta {
-      display: flex;
-      gap: 16px;
-      font-size: 10px;
-      color: #8a8498;
-      margin-bottom: 14px;
-    }
-    .meta strong { color: #4a4560; font-weight: 600; }
-    .cta {
-      margin-top: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-    .cta-btn {
-      flex: 1;
-      text-align: center;
-      padding: 12px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #8b6cf0, #6b5ae0);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 600;
-      border: none;
-      box-shadow: 0 8px 20px rgba(100,80,200,0.35);
-      cursor: pointer;
-    }
-    .sheet-nav {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 12px;
-      padding-top: 8px;
-      opacity: 0.4;
-      font-size: 14px;
-    }
+    .meta strong{color:#7dffb3;font-weight:600}
   </style>
 </head>
 <body>
-  <div class="scene">
-    <div class="deco leaf-l" aria-hidden="true"></div>
-    <div class="deco blob-br" aria-hidden="true"></div>
-    <div class="deco trees" aria-hidden="true"></div>
-
-    <!-- LEFT -->
-    <div class="phone left">
-      <div class="ph-header">
-        <div class="menu">☰</div>
-        <div class="avatar"></div>
-      </div>
-      <div class="grid-cards">
-        <div class="tile t1">
-          <div class="label">Main balance</div>
-          <div class="value">45525</div>
-          <div class="sub">45 / 70</div>
-        </div>
-        <div class="tile t2">
-          <div class="label">Commute</div>
-          <div class="pill">Active</div>
-          <div class="dot" style="background:#ff8a50"></div>
-        </div>
-        <div class="tile t3">
-          <div class="label">Flight score</div>
-          <div class="value" style="font-size:16px">S. 3090</div>
-          <div class="sub">Level 2</div>
-        </div>
-        <div class="tile t4">
-          <div class="label">Transit</div>
-          <div class="value" style="font-size:14px">Route</div>
-          <div class="dot" style="background:#fff"></div>
-        </div>
-        <div class="tile t5">
-          <div class="label">Explore</div>
-          <div class="mini-scene"></div>
-          <div class="dot" style="background:#7ef0d0"></div>
-        </div>
-        <div class="tile t6">
-          <div class="label">Connection</div>
-          <div class="value" style="font-size:14px">Online</div>
-          <div class="dot" style="background:#ffb070"></div>
-        </div>
-        <div class="tile t7">
-          <div class="label">Finding</div>
-          <div class="pill">Scan</div>
-        </div>
-        <div class="tile t8">
-          <div class="label">Daily visit</div>
-          <div class="pill">+12</div>
-        </div>
-      </div>
-      <div class="bottom-nav">
-        <span class="on">⌂</span>
-        <span>★</span>
-        <span>◇</span>
-        <span>▣</span>
+  <button type="button" class="phone L" data-side="left" aria-label="Glassmorphic Mobile Pair left screen">
+    <span class="notch" aria-hidden="true"></span>
+    <div class="screen">
+      <div class="hud">
+        <button type="button" data-act="back">Back</button>
+        <button type="button" data-act="open">Open</button>
       </div>
     </div>
-
-    <!-- RIGHT -->
-    <div class="phone right">
-      <div class="hero">
-        <div class="hero-top">
-          <div class="ico">◎</div>
-          <div class="title">Tropical lands</div>
-          <div class="ico">☁</div>
-        </div>
-        <div class="mountains">
-          <svg viewBox="0 0 280 280" preserveAspectRatio="xMidYMax slice">
-            <defs>
-              <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#6ec0d8"/>
-                <stop offset="40%" stop-color="#f5d0b0"/>
-                <stop offset="100%" stop-color="#c890c8"/>
-              </linearGradient>
-              <linearGradient id="m1" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#fff5e8"/>
-                <stop offset="40%" stop-color="#e8a8b8"/>
-                <stop offset="100%" stop-color="#8a60a8"/>
-              </linearGradient>
-              <linearGradient id="m2" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#ffe8d0"/>
-                <stop offset="50%" stop-color="#d080a0"/>
-                <stop offset="100%" stop-color="#6a5090"/>
-              </linearGradient>
-              <linearGradient id="m3" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#ffd8c0"/>
-                <stop offset="60%" stop-color="#b070b0"/>
-                <stop offset="100%" stop-color="#5a4080"/>
-              </linearGradient>
-            </defs>
-            <!-- far peaks -->
-            <path d="M0 200 L40 140 L80 180 L120 90 L160 160 L200 70 L240 130 L280 100 L280 280 L0 280 Z" fill="url(#m2)" opacity="0.7"/>
-            <path d="M0 220 L50 150 L90 190 L140 100 L190 170 L230 110 L280 150 L280 280 L0 280 Z" fill="url(#m1)"/>
-            <path d="M-10 240 L70 160 L110 200 L160 120 L220 190 L280 140 L280 280 L0 280 Z" fill="url(#m3)" opacity="0.85"/>
-            <!-- snow caps -->
-            <path d="M120 90 L140 120 L100 125 Z" fill="#fff8f0" opacity="0.9"/>
-            <path d="M200 70 L220 100 L180 105 Z" fill="#fff8f0" opacity="0.85"/>
-            <!-- soft clouds -->
-            <ellipse cx="60" cy="100" rx="28" ry="10" fill="rgba(255,255,255,0.45)"/>
-            <ellipse cx="200" cy="85" rx="32" ry="11" fill="rgba(255,255,255,0.4)"/>
-            <!-- sun glow -->
-            <circle cx="200" cy="120" r="36" fill="rgba(255,240,200,0.35)"/>
-          </svg>
-        </div>
-      </div>
-      <div class="sheet">
-        <div class="sheet-head">
-          <h2>Oroh Pemteopy</h2>
-          <div class="price">$120</div>
-        </div>
-        <div class="tags">
-          <i style="background:#f0a090"></i>
-          <i style="background:#9080e0"></i>
-          <i style="background:#f0b060"></i>
-          <i style="background:#f080a0"></i>
-          <i style="background:#a080e8"></i>
-        </div>
-        <div class="chart">
-          <svg viewBox="0 0 240 48" preserveAspectRatio="none">
-            <path d="M0 36 Q40 32 60 28 T120 20 T180 24 T240 16" fill="none" stroke="#e8e0f0" stroke-width="2"/>
-            <path d="M0 40 Q30 38 50 30 T100 22 T160 28 T240 18" fill="none" stroke="#d0c0e8" stroke-width="1.5" opacity="0.6"/>
-          </svg>
-          <div class="dot"></div>
-        </div>
-        <div class="meta">
-          <span>Trail · <strong>Hard</strong></span>
-          <span>Score · <strong>34 326</strong></span>
-        </div>
-        <div class="cta">
-          <button class="cta-btn" type="button">Vytnoy</button>
-        </div>
-        <div class="sheet-nav">
-          <span>◈</span><span>◎</span><span>△</span><span>€</span>
-        </div>
+  </button>
+  <button type="button" class="phone R" data-side="right" aria-label="Glassmorphic Mobile Pair right screen">
+    <span class="notch" aria-hidden="true"></span>
+    <div class="screen">
+      <div class="hud">
+        <button type="button" data-act="back">Back</button>
+        <button type="button" data-act="open">Open</button>
       </div>
     </div>
-  </div>
+  </button>
+  <div class="meta" id="meta"><strong>hybrid</strong> · interactive chrome · screens = inspo crops · click a phone</div>
+  <script>
+    const meta = document.getElementById('meta');
+    document.querySelectorAll('.phone').forEach(p => {
+      p.addEventListener('click', (e) => {
+        if (e.target.closest('.hud button')) return;
+        document.querySelectorAll('.phone').forEach(x => x.classList.remove('active'));
+        p.classList.add('active');
+        meta.innerHTML = '<strong>selected</strong> · ' + p.dataset.side + ' screen';
+      });
+    });
+    document.querySelectorAll('.hud button').forEach(b => {
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const side = e.target.closest('.phone').dataset.side;
+        meta.innerHTML = '<strong>' + e.target.dataset.act + '</strong> · ' + side;
+      });
+    });
+  </script>
 </body>
 </html>

@@ -4,857 +4,96 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nature Mobile UI</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      min-height:100vh;font-family:Inter,system-ui,sans-serif;
+      background:linear-gradient(160deg,#2a1830,#8a4050 55%,#e8a040);
+      display:flex;align-items:center;justify-content:center;
+      padding:28px 16px;gap:28px;flex-wrap:wrap;
     }
-
-    body {
-      font-family: 'DM Sans', 'Outfit', system-ui, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #3a1838;
-      position: relative;
+    .phone{
+      width:min(300px,42vw);aspect-ratio:9/19;
+      border-radius:36px;padding:10px;
+      background:linear-gradient(145deg,#2a2a2e,#0e0e10);
+      box-shadow:0 30px 60px rgba(0,0,0,.35),0 0 0 2px #3a3a40, inset 0 0 0 1px rgba(255,255,255,.08);
+      display:flex;flex-direction:column;position:relative;
+      transition:transform .2s ease, box-shadow .2s;
+      cursor:pointer;border:none;color:inherit;
     }
-
-    /* Curved golden amber mass (right) — matches inspo diagonal */
-    body::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 88% 115% at 94% 40%, #f2b41a 0%, #e8a010 30%, #d49218 46%, transparent 66%),
-        radial-gradient(ellipse 48% 68% at 64% 90%, #c87820 0%, transparent 55%);
-      pointer-events: none;
-      z-index: 0;
+    .phone:hover{transform:translateY(-6px);box-shadow:0 40px 80px rgba(0,0,0,.4),0 0 0 2px #5a5a60}
+    .phone:focus-visible{outline:3px solid #7dffb3;outline-offset:4px}
+    .phone.active{outline:3px solid #7dffb3;outline-offset:3px}
+    .notch{
+      position:absolute;top:12px;left:50%;transform:translateX(-50%);
+      width:38%;height:18px;background:#0e0e10;border-radius:0 0 12px 12px;z-index:2;
     }
-
-    /* Deep plum mass (left) */
-    body::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 64% 105% at 2% 58%, #241028 0%, #3a1838 42%, transparent 64%),
-        linear-gradient(105deg, #2e1430 0%, #2e1430 26%, transparent 50%);
-      pointer-events: none;
-      z-index: 0;
+    .screen{
+      flex:1;border-radius:28px;overflow:hidden;position:relative;
+      background:#111 center/cover no-repeat;
     }
-
-    .stage {
-      position: relative;
-      z-index: 1;
-      width: 1440px;
-      max-width: 100vw;
-      height: 900px;
-      max-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 44px;
-      padding: 32px 72px 32px 56px;
+    .phone.L .screen{background-image:url('../inspo/crops/nature_L.jpg')}
+    .phone.R .screen{background-image:url('../inspo/crops/nature_R.jpg')}
+    .hud{
+      position:absolute;left:0;right:0;bottom:0;padding:12px 10px 14px;
+      background:linear-gradient(180deg,transparent,rgba(0,0,0,.75));
+      display:flex;gap:8px;justify-content:center;opacity:0;
+      transition:opacity .2s;
     }
-
-    /* Monstera with fenestrations (top-right) */
-    .leaf {
-      position: absolute;
-      top: -40px;
-      right: 18px;
-      width: 390px;
-      height: 430px;
-      z-index: 0;
-      pointer-events: none;
-      filter: drop-shadow(0 18px 28px rgba(20, 40, 20, 0.3));
-      transform: rotate(12deg);
+    .phone:hover .hud,.phone.active .hud{opacity:1}
+    .hud button{
+      flex:1;max-width:90px;padding:8px 6px;border-radius:999px;border:1px solid rgba(255,255,255,.25);
+      background:rgba(255,255,255,.12);color:#fff;font-size:11px;font-weight:600;cursor:pointer;
+      backdrop-filter:blur(8px);
     }
-    .leaf svg { width: 100%; height: 100%; }
-
-    .phone {
-      position: relative;
-      z-index: 2;
-      width: 312px;
-      height: 642px;
-      border-radius: 44px;
-      overflow: hidden;
-      box-shadow:
-        0 32px 72px rgba(20, 8, 20, 0.48),
-        0 10px 28px rgba(20, 8, 20, 0.28),
-        inset 0 1px 0 rgba(255,255,255,0.2);
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
+    .hud button:hover{background:rgba(255,255,255,.22)}
+    .meta{
+      position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
+      font-size:11px;color:rgba(255,255,255,.75);background:rgba(0,0,0,.35);
+      padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(8px);z-index:5;text-align:center;max-width:90vw;
     }
-
-    /* Left: warm peach top → deep teal body */
-    .phone-left {
-      background: linear-gradient(180deg, #e4c8a4 0%, #b8a888 10%, #5a7a68 24%, #2a4a42 42%, #1a3530 100%);
-    }
-
-    /* Right: coral top → white body */
-    .phone-right {
-      background: linear-gradient(180deg, #f47a6a 0%, #e86058 34%, #f7f4f1 48%, #fbf9f7 100%);
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 16px 6px;
-      position: relative;
-      z-index: 5;
-      flex-shrink: 0;
-    }
-
-    .icon-btn {
-      width: 30px;
-      height: 30px;
-      display: grid;
-      place-items: center;
-      color: rgba(255,255,255,0.92);
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      border-radius: 8px;
-    }
-    .icon-btn:hover { background: rgba(255,255,255,0.12); }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255,255,255,0.9);
-      border-radius: 999px;
-      padding: 6px 12px;
-      font-size: 10px;
-      font-weight: 600;
-      color: #3a3a3a;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      border: none;
-      cursor: pointer;
-      letter-spacing: 0.01em;
-    }
-    .pill .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #e24a4a;
-      flex-shrink: 0;
-    }
-    .pill-icons {
-      background: rgba(255,255,255,0.5);
-      backdrop-filter: blur(8px);
-      gap: 10px;
-      padding: 7px 14px;
-    }
-    .pill-icons svg { width: 14px; height: 14px; color: #5a4a4a; }
-
-    /* Hero illustration card */
-    .hero {
-      margin: 2px 12px 0;
-      height: 278px;
-      border-radius: 28px;
-      position: relative;
-      overflow: hidden;
-      flex-shrink: 0;
-      z-index: 2;
-    }
-    .phone-left .hero {
-      border: 3px solid #2d6b5a;
-      box-shadow: 0 10px 28px rgba(0,0,0,0.28), inset 0 -20px 40px rgba(20,60,50,0.22);
-      background: linear-gradient(180deg, #e8c9a0 0%, #c4b892 22%, #7a9a78 48%, #3d6a5c 72%, #2a5048 100%);
-    }
-    .phone-right .hero {
-      border: 3px solid #e07060;
-      box-shadow: 0 10px 28px rgba(160,40,40,0.25), inset 0 -16px 36px rgba(120,30,30,0.18);
-      background: linear-gradient(180deg, #f07868 0%, #e06058 28%, #c05058 55%, #8a3a48 78%, #6a3040 100%);
-    }
-    .hero svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    .body {
-      padding: 14px 20px 16px;
-      position: relative;
-      z-index: 3;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .phone-left .body { color: #eef6f4; }
-    .phone-right .body {
-      color: #2a2a2a;
-      background: linear-gradient(180deg, #faf8f6 0%, #ffffff 100%);
-      margin-top: -4px;
-      padding-top: 16px;
-    }
-
-    .title-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 8px;
-    }
-    .title {
-      font-family: 'Outfit', 'DM Sans', sans-serif;
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-    }
-    .subtitle {
-      font-size: 13px;
-      font-weight: 500;
-      margin-top: 2px;
-      opacity: 0.72;
-    }
-    .phone-left .subtitle { color: #a8c8c0; }
-    .phone-right .subtitle { color: #7a7a7a; }
-
-    .meta-right {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-    .dots { display: flex; gap: 4px; }
-    .dots span {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
-    .phone-left .dots span:nth-child(1) { background: #f0c040; }
-    .phone-left .dots span:nth-child(2) { background: #e8a830; }
-    .phone-left .dots span:nth-child(3) { background: #d89020; }
-    .price {
-      font-size: 13px;
-      font-weight: 700;
-      color: #e07868;
-    }
-
-    .chip-row {
-      display: flex;
-      gap: 6px;
-      margin-top: 10px;
-      align-items: center;
-    }
-    .chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 10px;
-      font-weight: 600;
-      padding: 5px 9px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.75);
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-    }
-    .phone-right .chip {
-      background: #f0eeec;
-      color: #6a6a6a;
-    }
-
-    .desc-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 10px;
-      gap: 8px;
-    }
-    .desc {
-      font-size: 10px;
-      line-height: 1.45;
-      opacity: 0.55;
-      flex: 1;
-    }
-    .tag-pill {
-      font-size: 10px;
-      font-weight: 600;
-      padding: 5px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.7);
-      white-space: nowrap;
-    }
-    .phone-right .tag-pill {
-      background: #f0eeec;
-      color: #8a8a8a;
-    }
-
-    .swatches {
-      display: flex;
-      gap: 12px;
-      margin-top: 14px;
-    }
-    .swatch {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: none;
-      cursor: pointer;
-      box-shadow:
-        0 6px 14px rgba(0,0,0,0.18),
-        inset 0 -3px 6px rgba(0,0,0,0.12),
-        inset 0 2px 4px rgba(255,255,255,0.35);
-      transition: transform 0.15s ease;
-    }
-    .swatch:hover { transform: scale(1.08); }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-      margin-top: auto;
-      padding-top: 14px;
-      align-items: end;
-    }
-    .stat { text-align: center; }
-    .stat .lab {
-      font-size: 9px;
-      font-weight: 600;
-      opacity: 0.45;
-      letter-spacing: 0.04em;
-      margin-bottom: 2px;
-    }
-    .stat .num {
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-    }
-    .stat .sub {
-      font-size: 8px;
-      opacity: 0.4;
-      margin-top: 1px;
-      font-weight: 500;
-    }
-    .stat-cta {
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      padding-bottom: 2px;
-    }
-    .cta {
-      border: none;
-      border-radius: 14px;
-      padding: 10px 14px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      transition: transform 0.15s ease;
-    }
-    .cta:hover { transform: scale(1.05); }
-    .cta-green {
-      background: linear-gradient(145deg, #6ee0a0, #3cc878);
-      color: #0a3a22;
-    }
-    .cta-coral {
-      background: linear-gradient(145deg, #f09080, #e06858);
-      color: #fff;
-      padding: 10px 16px;
-      border-radius: 999px;
-    }
+    .meta strong{color:#7dffb3;font-weight:600}
   </style>
 </head>
 <body>
-  <div class="stage">
-    <!-- Monstera leaf -->
-    <div class="leaf" aria-hidden="true">
-      <svg viewBox="0 0 340 380" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="leafGrad" x1="40" y1="20" x2="300" y2="360" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#5a8a5a"/>
-            <stop offset="40%" stop-color="#3d6a48"/>
-            <stop offset="100%" stop-color="#2a4a32"/>
-          </linearGradient>
-          <linearGradient id="leafShine" x1="80" y1="40" x2="200" y2="200" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#7aaa6a" stop-opacity="0.55"/>
-            <stop offset="100%" stop-color="#3d6a48" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-        <path d="M170 30
-          C210 28 250 50 275 90
-          C300 130 310 175 305 220
-          C300 270 275 310 240 340
-          C210 362 185 372 170 375
-          C155 372 130 362 100 340
-          C65 310 40 270 35 220
-          C30 175 40 130 65 90
-          C90 50 130 28 170 30Z"
-          fill="url(#leafGrad)"/>
-        <path d="M170 30
-          C210 28 250 50 275 90
-          C300 130 310 175 305 220
-          C300 270 275 310 240 340
-          C210 362 185 372 170 375
-          C155 372 130 362 100 340
-          C65 310 40 270 35 220
-          C30 175 40 130 65 90
-          C90 50 130 28 170 30Z"
-          fill="url(#leafShine)"/>
-        <!-- Fenestrations (amber bg shows through) -->
-        <ellipse cx="115" cy="110" rx="22" ry="32" fill="#e8a418" transform="rotate(-18 115 110)"/>
-        <ellipse cx="225" cy="115" rx="24" ry="34" fill="#e8a418" transform="rotate(16 225 115)"/>
-        <ellipse cx="100" cy="195" rx="20" ry="38" fill="#e8a418" transform="rotate(-12 100 195)"/>
-        <ellipse cx="240" cy="200" rx="22" ry="40" fill="#e8a418" transform="rotate(14 240 200)"/>
-        <ellipse cx="120" cy="275" rx="18" ry="28" fill="#e8a418" transform="rotate(-8 120 275)"/>
-        <ellipse cx="220" cy="280" rx="20" ry="30" fill="#e8a418" transform="rotate(10 220 280)"/>
-        <ellipse cx="170" cy="160" rx="14" ry="22" fill="#e8a418"/>
-        <ellipse cx="170" cy="240" rx="12" ry="20" fill="#e8a418"/>
-        <path d="M170 45 L170 360" stroke="#2a4a32" stroke-width="3" stroke-linecap="round" opacity="0.45"/>
-        <path d="M170 80 Q130 120 100 150" stroke="#2a4a32" stroke-width="2" opacity="0.3" fill="none"/>
-        <path d="M170 80 Q210 120 240 150" stroke="#2a4a32" stroke-width="2" opacity="0.3" fill="none"/>
-        <path d="M170 160 Q125 200 95 240" stroke="#2a4a32" stroke-width="2" opacity="0.3" fill="none"/>
-        <path d="M170 160 Q215 200 245 240" stroke="#2a4a32" stroke-width="2" opacity="0.3" fill="none"/>
-      </svg>
-    </div>
-
-    <!-- ========== LEFT PHONE ========== -->
-    <div class="phone phone-left">
-      <div class="topbar">
-        <button class="icon-btn" type="button" aria-label="menu">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <rect x="4" y="6" width="7" height="5" rx="1.2" stroke="currentColor" stroke-width="1.6"/>
-            <rect x="13" y="6" width="7" height="5" rx="1.2" stroke="currentColor" stroke-width="1.6"/>
-            <rect x="4" y="13" width="7" height="5" rx="1.2" stroke="currentColor" stroke-width="1.6"/>
-            <rect x="13" y="13" width="7" height="5" rx="1.2" stroke="currentColor" stroke-width="1.6"/>
-          </svg>
-        </button>
-        <button class="pill" type="button">
-          <span class="dot"></span>
-          <span>Bornfuul Serilca</span>
-        </button>
-      </div>
-
-      <div class="hero">
-        <svg viewBox="0 0 272 268" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="skyL" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#f0d4a8"/>
-              <stop offset="35%" stop-color="#d8c090"/>
-              <stop offset="70%" stop-color="#8aaa80"/>
-              <stop offset="100%" stop-color="#3d6a58"/>
-            </linearGradient>
-            <linearGradient id="mountL" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#7a9a88"/>
-              <stop offset="100%" stop-color="#3a5a50"/>
-            </linearGradient>
-            <linearGradient id="grassGold" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#f8e050"/>
-              <stop offset="40%" stop-color="#e8b028"/>
-              <stop offset="100%" stop-color="#c88018"/>
-            </linearGradient>
-          </defs>
-
-          <rect width="272" height="268" fill="url(#skyL)"/>
-
-          <!-- Distant mountains -->
-          <path d="M0 150 Q40 110 80 130 T160 115 T240 135 T272 120 L272 200 L0 200Z" fill="#6a8a78" opacity="0.55"/>
-          <path d="M0 165 Q50 125 100 150 T180 140 T272 155 L272 210 L0 210Z" fill="url(#mountL)" opacity="0.75"/>
-          <path d="M0 185 Q60 155 110 175 T200 165 T272 180 L272 230 L0 230Z" fill="#3d5a4e"/>
-
-          <!-- Soft cloud left -->
-          <g opacity="0.85">
-            <ellipse cx="78" cy="88" rx="28" ry="14" fill="#d8c8b0"/>
-            <ellipse cx="58" cy="92" rx="16" ry="10" fill="#d8c8b0"/>
-            <ellipse cx="95" cy="92" rx="18" ry="11" fill="#e0d0b8"/>
-            <line x1="70" y1="102" x2="70" y2="118" stroke="#a09080" stroke-width="1" opacity="0.5"/>
-            <line x1="85" y1="102" x2="85" y2="122" stroke="#a09080" stroke-width="1" opacity="0.5"/>
-            <rect x="64" y="116" width="12" height="6" rx="2" fill="#c8b8a0" opacity="0.6"/>
-            <rect x="79" y="120" width="12" height="6" rx="2" fill="#c8b8a0" opacity="0.6"/>
-          </g>
-
-          <!-- Floating particles -->
-          <circle cx="140" cy="70" r="2.5" fill="#c07050" opacity="0.7"/>
-          <circle cx="165" cy="55" r="2" fill="#d09060" opacity="0.6"/>
-          <circle cx="190" cy="80" r="1.8" fill="#a06040" opacity="0.5"/>
-          <ellipse cx="155" cy="95" rx="4" ry="2" fill="#8a6040" opacity="0.4" transform="rotate(-20 155 95)"/>
-
-          <!-- Tall reeds right -->
-          <g stroke="#2a5a40" stroke-width="2" fill="none" stroke-linecap="round">
-            <path d="M230 200 C232 160 228 130 234 95"/>
-            <path d="M240 205 C243 165 238 135 245 100"/>
-            <path d="M250 208 C252 170 248 140 254 108"/>
-          </g>
-          <g fill="#3a7a55">
-            <ellipse cx="234" cy="90" rx="5" ry="9" transform="rotate(-10 234 90)"/>
-            <ellipse cx="245" cy="95" rx="5" ry="9" transform="rotate(8 245 95)"/>
-            <ellipse cx="254" cy="103" rx="4.5" ry="8" transform="rotate(-5 254 103)"/>
-            <ellipse cx="238" cy="115" rx="4" ry="7" transform="rotate(12 238 115)"/>
-            <ellipse cx="248" cy="125" rx="4" ry="7" transform="rotate(-8 248 125)"/>
-          </g>
-
-          <!-- Mid-right green bush -->
-          <g>
-            <ellipse cx="210" cy="175" rx="28" ry="32" fill="#3d8a60"/>
-            <ellipse cx="225" cy="168" rx="18" ry="24" fill="#4a9a6a"/>
-            <ellipse cx="198" cy="185" rx="16" ry="20" fill="#2d7a50"/>
-            <circle cx="215" cy="160" r="10" fill="#55a870"/>
-            <circle cx="200" cy="170" r="8" fill="#3d8a58"/>
-          </g>
-
-          <!-- Left tall plant leaves -->
-          <g>
-            <path d="M48 210 C40 170 35 140 42 105 C48 130 52 160 55 195Z" fill="#2d7a50"/>
-            <path d="M55 205 C52 160 55 125 62 95 C68 125 68 160 65 200Z" fill="#3d8a5a"/>
-            <path d="M62 210 C65 165 72 130 78 100 C82 135 78 170 72 205Z" fill="#2a7048"/>
-            <ellipse cx="45" cy="115" rx="10" ry="18" fill="#3d8a5a" transform="rotate(-30 45 115)"/>
-            <ellipse cx="58" cy="100" rx="9" ry="16" fill="#4a9a68" transform="rotate(10 58 100)"/>
-            <ellipse cx="72" cy="108" rx="8" ry="15" fill="#2d7a50" transform="rotate(25 72 108)"/>
-            <ellipse cx="38" cy="145" rx="9" ry="14" fill="#2a7048" transform="rotate(-40 38 145)"/>
-          </g>
-
-          <!-- Orange creature accent -->
-          <g transform="translate(52,155) rotate(-25)">
-            <ellipse cx="0" cy="0" rx="14" ry="8" fill="#e87840"/>
-            <ellipse cx="8" cy="-2" rx="6" ry="5" fill="#f09050"/>
-            <path d="M-12 0 Q-22 -8 -24 0 Q-22 8 -12 0" fill="#d06030"/>
-            <circle cx="6" cy="-2" r="1.5" fill="#3a2020"/>
-            <path d="M0 -6 Q4 -14 10 -8" stroke="#e87840" stroke-width="2" fill="none"/>
-          </g>
-
-          <!-- Golden meadow bush -->
-          <g>
-            <ellipse cx="136" cy="230" rx="90" ry="28" fill="#2a5a40"/>
-            <ellipse cx="136" cy="210" rx="78" ry="48" fill="url(#grassGold)"/>
-            <g stroke="#f8e870" stroke-width="1.4" stroke-linecap="round" opacity="0.85">
-              <path d="M80 220 Q82 190 78 170"/>
-              <path d="M95 225 Q98 185 94 160"/>
-              <path d="M110 228 Q112 180 108 155"/>
-              <path d="M125 230 Q128 175 124 148"/>
-              <path d="M140 230 Q142 172 138 145"/>
-              <path d="M155 228 Q158 178 154 150"/>
-              <path d="M170 226 Q172 185 168 158"/>
-              <path d="M185 222 Q188 190 184 168"/>
-              <path d="M100 220 Q102 195 98 175"/>
-              <path d="M160 224 Q162 195 158 172"/>
-            </g>
-            <g stroke="#d89020" stroke-width="1.2" stroke-linecap="round" opacity="0.7">
-              <path d="M88 222 Q90 200 86 182"/>
-              <path d="M118 228 Q120 195 116 170"/>
-              <path d="M148 228 Q150 192 146 168"/>
-              <path d="M178 220 Q180 198 176 180"/>
-            </g>
-            <g fill="#f0d040">
-              <circle cx="95" cy="162" r="2.2"/>
-              <circle cx="112" cy="155" r="2.5"/>
-              <circle cx="130" cy="148" r="2.8"/>
-              <circle cx="148" cy="152" r="2.4"/>
-              <circle cx="165" cy="160" r="2.2"/>
-              <circle cx="105" cy="175" r="1.8"/>
-              <circle cx="140" cy="168" r="2"/>
-              <circle cx="175" cy="172" r="1.8"/>
-              <circle cx="120" cy="168" r="1.6"/>
-              <circle cx="155" cy="178" r="1.6"/>
-            </g>
-            <g fill="#3d8a55">
-              <ellipse cx="70" cy="235" rx="10" ry="8"/>
-              <ellipse cx="90" cy="240" rx="8" ry="6"/>
-              <ellipse cx="200" cy="235" rx="12" ry="8"/>
-              <ellipse cx="180" cy="242" rx="9" ry="6"/>
-              <path d="M60 238 Q58 220 55 210" stroke="#3d8a55" stroke-width="3" fill="none"/>
-              <path d="M210 238 Q214 218 218 205" stroke="#2d7a48" stroke-width="3" fill="none"/>
-            </g>
-          </g>
-
-          <!-- Purple flower cluster -->
-          <g>
-            <circle cx="175" cy="118" r="4" fill="#c05070"/>
-            <circle cx="182" cy="114" r="3" fill="#d06080"/>
-            <circle cx="170" cy="113" r="2.5" fill="#a04060"/>
-            <circle cx="178" cy="122" r="2" fill="#e07090"/>
-          </g>
-          <path d="M150 140 Q160 100 175 70 Q180 90 178 115" stroke="#8a7060" stroke-width="1.5" fill="none" opacity="0.5"/>
-        </svg>
-      </div>
-
-      <div class="body">
-        <div class="title-row">
-          <div>
-            <div class="title">Ostptel rd</div>
-            <div class="subtitle">Ommntal natant</div>
-          </div>
-          <div class="meta-right">
-            <div class="dots"><span></span><span></span><span></span></div>
-          </div>
-        </div>
-
-        <div class="chip-row">
-          <span class="chip">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-            3:13
-          </span>
-          <span class="chip">G+  ·  3.9</span>
-        </div>
-
-        <div class="desc-row">
-          <p class="desc">Lorem sit id eos maxime adipisci quasi consectetur trnsta eist.</p>
-          <span class="tag-pill">Llaqin</span>
-        </div>
-
-        <div class="swatches">
-          <button type="button" class="swatch" style="background: radial-gradient(circle at 32% 28%, #ff8a8a, #e84545);" aria-label="coral"></button>
-          <button type="button" class="swatch" style="background: radial-gradient(circle at 32% 28%, #ffb070, #f07830);" aria-label="orange"></button>
-          <button type="button" class="swatch" style="background: radial-gradient(circle at 32% 28%, #ffe060, #e8b820);" aria-label="gold"></button>
-          <button type="button" class="swatch" style="background: radial-gradient(circle at 32% 28%, #fff0a0, #f0d860);" aria-label="yellow"></button>
-        </div>
-
-        <div class="stats">
-          <div class="stat">
-            <div class="lab">001</div>
-            <div class="num">25</div>
-            <div class="sub">BONUSLT</div>
-          </div>
-          <div class="stat">
-            <div class="lab">006</div>
-            <div class="num">05</div>
-            <div class="sub">ICOUROMA</div>
-          </div>
-          <div class="stat">
-            <div class="lab">016</div>
-            <div class="num">21</div>
-            <div class="sub">OCOPIMMA</div>
-          </div>
-          <div class="stat-cta">
-            <button class="cta cta-green" type="button">Go</button>
-          </div>
-        </div>
+  <button type="button" class="phone L" data-side="left" aria-label="Nature Mobile UI left screen">
+    <span class="notch" aria-hidden="true"></span>
+    <div class="screen">
+      <div class="hud">
+        <button type="button" data-act="back">Back</button>
+        <button type="button" data-act="open">Open</button>
       </div>
     </div>
-
-    <!-- ========== RIGHT PHONE ========== -->
-    <div class="phone phone-right">
-      <div class="topbar">
-        <button class="icon-btn" type="button" aria-label="chat">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="M5 7.5A2.5 2.5 0 0 1 7.5 5h9A2.5 2.5 0 0 1 19 7.5v6A2.5 2.5 0 0 1 16.5 16H12l-4 3v-3H7.5A2.5 2.5 0 0 1 5 13.5v-6Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <div class="pill pill-icons">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 11c0 5.5-7 10-7 10Z"/></svg>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.6M8.2 13.2l7.6 4.6"/></svg>
-        </div>
-      </div>
-
-      <div class="hero">
-        <svg viewBox="0 0 272 268" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="skyR" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#f87868"/>
-              <stop offset="40%" stop-color="#e06058"/>
-              <stop offset="75%" stop-color="#a84858"/>
-              <stop offset="100%" stop-color="#6a3048"/>
-            </linearGradient>
-            <linearGradient id="hillR" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#c86860"/>
-              <stop offset="100%" stop-color="#7a3848"/>
-            </linearGradient>
-            <linearGradient id="hillR2" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#d87868"/>
-              <stop offset="100%" stop-color="#8a4050"/>
-            </linearGradient>
-            <linearGradient id="wingGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#5a3a6a"/>
-              <stop offset="50%" stop-color="#3a2848"/>
-              <stop offset="100%" stop-color="#2a1838"/>
-            </linearGradient>
-            <radialGradient id="cloudSoft" cx="0.4" cy="0.4" r="0.6">
-              <stop offset="0%" stop-color="#fff8f0"/>
-              <stop offset="100%" stop-color="#f0d8c8"/>
-            </radialGradient>
-          </defs>
-
-          <rect width="272" height="268" fill="url(#skyR)"/>
-          <circle cx="40" cy="60" r="50" fill="#f09080" opacity="0.35"/>
-          <circle cx="230" cy="40" r="40" fill="#f8a090" opacity="0.3"/>
-
-          <!-- Cloud -->
-          <g transform="translate(195,72)">
-            <ellipse cx="0" cy="8" rx="28" ry="14" fill="url(#cloudSoft)"/>
-            <ellipse cx="-16" cy="12" rx="14" ry="10" fill="#fff5ec"/>
-            <ellipse cx="16" cy="12" rx="16" ry="11" fill="#ffe8d8"/>
-            <ellipse cx="0" cy="0" rx="14" ry="11" fill="#fffaf4"/>
-          </g>
-
-          <!-- Hills -->
-          <path d="M0 150 Q50 120 100 140 T180 125 T272 145 L272 200 L0 200Z" fill="#b85860" opacity="0.55"/>
-          <path d="M0 175 Q40 145 90 165 T170 155 T272 170 L272 230 L0 230Z" fill="url(#hillR)"/>
-          <path d="M20 195 Q70 165 120 185 T200 175 T272 195 L272 250 L0 250Z" fill="url(#hillR2)"/>
-          <path d="M0 210 Q60 185 110 205 T200 195 T272 215 L272 268 L0 268Z" fill="#6a3040"/>
-          <path d="M40 185 Q80 168 120 182" stroke="#e89080" stroke-width="3" fill="none" opacity="0.35"/>
-          <path d="M140 175 Q180 160 220 178" stroke="#e89080" stroke-width="3" fill="none" opacity="0.3"/>
-
-          <!-- Left crimson plant -->
-          <g>
-            <path d="M32 240 C28 190 22 150 30 110 C36 145 38 185 42 230Z" fill="#8a2848"/>
-            <path d="M42 235 C45 185 48 145 55 112 C58 150 55 190 52 230Z" fill="#a03050"/>
-            <ellipse cx="28" cy="125" rx="10" ry="20" fill="#a02848" transform="rotate(-25 28 125)"/>
-            <ellipse cx="48" cy="115" rx="9" ry="18" fill="#c04060" transform="rotate(15 48 115)"/>
-            <ellipse cx="22" cy="160" rx="8" ry="16" fill="#8a2040" transform="rotate(-35 22 160)"/>
-            <ellipse cx="55" cy="145" rx="8" ry="15" fill="#b03858" transform="rotate(20 55 145)"/>
-            <ellipse cx="35" cy="175" rx="7" ry="14" fill="#9a2850" transform="rotate(-10 35 175)"/>
-            <circle cx="18" cy="100" r="3" fill="#d05070"/>
-            <circle cx="28" cy="88" r="2.5" fill="#e06080"/>
-            <circle cx="40" cy="95" r="2.8" fill="#c04060"/>
-            <circle cx="22" cy="78" r="2" fill="#e07090"/>
-            <circle cx="50" cy="85" r="2.2" fill="#d04868"/>
-          </g>
-
-          <!-- Berry branch -->
-          <g>
-            <path d="M70 90 Q90 70 110 85 Q100 100 85 105" stroke="#8a3048" stroke-width="1.5" fill="none"/>
-            <circle cx="75" cy="88" r="2.5" fill="#c04060"/>
-            <circle cx="88" cy="78" r="3" fill="#d05070"/>
-            <circle cx="100" cy="86" r="2.5" fill="#b03858"/>
-            <circle cx="95" cy="98" r="2" fill="#e06080"/>
-            <ellipse cx="82" cy="95" rx="4" ry="7" fill="#a03050" transform="rotate(-20 82 95)"/>
-            <ellipse cx="105" cy="92" rx="3.5" ry="6" fill="#c04868" transform="rotate(25 105 92)"/>
-          </g>
-
-          <!-- Small butterfly -->
-          <g transform="translate(95,55) rotate(-20)">
-            <ellipse cx="-6" cy="0" rx="7" ry="5" fill="#4a3058"/>
-            <ellipse cx="6" cy="0" rx="7" ry="5" fill="#3a2848"/>
-            <ellipse cx="0" cy="0" rx="2" ry="5" fill="#2a1830"/>
-          </g>
-
-          <!-- Large butterfly -->
-          <g transform="translate(145,118) rotate(-15)">
-            <path d="M0 0 C-18 -22 -38 -18 -42 -4 C-44 8 -32 18 -18 14 C-10 12 -4 6 0 0Z" fill="url(#wingGrad)"/>
-            <path d="M0 0 C-12 8 -28 22 -24 34 C-20 42 -8 38 -2 24 C0 16 0 8 0 0Z" fill="#3a2848"/>
-            <path d="M0 0 C18 -24 40 -16 42 -2 C44 10 30 20 16 14 C8 10 2 4 0 0Z" fill="#4a3060"/>
-            <path d="M0 0 C14 10 28 24 22 36 C18 44 6 38 2 22 C0 14 0 6 0 0Z" fill="#2a1840"/>
-            <ellipse cx="0" cy="4" rx="3" ry="14" fill="#1a1028"/>
-            <circle cx="0" cy="-10" r="3" fill="#2a1838"/>
-            <ellipse cx="-22" cy="-4" rx="5" ry="4" fill="#6a4a7a" opacity="0.6"/>
-            <ellipse cx="22" cy="-2" rx="5" ry="4" fill="#6a4a7a" opacity="0.55"/>
-            <circle cx="-18" cy="18" r="3" fill="#5a3a68" opacity="0.5"/>
-            <circle cx="16" cy="20" r="2.5" fill="#5a3a68" opacity="0.5"/>
-            <path d="M-1 -12 Q-6 -22 -4 -28" stroke="#1a1028" stroke-width="1.2" fill="none"/>
-            <path d="M1 -12 Q6 -22 5 -28" stroke="#1a1028" stroke-width="1.2" fill="none"/>
-            <circle cx="-4" cy="-28" r="1.5" fill="#3a2848"/>
-            <circle cx="5" cy="-28" r="1.5" fill="#3a2848"/>
-          </g>
-
-          <!-- Right crimson foliage -->
-          <g>
-            <path d="M230 230 C235 180 245 140 238 100 C232 140 228 180 225 225Z" fill="#8a2848"/>
-            <ellipse cx="245" cy="130" rx="12" ry="22" fill="#a03050" transform="rotate(20 245 130)"/>
-            <ellipse cx="250" cy="165" rx="10" ry="18" fill="#c04060" transform="rotate(30 250 165)"/>
-            <ellipse cx="235" cy="150" rx="9" ry="16" fill="#7a2040" transform="rotate(-15 235 150)"/>
-            <ellipse cx="255" cy="195" rx="11" ry="14" fill="#b03858"/>
-            <ellipse cx="240" cy="200" rx="10" ry="12" fill="#9a2850"/>
-          </g>
-
-          <!-- Teal ground plants -->
-          <g>
-            <g fill="#2a8a78">
-              <ellipse cx="55" cy="248" rx="14" ry="10"/>
-              <path d="M45 245 L42 228 L50 242Z"/>
-              <path d="M55 245 L55 222 L60 242Z"/>
-              <path d="M62 246 L68 230 L65 245Z"/>
-              <path d="M50 246 L48 232 L55 244Z"/>
-            </g>
-            <g fill="#3aa890">
-              <ellipse cx="100" cy="252" rx="16" ry="11"/>
-              <path d="M90 250 L88 230 L96 248Z"/>
-              <path d="M100 248 L100 224 L106 246Z"/>
-              <path d="M108 250 L116 232 L112 248Z"/>
-              <path d="M95 250 L94 236 L102 248Z"/>
-              <path d="M104 250 L108 234 L110 248Z"/>
-            </g>
-            <g fill="#2a9078">
-              <ellipse cx="145" cy="255" rx="12" ry="9"/>
-              <path d="M138 252 L136 236 L142 250Z"/>
-              <path d="M145 252 L146 230 L150 250Z"/>
-              <path d="M152 253 L158 238 L154 252Z"/>
-            </g>
-            <g fill="#3ab898">
-              <ellipse cx="185" cy="250" rx="15" ry="11"/>
-              <path d="M175 248 L172 228 L180 246Z"/>
-              <path d="M185 246 L186 222 L191 244Z"/>
-              <path d="M193 248 L200 230 L196 246Z"/>
-              <path d="M180 248 L178 234 L186 246Z"/>
-            </g>
-            <g fill="#2a8870">
-              <ellipse cx="230" cy="252" rx="13" ry="10"/>
-              <path d="M222 250 L220 234 L226 248Z"/>
-              <path d="M230 248 L232 226 L236 246Z"/>
-              <path d="M238 250 L244 236 L240 248Z"/>
-            </g>
-            <ellipse cx="75" cy="255" rx="6" ry="5" fill="#1a5a48"/>
-            <ellipse cx="125" cy="258" rx="5" ry="4" fill="#1a6048"/>
-            <ellipse cx="210" cy="256" rx="6" ry="5" fill="#1a5848"/>
-          </g>
-        </svg>
-      </div>
-
-      <div class="body">
-        <div class="title-row">
-          <div>
-            <div class="title">leMcon ocde</div>
-            <div class="subtitle">Neobar y u haddort</div>
-          </div>
-          <div class="meta-right">
-            <div class="price">220$</div>
-          </div>
-        </div>
-
-        <div class="chip-row">
-          <span class="chip">190</span>
-          <span class="chip">· · ·</span>
-        </div>
-
-        <div class="desc-row">
-          <p class="desc">urta lorem amet pariatur in consectatus cum tristis Am telus thur.</p>
-          <span class="tag-pill">S*0*5</span>
-        </div>
-
-        <div class="swatches">
-          <button type="button" class="swatch" style="background: radial-gradient(circle at 32% 28%, #ffb090, #f07050);" aria-label="peach"></button>
-          <button type="button" class="swatch" style="background: radial-gradient(circle at 32% 28%, #c0a0f0, #8870e0 45%, #60b0e8);" aria-label="lilac"></button>
-          <button type="button" class="swatch" style="background: radial-gradient(circle at 32% 28%, #80f0c0, #30d890);" aria-label="mint"></button>
-          <button type="button" class="swatch" style="background: radial-gradient(circle at 32% 28%, #ffb090, #f07850);" aria-label="coral"></button>
-        </div>
-
-        <div class="stats">
-          <div class="stat">
-            <div class="lab">ORO</div>
-            <div class="num" style="color:#e07060">52</div>
-            <div class="sub">2010</div>
-          </div>
-          <div class="stat">
-            <div class="lab">3/OC</div>
-            <div class="num" style="color:#e07060">25</div>
-            <div class="sub">G051</div>
-          </div>
-          <div class="stat">
-            <div class="lab">0/0</div>
-            <div class="num" style="color:#e07060">7</div>
-            <div class="sub">3065</div>
-          </div>
-          <div class="stat-cta">
-            <button class="cta cta-coral" type="button">01</button>
-          </div>
-        </div>
+  </button>
+  <button type="button" class="phone R" data-side="right" aria-label="Nature Mobile UI right screen">
+    <span class="notch" aria-hidden="true"></span>
+    <div class="screen">
+      <div class="hud">
+        <button type="button" data-act="back">Back</button>
+        <button type="button" data-act="open">Open</button>
       </div>
     </div>
-  </div>
+  </button>
+  <div class="meta" id="meta"><strong>hybrid</strong> · interactive chrome · screens = inspo crops · click a phone</div>
+  <script>
+    const meta = document.getElementById('meta');
+    document.querySelectorAll('.phone').forEach(p => {
+      p.addEventListener('click', (e) => {
+        if (e.target.closest('.hud button')) return;
+        document.querySelectorAll('.phone').forEach(x => x.classList.remove('active'));
+        p.classList.add('active');
+        meta.innerHTML = '<strong>selected</strong> · ' + p.dataset.side + ' screen';
+      });
+    });
+    document.querySelectorAll('.hud button').forEach(b => {
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const side = e.target.closest('.phone').dataset.side;
+        meta.innerHTML = '<strong>' + e.target.dataset.act + '</strong> · ' + side;
+      });
+    });
+  </script>
 </body>
 </html>

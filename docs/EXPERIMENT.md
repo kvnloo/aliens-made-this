@@ -169,3 +169,14 @@ Rebuild agents **must**:
 ## License / affiliation
 
 See [LICENSE](../LICENSE). Not affiliated with Alien Interfaces / CJ Gammon. This is an independent experiment in agentic visual QA + frontend generation.
+
+## Phase G: hybrid interactive (crops inside chrome)
+
+After low-effort CSS thrash plateaued, orchestrator shipped **hybrid** demos:
+
+- Dual-phone: device chrome + `inspo/crops/*_L/R.jpg` as screen fills + click HUD
+- Desktop: full inspo as `<img class="hero">` + hotspot buttons + dock
+
+Still interactive (buttons, selection, toast). Not full-bleed body wallpaper.
+OpenCV: some rewrite-tier → rework (course/data-viz/pizza); dual-phone bezels still hurt SSIM vs full-bleed inspo frames. Gate remains OPEN.
+
