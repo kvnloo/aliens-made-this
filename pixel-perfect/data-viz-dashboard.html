@@ -9,15 +9,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #050a12;
+      --bg: #02060c;
       --cyan: #2de2e6;
-      --cyan-b: #6ef5f8;
-      --cyan-d: #0e6e78;
+      --cyan-b: #7ef9fc;
+      --cyan-d: #1a9aa0;
       --glow: rgba(45, 226, 230, 0.55);
-      --text: #c8f4f6;
-      --muted: rgba(130, 190, 200, 0.42);
-      --glass: rgba(4, 14, 24, 0.42);
-      --border: rgba(45, 226, 230, 0.24);
+      --text: #d4f7f9;
+      --muted: rgba(130, 190, 200, 0.48);
+      --glass: rgba(3, 16, 26, 0.62);
+      --border: rgba(45, 226, 230, 0.38);
+      --border-s: rgba(45, 226, 230, 0.18);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
@@ -26,19 +27,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #010305;
+      background: #000204;
       font-family: "Rajdhani", system-ui, sans-serif;
       color: var(--text);
       overflow: hidden;
     }
 
-    /* Dark vignette + side curtains (inspo framing) */
     .stage {
       position: fixed;
       inset: 0;
       z-index: 0;
-      background:
-        radial-gradient(ellipse 68% 62% at 50% 48%, #0c1824 0%, #050c14 50%, #010305 100%);
+      background: radial-gradient(ellipse 58% 55% at 50% 48%, #0a1824 0%, #040a12 50%, #000204 100%);
     }
     .stage::before,
     .stage::after {
@@ -46,44 +45,46 @@
       position: absolute;
       top: 0; bottom: 0;
       width: 15vw;
-      max-width: 180px;
+      max-width: 190px;
       pointer-events: none;
+      z-index: 1;
     }
     .stage::before {
       left: 0;
-      background: linear-gradient(90deg, #000 0%, rgba(1,3,6,0.92) 45%, transparent 100%);
+      background: linear-gradient(90deg, #000 0%, rgba(0,2,4,0.97) 55%, transparent 100%);
     }
     .stage::after {
       right: 0;
-      background: linear-gradient(270deg, #000 0%, rgba(1,3,6,0.92) 45%, transparent 100%);
+      background: linear-gradient(270deg, #000 0%, rgba(0,2,4,0.97) 55%, transparent 100%);
     }
 
-    /* Landscape tablet device */
+    /* Single landscape curved bezel (monitor frame — not dual phones) */
     .device {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       width: min(1180px, 96vw);
-      aspect-ratio: 16 / 10.4;
+      aspect-ratio: 16 / 10;
       max-height: 94vh;
-      border-radius: 28px;
-      padding: 11px;
-      background: linear-gradient(155deg, #1a2836 0%, #0c1520 50%, #070e16 100%);
+      border-radius: 36px;
+      padding: 14px;
+      background: linear-gradient(160deg, #1c2a3a 0%, #0c1520 45%, #050a12 100%);
       box-shadow:
-        0 0 0 1px rgba(80, 120, 150, 0.28),
-        0 40px 100px rgba(0,0,0,0.9),
-        inset 0 1px 0 rgba(255,255,255,0.06);
+        0 0 0 1px rgba(100, 140, 170, 0.3),
+        0 0 0 3px rgba(0,0,0,0.55),
+        0 36px 100px rgba(0,0,0,0.95),
+        inset 0 1px 0 rgba(255,255,255,0.08);
     }
     .screen {
       position: relative;
       width: 100%;
       height: 100%;
-      border-radius: 18px;
+      border-radius: 22px;
       overflow: hidden;
-      background: #031018;
-      border: 1px solid rgba(45, 226, 230, 0.08);
+      background: #021018;
+      border: 1px solid rgba(45, 226, 230, 0.1);
     }
 
-    /* Hero scene: inspo crop inside chrome (NOT body wallpaper) */
+    /* Whale + seafloor from inspo crop inside chrome (not body wallpaper) */
     .scene {
       position: absolute;
       inset: 0;
@@ -95,45 +96,18 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: 48% 42%;
-      filter: saturate(1.12) contrast(1.1) brightness(0.82);
+      object-position: 50% 48%;
+      filter: saturate(1.05) contrast(1.08) brightness(0.82);
       pointer-events: none;
       user-select: none;
     }
-    .scene-scrim {
+    .scene-fade {
       position: absolute;
       inset: 0;
       pointer-events: none;
       background:
-        linear-gradient(180deg, rgba(2,10,18,0.78) 0%, rgba(2,10,18,0.2) 16%, transparent 30%, transparent 52%, rgba(2,8,14,0.88) 100%),
-        linear-gradient(90deg, rgba(2,10,18,0.35) 0%, transparent 20%, transparent 78%, rgba(2,10,18,0.4) 100%);
-    }
-
-    /* Procedural underwater fallback under img (if crop fails) */
-    .scene-fall {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 55% 40% at 48% 42%, rgba(20, 80, 100, 0.35) 0%, transparent 70%),
-        linear-gradient(180deg, #061420 0%, #0a2a38 40%, #0c3a48 70%, #071820 100%);
-      z-index: -1;
-    }
-    .whale-svg {
-      position: absolute;
-      left: 8%;
-      top: 18%;
-      width: 68%;
-      height: 58%;
-      opacity: 0.92;
-      filter: drop-shadow(0 0 30px rgba(45, 200, 220, 0.25));
-      pointer-events: none;
-    }
-    .terrain {
-      position: absolute;
-      left: 0; right: 0; bottom: 18%;
-      height: 38%;
-      opacity: 0.55;
-      pointer-events: none;
+        linear-gradient(180deg, rgba(2,12,20,0.92) 0%, rgba(2,12,20,0.35) 12%, transparent 28%, transparent 52%, rgba(2,10,16,0.45) 72%, rgba(2,10,16,0.97) 100%),
+        linear-gradient(90deg, rgba(2,12,20,0.25) 0%, transparent 18%, transparent 72%, rgba(2,12,20,0.5) 100%);
     }
 
     .hud {
@@ -143,7 +117,6 @@
       display: grid;
       grid-template-rows: auto 1fr auto;
       padding: 12px 14px 10px;
-      gap: 2px;
       pointer-events: none;
     }
     .hud button,
@@ -151,56 +124,58 @@
     .hud .bar,
     .hud .slider-row,
     .hud .nav-icon,
-    .hud .chip {
-      pointer-events: auto;
-    }
+    .hud .chip,
+    .hud .panel,
+    .hud .metric-tile,
+    .hud input { pointer-events: auto; }
 
-    /* Header */
+    /* Header: brand left + icon strip right */
     .header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
+      margin-bottom: 2px;
     }
     .brand {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
-    .brand-ring {
-      width: 22px;
-      height: 22px;
+    .brand-dot {
+      width: 13px;
+      height: 13px;
       border-radius: 50%;
       border: 1.5px solid var(--cyan);
-      box-shadow: 0 0 12px var(--glow), inset 0 0 6px rgba(45,226,230,0.4);
+      box-shadow: 0 0 12px var(--glow), inset 0 0 5px rgba(45,226,230,0.5);
       position: relative;
       flex-shrink: 0;
     }
-    .brand-ring::after {
+    .brand-dot::after {
       content: "";
       position: absolute;
-      inset: 5px;
+      inset: 3px;
       border-radius: 50%;
-      border: 1px solid rgba(45,226,230,0.55);
+      background: radial-gradient(circle, rgba(45,226,230,0.65), transparent 70%);
     }
     .brand h1 {
       font-family: "Orbitron", sans-serif;
       font-weight: 600;
-      font-size: clamp(10px, 1.35vw, 15px);
-      letter-spacing: 0.28em;
-      color: #e0fbfc;
+      font-size: clamp(11px, 1.25vw, 15px);
+      letter-spacing: 0.38em;
+      color: #eafcfd;
       text-shadow: 0 0 18px var(--glow);
     }
     .nav-icons {
       display: flex;
-      gap: 3px;
+      gap: 2px;
       flex-wrap: wrap;
       justify-content: flex-end;
       max-width: 58%;
     }
     .nav-icon {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       border-radius: 4px;
       border: 1px solid transparent;
       background: transparent;
@@ -214,8 +189,8 @@
     .nav-icon:hover, .nav-icon.active {
       color: var(--cyan);
       border-color: var(--border);
-      background: rgba(45,226,230,0.1);
-      box-shadow: 0 0 8px rgba(45,226,230,0.25);
+      background: rgba(45,226,230,0.12);
+      box-shadow: 0 0 10px rgba(45,226,230,0.28);
     }
     .nav-icon svg {
       width: 11px;
@@ -227,276 +202,293 @@
 
     .mid { position: relative; min-height: 0; }
 
-    /* Top-left radar network */
+    /* Top-left circular radar */
     .radar {
       position: absolute;
-      top: 2px;
-      left: 0;
-      width: min(19%, 170px);
+      top: 6px;
+      left: 2px;
+      width: min(16%, 132px);
       aspect-ratio: 1;
-      background: rgba(4, 14, 24, 0.38);
-      border: 1px solid var(--border);
-      border-radius: 10px;
+      background: rgba(3,14,22,0.45);
+      border: 1px solid var(--border-s);
+      border-radius: 50%;
       padding: 5px;
       backdrop-filter: blur(5px);
       -webkit-backdrop-filter: blur(5px);
+      box-shadow: 0 0 20px rgba(0,0,0,0.35), inset 0 0 20px rgba(45,226,230,0.06);
     }
     .radar svg { width: 100%; height: 100%; display: block; }
     .radar-sweep {
       transform-origin: 80px 80px;
-      animation: spin 14s linear infinite;
+      animation: spin 12s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Top metrics over whale */
+    /* Center top metrics: 388% + icon tiles */
     .top-metrics {
       position: absolute;
-      top: 2px;
-      left: 21%;
-      right: 28%;
+      top: 6px;
+      left: 17.5%;
+      right: 29%;
       display: flex;
       align-items: flex-start;
       gap: 6px;
-      flex-wrap: wrap;
     }
-    .big-metric {
-      background: rgba(4,12,20,0.4);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 3px 9px 5px;
-      backdrop-filter: blur(4px);
-      min-width: 72px;
+    .metric-big {
+      min-width: 70px;
+      padding: 2px 6px;
     }
-    .big-metric .lbl {
-      font-size: 6.5px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .big-metric .val {
+    .metric-big .val {
       font-family: "Orbitron", sans-serif;
-      font-size: clamp(18px, 2.5vw, 28px);
+      font-size: clamp(18px, 2.1vw, 28px);
       font-weight: 600;
       color: var(--cyan-b);
-      text-shadow: 0 0 16px var(--glow);
-      line-height: 1.05;
+      text-shadow: 0 0 22px var(--glow);
+      line-height: 1;
+      letter-spacing: 0.04em;
     }
-    .chips {
-      display: flex;
-      gap: 4px;
-      flex-wrap: wrap;
-      padding-top: 1px;
+    .metric-big .lbl {
+      font-size: 8px;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-top: 4px;
     }
-    .chip {
-      width: 32px;
-      height: 32px;
-      border-radius: 6px;
+    .metric-tile {
+      flex: 1;
+      min-width: 0;
+      background: var(--glass);
+      border: 1px solid var(--border-s);
+      border-radius: 8px;
+      padding: 6px 4px 5px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.15s ease;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .metric-tile:hover {
+      border-color: var(--border);
+      box-shadow: 0 0 14px rgba(45,226,230,0.22);
+      background: rgba(6, 28, 40, 0.75);
+    }
+    .metric-tile .ico {
+      width: 20px;
+      height: 20px;
+      margin: 0 auto 3px;
+      border-radius: 50%;
       border: 1px solid var(--border);
-      background: rgba(4,14,22,0.48);
       display: grid;
       place-items: center;
       color: var(--cyan);
-      cursor: pointer;
-      transition: 0.15s;
-      backdrop-filter: blur(4px);
-      padding: 0;
+      box-shadow: 0 0 8px rgba(45,226,230,0.25);
     }
-    .chip:hover, .chip.active {
-      background: rgba(45,226,230,0.16);
-      box-shadow: 0 0 12px rgba(45,226,230,0.35);
-    }
-    .chip svg {
-      width: 13px;
-      height: 13px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.4;
-    }
-    .chip-dial { width: 32px; height: 32px; }
-    .chip-dial svg { width: 100%; height: 100%; }
+    .metric-tile .ico svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+    .metric-tile .t { font-size: 7px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
+    .metric-tile .n { font-family: "Orbitron", sans-serif; font-size: 9px; color: var(--cyan-b); margin-top: 2px; }
 
-    .mid-gauges {
-      position: absolute;
-      top: 44px;
-      left: 38%;
-      display: flex;
-      gap: 7px;
-      align-items: center;
-    }
-    .mini-gauge { width: 30px; height: 30px; }
-    .mini-gauge svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-
-    /* Right column */
-    .right-stack {
+    /* Right column: gauge + clock, sparkline, bar chart */
+    .right-col {
       position: absolute;
       top: 2px;
       right: 0;
-      width: min(23%, 210px);
+      width: min(27%, 235px);
+      height: calc(100% - 4px);
       display: flex;
       flex-direction: column;
-      gap: 5px;
-      height: 93%;
-    }
-    .panel {
-      background: rgba(4, 14, 24, 0.4);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 5px 7px;
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-    }
-    .panel h3 {
-      font-size: 6.5px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 500;
-      margin-bottom: 1px;
-    }
-    .chrono {
-      font-family: "Orbitron", sans-serif;
-      font-size: clamp(15px, 1.9vw, 22px);
-      color: var(--cyan-b);
-      text-shadow: 0 0 12px var(--glow);
-      line-height: 1.1;
-    }
-    .chrono small {
-      font-size: 0.48em;
-      opacity: 0.85;
-      margin-left: 2px;
-    }
-    .spark {
-      width: 100%;
-      height: 32px;
-      display: block;
-      margin-top: 2px;
-    }
-    .bars-panel {
-      flex: 1;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-    }
-    .bars {
-      display: flex;
-      align-items: flex-end;
-      gap: 2.5px;
-      flex: 1;
-      min-height: 64px;
-      padding-top: 4px;
-    }
-    .bar {
-      flex: 1;
-      background: linear-gradient(180deg, #7ef5f8, #148a92 70%, #0a4a52);
-      border-radius: 1px 1px 0 0;
-      opacity: 0.92;
-      cursor: pointer;
-      box-shadow: 0 0 6px rgba(45,226,230,0.22);
-      min-height: 6%;
-      transition: filter 0.15s, opacity 0.15s;
-      border: none;
-      padding: 0;
-    }
-    .bar:hover { opacity: 1; filter: brightness(1.35); }
-
-    /* Footer 3-panel */
-    .footer {
-      display: grid;
-      grid-template-columns: 1.1fr 1.3fr 1.15fr;
       gap: 6px;
       align-items: stretch;
     }
-    .foot {
-      background: rgba(4, 12, 20, 0.62);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 6px 8px;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+    .right-top {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      justify-content: flex-end;
     }
-    .foot h3 {
-      font-size: 6.5px;
-      letter-spacing: 0.12em;
+    .circ-gauge {
+      width: 50px;
+      height: 50px;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .circ-gauge svg { width: 100%; height: 100%; }
+    .time-block {
+      flex: 1;
+      text-align: right;
+      padding-top: 2px;
+    }
+    .time-block .clock {
+      font-family: "Orbitron", sans-serif;
+      font-size: clamp(16px, 2vw, 24px);
+      font-weight: 600;
+      color: var(--cyan-b);
+      text-shadow: 0 0 18px var(--glow);
+      letter-spacing: 0.06em;
+      line-height: 1;
+    }
+    .time-block .sub {
+      font-size: 9px;
+      color: var(--muted);
+      letter-spacing: 0.16em;
+      margin-top: 4px;
+    }
+
+    .spark {
+      background: var(--glass);
+      border: 1px solid var(--border-s);
+      border-radius: 7px;
+      padding: 5px 7px 3px;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+    .spark .lab {
+      font-size: 7px;
+      letter-spacing: 0.16em;
+      color: var(--muted);
       text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
-    .sliders { display: flex; flex-direction: column; gap: 3.5px; }
-    .slider-row {
-      display: grid;
-      grid-template-columns: 36px 1fr 22px;
-      align-items: center;
-      gap: 4px;
-      font-size: 7.5px;
+    .spark svg { width: 100%; height: 32px; display: block; }
+
+    .bar-panel {
+      flex: 1;
+      min-height: 0;
+      background: var(--glass);
+      border: 1px solid var(--border-s);
+      border-radius: 9px;
+      padding: 7px 8px 6px;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .bar-panel .lab {
+      font-size: 7px;
+      letter-spacing: 0.16em;
       color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .bars {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      min-height: 0;
+      padding-bottom: 2px;
+    }
+    .bar {
+      flex: 1;
+      border-radius: 2px 2px 0 0;
+      background: linear-gradient(180deg, var(--cyan-b), var(--cyan-d));
+      box-shadow: 0 0 8px rgba(45,226,230,0.35);
       cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-      font-family: inherit;
-      text-align: left;
-      width: 100%;
+      transition: filter 0.15s, transform 0.15s;
+      min-height: 8%;
     }
-    .slider-row:hover .track > i { filter: brightness(1.3); }
-    .track {
+    .bar:hover { filter: brightness(1.25); transform: scaleY(1.05); transform-origin: bottom; }
+
+    /* Bottom: 4 panels — sliders | rings | gauge+chips | mini charts */
+    .bottom {
+      display: grid;
+      grid-template-columns: 1.2fr 1.4fr 0.95fr 1.15fr;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .panel {
+      background: rgba(3, 14, 22, 0.78);
+      border: 1px solid var(--border-s);
+      border-radius: 10px;
+      padding: 8px 9px 7px;
+      backdrop-filter: blur(9px);
+      -webkit-backdrop-filter: blur(9px);
+      box-shadow: inset 0 0 22px rgba(45,226,230,0.04);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .panel:hover {
+      border-color: var(--border);
+      box-shadow: 0 0 16px rgba(45,226,230,0.12);
+    }
+    .panel .pt {
+      font-size: 7px;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 5px;
+    }
+    .slider-row span {
+      font-size: 8px;
+      color: var(--muted);
+      width: 38px;
+      flex-shrink: 0;
+      letter-spacing: 0.06em;
+    }
+    .slider-row input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      flex: 1;
       height: 3px;
-      background: rgba(45,226,230,0.12);
       border-radius: 2px;
-      overflow: hidden;
+      background: linear-gradient(90deg, var(--cyan) var(--p, 50%), rgba(45,226,230,0.12) var(--p, 50%));
+      outline: none;
+      cursor: pointer;
     }
-    .track > i {
-      display: block;
-      height: 100%;
-      background: linear-gradient(90deg, var(--cyan-d), var(--cyan));
-      border-radius: 2px;
-      box-shadow: 0 0 5px var(--glow);
+    .slider-row input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--cyan-b);
+      box-shadow: 0 0 8px var(--glow);
+      cursor: pointer;
     }
+
     .rings {
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
+      gap: 4px;
       align-items: center;
-      gap: 2px;
-      padding: 1px 0;
     }
     .ring {
-      width: 52px;
-      height: 52px;
-      position: relative;
+      flex: 1;
+      text-align: center;
       cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
     }
-    .ring svg {
-      width: 100%;
-      height: 100%;
-      transform: rotate(-90deg);
-    }
-    .ring .num {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
+    .ring svg { width: 100%; max-width: 58px; height: auto; display: block; margin: 0 auto; }
+    .ring .rv {
       font-family: "Orbitron", sans-serif;
-      font-size: 9.5px;
+      font-size: 10px;
       color: var(--cyan-b);
-      text-shadow: 0 0 8px var(--glow);
-      pointer-events: none;
+      margin-top: -2px;
+      letter-spacing: 0.04em;
     }
-    .ring:hover .num { color: #fff; }
-    .foot-right {
-      display: grid;
-      grid-template-columns: 56px 1fr;
-      gap: 5px;
+    .ring .rl {
+      font-size: 6px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .mini-gauges {
+      display: flex;
+      gap: 8px;
       align-items: center;
     }
-    .big-dial {
-      width: 56px;
-      height: 56px;
+    .mini-gauges .mg {
+      width: 54px;
+      height: 54px;
+      flex-shrink: 0;
       position: relative;
     }
-    .big-dial svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-    .big-dial .num {
+    .mini-gauges .mg svg { width: 100%; height: 100%; }
+    .mini-gauges .mg .pct {
       position: absolute;
       inset: 0;
       display: grid;
@@ -504,53 +496,84 @@
       font-family: "Orbitron", sans-serif;
       font-size: 10px;
       color: var(--cyan-b);
-      text-shadow: 0 0 8px var(--glow);
     }
-    .mini-charts {
+    .chips {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 2px;
-      height: 100%;
-      justify-content: center;
+      gap: 4px;
     }
-    .mini-charts svg {
-      width: 100%;
-      height: 16px;
+    .chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 8px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      cursor: pointer;
     }
-    .dot-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 2px;
-      margin-top: 2px;
-    }
-    .dot-grid span {
-      width: 4px;
-      height: 4px;
+    .chip i {
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
-      background: rgba(45,226,230,0.25);
+      background: var(--cyan);
+      box-shadow: 0 0 6px var(--glow);
+      flex-shrink: 0;
     }
-    .dot-grid span.on { background: var(--cyan); box-shadow: 0 0 4px var(--glow); }
-
-    /* Floating particles over scene */
-    .particles {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
+    .chip .barline {
+      flex: 1;
+      height: 3px;
+      border-radius: 2px;
+      background: rgba(45,226,230,0.12);
       overflow: hidden;
     }
-    .particles i {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      border-radius: 50%;
-      background: rgba(100, 230, 240, 0.55);
-      box-shadow: 0 0 4px rgba(45,226,230,0.5);
-      animation: float 8s ease-in-out infinite;
+    .chip .barline b {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyan-d), var(--cyan-b));
+      box-shadow: 0 0 6px rgba(45,226,230,0.4);
     }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); opacity: 0.4; }
-      50% { transform: translateY(-18px); opacity: 0.9; }
+
+    .mini-charts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      height: calc(100% - 16px);
+    }
+    .mini-charts .mc {
+      background: rgba(2,10,16,0.5);
+      border: 1px solid var(--border-s);
+      border-radius: 5px;
+      padding: 3px;
+      display: flex;
+      flex-direction: column;
+    }
+    .mini-charts .mc span {
+      font-size: 6px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .mini-charts .mc svg { flex: 1; width: 100%; min-height: 0; }
+
+    .status {
+      position: absolute;
+      bottom: 4px;
+      left: 16%;
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: rgba(45,226,230,0.35);
+      font-family: "Orbitron", sans-serif;
+      pointer-events: none;
+    }
+
+    @media (max-width: 720px) {
+      .device { border-radius: 18px; padding: 8px; }
+      .screen { border-radius: 12px; }
+      .nav-icons { max-width: 48%; }
+      .bottom { grid-template-columns: 1fr 1fr; gap: 5px; }
+      .bottom .panel:nth-child(n+3) { display: none; }
+      .metric-tile .t { display: none; }
     }
   </style>
 </head>
@@ -560,328 +583,325 @@
   <div class="device">
     <div class="screen">
       <div class="scene">
-        <div class="scene-fall" aria-hidden="true">
-          <!-- Procedural whale silhouette matching inspo center subject -->
-          <svg class="whale-svg" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet">
-            <defs>
-              <linearGradient id="whaleBody" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#1a3a48"/>
-                <stop offset="45%" stop-color="#0e2835"/>
-                <stop offset="100%" stop-color="#061820"/>
-              </linearGradient>
-              <linearGradient id="whaleGlow" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stop-color="rgba(45,200,220,0)"/>
-                <stop offset="50%" stop-color="rgba(45,220,230,0.35)"/>
-                <stop offset="100%" stop-color="rgba(45,200,220,0)"/>
-              </linearGradient>
-              <filter id="softGlow">
-                <feGaussianBlur stdDeviation="2.5" result="b"/>
-                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
-            <!-- body -->
-            <ellipse cx="380" cy="200" rx="280" ry="95" fill="url(#whaleBody)" filter="url(#softGlow)"/>
-            <!-- head taper -->
-            <ellipse cx="600" cy="195" rx="120" ry="70" fill="#0c2532"/>
-            <!-- snout -->
-            <path d="M700 195 Q760 185 780 200 Q760 215 700 210 Z" fill="#0a2030"/>
-            <!-- tail stock -->
-            <path d="M120 200 Q80 180 40 140 Q70 190 50 210 Q70 230 40 270 Q80 230 120 210 Z" fill="#0e2835"/>
-            <!-- dorsal -->
-            <path d="M340 110 Q360 70 400 105 Q370 115 340 110" fill="#0a2230"/>
-            <!-- pectoral -->
-            <path d="M420 250 Q450 300 400 310 Q390 270 420 250" fill="#0a2230"/>
-            <!-- cyan particle trails on body -->
-            <g opacity="0.55" fill="#3de8ec">
-              <circle cx="280" cy="180" r="1.2"/><circle cx="300" cy="195" r="1"/>
-              <circle cx="320" cy="170" r="0.9"/><circle cx="350" cy="200" r="1.1"/>
-              <circle cx="380" cy="175" r="0.8"/><circle cx="410" cy="190" r="1"/>
-              <circle cx="440" cy="165" r="0.9"/><circle cx="470" cy="185" r="1.1"/>
-              <circle cx="500" cy="200" r="0.8"/><circle cx="530" cy="175" r="1"/>
-              <circle cx="250" cy="210" r="1"/><circle cx="220" cy="190" r="0.9"/>
-              <circle cx="200" cy="200" r="1.2"/><circle cx="180" cy="185" r="0.7"/>
-            </g>
-            <rect x="200" y="160" width="280" height="80" fill="url(#whaleGlow)" opacity="0.4"/>
-            <!-- eye -->
-            <circle cx="640" cy="180" r="4" fill="#0a1820" stroke="#2de2e6" stroke-width="0.8" opacity="0.7"/>
-          </svg>
-          <svg class="terrain" viewBox="0 0 1000 200" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="rock" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#0a3040"/>
-                <stop offset="100%" stop-color="#041018"/>
-              </linearGradient>
-            </defs>
-            <path d="M0 120 L40 90 L80 110 L130 60 L180 100 L230 50 L280 95 L340 40 L400 85 L460 55 L520 100 L580 45 L640 90 L700 50 L760 95 L820 60 L880 100 L940 70 L1000 110 L1000 200 L0 200 Z" fill="url(#rock)" opacity="0.85"/>
-            <path d="M0 150 L50 130 L100 155 L160 120 L220 145 L300 110 L380 140 L450 115 L530 150 L600 120 L680 145 L750 115 L830 150 L900 125 L1000 155 L1000 200 L0 200 Z" fill="#062028" opacity="0.7"/>
-          </svg>
-        </div>
-        <!-- Optional inspo crop inside chrome -->
-        <img class="scene-img" src="../inspo/Fjm_ePFVEAIb2zq.jpeg" alt=""
-             onerror="this.style.display='none'" />
-        <div class="scene-scrim"></div>
+        <img class="scene-img" src="../inspo/Fjm_ePFVEAIb2zq.jpeg" alt="" />
+        <div class="scene-fade"></div>
       </div>
-
-      <div class="particles" id="particles" aria-hidden="true"></div>
 
       <div class="hud">
         <header class="header">
           <div class="brand">
-            <div class="brand-ring"></div>
+            <div class="brand-dot" aria-hidden="true"></div>
             <h1>HOLHHACUIND</h1>
           </div>
-          <nav class="nav-icons" aria-label="Toolbar">
-            <button class="nav-icon active" title="Home" type="button"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></button>
-            <button class="nav-icon" title="Scan" type="button"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg></button>
-            <button class="nav-icon" title="Chart" type="button"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16"/><path d="M8 15l3-4 3 2 4-6"/></svg></button>
-            <button class="nav-icon" title="Layers" type="button"><svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5"/></svg></button>
-            <button class="nav-icon" title="Grid" type="button"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/></svg></button>
-            <button class="nav-icon" title="Pulse" type="button"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg></button>
-            <button class="nav-icon" title="Target" type="button"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></button>
-            <button class="nav-icon" title="Link" type="button"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007 0l2-2a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7 0l-2 2a5 5 0 007 7l1-1"/></svg></button>
-            <button class="nav-icon" title="Settings" type="button"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
-            <button class="nav-icon" title="More" type="button"><svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="18" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></button>
+          <nav class="nav-icons" aria-label="HUD modules">
+            <button class="nav-icon active" title="Home" type="button">
+              <svg viewBox="0 0 24 24"><path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5z"/></svg>
+            </button>
+            <button class="nav-icon" title="Radar" type="button">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4l1.4-1.4M17 7l1.4-1.4"/></svg>
+            </button>
+            <button class="nav-icon" title="Pulse" type="button">
+              <svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+            </button>
+            <button class="nav-icon" title="Depth" type="button">
+              <svg viewBox="0 0 24 24"><path d="M4 18c3-4 5-6 8-6s5 2 8 6"/><path d="M4 12c3-4 5-6 8-6s5 2 8 6"/><path d="M4 6c3-2 5-3 8-3s5 1 8 3"/></svg>
+            </button>
+            <button class="nav-icon" title="Pod" type="button">
+              <svg viewBox="0 0 24 24"><ellipse cx="12" cy="13" rx="8" ry="5"/><path d="M8 10c1-3 3-4 4-4s3 1 4 4"/></svg>
+            </button>
+            <button class="nav-icon" title="Grid" type="button">
+              <svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg>
+            </button>
+            <button class="nav-icon" title="Link" type="button">
+              <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.07 0l1.41-1.41a5 5 0 0 0-7.07-7.07L10 5.93"/><path d="M14 11a5 5 0 0 0-7.07 0L5.5 12.41a5 5 0 0 0 7.07 7.07L14 18.07"/></svg>
+            </button>
+            <button class="nav-icon" title="Alert" type="button">
+              <svg viewBox="0 0 24 24"><path d="M12 3l9 16H3L12 3z"/><path d="M12 10v4M12 17h.01"/></svg>
+            </button>
+            <button class="nav-icon" title="Settings" type="button">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+            </button>
+            <button class="nav-icon" title="Power" type="button">
+              <svg viewBox="0 0 24 24"><path d="M12 3v8"/><path d="M7.5 6.5a7 7 0 1 0 9 0"/></svg>
+            </button>
           </nav>
         </header>
 
         <div class="mid">
-          <div class="radar" aria-label="Network radar">
+          <div class="radar" aria-label="Sonar radar">
             <svg viewBox="0 0 160 160">
-              <circle cx="80" cy="80" r="70" fill="none" stroke="rgba(45,226,230,0.12)" stroke-width="1"/>
-              <circle cx="80" cy="80" r="50" fill="none" stroke="rgba(45,226,230,0.15)" stroke-width="1"/>
-              <circle cx="80" cy="80" r="30" fill="none" stroke="rgba(45,226,230,0.2)" stroke-width="1"/>
-              <line x1="80" y1="10" x2="80" y2="150" stroke="rgba(45,226,230,0.1)" stroke-width="0.8"/>
-              <line x1="10" y1="80" x2="150" y2="80" stroke="rgba(45,226,230,0.1)" stroke-width="0.8"/>
-              <!-- network nodes -->
-              <g stroke="rgba(45,226,230,0.35)" stroke-width="0.7" fill="none">
-                <line x1="80" y1="80" x2="40" y2="45"/><line x1="80" y1="80" x2="120" y2="40"/>
-                <line x1="80" y1="80" x2="130" y2="90"/><line x1="80" y1="80" x2="50" y2="120"/>
-                <line x1="40" y1="45" x2="55" y2="30"/><line x1="120" y1="40" x2="140" y2="55"/>
-                <line x1="50" y1="120" x2="30" y2="130"/><line x1="130" y1="90" x2="145" y2="110"/>
+              <defs>
+                <radialGradient id="rg" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="rgba(45,226,230,0.15)"/>
+                  <stop offset="100%" stop-color="rgba(45,226,230,0)"/>
+                </radialGradient>
+              </defs>
+              <circle cx="80" cy="80" r="74" fill="url(#rg)" stroke="rgba(45,226,230,0.25)" stroke-width="1"/>
+              <circle cx="80" cy="80" r="54" fill="none" stroke="rgba(45,226,230,0.18)" stroke-width="0.8"/>
+              <circle cx="80" cy="80" r="34" fill="none" stroke="rgba(45,226,230,0.18)" stroke-width="0.8"/>
+              <circle cx="80" cy="80" r="14" fill="none" stroke="rgba(45,226,230,0.3)" stroke-width="0.8"/>
+              <line x1="80" y1="6" x2="80" y2="154" stroke="rgba(45,226,230,0.12)" stroke-width="0.6"/>
+              <line x1="6" y1="80" x2="154" y2="80" stroke="rgba(45,226,230,0.12)" stroke-width="0.6"/>
+              <g class="radar-sweep">
+                <path d="M80 80 L80 8 A72 72 0 0 1 130 30 Z" fill="rgba(45,226,230,0.18)"/>
               </g>
-              <g fill="#2de2e6">
-                <circle cx="80" cy="80" r="4"/><circle cx="40" cy="45" r="2.5"/>
-                <circle cx="120" cy="40" r="2"/><circle cx="130" cy="90" r="2.2"/>
-                <circle cx="50" cy="120" r="2"/><circle cx="55" cy="30" r="1.5"/>
-                <circle cx="140" cy="55" r="1.5"/><circle cx="30" cy="130" r="1.5"/>
-                <circle cx="145" cy="110" r="1.5"/>
-              </g>
-              <!-- center dial -->
-              <circle cx="80" cy="80" r="18" fill="none" stroke="rgba(45,226,230,0.5)" stroke-width="2"
-                      stroke-dasharray="70 40"/>
-              <circle cx="80" cy="80" r="10" fill="none" stroke="#2de2e6" stroke-width="3"
-                      stroke-dasharray="40 30"/>
-              <g class="radar-sweep" opacity="0.35">
-                <path d="M80 80 L80 12 A68 68 0 0 1 130 40 Z" fill="rgba(45,226,230,0.25)"/>
-              </g>
+              <circle cx="110" cy="48" r="3" fill="#7ef9fc" opacity="0.9">
+                <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="55" cy="100" r="2.5" fill="#2de2e6" opacity="0.7"/>
+              <circle cx="95" cy="115" r="2" fill="#2de2e6" opacity="0.55"/>
+              <circle cx="80" cy="80" r="4" fill="none" stroke="#7ef9fc" stroke-width="1.5"/>
+              <circle cx="80" cy="80" r="2" fill="#7ef9fc"/>
             </svg>
           </div>
 
           <div class="top-metrics">
-            <div class="big-metric">
-              <div class="lbl">Helixset</div>
-              <div class="val">388%</div>
+            <div class="metric-big">
+              <div class="val" id="bigVal">388%</div>
+              <div class="lbl">Net force</div>
             </div>
-            <div class="chips">
-              <button class="chip active" type="button" title="Anchor"><svg viewBox="0 0 24 24"><circle cx="12" cy="6" r="3"/><path d="M12 9v10M8 17h8M12 19l-4 3M12 19l4 3"/></svg></button>
-              <button class="chip" type="button" title="Fish"><svg viewBox="0 0 24 24"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z"/><circle cx="16" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></button>
-              <button class="chip" type="button" title="Waves"><svg viewBox="0 0 24 24"><path d="M2 12c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M2 17c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg></button>
-              <button class="chip chip-dial" type="button" title="Dial" aria-label="Dial">
-                <svg viewBox="0 0 32 32">
-                  <circle cx="16" cy="16" r="12" fill="none" stroke="rgba(45,226,230,0.3)" stroke-width="2"/>
-                  <circle cx="16" cy="16" r="12" fill="none" stroke="#2de2e6" stroke-width="2.5"
-                          stroke-dasharray="50 30" transform="rotate(-90 16 16)"/>
+            <button class="metric-tile" type="button" data-n="42.1">
+              <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 10l7-7 7 7"/></svg></div>
+              <div class="t">Ascent</div>
+              <div class="n">42.1 kn</div>
+            </button>
+            <button class="metric-tile" type="button" data-n="18.4">
+              <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 12h16M12 4v16"/></svg></div>
+              <div class="t">Bearing</div>
+              <div class="n">18.4°</div>
+            </button>
+            <button class="metric-tile" type="button" data-n="07.2">
+              <div class="ico"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="13" rx="7" ry="4"/><path d="M9 10c1-2 2-3 3-3s2 1 3 3"/></svg></div>
+              <div class="t">Pod ID</div>
+              <div class="n">07.2k</div>
+            </button>
+            <button class="metric-tile" type="button" data-n="91.0">
+              <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div>
+              <div class="t">Sync</div>
+              <div class="n">91.0%</div>
+            </button>
+            <button class="metric-tile" type="button" data-n="3.6">
+              <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-4 3 8 2-4h7"/></svg></div>
+              <div class="t">Signal</div>
+              <div class="n">3.6 dB</div>
+            </button>
+          </div>
+
+          <div class="right-col">
+            <div class="right-top">
+              <div class="circ-gauge" aria-hidden="true">
+                <svg viewBox="0 0 50 50">
+                  <circle cx="25" cy="25" r="20" fill="none" stroke="rgba(45,226,230,0.12)" stroke-width="3"/>
+                  <circle cx="25" cy="25" r="20" fill="none" stroke="#7ef9fc" stroke-width="3"
+                    stroke-dasharray="88 126" stroke-linecap="round" transform="rotate(-90 25 25)"
+                    style="filter: drop-shadow(0 0 4px rgba(45,226,230,0.6))"/>
+                  <circle cx="25" cy="25" r="12" fill="none" stroke="rgba(45,226,230,0.2)" stroke-width="1"/>
                 </svg>
-              </button>
-              <button class="chip chip-dial" type="button" title="Signal" aria-label="Signal">
-                <svg viewBox="0 0 32 32">
-                  <polyline points="4,22 10,14 15,18 22,8 28,12" fill="none" stroke="#2de2e6" stroke-width="1.8"/>
-                </svg>
-              </button>
+              </div>
+              <div class="time-block">
+                <div class="clock" id="clock">121:40%</div>
+                <div class="sub">DEPTH · 340m</div>
+              </div>
+            </div>
+            <div class="spark">
+              <div class="lab">Hydrograph</div>
+              <svg viewBox="0 0 200 40" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(45,226,230,0.45)"/>
+                    <stop offset="100%" stop-color="rgba(45,226,230,0)"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0 28 L15 24 L30 30 L45 18 L60 22 L75 12 L90 16 L105 8 L120 14 L135 10 L150 18 L165 14 L180 20 L200 12 V40 H0 Z" fill="url(#ag)"/>
+                <path d="M0 28 L15 24 L30 30 L45 18 L60 22 L75 12 L90 16 L105 8 L120 14 L135 10 L150 18 L165 14 L180 20 L200 12" fill="none" stroke="#7ef9fc" stroke-width="1.4" style="filter: drop-shadow(0 0 3px rgba(45,226,230,0.7))"/>
+              </svg>
+            </div>
+            <div class="bar-panel">
+              <div class="lab">Biomass index</div>
+              <div class="bars" id="bars">
+                <div class="bar" style="height:42%"></div>
+                <div class="bar" style="height:58%"></div>
+                <div class="bar" style="height:35%"></div>
+                <div class="bar" style="height:72%"></div>
+                <div class="bar" style="height:88%"></div>
+                <div class="bar" style="height:64%"></div>
+                <div class="bar" style="height:95%"></div>
+                <div class="bar" style="height:48%"></div>
+                <div class="bar" style="height:70%"></div>
+                <div class="bar" style="height:55%"></div>
+                <div class="bar" style="height:82%"></div>
+                <div class="bar" style="height:40%"></div>
+              </div>
             </div>
           </div>
 
-          <div class="mid-gauges" aria-hidden="true">
-            <div class="mini-gauge">
-              <svg viewBox="0 0 36 36">
-                <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(45,226,230,0.15)" stroke-width="3"/>
-                <circle cx="18" cy="18" r="14" fill="none" stroke="#2de2e6" stroke-width="3"
-                        stroke-dasharray="55 88" stroke-linecap="round"/>
-              </svg>
+          <div class="status">SONAR · LIVE</div>
+        </div>
+
+        <div class="bottom">
+          <div class="panel">
+            <div class="pt">Bio telemetry</div>
+            <div class="slider-row" style="--p:72%">
+              <span>HRV</span>
+              <input type="range" min="0" max="100" value="72" aria-label="HRV"/>
             </div>
-            <div class="mini-gauge">
-              <svg viewBox="0 0 36 36">
-                <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(45,226,230,0.15)" stroke-width="3"/>
-                <circle cx="18" cy="18" r="14" fill="none" stroke="#5ef0f4" stroke-width="3"
-                        stroke-dasharray="40 88" stroke-linecap="round"/>
-              </svg>
+            <div class="slider-row" style="--p:54%">
+              <span>O₂</span>
+              <input type="range" min="0" max="100" value="54" aria-label="O2"/>
+            </div>
+            <div class="slider-row" style="--p:81%">
+              <span>TEMP</span>
+              <input type="range" min="0" max="100" value="81" aria-label="Temp"/>
+            </div>
+            <div class="slider-row" style="--p:38%">
+              <span>LOAD</span>
+              <input type="range" min="0" max="100" value="38" aria-label="Load"/>
             </div>
           </div>
 
-          <div class="right-stack">
-            <div class="panel">
-              <h3>Chronosync</h3>
-              <div class="chrono">121:4<small>0%</small></div>
-              <svg class="spark" viewBox="0 0 200 40" preserveAspectRatio="none">
-                <polyline fill="none" stroke="rgba(45,226,230,0.85)" stroke-width="1.5"
-                  points="0,28 15,22 30,30 45,12 60,20 75,8 90,18 105,6 120,16 135,10 150,22 165,14 180,24 200,12"/>
-                <polyline fill="rgba(45,226,230,0.08)" stroke="none"
-                  points="0,40 0,28 15,22 30,30 45,12 60,20 75,8 90,18 105,6 120,16 135,10 150,22 165,14 180,24 200,12 200,40"/>
-              </svg>
+          <div class="panel">
+            <div class="pt">Mission rings · LS unit</div>
+            <div class="rings">
+              <div class="ring" data-v="91">
+                <svg viewBox="0 0 64 64">
+                  <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(45,226,230,0.12)" stroke-width="4"/>
+                  <circle cx="32" cy="32" r="26" fill="none" stroke="#7ef9fc" stroke-width="4"
+                    stroke-dasharray="149" stroke-dashoffset="13" stroke-linecap="round" transform="rotate(-90 32 32)"/>
+                </svg>
+                <div class="rv">91%</div>
+                <div class="rl">Core</div>
+              </div>
+              <div class="ring" data-v="94">
+                <svg viewBox="0 0 64 64">
+                  <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(45,226,230,0.12)" stroke-width="4"/>
+                  <circle cx="32" cy="32" r="26" fill="none" stroke="#2de2e6" stroke-width="4"
+                    stroke-dasharray="149" stroke-dashoffset="9" stroke-linecap="round" transform="rotate(-90 32 32)"/>
+                </svg>
+                <div class="rv">94.7</div>
+                <div class="rl">Nav</div>
+              </div>
+              <div class="ring" data-v="50">
+                <svg viewBox="0 0 64 64">
+                  <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(45,226,230,0.12)" stroke-width="4"/>
+                  <circle cx="32" cy="32" r="26" fill="none" stroke="#5eeaef" stroke-width="4"
+                    stroke-dasharray="149" stroke-dashoffset="74" stroke-linecap="round" transform="rotate(-90 32 32)"/>
+                </svg>
+                <div class="rv">50%</div>
+                <div class="rl">Fuel</div>
+              </div>
             </div>
-            <div class="panel bars-panel">
-              <h3>Depth profile</h3>
-              <div class="bars" id="bars" role="img" aria-label="Bar chart"></div>
+          </div>
+
+          <div class="panel">
+            <div class="pt">Hull integrity</div>
+            <div class="mini-gauges">
+              <div class="mg">
+                <svg viewBox="0 0 54 54">
+                  <circle cx="27" cy="27" r="22" fill="none" stroke="rgba(45,226,230,0.12)" stroke-width="4"/>
+                  <circle cx="27" cy="27" r="22" fill="none" stroke="#7ef9fc" stroke-width="4"
+                    stroke-dasharray="97" stroke-dashoffset="28" stroke-linecap="round" transform="rotate(-90 27 27)"/>
+                </svg>
+                <div class="pct">39%</div>
+              </div>
+              <div class="chips">
+                <div class="chip"><i></i> Fore <div class="barline"><b style="width:72%"></b></div></div>
+                <div class="chip"><i></i> Mid <div class="barline"><b style="width:55%"></b></div></div>
+                <div class="chip"><i></i> Aft <div class="barline"><b style="width:88%"></b></div></div>
+                <div class="chip"><i></i> Fin <div class="barline"><b style="width:41%"></b></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="pt">Spectra · bands</div>
+            <div class="mini-charts">
+              <div class="mc">
+                <span>LF</span>
+                <svg viewBox="0 0 80 36" preserveAspectRatio="none">
+                  <polyline fill="none" stroke="#7ef9fc" stroke-width="1.2" points="0,28 10,22 20,26 30,14 40,18 50,10 60,16 70,8 80,12"/>
+                </svg>
+              </div>
+              <div class="mc">
+                <span>HF</span>
+                <svg viewBox="0 0 80 36" preserveAspectRatio="none">
+                  <rect x="4" y="20" width="5" height="12" fill="#2de2e6" opacity="0.7"/>
+                  <rect x="14" y="14" width="5" height="18" fill="#2de2e6" opacity="0.8"/>
+                  <rect x="24" y="18" width="5" height="14" fill="#2de2e6" opacity="0.65"/>
+                  <rect x="34" y="8" width="5" height="24" fill="#7ef9fc" opacity="0.9"/>
+                  <rect x="44" y="12" width="5" height="20" fill="#2de2e6" opacity="0.75"/>
+                  <rect x="54" y="16" width="5" height="16" fill="#2de2e6" opacity="0.7"/>
+                  <rect x="64" y="10" width="5" height="22" fill="#7ef9fc" opacity="0.85"/>
+                </svg>
+              </div>
+              <div class="mc">
+                <span>MID</span>
+                <svg viewBox="0 0 80 36" preserveAspectRatio="none">
+                  <path d="M0 30 Q20 8 40 20 T80 12" fill="none" stroke="#5eeaef" stroke-width="1.2"/>
+                </svg>
+              </div>
+              <div class="mc">
+                <span>NOISE</span>
+                <svg viewBox="0 0 80 36" preserveAspectRatio="none">
+                  <polyline fill="none" stroke="#2de2e6" stroke-width="1" points="0,18 5,22 10,14 15,20 20,10 25,24 30,16 35,19 40,8 45,22 50,15 55,21 60,12 65,18 70,14 75,20 80,16"/>
+                </svg>
+              </div>
             </div>
           </div>
         </div>
-
-        <footer class="footer">
-          <div class="foot">
-            <h3>Bio-parameters · 010</h3>
-            <div class="sliders" id="sliders"></div>
-          </div>
-          <div class="foot">
-            <h3>Modulators · LS suite</h3>
-            <div class="rings">
-              <button class="ring" type="button" data-v="91%" aria-label="91 percent">
-                <svg viewBox="0 0 54 54">
-                  <circle cx="27" cy="27" r="22" fill="none" stroke="rgba(45,226,230,0.12)" stroke-width="3"/>
-                  <circle cx="27" cy="27" r="22" fill="none" stroke="#2de2e6" stroke-width="3.2"
-                          stroke-dasharray="126 138" stroke-linecap="round"/>
-                </svg>
-                <span class="num">91%</span>
-              </button>
-              <button class="ring" type="button" data-v="94.7" aria-label="94.7">
-                <svg viewBox="0 0 54 54">
-                  <circle cx="27" cy="27" r="22" fill="none" stroke="rgba(45,226,230,0.12)" stroke-width="3"/>
-                  <circle cx="27" cy="27" r="22" fill="none" stroke="#5ef0f4" stroke-width="3.2"
-                          stroke-dasharray="118 138" stroke-linecap="round"/>
-                </svg>
-                <span class="num">94.7</span>
-              </button>
-              <button class="ring" type="button" data-v="50.8" aria-label="50.8">
-                <svg viewBox="0 0 54 54">
-                  <circle cx="27" cy="27" r="22" fill="none" stroke="rgba(45,226,230,0.12)" stroke-width="3"/>
-                  <circle cx="27" cy="27" r="22" fill="none" stroke="#2de2e6" stroke-width="3.2"
-                          stroke-dasharray="70 138" stroke-linecap="round"/>
-                </svg>
-                <span class="num">50.8</span>
-              </button>
-            </div>
-          </div>
-          <div class="foot foot-right">
-            <div class="big-dial">
-              <svg viewBox="0 0 56 56">
-                <circle cx="28" cy="28" r="23" fill="none" stroke="rgba(45,226,230,0.12)" stroke-width="3.5"/>
-                <circle cx="28" cy="28" r="23" fill="none" stroke="#2de2e6" stroke-width="3.5"
-                        stroke-dasharray="100 145" stroke-linecap="round"/>
-                <circle cx="28" cy="28" r="16" fill="none" stroke="rgba(45,226,230,0.2)" stroke-width="1.5"/>
-              </svg>
-              <span class="num">39%</span>
-            </div>
-            <div class="mini-charts">
-              <svg viewBox="0 0 120 16" preserveAspectRatio="none">
-                <polyline fill="none" stroke="#2de2e6" stroke-width="1.2"
-                  points="0,12 15,8 30,11 45,4 60,9 75,3 90,8 105,5 120,7"/>
-              </svg>
-              <svg viewBox="0 0 120 16" preserveAspectRatio="none">
-                <rect x="2" y="8" width="6" height="8" fill="#2de2e6" opacity="0.7"/>
-                <rect x="12" y="4" width="6" height="12" fill="#2de2e6" opacity="0.85"/>
-                <rect x="22" y="6" width="6" height="10" fill="#2de2e6" opacity="0.6"/>
-                <rect x="32" y="2" width="6" height="14" fill="#5ef0f4"/>
-                <rect x="42" y="7" width="6" height="9" fill="#2de2e6" opacity="0.7"/>
-                <rect x="52" y="3" width="6" height="13" fill="#2de2e6" opacity="0.9"/>
-                <rect x="62" y="9" width="6" height="7" fill="#2de2e6" opacity="0.5"/>
-                <rect x="72" y="5" width="6" height="11" fill="#5ef0f4" opacity="0.8"/>
-                <rect x="82" y="1" width="6" height="15" fill="#2de2e6"/>
-                <rect x="92" y="6" width="6" height="10" fill="#2de2e6" opacity="0.65"/>
-                <rect x="102" y="4" width="6" height="12" fill="#2de2e6" opacity="0.75"/>
-                <rect x="112" y="8" width="6" height="8" fill="#2de2e6" opacity="0.55"/>
-              </svg>
-              <div class="dot-grid" id="dots"></div>
-            </div>
-          </div>
-        </footer>
       </div>
     </div>
   </div>
 
   <script>
     (function () {
-      // Bars
-      var heights = [40, 55, 35, 70, 48, 85, 60, 95, 72, 50, 88, 65, 45, 78, 92, 58, 68, 42, 80, 55];
-      var bars = document.getElementById("bars");
-      heights.forEach(function (h, i) {
-        var b = document.createElement("button");
-        b.className = "bar";
-        b.type = "button";
-        b.style.height = h + "%";
-        b.title = "Series " + (i + 1) + ": " + h;
-        b.addEventListener("click", function () {
-          b.style.filter = b.style.filter ? "" : "brightness(1.6)";
-        });
-        bars.appendChild(b);
-      });
-
-      // Sliders
-      var rows = [
-        { label: "Depth", v: 72, n: "72" },
-        { label: "Saline", v: 48, n: "48" },
-        { label: "Press", v: 86, n: "86" },
-        { label: "Thermo", v: 34, n: "34" },
-        { label: "Sonic", v: 61, n: "61" }
-      ];
-      var sl = document.getElementById("sliders");
-      rows.forEach(function (r) {
-        var btn = document.createElement("button");
-        btn.className = "slider-row";
-        btn.type = "button";
-        btn.innerHTML =
-          "<span>" + r.label + "</span>" +
-          "<span class=\"track\"><i style=\"width:" + r.v + "%\"></i></span>" +
-          "<span>" + r.n + "</span>";
-        btn.addEventListener("click", function () {
-          var next = (r.v + 12) % 100;
-          if (next < 20) next = 20;
-          r.v = next;
-          btn.querySelector("i").style.width = next + "%";
-          btn.querySelectorAll("span")[2].textContent = String(next);
-        });
-        sl.appendChild(btn);
-      });
-
-      // Dot grid
-      var dots = document.getElementById("dots");
-      for (var i = 0; i < 18; i++) {
-        var s = document.createElement("span");
-        if (i % 3 === 0 || i === 7 || i === 11) s.className = "on";
-        dots.appendChild(s);
-      }
-
-      // Particles
-      var p = document.getElementById("particles");
-      for (var j = 0; j < 28; j++) {
-        var el = document.createElement("i");
-        el.style.left = Math.random() * 100 + "%";
-        el.style.top = 20 + Math.random() * 55 + "%";
-        el.style.animationDelay = Math.random() * 6 + "s";
-        el.style.animationDuration = 5 + Math.random() * 6 + "s";
-        el.style.opacity = 0.3 + Math.random() * 0.5;
-        p.appendChild(el);
-      }
-
       // Nav toggle
-      document.querySelectorAll(".nav-icon").forEach(function (n) {
-        n.addEventListener("click", function () {
-          document.querySelectorAll(".nav-icon").forEach(function (x) { x.classList.remove("active"); });
-          n.classList.add("active");
+      document.querySelectorAll(".nav-icon").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          document.querySelectorAll(".nav-icon").forEach(function (b) { b.classList.remove("active"); });
+          btn.classList.add("active");
         });
       });
-      document.querySelectorAll(".chip").forEach(function (c) {
-        c.addEventListener("click", function () {
-          document.querySelectorAll(".chip").forEach(function (x) { x.classList.remove("active"); });
-          c.classList.add("active");
+
+      // Range fill
+      document.querySelectorAll('.slider-row input[type="range"]').forEach(function (el) {
+        function sync() {
+          el.parentElement.style.setProperty("--p", el.value + "%");
+        }
+        el.addEventListener("input", sync);
+        sync();
+      });
+
+      // Metric tiles bump big value
+      document.querySelectorAll(".metric-tile").forEach(function (tile) {
+        tile.addEventListener("click", function () {
+          var n = tile.getAttribute("data-n") || "100";
+          var el = document.getElementById("bigVal");
+          el.textContent = (parseFloat(n) * 9.2).toFixed(0) + "%";
+        });
+      });
+
+      // Subtle bar animation
+      var bars = document.querySelectorAll("#bars .bar");
+      setInterval(function () {
+        bars.forEach(function (b) {
+          var h = 30 + Math.random() * 65;
+          b.style.height = h + "%";
+        });
+      }, 2200);
+
+      // Clock-ish readout flicker
+      var clock = document.getElementById("clock");
+      var base = 121;
+      setInterval(function () {
+        var frac = (40 + Math.floor(Math.random() * 9));
+        clock.textContent = base + ":" + frac + "%";
+      }, 1800);
+
+      // Ring click pulse
+      document.querySelectorAll(".ring").forEach(function (r) {
+        r.addEventListener("click", function () {
+          r.style.filter = "brightness(1.4)";
+          setTimeout(function () { r.style.filter = ""; }, 200);
         });
       });
     })();

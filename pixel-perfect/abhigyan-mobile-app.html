@@ -9,22 +9,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      width: 100%; height: 100%; overflow: hidden;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    }
-    /* Studio: violet left → peach/coral right (DOM gradient, not inspo wallpaper) */
+    html, body { width: 100%; height: 100%; overflow: hidden; }
     body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      /* Soft purple → peach like inspo (NOT inspo wallpaper) */
       background:
-        radial-gradient(ellipse 75% 110% at 0% 48%, rgba(130, 70, 210, 0.72) 0%, transparent 58%),
-        radial-gradient(ellipse 70% 100% at 100% 50%, rgba(255, 175, 145, 0.78) 0%, transparent 55%),
+        radial-gradient(ellipse 85% 120% at -5% 50%, #7B3BC8 0%, transparent 55%),
+        radial-gradient(ellipse 80% 110% at 105% 48%, #FFD0B8 0%, transparent 52%),
         linear-gradient(105deg,
-          #5C3A9E 0%, #6B45A0 12%, #85559A 28%,
-          #B0708C 46%, #D89888 62%, #EFB0A0 78%, #F6C4B0 100%);
+          #5A26A4 0%, #6B32B0 12%, #8A4598 30%,
+          #B86892 48%, #E8A092 70%, #F8C8B4 88%, #FFD8C8 100%);
     }
 
     .stage {
@@ -32,270 +30,263 @@
       align-items: center;
       justify-content: center;
       gap: 36px;
-      transform: scale(0.88);
-      transform-origin: center center;
+      transform: scale(1.08);
+      transform-origin: center;
     }
 
     .phone {
-      width: 320px;
-      height: 690px;
-      background: #05060a;
-      border-radius: 46px;
-      padding: 8px;
+      width: 280px;
+      height: 606px;
+      background: #050508;
+      border-radius: 42px;
+      padding: 6px;
       box-shadow:
-        0 40px 90px rgba(40, 10, 55, 0.55),
-        0 14px 32px rgba(0, 0, 0, 0.38),
-        inset 0 0 0 1.5px rgba(255, 255, 255, 0.08);
+        0 32px 72px rgba(40, 8, 70, 0.5),
+        0 10px 24px rgba(0, 0, 0, 0.4),
+        inset 0 0 0 1.5px rgba(255, 255, 255, 0.12);
       position: relative;
       flex-shrink: 0;
     }
 
     .screen {
-      width: 100%; height: 100%;
-      border-radius: 38px;
+      width: 100%;
+      height: 100%;
+      border-radius: 36px;
       overflow: hidden;
       position: relative;
-      background: #081022;
-    }
-    .screen-left {
       background:
-        radial-gradient(ellipse 120% 50% at 50% 16%, rgba(60, 80, 150, 0.38) 0%, transparent 62%),
-        radial-gradient(ellipse 70% 35% at 78% 55%, rgba(40, 55, 110, 0.22) 0%, transparent 58%),
-        linear-gradient(180deg, #0c1830 0%, #091426 42%, #070f1c 100%);
-    }
-    .screen-right {
-      background:
-        radial-gradient(ellipse 100% 46% at 50% 14%, rgba(50, 80, 145, 0.36) 0%, transparent 64%),
-        linear-gradient(180deg, #0c1830 0%, #091426 42%, #070f1c 100%);
+        radial-gradient(ellipse 140% 50% at 50% 0%, rgba(40, 60, 120, 0.55) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 40% at 80% 40%, rgba(30, 45, 100, 0.25) 0%, transparent 50%),
+        linear-gradient(180deg, #0c1a36 0%, #081428 40%, #050f1e 100%);
     }
 
     .notch {
       position: absolute;
       top: 0; left: 50%; transform: translateX(-50%);
-      width: 108px; height: 26px;
-      background: #05060a;
-      border-radius: 0 0 18px 18px;
+      width: 100px; height: 22px;
+      background: #050508;
+      border-radius: 0 0 15px 15px;
       z-index: 60;
     }
     .notch::after {
       content: '';
       position: absolute;
-      top: 8px; left: 50%; transform: translateX(-50%);
-      width: 42px; height: 4px;
-      background: #1a1e28;
+      top: 7px; left: 50%; transform: translateX(-50%);
+      width: 36px; height: 4px;
+      background: #1a2030;
       border-radius: 3px;
     }
 
     .status {
       position: relative; z-index: 50;
-      height: 36px;
-      padding: 11px 20px 0;
+      height: 32px;
+      padding: 9px 16px 0;
       display: flex; justify-content: space-between; align-items: center;
-      color: #fff; font-size: 12px; font-weight: 600;
+      color: #fff; font-size: 11px; font-weight: 600;
     }
-    .status-icons { display: flex; gap: 4px; align-items: center; opacity: 0.92; }
+    .status-icons { display: flex; gap: 3px; align-items: center; opacity: 0.95; }
 
     .app-bar {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 2px 18px 0;
+      padding: 0 14px 2px;
       position: relative; z-index: 20;
     }
     .app-name {
-      font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.6px;
+      font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -0.5px;
     }
     .app-bar-right {
-      display: flex; align-items: center; gap: 6px;
-      color: rgba(255,255,255,0.4); font-size: 11px; font-weight: 500;
+      display: flex; align-items: center; gap: 5px;
+      color: rgba(255,255,255,0.32); font-size: 10px; font-weight: 500;
     }
     .icon-btn {
-      width: 28px; height: 28px; border-radius: 8px;
+      width: 22px; height: 22px; border-radius: 6px;
       display: flex; align-items: center; justify-content: center;
-      color: rgba(255,255,255,0.55); cursor: pointer;
+      color: rgba(255,255,255,0.4); cursor: pointer;
       border: none; background: transparent;
       transition: background 0.15s, color 0.15s;
     }
-    .icon-btn:hover { background: rgba(255,255,255,0.08); color: #fff; }
+    .icon-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
 
     .stars { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
     .star { position: absolute; background: rgba(255,255,255,0.9); border-radius: 50%; }
-    .star.sm { width: 1.3px; height: 1.3px; opacity: 0.35; }
-    .star.md { width: 2.1px; height: 2.1px; opacity: 0.7; }
-    .star.lg { width: 2.8px; height: 2.8px; opacity: 0.92; }
+    .star.sm { width: 1.2px; height: 1.2px; opacity: 0.35; }
+    .star.md { width: 2px; height: 2px; opacity: 0.75; }
+    .star.lg { width: 2.6px; height: 2.6px; opacity: 0.95; }
     .star.cross {
-      width: 10px; height: 10px; background: transparent; opacity: 0.9;
+      width: 9px; height: 9px; background: transparent; opacity: 0.95;
     }
     .star.cross::before, .star.cross::after {
       content: ''; position: absolute;
-      background: rgba(255, 230, 190, 0.95);
+      background: rgba(255, 245, 220, 0.95);
       border-radius: 1px;
       left: 50%; top: 50%; transform: translate(-50%, -50%);
     }
-    .star.cross::before { width: 10px; height: 1.5px; }
-    .star.cross::after { width: 1.5px; height: 10px; }
-    .star.cross.cyan::before, .star.cross.cyan::after { background: rgba(170, 240, 255, 0.92); }
+    .star.cross::before { width: 9px; height: 1.4px; }
+    .star.cross::after { width: 1.4px; height: 9px; }
+    .star.cross.cyan::before, .star.cross.cyan::after { background: rgba(180, 250, 255, 0.95); }
 
-    /* LEFT planet hero — large centered peach globe */
+    /* LEFT — large peach planet */
     .planet-zone {
       position: relative;
-      height: 268px;
+      height: 255px;
       display: flex; align-items: center; justify-content: center;
-      z-index: 5; margin-top: 6px;
+      z-index: 5;
+      margin-top: -2px;
     }
     .planet {
-      width: 196px; height: 196px; border-radius: 50%;
+      width: 198px; height: 198px; border-radius: 50%;
       position: relative; z-index: 4;
       background:
-        radial-gradient(circle at 32% 20%,
-          #FFF8E8 0%, #FFE8B0 8%, #FFC878 18%,
-          #FFA060 30%, #FF8A58 42%, #F06068 58%,
-          #D04070 74%, #A83058 90%, #802040 100%);
+        radial-gradient(circle at 32% 16%,
+          #FFF6E0 0%, #FFE0A0 7%, #FFB868 16%,
+          #FF8C48 30%, #F86048 46%, #D83858 62%,
+          #982040 78%, #5A1028 100%);
       box-shadow:
-        0 0 48px rgba(255, 100, 110, 0.58),
-        0 0 96px rgba(255, 70, 120, 0.3),
-        0 14px 30px rgba(0,0,0,0.42),
-        inset -14px -16px 30px rgba(120, 15, 50, 0.48),
-        inset 12px 12px 26px rgba(255,255,255,0.3);
+        0 0 50px rgba(255, 80, 70, 0.65),
+        0 0 100px rgba(255, 40, 80, 0.28),
+        0 12px 28px rgba(0,0,0,0.45),
+        inset -18px -20px 36px rgba(70, 8, 30, 0.55),
+        inset 16px 16px 28px rgba(255,255,255,0.28);
       overflow: hidden; cursor: pointer;
       transition: transform 0.25s ease;
     }
     .planet:hover { transform: scale(1.03); }
     .planet-band {
-      position: absolute; left: -12%; right: -12%; height: 52%; bottom: 0;
+      position: absolute; left: -12%; right: -12%; height: 58%; bottom: 0;
       background: linear-gradient(180deg,
-        transparent 0%, rgba(255,120,80,0.12) 8%,
-        rgba(170,35,65,0.55) 48%, rgba(120,20,50,0.94) 100%);
+        transparent 0%, rgba(255,100,50,0.1) 10%,
+        rgba(120,20,42,0.55) 48%, rgba(50,6,22,0.92) 100%);
     }
     .planet-mountains {
-      position: absolute; left: 0; right: 0; bottom: 4%; height: 52%; z-index: 2;
+      position: absolute; left: 0; right: 0; bottom: 0; height: 54%; z-index: 2;
     }
     .planet-mountains svg { width: 100%; height: 100%; display: block; }
     .planet-chart {
-      position: absolute; left: 8%; right: 8%; top: 20%; height: 46%; z-index: 3;
+      position: absolute; left: 10%; right: 10%; top: 18%; height: 46%; z-index: 3;
     }
     .planet-chart svg { width: 100%; height: 100%; overflow: visible; }
 
     .moon { position: absolute; border-radius: 50%; z-index: 6; }
     .moon-blue {
-      width: 32px; height: 32px; right: 36px; bottom: 62px;
-      background: radial-gradient(circle at 32% 28%, #C8F4FF 0%, #58B0F0 45%, #2468B0 100%);
-      box-shadow: 0 0 20px rgba(90,180,240,0.7), 0 4px 10px rgba(0,0,0,0.3);
+      width: 30px; height: 30px; right: 12px; bottom: 48px;
+      background: radial-gradient(circle at 32% 28%, #D0F8FF 0%, #48A0E8 42%, #1A58A0 100%);
+      box-shadow: 0 0 20px rgba(80,170,240,0.9), 0 3px 8px rgba(0,0,0,0.3);
     }
     .moon-purple {
-      width: 16px; height: 16px; left: 44px; bottom: 80px;
-      background: radial-gradient(circle at 30% 28%, #E8D0FF 0%, #9070D8 50%, #5030A0 100%);
-      box-shadow: 0 0 14px rgba(140,100,230,0.6);
+      width: 13px; height: 13px; left: 22px; bottom: 72px;
+      background: radial-gradient(circle at 30% 28%, #EED8FF 0%, #8868D0 50%, #4828A0 100%);
+      box-shadow: 0 0 12px rgba(140,100,230,0.8);
     }
     .moon-tiny {
-      width: 11px; height: 11px; right: 58px; top: 64px;
-      background: radial-gradient(circle at 30% 28%, #FFF0B0, #E8A040);
-      box-shadow: 0 0 12px rgba(255,200,80,0.7);
+      width: 9px; height: 9px; right: 38px; top: 38px;
+      background: radial-gradient(circle at 30% 28%, #FFF0B0, #E89838);
+      box-shadow: 0 0 10px rgba(255,200,80,0.9);
     }
     .moon-cyan-sm {
-      width: 9px; height: 9px; left: 58px; top: 92px;
-      background: radial-gradient(circle at 30% 28%, #B0F0FF, #40A0D8);
-      box-shadow: 0 0 9px rgba(80,180,240,0.55);
+      width: 7px; height: 7px; left: 38px; top: 58px;
+      background: radial-gradient(circle at 30% 28%, #B0F0FF, #38A0D0);
+      box-shadow: 0 0 9px rgba(80,180,240,0.75);
     }
 
-    .content-pad { padding: 0 14px; position: relative; z-index: 10; }
+    .content-pad { padding: 0 12px; position: relative; z-index: 10; }
 
     .card {
-      background: rgba(10, 22, 44, 0.82);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 14px;
-      padding: 11px 13px 10px;
-      margin-bottom: 9px;
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      box-shadow: 0 6px 22px rgba(0,0,0,0.25);
+      background: rgba(6, 14, 32, 0.82);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 12px;
+      padding: 9px 11px 8px;
+      margin-bottom: 6px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.28);
       transition: border-color 0.15s, background 0.15s;
       cursor: pointer;
     }
     .card:hover {
-      border-color: rgba(255,255,255,0.18);
-      background: rgba(16, 30, 54, 0.92);
+      border-color: rgba(255,255,255,0.16);
+      background: rgba(10, 22, 46, 0.92);
     }
     .card-row { display: flex; justify-content: space-between; align-items: center; }
-    .card-title { font-size: 13.5px; font-weight: 600; color: #fff; letter-spacing: -0.2px; }
-    .card-meta { display: flex; align-items: center; gap: 7px; margin-top: 3px; }
-    .meta-chip { font-size: 10px; color: rgba(255,255,255,0.32); }
-    .pct { font-size: 10.5px; font-weight: 600; color: #FF7A9A; }
+    .card-title { font-size: 12.5px; font-weight: 600; color: #fff; letter-spacing: -0.2px; }
+    .card-meta { display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+    .meta-chip { font-size: 8.5px; color: rgba(255,255,255,0.28); }
+    .pct { font-size: 9.5px; font-weight: 600; color: #FF7A98; }
     .share-ico {
-      width: 22px; height: 22px; border-radius: 6px;
+      width: 18px; height: 18px; border-radius: 5px;
       border: 1px solid rgba(255,255,255,0.1);
       display: flex; align-items: center; justify-content: center;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.36);
     }
 
-    .dot-row { display: flex; gap: 10px; margin-top: 11px; }
+    .dot-row { display: flex; gap: 8px; margin-top: 9px; justify-content: flex-start; }
     .ndot {
-      width: 34px; height: 34px; border-radius: 50%;
+      width: 29px; height: 29px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 700; color: #fff;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.32);
+      font-size: 11px; font-weight: 700; color: #fff;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.35);
       cursor: pointer; border: none; transition: transform 0.15s;
     }
     .ndot:hover { transform: translateY(-2px); }
-    .ndot.active { outline: 2px solid rgba(255,255,255,0.5); outline-offset: 2px; }
-    .dot-labels { display: flex; gap: 10px; margin-top: 4px; }
+    .ndot.active { outline: 2px solid rgba(255,255,255,0.55); outline-offset: 2px; }
+    .dot-labels { display: flex; gap: 8px; margin-top: 3px; }
     .dot-labels span {
-      width: 34px; text-align: center; font-size: 6.5px;
-      color: rgba(255,255,255,0.34); font-weight: 500;
+      width: 29px; text-align: center; font-size: 5.5px;
+      color: rgba(255,255,255,0.3); font-weight: 500;
     }
 
     .bottom-nav {
-      position: absolute; bottom: 20px; left: 0; right: 0;
-      display: flex; justify-content: center; gap: 11px; z-index: 20;
+      position: absolute; bottom: 16px; left: 0; right: 0;
+      display: flex; justify-content: center; gap: 9px; z-index: 20;
     }
     .nav-orb {
-      width: 40px; height: 40px; border-radius: 50%;
+      width: 34px; height: 34px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.36);
       color: #fff; cursor: pointer; transition: transform 0.15s;
       border: none; padding: 0;
     }
-    .nav-orb:hover { transform: scale(1.08); }
+    .nav-orb:hover { transform: scale(1.09); }
     .nav-orb.active {
-      box-shadow: 0 0 0 2px rgba(255,255,255,0.38), 0 4px 14px rgba(0,0,0,0.35);
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.4), 0 4px 12px rgba(0,0,0,0.36);
     }
-    .nav-orb svg { width: 15px; height: 15px; }
-    .nav-orb .n-num { font-size: 12px; font-weight: 700; color: #fff; }
+    .nav-orb svg { width: 13px; height: 13px; }
 
     .home-bar {
-      position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
-      width: 104px; height: 3.5px;
-      background: rgba(255,255,255,0.3); border-radius: 4px; z-index: 30;
+      position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%);
+      width: 90px; height: 3.5px;
+      background: rgba(255,255,255,0.24); border-radius: 4px; z-index: 30;
     }
 
-    /* RIGHT metrics */
+    /* RIGHT — multicolor orb + waves */
     .hero-zone {
-      position: relative; height: 150px;
+      position: relative; height: 138px;
       display: flex; align-items: center; justify-content: center;
-      z-index: 5; margin-top: 4px;
+      z-index: 5; margin-top: 0;
     }
-    .orb-wrap { position: relative; width: 104px; height: 104px; }
+    .orb-wrap { position: relative; width: 92px; height: 92px; }
     .orb {
-      width: 104px; height: 104px; border-radius: 50%;
+      width: 92px; height: 92px; border-radius: 50%;
       background:
-        radial-gradient(circle at 28% 22%,
-          #F0FCFF 0%, #78D8F8 12%, #5898F0 30%,
-          #7868D8 52%, #C870B8 74%, #F09098 100%);
+        radial-gradient(circle at 28% 14%,
+          #F8FEFF 0%, #68D0F0 12%, #5888E8 28%,
+          #8070D0 48%, #C068B0 68%, #E88890 88%, #F09888 100%);
       box-shadow:
-        0 0 36px rgba(100,170,240,0.55),
-        0 0 70px rgba(170,100,200,0.3),
-        0 8px 24px rgba(0,0,0,0.36),
-        inset -8px -10px 22px rgba(80,40,120,0.32),
-        inset 8px 10px 18px rgba(255,255,255,0.26);
+        0 0 36px rgba(90,160,240,0.6),
+        0 0 68px rgba(160,90,200,0.3),
+        0 8px 18px rgba(0,0,0,0.36),
+        inset -8px -10px 20px rgba(70,35,110,0.35),
+        inset 8px 10px 16px rgba(255,255,255,0.3);
       position: relative; z-index: 4; cursor: pointer;
       transition: transform 0.25s; overflow: hidden;
     }
     .orb:hover { transform: scale(1.05); }
     .orb-inner-chart {
-      position: absolute; inset: 16%; z-index: 2; opacity: 0.88;
+      position: absolute; inset: 16%; z-index: 2; opacity: 0.9;
     }
     .orb-inner-chart svg { width: 100%; height: 100%; overflow: visible; }
 
     .wave-layer {
-      position: absolute; inset: -40px -60px; z-index: 2; pointer-events: none;
+      position: absolute; inset: -36px -54px; z-index: 2; pointer-events: none;
     }
     .wave-layer svg { width: 100%; height: 100%; overflow: visible; }
 
@@ -303,108 +294,108 @@
       position: absolute; border-radius: 50%; z-index: 5;
     }
     .orb-sat.s1 {
-      width: 14px; height: 14px; right: -6px; top: 14px;
-      background: radial-gradient(circle at 30% 30%, #C0F8FF, #48A8E8);
-      box-shadow: 0 0 12px rgba(80,180,240,0.75);
+      width: 12px; height: 12px; right: -6px; top: 2px;
+      background: radial-gradient(circle at 30% 30%, #C0F8FF, #40A0E0);
+      box-shadow: 0 0 11px rgba(80,180,240,0.85);
     }
     .orb-sat.s2 {
-      width: 10px; height: 10px; left: -4px; bottom: 24px;
-      background: radial-gradient(circle at 30% 30%, #FFE0A0, #E88840);
-      box-shadow: 0 0 9px rgba(255,160,60,0.65);
+      width: 9px; height: 9px; left: -3px; bottom: 12px;
+      background: radial-gradient(circle at 30% 30%, #FFE0A0, #E08038);
+      box-shadow: 0 0 8px rgba(255,160,60,0.75);
     }
     .orb-sat.s3 {
-      width: 8px; height: 8px; right: 14px; bottom: -2px;
-      background: radial-gradient(circle at 30% 30%, #E0C0FF, #8860D0);
-      box-shadow: 0 0 8px rgba(140,100,220,0.6);
+      width: 7px; height: 7px; right: 10px; bottom: -2px;
+      background: radial-gradient(circle at 30% 30%, #E0C0FF, #8060C8);
+      box-shadow: 0 0 7px rgba(140,100,220,0.7);
     }
 
-    .metric-block { padding: 0 18px; position: relative; z-index: 10; }
+    .metric-block { padding: 0 14px; position: relative; z-index: 10; }
     .metric-row {
       display: flex; justify-content: space-between; align-items: flex-end;
       margin-bottom: 2px;
     }
     .big-num {
-      font-size: 36px; font-weight: 700; color: #fff;
-      letter-spacing: -1.4px; line-height: 1;
+      font-size: 31px; font-weight: 700; color: #fff;
+      letter-spacing: -1.2px; line-height: 1;
     }
     .metric-sub {
-      font-size: 9.5px; color: rgba(255,255,255,0.38); margin-top: 4px; font-weight: 500;
+      font-size: 8px; color: rgba(255,255,255,0.32); margin-top: 3px; font-weight: 500;
     }
-    .side-metric { text-align: right; }
+    .side-metric { text-align: right; padding-bottom: 2px; }
     .side-val {
-      font-size: 15px; font-weight: 600; color: #F0A060; letter-spacing: -0.3px;
+      font-size: 13px; font-weight: 600; color: #F09858; letter-spacing: -0.3px;
     }
     .side-label {
-      font-size: 8.5px; color: rgba(255,255,255,0.32); margin-top: 2px;
+      font-size: 7px; color: rgba(255,255,255,0.28); margin-top: 2px;
     }
 
     .chip-row {
-      display: flex; gap: 9px; margin: 14px 0 8px; justify-content: flex-start;
+      display: flex; gap: 7px; margin: 10px 0 2px; justify-content: flex-start;
     }
     .chip {
-      width: 34px; height: 34px; border-radius: 50%;
+      width: 29px; height: 29px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 700; color: #fff;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+      font-size: 11px; font-weight: 700; color: #fff;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.32);
       cursor: pointer; border: none; transition: transform 0.15s;
     }
     .chip:hover { transform: translateY(-2px); }
-    .chip.active { outline: 2px solid rgba(255,255,255,0.48); outline-offset: 2px; }
-    .chip-labels { display: flex; gap: 9px; margin-top: -2px; margin-bottom: 12px; }
+    .chip.active { outline: 2px solid rgba(255,255,255,0.5); outline-offset: 2px; }
+    .chip-labels { display: flex; gap: 7px; margin-bottom: 8px; }
     .chip-labels span {
-      width: 34px; text-align: center; font-size: 6.5px;
-      color: rgba(255,255,255,0.32); font-weight: 500;
+      width: 29px; text-align: center; font-size: 5.5px;
+      color: rgba(255,255,255,0.28); font-weight: 500;
     }
 
     .panel {
-      background: rgba(8, 20, 40, 0.75);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 13px;
-      padding: 10px 12px;
-      margin-bottom: 8px;
-      backdrop-filter: blur(14px);
+      background: rgba(4, 10, 24, 0.75);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 11px;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      backdrop-filter: blur(12px);
       cursor: pointer;
       transition: border-color 0.15s;
     }
-    .panel:hover { border-color: rgba(255,255,255,0.15); }
+    .panel:hover { border-color: rgba(255,255,255,0.14); }
     .panel-title {
-      font-size: 11.5px; font-weight: 600; color: rgba(255,255,255,0.9); margin-bottom: 8px;
+      font-size: 10.5px; font-weight: 600; color: rgba(255,255,255,0.88); margin-bottom: 5px;
     }
-    .mini-chart { height: 46px; width: 100%; }
+    .mini-chart { height: 38px; width: 100%; }
     .mini-chart svg { width: 100%; height: 100%; overflow: visible; }
 
-    .line-list { display: flex; flex-direction: column; gap: 10px; }
+    .line-list { display: flex; flex-direction: column; gap: 8px; }
     .line-item {
-      display: flex; align-items: center; gap: 9px;
-      font-size: 10.5px; color: rgba(255,255,255,0.52);
+      display: flex; align-items: center; gap: 7px;
+      font-size: 8.5px; color: rgba(255,255,255,0.45);
     }
     .line-bar {
       flex: 1; height: 2.5px; border-radius: 2px;
-      background: rgba(255,255,255,0.07); overflow: hidden;
+      background: rgba(255,255,255,0.06); overflow: hidden;
     }
     .line-fill {
       height: 100%; border-radius: 2px;
-      background: linear-gradient(90deg, #F09060, #E86090);
+      background: linear-gradient(90deg, #F08858, #E85888);
     }
     .line-dot {
-      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+      width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0;
     }
   </style>
 </head>
 <body>
   <div class="stage">
-    <!-- LEFT: Laledo -->
+    <!-- LEFT: Laledo — large peach/coral planet -->
     <div class="phone" data-phone="left">
-      <div class="screen screen-left">
+      <div class="screen">
         <div class="notch"></div>
         <div class="stars" id="stars-l"></div>
 
         <div class="status">
           <span>9:41</span>
           <div class="status-icons">
-            <svg width="15" height="11" viewBox="0 0 15 11" fill="none"><rect x="0" y="3" width="3" height="8" rx="0.5" fill="#fff"/><rect x="4" y="2" width="3" height="9" rx="0.5" fill="#fff"/><rect x="8" y="0.5" width="3" height="10.5" rx="0.5" fill="#fff"/><rect x="12" y="0" width="3" height="11" rx="0.5" fill="rgba(255,255,255,0.35)"/></svg>
-            <svg width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1 7.5C2.5 5.5 5 4 7 4s4.5 1.5 6 3.5" stroke="#fff" stroke-width="1.2" fill="none"/><path d="M3 9c1.2-1.2 2.8-1.8 4-1.8S9.8 7.8 11 9" stroke="#fff" stroke-width="1.2" fill="none"/><circle cx="7" cy="10" r="1" fill="#fff"/></svg>
-            <svg width="22" height="11" viewBox="0 0 22 11" fill="none"><rect x="0.5" y="1" width="18" height="9" rx="2" stroke="#fff" stroke-width="1"/><rect x="2" y="2.5" width="13" height="6" rx="1" fill="#fff"/><path d="M19.5 3.5v4c1 .4 1 .4 1-2s0-2.4-1-2z" fill="rgba(255,255,255,0.5)"/></svg>
+            <svg width="14" height="10" viewBox="0 0 15 11" fill="none"><rect x="0" y="3" width="3" height="8" rx="0.5" fill="#fff"/><rect x="4" y="2" width="3" height="9" rx="0.5" fill="#fff"/><rect x="8" y="0.5" width="3" height="10.5" rx="0.5" fill="#fff"/><rect x="12" y="0" width="3" height="11" rx="0.5" fill="rgba(255,255,255,0.35)"/></svg>
+            <svg width="13" height="10" viewBox="0 0 14 11" fill="none"><path d="M1 7.5C2.5 5.5 5 4 7 4s4.5 1.5 6 3.5" stroke="#fff" stroke-width="1.2" fill="none"/><path d="M3 9c1.2-1.2 2.8-1.8 4-1.8S9.8 7.8 11 9" stroke="#fff" stroke-width="1.2" fill="none"/><circle cx="7" cy="10" r="1" fill="#fff"/></svg>
+            <svg width="20" height="10" viewBox="0 0 22 11" fill="none"><rect x="0.5" y="1" width="18" height="9" rx="2" stroke="#fff" stroke-width="1"/><rect x="2" y="2.5" width="13" height="6" rx="1" fill="#fff"/><path d="M19.5 3.5v4c1 .4 1 .4 1-2s0-2.4-1-2z" fill="rgba(255,255,255,0.5)"/></svg>
           </div>
         </div>
 
@@ -413,7 +404,7 @@
           <div class="app-bar-right">
             <span>Aurora</span>
             <button class="icon-btn" aria-label="share" type="button">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
             </button>
           </div>
         </div>
@@ -427,16 +418,16 @@
             <div class="planet-band"></div>
             <div class="planet-mountains">
               <svg viewBox="0 0 200 100" preserveAspectRatio="none">
-                <path d="M0 80 L28 52 L52 66 L78 38 L108 60 L138 32 L168 56 L200 46 L200 100 L0 100 Z" fill="rgba(110,25,50,0.58)"/>
-                <path d="M0 88 L38 64 L68 76 L98 50 L132 70 L162 48 L200 64 L200 100 L0 100 Z" fill="rgba(85,18,42,0.72)"/>
+                <path d="M0 80 L28 52 L52 66 L78 38 L108 60 L138 32 L168 56 L200 46 L200 100 L0 100 Z" fill="rgba(100,22,45,0.55)"/>
+                <path d="M0 88 L38 64 L68 76 L98 50 L132 70 L162 48 L200 64 L200 100 L0 100 Z" fill="rgba(78,16,38,0.7)"/>
               </svg>
             </div>
             <div class="planet-chart">
               <svg viewBox="0 0 100 50" preserveAspectRatio="none">
                 <polyline points="0,38 12,32 22,36 35,22 48,28 58,14 70,20 82,10 95,16 100,12"
-                  fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                  fill="none" stroke="rgba(255,255,255,0.92)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                 <polyline points="0,42 15,36 28,40 42,30 55,34 68,24 80,28 92,20 100,22"
-                  fill="none" stroke="rgba(255,200,160,0.5)" stroke-width="1.15" stroke-linecap="round"/>
+                  fill="none" stroke="rgba(255,200,160,0.55)" stroke-width="1.2" stroke-linecap="round"/>
               </svg>
             </div>
           </div>
@@ -447,21 +438,21 @@
             <div class="card-row">
               <div class="card-title">Fluxion Lode</div>
               <div class="share-ico">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
               </div>
             </div>
           </div>
           <div class="card" data-card="low">
             <div class="card-row">
               <div>
-                <div class="card-title" style="font-size:12.5px">Lowrick Dorgean</div>
+                <div class="card-title" style="font-size:11.5px">Lowrick Dorgean</div>
                 <div class="card-meta">
                   <span class="meta-chip">Babrorn · 11m</span>
                   <span class="pct">+12.4%</span>
                 </div>
               </div>
               <div class="share-ico">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
               </div>
             </div>
             <div class="dot-row" id="left-dots">
@@ -498,18 +489,18 @@
       </div>
     </div>
 
-    <!-- RIGHT: Laloch -->
+    <!-- RIGHT: Laloch — multicolor orb + metrics -->
     <div class="phone" data-phone="right">
-      <div class="screen screen-right">
+      <div class="screen">
         <div class="notch"></div>
         <div class="stars" id="stars-r"></div>
 
         <div class="status">
           <span>9:41</span>
           <div class="status-icons">
-            <svg width="15" height="11" viewBox="0 0 15 11" fill="none"><rect x="0" y="3" width="3" height="8" rx="0.5" fill="#fff"/><rect x="4" y="2" width="3" height="9" rx="0.5" fill="#fff"/><rect x="8" y="0.5" width="3" height="10.5" rx="0.5" fill="#fff"/><rect x="12" y="0" width="3" height="11" rx="0.5" fill="rgba(255,255,255,0.35)"/></svg>
-            <svg width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1 7.5C2.5 5.5 5 4 7 4s4.5 1.5 6 3.5" stroke="#fff" stroke-width="1.2" fill="none"/><path d="M3 9c1.2-1.2 2.8-1.8 4-1.8S9.8 7.8 11 9" stroke="#fff" stroke-width="1.2" fill="none"/><circle cx="7" cy="10" r="1" fill="#fff"/></svg>
-            <svg width="22" height="11" viewBox="0 0 22 11" fill="none"><rect x="0.5" y="1" width="18" height="9" rx="2" stroke="#fff" stroke-width="1"/><rect x="2" y="2.5" width="13" height="6" rx="1" fill="#fff"/><path d="M19.5 3.5v4c1 .4 1 .4 1-2s0-2.4-1-2z" fill="rgba(255,255,255,0.5)"/></svg>
+            <svg width="14" height="10" viewBox="0 0 15 11" fill="none"><rect x="0" y="3" width="3" height="8" rx="0.5" fill="#fff"/><rect x="4" y="2" width="3" height="9" rx="0.5" fill="#fff"/><rect x="8" y="0.5" width="3" height="10.5" rx="0.5" fill="#fff"/><rect x="12" y="0" width="3" height="11" rx="0.5" fill="rgba(255,255,255,0.35)"/></svg>
+            <svg width="13" height="10" viewBox="0 0 14 11" fill="none"><path d="M1 7.5C2.5 5.5 5 4 7 4s4.5 1.5 6 3.5" stroke="#fff" stroke-width="1.2" fill="none"/><path d="M3 9c1.2-1.2 2.8-1.8 4-1.8S9.8 7.8 11 9" stroke="#fff" stroke-width="1.2" fill="none"/><circle cx="7" cy="10" r="1" fill="#fff"/></svg>
+            <svg width="20" height="10" viewBox="0 0 22 11" fill="none"><rect x="0.5" y="1" width="18" height="9" rx="2" stroke="#fff" stroke-width="1"/><rect x="2" y="2.5" width="13" height="6" rx="1" fill="#fff"/><path d="M19.5 3.5v4c1 .4 1 .4 1-2s0-2.4-1-2z" fill="rgba(255,255,255,0.5)"/></svg>
           </div>
         </div>
 
@@ -518,17 +509,17 @@
           <div class="app-bar-right">
             <span>Aurora</span>
             <button class="icon-btn" aria-label="search" type="button">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
             </button>
           </div>
         </div>
 
         <div class="hero-zone">
           <div class="wave-layer">
-            <svg viewBox="0 0 220 160" preserveAspectRatio="none">
-              <path d="M10 90 C40 70, 70 110, 100 85 S160 50, 210 70" fill="none" stroke="rgba(80,160,255,0.38)" stroke-width="1.5"/>
-              <path d="M5 100 C50 80, 80 120, 120 90 S170 60, 215 85" fill="none" stroke="rgba(240,140,80,0.45)" stroke-width="1.5"/>
-              <path d="M15 70 C45 95, 90 40, 130 75 S180 95, 210 55" fill="none" stroke="rgba(180,100,220,0.3)" stroke-width="1.25"/>
+            <svg viewBox="0 0 200 160" preserveAspectRatio="none">
+              <path d="M0 95 C30 70, 50 110, 80 88 S130 60, 160 85 S190 100, 200 78" fill="none" stroke="rgba(90,180,230,0.45)" stroke-width="1.4"/>
+              <path d="M0 105 C35 80, 55 120, 90 95 S140 70, 170 95 S195 110, 200 90" fill="none" stroke="rgba(240,140,90,0.55)" stroke-width="1.5"/>
+              <path d="M0 115 C40 95, 60 125, 95 108 S145 85, 175 108 S195 120, 200 105" fill="none" stroke="rgba(160,100,220,0.35)" stroke-width="1.2"/>
             </svg>
           </div>
           <div class="orb-wrap">
@@ -537,9 +528,9 @@
             <div class="orb-sat s3"></div>
             <div class="orb" id="orb" role="button" tabindex="0" aria-label="Metric orb">
               <div class="orb-inner-chart">
-                <svg viewBox="0 0 60 60">
-                  <polyline points="4,40 12,32 20,36 28,22 36,28 44,16 52,20 56,14"
-                    fill="none" stroke="rgba(255,255,255,0.78)" stroke-width="1.5" stroke-linecap="round"/>
+                <svg viewBox="0 0 60 40" preserveAspectRatio="none">
+                  <polyline points="2,30 12,22 20,26 30,12 40,18 50,8 58,14"
+                    fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.6" stroke-linecap="round"/>
                 </svg>
               </div>
             </div>
@@ -549,62 +540,52 @@
         <div class="metric-block">
           <div class="metric-row">
             <div>
-              <div class="big-num">208.30</div>
-              <div class="metric-sub">Bonded asset · A.From</div>
+              <div class="big-num" id="metric-num">208.30</div>
+              <div class="metric-sub">Density · Loded A · From</div>
             </div>
             <div class="side-metric">
-              <div class="side-val">+8.4%</div>
-              <div class="side-label">Anglo · MindSet last</div>
+              <div class="side-val">+6.2%</div>
+              <div class="side-label">Night / Mid Set last</div>
             </div>
           </div>
 
           <div class="chip-row" id="right-chips">
             <button class="chip active" style="background:linear-gradient(145deg,#4A9EF0,#2A6AD0)" type="button">7</button>
-            <button class="chip" style="background:linear-gradient(145deg,#F0A040,#E07030)" type="button">3</button>
-            <button class="chip" style="background:linear-gradient(145deg,#50C0F0,#2890C8)" type="button">2</button>
-            <button class="chip" style="background:linear-gradient(145deg,#C060E8,#8030C0)" type="button">5</button>
-            <button class="chip" style="background:linear-gradient(145deg,#40C888,#28A060)" type="button">7</button>
+            <button class="chip" style="background:linear-gradient(145deg,#F0A040,#E07030)" type="button">2</button>
+            <button class="chip" style="background:linear-gradient(145deg,#50C8E8,#2890C0)" type="button">5</button>
+            <button class="chip" style="background:linear-gradient(145deg,#C060E8,#8030C0)" type="button">8</button>
+            <button class="chip" style="background:linear-gradient(145deg,#F07050,#D04040)" type="button">7</button>
           </div>
           <div class="chip-labels">
-            <span>Magics</span><span>A.locius</span><span>Twico</span><span>Suavis</span><span>Aportica</span>
+            <span>Magits</span><span>Atexis</span><span>Twicix</span><span>Suenix</span><span>Avotex</span>
           </div>
 
           <div class="panel" data-panel="ledot">
-            <div class="panel-title">Ledot t.est ltm</div>
+            <div class="panel-title">Ledot 1 est Inn</div>
             <div class="mini-chart">
-              <svg viewBox="0 0 200 48" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="areaG" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="rgba(240,120,80,0.38)"/>
-                    <stop offset="100%" stop-color="rgba(240,120,80,0)"/>
-                  </linearGradient>
-                </defs>
-                <path d="M0 36 L20 30 L40 34 L60 18 L80 26 L100 12 L120 20 L140 10 L160 16 L180 8 L200 14 L200 48 L0 48 Z" fill="url(#areaG)"/>
-                <polyline points="0,36 20,30 40,34 60,18 80,26 100,12 120,20 140,10 160,16 180,8 200,14"
-                  fill="none" stroke="#F09060" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="100" cy="12" r="2.5" fill="#fff" stroke="#F09060" stroke-width="1"/>
-                <circle cx="140" cy="10" r="2" fill="#F09060"/>
+              <svg viewBox="0 0 120 40" preserveAspectRatio="none">
+                <polyline points="0,28 15,22 28,30 42,12 55,20 70,8 85,16 100,10 120,18"
+                  fill="none" stroke="rgba(100,180,240,0.9)" stroke-width="1.6" stroke-linecap="round"/>
+                <polyline points="0,32 18,26 32,34 48,20 62,26 78,14 95,22 120,24"
+                  fill="none" stroke="rgba(240,140,90,0.7)" stroke-width="1.3" stroke-linecap="round"/>
               </svg>
             </div>
           </div>
 
-          <div class="panel" data-panel="por">
+          <div class="panel" data-panel="pore">
             <div class="panel-title">Poreages</div>
             <div class="line-list">
               <div class="line-item">
-                <div class="line-dot" style="background:#5AA8F0"></div>
-                <span style="width:42px">Alpha</span>
+                <span class="line-dot" style="background:#F08858"></span>
                 <div class="line-bar"><div class="line-fill" style="width:72%"></div></div>
               </div>
               <div class="line-item">
-                <div class="line-dot" style="background:#F0A050"></div>
-                <span style="width:42px">Beta</span>
-                <div class="line-bar"><div class="line-fill" style="width:48%"></div></div>
+                <span class="line-dot" style="background:#E85888"></span>
+                <div class="line-bar"><div class="line-fill" style="width:48%;background:linear-gradient(90deg,#E85888,#C060E8)"></div></div>
               </div>
               <div class="line-item">
-                <div class="line-dot" style="background:#C070E8"></div>
-                <span style="width:42px">Gamma</span>
-                <div class="line-bar"><div class="line-fill" style="width:61%"></div></div>
+                <span class="line-dot" style="background:#58A8F0"></span>
+                <div class="line-bar"><div class="line-fill" style="width:85%;background:linear-gradient(90deg,#58A8F0,#8060D0)"></div></div>
               </div>
             </div>
           </div>
@@ -614,17 +595,17 @@
           <button class="nav-orb active" style="background:linear-gradient(145deg,#5AA8F0,#3060C8)" type="button" aria-label="home">
             <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1v-9.5z"/></svg>
           </button>
-          <button class="nav-orb" style="background:linear-gradient(145deg,#F0A050,#E06030)" type="button" aria-label="wallet">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18"/><circle cx="16" cy="14" r="1.5" fill="#fff"/></svg>
+          <button class="nav-orb" style="background:linear-gradient(145deg,#F0A050,#E06030)" type="button" aria-label="chart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 19V9M10 19V5M16 19v-7M22 19V8"/></svg>
           </button>
           <button class="nav-orb" style="background:linear-gradient(145deg,#C070E8,#8040C0)" type="button" aria-label="star">
             <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><polygon points="12 2 15 9 22 9.5 17 14.5 18.5 22 12 18 5.5 22 7 14.5 2 9.5 9 9"/></svg>
           </button>
-          <button class="nav-orb" style="background:linear-gradient(145deg,#48C888,#28A060)" type="button">
-            <span class="n-num">14</span>
+          <button class="nav-orb" style="background:linear-gradient(145deg,#48C888,#28A060)" type="button" aria-label="pulse">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><polyline points="3 12 7 12 10 6 14 18 17 12 21 12"/></svg>
           </button>
-          <button class="nav-orb" style="background:linear-gradient(145deg,#F06858,#D03848)" type="button" aria-label="grid">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg>
+          <button class="nav-orb" style="background:linear-gradient(145deg,#F06858,#D03848)" type="button" aria-label="bag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7V5a3 3 0 016 0v2"/></svg>
           </button>
         </div>
         <div class="home-bar"></div>
@@ -640,25 +621,25 @@
       for (let i = 0; i < n; i++) {
         const s = document.createElement('div');
         const r = Math.random();
-        if (r > 0.94) {
-          s.className = 'star cross' + (Math.random() > 0.5 ? ' cyan' : '');
-        } else if (r > 0.75) {
-          s.className = 'star lg';
-        } else if (r > 0.4) {
-          s.className = 'star md';
-        } else {
-          s.className = 'star sm';
-        }
+        s.className = 'star ' + (r > 0.92 ? 'cross' + (Math.random() > 0.5 ? ' cyan' : '') : r > 0.7 ? 'lg' : r > 0.4 ? 'md' : 'sm');
         s.style.left = (Math.random() * 100) + '%';
         s.style.top = (Math.random() * 100) + '%';
         frag.appendChild(s);
       }
+      // fixed sparkles for composition stability
+      [[12,18,'cross'],[78,12,'cross cyan'],[22,42,'lg'],[88,38,'md'],[55,8,'cross'],[8,72,'md'],[92,68,'lg'],[40,22,'sm']].forEach(([x,y,c]) => {
+        const s = document.createElement('div');
+        s.className = 'star ' + c;
+        s.style.left = x + '%';
+        s.style.top = y + '%';
+        frag.appendChild(s);
+      });
       root.appendChild(frag);
     }
-    sprinkle('stars-l', 52);
-    sprinkle('stars-r', 46);
+    sprinkle('stars-l', 48);
+    sprinkle('stars-r', 42);
 
-    function bindNav(id) {
+    function wireNav(id) {
       const nav = document.getElementById(id);
       if (!nav) return;
       nav.querySelectorAll('.nav-orb').forEach(btn => {
@@ -668,11 +649,11 @@
         });
       });
     }
-    bindNav('nav-left');
-    bindNav('nav-right');
+    wireNav('nav-left');
+    wireNav('nav-right');
 
     document.getElementById('left-dots')?.querySelectorAll('.ndot').forEach(btn => {
-      btn.addEventListener('click', e => {
+      btn.addEventListener('click', (e) => {
         e.stopPropagation();
         document.querySelectorAll('#left-dots .ndot').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
@@ -682,18 +663,19 @@
       btn.addEventListener('click', () => {
         document.querySelectorAll('#right-chips .chip').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        const n = 180 + Math.random() * 40;
+        const el = document.getElementById('metric-num');
+        if (el) el.textContent = n.toFixed(2);
       });
     });
 
-    document.getElementById('planet')?.addEventListener('click', () => {
-      const p = document.getElementById('planet');
-      p.style.transform = 'scale(1.06)';
-      setTimeout(() => { p.style.transform = ''; }, 220);
+    document.getElementById('planet')?.addEventListener('click', function () {
+      this.style.transform = 'scale(1.06)';
+      setTimeout(() => { this.style.transform = ''; }, 220);
     });
-    document.getElementById('orb')?.addEventListener('click', () => {
-      const o = document.getElementById('orb');
-      o.style.transform = 'scale(1.08)';
-      setTimeout(() => { o.style.transform = ''; }, 220);
+    document.getElementById('orb')?.addEventListener('click', function () {
+      this.style.transform = 'scale(1.08)';
+      setTimeout(() => { this.style.transform = ''; }, 220);
     });
   </script>
 </body>

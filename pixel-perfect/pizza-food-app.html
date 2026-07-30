@@ -9,88 +9,93 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg0: #f0c4a0;
-      --bg1: #eeb992;
-      --cream: #fbf6ef;
-      --card: #ffffff;
+      --peach: #efc4a4;
+      --peach-mid: #e9b992;
+      --cream: #faf6f0;
+      --card: #fffdfb;
       --ink: #2a2118;
-      --muted: #a09080;
-      --line: #efe4d6;
+      --muted: #a39486;
+      --line: #efe6db;
       --orange: #f0a04b;
-      --orange-hot: #ee9840;
+      --orange-d: #e8943a;
       --brown: #2c2118;
-      --brown-mid: #3d3026;
-      --shadow: 0 18px 40px rgba(90, 50, 20, 0.18), 0 4px 12px rgba(90, 50, 20, 0.08);
       --kit: url("../inspo/crops/pizza_kit.jpg");
+      --sh: 0 18px 40px rgba(90, 50, 20, 0.16), 0 2px 8px rgba(90, 50, 20, 0.06);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
     body {
       min-height: 100vh;
       font-family: Inter, system-ui, -apple-system, sans-serif;
-      /* solid peach stage — NOT full-bleed inspo wallpaper */
-      background: radial-gradient(ellipse 110% 90% at 50% 45%, #f2c8a6 0%, #efbf98 50%, #e8b48a 100%);
+      background: radial-gradient(ellipse 120% 100% at 50% 48%, #f3cbaa 0%, #ebb891 48%, #e3a97f 100%);
       color: var(--ink);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 18px 14px;
+      padding: 12px 8px;
       -webkit-font-smoothing: antialiased;
       overflow: hidden;
     }
 
     .stage {
-      width: min(1040px, 97vw);
-      height: min(760px, 94vh);
+      width: min(1040px, 98vw);
+      height: min(780px, 96vh);
       display: grid;
-      grid-template-columns: 1.1fr 0.98fr 0.98fr 1.05fr;
-      gap: 11px 13px;
+      grid-template-columns: 1fr 0.95fr 0.95fr 0.95fr;
+      gap: 11px 14px;
       align-items: stretch;
     }
     .col {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 11px;
       min-width: 0;
       height: 100%;
     }
 
     .phone {
       background: var(--cream);
-      border-radius: 26px;
-      box-shadow: var(--shadow);
+      border-radius: 28px;
+      box-shadow: var(--sh);
       overflow: hidden;
       position: relative;
       min-height: 0;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .phone:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 48px rgba(90, 50, 20, 0.2);
     }
     .phone.dark {
       background: var(--brown);
       color: #f5ebe0;
     }
-    .phone-inner {
-      padding: 12px 12px 11px;
+    .pi {
+      padding: 14px 13px 12px;
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 8px;
       height: 100%;
+      min-height: 0;
     }
 
-    /* Vertical proportions from inspo */
-    .c1-top { flex: 0 0 46%; }
-    .c1-bot { flex: 1 1 auto; }
-    .c2-prod { flex: 0 0 16.5%; }
-    .c2-tray { flex: 0 0 12%; }
-    .c2-daily { flex: 0 0 28%; }
-    .c2-pastry { flex: 0 0 16%; }
-    .c2-half { flex: 1 1 auto; }
-    .c3-select { flex: 0 0 39%; }
-    .c3-tray { flex: 0 0 14%; }
-    .c3-cr { flex: 0 0 23%; }
-    .c3-pie { flex: 1 1 auto; }
-    .c4-dark { flex: 0 0 55%; }
-    .c4-cart { flex: 1 1 auto; }
+    /* Column flex ratios matching inspo */
+    .c1a { flex: 0 0 49%; }
+    .c1b { flex: 1 1 auto; }
+    .c2a { flex: 0 0 15%; }
+    .c2b { flex: 0 0 13%; }
+    .c2c { flex: 0 0 36%; }
+    .c2d { flex: 1 1 auto; }
+    .c3a { flex: 0 0 38%; }
+    .c3b { flex: 0 0 16%; }
+    .c3c { flex: 0 0 20%; }
+    .c3d { flex: 1 1 auto; }
+    .c4a { flex: 0 0 56%; }
+    .c4b { flex: 1 1 auto; }
 
-    .topbar {
+    .top {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -98,760 +103,824 @@
     }
     .brand {
       font-weight: 800;
-      font-size: 1.18rem;
-      letter-spacing: -0.04em;
-      line-height: 1.05;
+      font-size: clamp(15px, 1.55vw, 20px);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
     }
-    .icon-btn {
-      width: 28px; height: 28px;
-      border-radius: 9px;
-      border: none;
-      background: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+    .ico-row { display: flex; gap: 8px; align-items: center; color: var(--muted); }
+    .ico {
+      width: 18px; height: 18px;
       display: grid; place-items: center;
       cursor: pointer;
-      color: var(--ink);
-      flex-shrink: 0;
-      font-family: inherit;
+      opacity: 0.85;
     }
-    .dark .icon-btn { background: var(--brown-mid); color: #f5ebe0; }
-    .icon-btn.orange {
+    .ico:hover { opacity: 1; color: var(--ink); }
+    .status {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+    .dark .status { color: rgba(245,235,224,0.55); }
+
+    .dots {
+      display: flex; gap: 4px; align-items: center; margin: 2px 0 4px;
+    }
+    .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #e8d5c4;
+    }
+    .dot.on { background: var(--orange); width: 16px; border-radius: 4px; }
+    .price-pill {
+      margin-left: auto;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 3px 9px;
+      font-size: 11px;
+      font-weight: 700;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+    }
+    .row:last-child { border-bottom: 0; }
+    .row:hover { background: rgba(240,160,75,0.06); margin: 0 -6px; padding-left: 6px; padding-right: 6px; border-radius: 10px; }
+    .chk {
+      width: 14px; height: 14px;
+      border: 1.5px solid #d4c4b4;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .chk.on {
+      background: var(--orange);
+      border-color: var(--orange);
+      box-shadow: inset 0 0 0 2px #fff;
+    }
+    .row-txt { flex: 1; min-width: 0; }
+    .row-title { font-size: 12px; font-weight: 600; }
+    .row-sub { font-size: 9px; color: var(--muted); margin-top: 1px; }
+    .row-price {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .badge {
       background: var(--orange);
       color: #fff;
-      border-radius: 50%;
-      width: 22px; height: 22px;
-      box-shadow: 0 3px 8px rgba(240,160,75,0.4);
+      font-size: 9px;
       font-weight: 700;
-      font-size: 0.9rem;
-      line-height: 1;
+      padding: 2px 7px;
+      border-radius: 10px;
     }
 
-    .stars {
-      color: var(--orange);
-      font-size: 0.58rem;
-      letter-spacing: 0.5px;
-      display: flex; align-items: center; gap: 5px;
-    }
-    .stars .rating { color: var(--muted); font-size: 0.64rem; font-weight: 500; letter-spacing: 0; }
-
-    .menu-row {
-      background: #fff;
-      border-radius: 13px;
-      padding: 9px 11px;
+    .total-bar {
+      margin-top: auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 2px 5px rgba(80,40,10,0.04);
-      cursor: pointer;
-      border: 1.5px solid transparent;
-      transition: border-color .15s, transform .15s;
+      padding-top: 8px;
     }
-    .menu-row:hover { transform: translateY(-1px); }
-    .menu-row.active { border-color: var(--orange); }
-    .menu-row .left {
-      display: flex; align-items: center; gap: 9px;
-      font-weight: 600; font-size: 0.78rem;
-    }
-    .dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      border: 2px solid #cfc3b4;
-      background: transparent;
-      flex-shrink: 0;
-    }
-    .dot.on { background: var(--orange); border-color: var(--orange); }
-    .menu-row .price { color: var(--muted); font-size: 0.7rem; font-weight: 500; }
-
-    .pill-row { display: flex; gap: 5px; flex-wrap: wrap; }
-    .pill {
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: #fff;
-      font-size: 0.62rem;
-      font-weight: 600;
-      color: var(--muted);
-      border: 1px solid var(--line);
-      cursor: pointer;
-      font-family: inherit;
-    }
-    .pill.on {
+    .total-bar .t-label { font-size: 11px; color: var(--muted); font-weight: 500; }
+    .total-bar .t-val { font-size: 13px; font-weight: 800; }
+    .btn-cart {
       background: var(--orange);
       color: #fff;
-      border-color: var(--orange);
-    }
-
-    .section-title {
+      border: 0;
+      border-radius: 14px;
+      padding: 8px 14px;
+      font-size: 11px;
       font-weight: 700;
-      font-size: 0.86rem;
-      letter-spacing: -0.02em;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(240,160,75,0.35);
     }
-    .sub { color: var(--muted); font-size: 0.62rem; }
-    .dark .sub { color: #cbb8a4; }
+    .btn-cart:hover { background: var(--orange-d); }
+    .btn-cart:active { transform: scale(0.97); }
 
-    /* Food via background-position on kit crop — only inside chrome */
+    /* Food images via pizza_kit crop positions */
     .food {
       width: 100%;
       border-radius: 12px;
       overflow: hidden;
-      background-color: #f3e8d8;
-      background-image: var(--kit);
-      background-repeat: no-repeat;
-      flex-shrink: 0;
+      background: #f0e6da;
       position: relative;
     }
     .food img {
-      position: absolute;
-      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0; /* decorative crop path kept for verify; paint via bg */
-      pointer-events: none;
-    }
-    .food.tray-dark {
-      height: 100%;
-      min-height: 58px;
-      background-size: 440% auto;
-      background-position: 36% 27%;
-      border-radius: 11px;
-      box-shadow: inset 0 0 0 5px #2a2420;
-    }
-    .food.tray-white {
-      height: 100%;
-      min-height: 72px;
-      background-size: 420% auto;
-      background-position: 62% 53%;
-      border-radius: 11px;
-      box-shadow: inset 0 0 0 6px #ebe7df;
-    }
-    .food.breads {
-      flex: 1;
-      min-height: 56px;
-      background-size: 400% auto;
-      background-position: 38% 49%;
-      border-radius: 11px;
-    }
-    .food.half-pie {
-      height: 100%;
-      min-height: 58px;
-      background-size: 360% auto;
-      background-position: 38% 87%;
-      border-radius: 14px;
-    }
-    .food.croissant {
-      flex: 1;
-      min-height: 64px;
-      background-size: 440% auto;
-      background-position: 62% 71%;
-      border-radius: 12px;
-    }
-    .food.full-pie {
-      height: 100%;
-      min-height: 72px;
-      background-size: 380% auto;
-      background-position: 62% 89%;
-      border-radius: 14px;
-      background-color: #faf6f0;
-    }
-    .food.thumb-a { width:100%; height:100%; border-radius:9px; background-size:1100% auto; background-position:36% 13%; }
-    .food.thumb-b { width:100%; height:100%; border-radius:9px; background-size:1100% auto; background-position:43% 13%; }
-    .food.thumb-pizza { width:100%; height:100%; border-radius:9px; background-size:980% auto; background-position:56% 17%; }
-    .food.thumb-pep { width:100%; height:100%; border-radius:9px; background-size:980% auto; background-position:66% 17%; }
-    .food.thumb-tray { width:100%; height:100%; border-radius:9px; background-size:860% auto; background-position:37% 29%; }
-    .food.thumb-foc { width:100%; height:100%; border-radius:9px; background-size:860% auto; background-position:38% 50%; }
-    .food.thumb-pastry { width:100%; height:100%; border-radius:7px; background-size:1000% auto; background-position:38% 67%; }
-    .food.thumb-slice { width:100%; height:100%; border-radius:7px; background-size:860% auto; background-position:38% 87%; }
-    .food.thumb-round { width:100%; height:100%; border-radius:9px; background-size:900% auto; background-position:62% 89%; }
-    .food.thumb-cr { width:100%; height:100%; border-radius:9px; background-size:1000% auto; background-position:62.5% 72%; }
-    .food.thumb-bread { width:100%; height:100%; border-radius:9px; background-size:900% auto; background-position:38% 51%; }
-
-    .item-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px;
-      flex: 1;
-      min-height: 0;
-    }
-    .item-card {
-      background: #fff;
-      border-radius: 11px;
-      padding: 5px;
-      box-shadow: 0 2px 5px rgba(80,40,10,0.05);
-      cursor: pointer;
-      transition: transform .15s;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-    }
-    .item-card:hover { transform: translateY(-2px); }
-    .item-card .pic {
-      flex: 1;
-      min-height: 34px;
-      border-radius: 9px;
-      background: #f5ebe0;
-      margin-bottom: 3px;
-      overflow: hidden;
-    }
-    .item-card h4 { font-size: 0.62rem; font-weight: 700; }
-    .item-card .meta {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-top: 1px; font-size: 0.58rem; color: var(--muted);
-    }
-    .plus {
-      width: 16px; height: 16px; border-radius: 5px;
-      background: var(--orange); color: #fff; border: none;
-      font-weight: 700; cursor: pointer; line-height: 1;
-      font-size: 0.75rem;
-      display: grid; place-items: center;
-      font-family: inherit;
+      display: block;
     }
 
-    .cat-list { display: flex; flex-direction: column; gap: 6px; flex: 1; min-height: 0; }
-    .cat-row {
-      display: flex; align-items: center; gap: 9px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 12px;
-      padding: 6px 9px;
-      cursor: pointer;
-      transition: background .15s;
-    }
-    .cat-row:hover { background: rgba(255,255,255,0.1); }
-    .cat-row .thumb {
-      width: 34px; height: 34px; border-radius: 9px;
-      background: #4a3a2c; overflow: hidden; flex-shrink: 0;
-    }
-    .cat-row .name { flex: 1; font-size: 0.74rem; font-weight: 600; }
-    .cat-row .price { font-size: 0.64rem; opacity: 0.7; }
-
-    .search-bar {
-      display: flex; gap: 7px; align-items: center;
-      background: var(--brown-mid); border-radius: 11px; padding: 7px 10px;
-      font-size: 0.66rem; color: #cbb8a4;
-    }
-    .search-bar input {
-      flex: 1; background: transparent; border: none; outline: none;
-      color: #f5ebe0; font-size: 0.68rem; font-family: inherit;
-    }
-    .chip-orange {
-      background: var(--orange);
-      color: #fff;
-      border: none;
-      border-radius: 11px;
-      padding: 9px 11px;
-      font-weight: 700;
-      font-size: 0.68rem;
-      cursor: pointer;
-      font-family: inherit;
-      text-align: center;
-    }
-
-    .stat-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px;
-      text-align: center;
-    }
-    .stat-grid .n { font-weight: 800; font-size: 0.76rem; }
-    .stat-grid .l { font-size: 0.48rem; color: var(--muted); }
-
-    .icon-row {
+    /* bakery bottom left */
+    .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 5px;
+      gap: 6px;
+      margin: 6px 0 8px;
     }
-    .icon-tile {
-      background: #fff;
-      border-radius: 11px;
-      padding: 6px 2px 4px;
+    .stat {
       text-align: center;
-      font-size: 0.48rem;
+    }
+    .stat-ico {
+      width: 28px; height: 28px;
+      margin: 0 auto 3px;
+      border-radius: 8px;
+      background: #f5ebe0;
+      display: grid; place-items: center;
+      font-size: 12px;
+    }
+    .stat-n { font-size: 11px; font-weight: 800; }
+    .stat-l { font-size: 8px; color: var(--muted); }
+
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px 6px;
+      margin: 4px 0 10px;
+    }
+    .ig {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+    }
+    .ig-c {
+      width: 34px; height: 34px;
+      border-radius: 10px;
+      background: #fff5eb;
+      display: grid; place-items: center;
+      font-size: 14px;
+      border: 1px solid #f0e0d0;
+      transition: background 0.15s;
+    }
+    .ig:hover .ig-c { background: #ffe8d0; }
+    .ig-l { font-size: 7.5px; color: var(--muted); font-weight: 500; text-align: center; }
+
+    .bottom-cta {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 6px;
+    }
+    .avatar-stack {
+      display: flex;
+      align-items: center;
+    }
+    .av {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      margin-left: -6px;
+      background: linear-gradient(135deg, #f0a04b, #e07a3a);
+    }
+    .av:first-child { margin-left: 0; }
+    .cta-btn {
+      background: var(--orange);
+      color: #fff;
+      border: 0;
+      border-radius: 16px;
+      padding: 9px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .cta-btn:hover { background: var(--orange-d); }
+
+    /* Col 2 product rows */
+    .prod-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 0;
+    }
+    .th {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #f0e6da;
+    }
+    .th img { width: 100%; height: 100%; object-fit: cover; }
+    .prod-info { flex: 1; min-width: 0; }
+    .prod-name { font-size: 11px; font-weight: 600; }
+    .prod-meta { font-size: 9px; color: var(--muted); }
+    .plus {
+      width: 22px; height: 22px;
+      border-radius: 7px;
+      background: var(--orange);
+      color: #fff;
+      border: 0;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: grid; place-items: center;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .plus:hover { background: var(--orange-d); }
+    .plus:active { transform: scale(0.92); }
+
+    .sec-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .sec-sub { font-size: 9px; color: var(--muted); }
+
+    /* tray / hero food blocks */
+    .tray {
+      border-radius: 14px;
+      overflow: hidden;
+      flex: 1;
+      min-height: 48px;
+      background: #2a2118;
+    }
+    .tray.light { background: #e8ddd0; }
+    .tray img { width: 100%; height: 100%; object-fit: cover; }
+
+    .hero-food {
+      flex: 1;
+      min-height: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #f0e6da;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-food img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .caption {
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+    .caption span { color: var(--muted); font-weight: 500; font-size: 10px; }
+
+    /* Col 3 menu list */
+    .menu-list { display: flex; flex-direction: column; gap: 2px; flex: 1; min-height: 0; overflow: hidden; }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 0;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .menu-item:hover { background: rgba(240,160,75,0.07); padding-left: 4px; padding-right: 4px; }
+    .menu-item .th { width: 32px; height: 32px; border-radius: 8px; }
+    .mi-txt { flex: 1; }
+    .mi-name { font-size: 11px; font-weight: 600; }
+    .mi-price { font-size: 9px; color: var(--muted); }
+    .mi-add {
+      width: 20px; height: 20px;
+      border-radius: 6px;
+      background: #fff5eb;
+      border: 1px solid #f0e0d0;
+      color: var(--orange);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: grid; place-items: center;
+    }
+    .mi-add:hover { background: var(--orange); color: #fff; border-color: var(--orange); }
+
+    .tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .tab {
+      font-size: 10px;
       font-weight: 600;
       color: var(--muted);
-      box-shadow: 0 2px 4px rgba(80,40,10,0.05);
+      padding: 4px 10px;
+      border-radius: 12px;
       cursor: pointer;
+      border: 0;
+      background: transparent;
     }
-    .icon-tile .ic {
-      width: 24px; height: 24px;
-      margin: 0 auto 2px;
-      border-radius: 7px;
-      display: grid; place-items: center;
-      background: #fff4e8;
-      color: var(--orange);
+    .tab.on {
+      background: #fff5eb;
+      color: var(--ink);
     }
-    .icon-tile .ic svg { width: 14px; height: 14px; }
-    .icon-tile.solid .ic {
+    .tab:hover:not(.on) { color: var(--ink); }
+
+    /* Dark phone */
+    .dark .pi { padding-top: 16px; }
+    .dark-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      margin: 4px 0 10px;
+    }
+    .seg {
+      display: flex;
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 3px;
+      margin-bottom: 10px;
+    }
+    .seg button {
+      flex: 1;
+      border: 0;
+      background: transparent;
+      color: rgba(245,235,224,0.55);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 7px 4px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .seg button.on {
       background: var(--orange);
       color: #fff;
-      border-radius: 50%;
     }
-    .icon-tile.outline .ic {
-      background: transparent;
-      border: 1.5px solid var(--orange);
-      border-radius: 50%;
-      color: var(--orange);
+    .search-d {
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 9px 12px;
+      font-size: 11px;
+      color: rgba(245,235,224,0.4);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
+    .d-list { display: flex; flex-direction: column; gap: 6px; flex: 1; overflow: hidden; }
+    .d-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 4px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .d-item:hover { background: rgba(255,255,255,0.05); }
+    .d-item .th {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.08);
+    }
+    .d-name { font-size: 12px; font-weight: 600; color: #f5ebe0; }
+    .d-meta { font-size: 9px; color: rgba(245,235,224,0.45); }
+    .d-price { margin-left: auto; font-size: 11px; font-weight: 700; color: var(--orange); }
 
-    .list-line {
-      display: flex; align-items: center; gap: 7px;
-      padding: 3px 0;
+    /* Col 4 bottom cart */
+    .cart-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .cart-title { font-size: 13px; font-weight: 800; }
+    .cart-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 10px;
+      font-size: 9px;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 4px;
+      padding: 0 2px;
+    }
+    .cart-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
       border-bottom: 1px solid var(--line);
+      cursor: pointer;
     }
-    .list-line:last-child { border-bottom: none; }
-    .list-line .t {
-      width: 30px; height: 30px; border-radius: 8px;
-      background: #f3e8d8; overflow: hidden; flex-shrink: 0;
-    }
-    .list-line .info { flex: 1; min-width: 0; }
-    .list-line .info h4 { font-size: 0.66rem; font-weight: 700; }
-    .list-line .info p { font-size: 0.52rem; color: var(--muted); }
-    .list-line .amt { font-weight: 700; font-size: 0.66rem; }
-
-    .cta {
+    .cart-row:last-of-type { border-bottom: 0; }
+    .cart-row .th { width: 34px; height: 34px; }
+    .cart-name { font-size: 11px; font-weight: 600; flex: 1; }
+    .cart-price { font-size: 11px; font-weight: 700; }
+    .btn-full {
       margin-top: auto;
       width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 13px;
       background: var(--orange);
       color: #fff;
+      border: 0;
+      border-radius: 16px;
+      padding: 12px;
+      font-size: 12px;
       font-weight: 700;
-      font-size: 0.8rem;
       cursor: pointer;
-      box-shadow: 0 6px 14px rgba(240,160,75,0.35);
       font-family: inherit;
-      transition: transform .15s, filter .15s;
+      box-shadow: 0 6px 16px rgba(240,160,75,0.35);
     }
-    .cta:hover { filter: brightness(1.05); transform: translateY(-1px); }
-    .cta:active { transform: scale(0.98); }
+    .btn-full:hover { background: var(--orange-d); }
+    .btn-full:active { transform: scale(0.98); }
 
-    .price-tag {
-      display: inline-flex; align-items: center; gap: 4px;
-      background: #fff; border-radius: 999px; padding: 3px 9px;
-      font-weight: 700; font-size: 0.68rem;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
-    }
-
-    .search-tabs { display: flex; gap: 5px; }
-    .search-tabs button {
-      flex: 1; padding: 6px; border-radius: 9px; border: none;
-      background: var(--brown-mid); color: #cbb8a4; font-size: 0.62rem;
-      font-weight: 600; cursor: pointer; font-family: inherit;
-    }
-    .search-tabs button.on { background: var(--orange); color: #fff; }
-
-    .foot-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: auto;
-      padding-top: 2px;
-    }
-
-    .center-label { text-align: center; margin-top: 1px; }
-    .center-label .section-title { font-size: 0.78rem; }
-    .price-inline {
+    .pill-tag {
       display: inline-flex;
       align-items: center;
       gap: 4px;
+      background: #fff5eb;
+      color: var(--orange-d);
+      font-size: 9px;
       font-weight: 700;
-      font-size: 0.7rem;
-    }
-    .price-inline .stars-mini { color: var(--orange); font-size: 0.54rem; }
-
-    .gourmet-row {
-      display: flex; align-items: center; gap: 7px;
-      background: #fff;
-      border-radius: 11px;
-      padding: 5px 7px;
-      box-shadow: 0 2px 4px rgba(80,40,10,0.04);
-    }
-    .gourmet-row .t {
-      width: 30px; height: 30px; border-radius: 8px;
-      overflow: hidden; background: #f5ebe0; flex-shrink: 0;
+      padding: 3px 8px;
+      border-radius: 10px;
     }
 
-    .c2-prod .phone-inner,
-    .c2-tray .phone-inner,
-    .c2-half .phone-inner,
-    .c3-tray .phone-inner,
-    .c3-pie .phone-inner { padding: 8px; }
+    /* object-position helpers for kit crop */
+    .op-tl img { object-position: 8% 12%; }
+    .op-tr img { object-position: 78% 18%; }
+    .op-ml img { object-position: 12% 48%; }
+    .op-mr img { object-position: 72% 52%; }
+    .op-bl img { object-position: 18% 82%; }
+    .op-br img { object-position: 80% 78%; }
+    .op-c  img { object-position: 50% 50%; }
+    .op-tray img { object-position: 45% 35%; }
+    .op-bread img { object-position: 35% 55%; }
+    .op-half img { object-position: 22% 72%; }
+    .op-pie img { object-position: 55% 75%; }
+    .op-croi img { object-position: 62% 62%; }
+    .op-white img { object-position: 48% 42%; }
 
-    .c2-daily .phone-inner { gap: 5px; }
-    .c3-select .phone-inner { gap: 5px; padding: 10px; }
-    .c3-cr .phone-inner { gap: 4px; }
-
-    @media (max-width: 980px) {
-      .stage { grid-template-columns: 1fr 1fr; height: auto; max-width: 560px; }
-      body { overflow: auto; }
-    }
-    @media (max-width: 520px) {
-      .stage { grid-template-columns: 1fr; max-width: 300px; }
+    @media (max-width: 720px) {
+      body { overflow: auto; padding: 8px; }
+      .stage {
+        width: 100%;
+        height: auto;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .col { height: auto; min-height: 360px; }
+      .phone { min-height: 160px; }
     }
   </style>
 </head>
 <body>
-  <div class="stage" id="app" role="main" aria-label="SweeDly food app UI kit">
-
-    <!-- COL 1: SweeDly menu + Browse bakery -->
+  <div class="stage" role="main" aria-label="SweeDly food app UI kit">
+    <!-- COL 1 -->
     <div class="col">
-      <div class="phone c1-top">
-        <div class="phone-inner">
-          <div class="topbar">
-            <div style="display:flex;align-items:center;gap:6px">
-              <button class="icon-btn" aria-label="menu" type="button">
-                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 3.5h8M2.5 6.5h8M2.5 9.5h8"/></svg>
-              </button>
-              <span class="brand">SweeDly</span>
+      <article class="phone c1a">
+        <div class="pi">
+          <div class="top">
+            <span class="status">9:41</span>
+            <div class="ico-row">
+              <span class="ico" title="search" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>
+              </span>
+              <span class="ico" title="menu" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+              </span>
             </div>
-            <button class="icon-btn" aria-label="profile" type="button">
-              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6.5" cy="5" r="2"/><path d="M2.5 11c.8-2 2.4-2.9 4-2.9S10 9 10.5 11"/></svg>
-            </button>
           </div>
-          <div class="stars">★★★★★ <span class="rating">4.9</span></div>
-          <div class="menu-row active" data-meal="breakfast">
-            <div class="left"><span class="dot on"></span> Breakfast</div>
-            <span class="price">$20</span>
+          <div class="brand">SweeDly</div>
+          <div class="dots">
+            <span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="price-pill">$23</span>
           </div>
-          <div class="menu-row" data-meal="lunch">
-            <div class="left"><span class="dot"></span> Lunch</div>
-            <span class="price">$18</span>
+          <div class="row">
+            <span class="chk on"></span>
+            <div class="row-txt">
+              <div class="row-title">Margherita</div>
+              <div class="row-sub">Tomato · mozzarella</div>
+            </div>
+            <span class="row-price">$8.50</span>
           </div>
-          <div class="menu-row" data-meal="dinner">
-            <div class="left"><span class="dot"></span> Dinner</div>
-            <span class="price">$24</span>
+          <div class="row">
+            <span class="chk"></span>
+            <div class="row-txt">
+              <div class="row-title">Pepperoni</div>
+              <div class="row-sub">Spicy beef</div>
+            </div>
+            <span class="row-price">$9.50</span>
           </div>
-          <div class="menu-row" data-meal="coffee">
-            <div class="left"><span class="dot"></span> Day coffee</div>
-            <span class="price">$8</span>
+          <div class="row">
+            <span class="chk"></span>
+            <div class="row-txt">
+              <div class="row-title">BBQ Chicken</div>
+              <div class="row-sub">Smoky sauce</div>
+            </div>
+            <span class="badge">−15%</span>
           </div>
-          <div class="pill-row" style="margin-top:1px">
-            <button class="pill on" type="button">Popular</button>
-            <button class="pill" type="button">New</button>
-            <button class="pill" type="button">Vegan</button>
+          <div class="row">
+            <span class="chk on"></span>
+            <div class="row-txt">
+              <div class="row-title">Four Cheese</div>
+              <div class="row-sub">Blend of 4</div>
+            </div>
+            <span class="row-price">$10.50</span>
           </div>
-          <div class="foot-row">
-            <span class="sub">N. Recipe story</span>
-            <span class="price-tag">$20</span>
+          <div class="total-bar">
+            <div>
+              <div class="t-label">Total</div>
+              <div class="t-val">$19.00</div>
+            </div>
+            <button class="btn-cart" type="button">Add to cart</button>
           </div>
         </div>
-      </div>
+      </article>
 
-      <div class="phone c1-bot">
-        <div class="phone-inner">
-          <div class="section-title">Browse the bakery</div>
-          <div class="stat-grid">
-            <div><div class="n">120</div><div class="l">Items</div></div>
-            <div><div class="n">48</div><div class="l">Chefs</div></div>
-            <div><div class="n">16k</div><div class="l">Orders</div></div>
-            <div><div class="n">4.9</div><div class="l">Rating</div></div>
+      <article class="phone c1b">
+        <div class="pi">
+          <div class="top">
+            <div class="brand" style="font-size:14px">Brownie Bee Bakery</div>
+            <span class="ico" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
+            </span>
           </div>
-          <div class="icon-row">
-            <div class="icon-tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M10 18h4"/></svg></div>App</div>
-            <div class="icon-tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M9 8h6M9 12h6"/></svg></div>Menu</div>
-            <div class="icon-tile"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/><circle cx="9" cy="10" r="1.2" fill="#fff"/><circle cx="15" cy="11" r="1" fill="#fff"/><circle cx="11" cy="14" r="1.1" fill="#fff"/></svg></div>Pizza</div>
-            <div class="icon-tile"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="14" rx="7" ry="5"/><path d="M7 12c1-3 3-5 5-5s4 2 5 5" fill="none" stroke="#c87830" stroke-width="1"/></svg></div>Bowl</div>
+          <div class="stats-grid">
+            <div class="stat"><div class="stat-ico">📱</div><div class="stat-n">250</div><div class="stat-l">Orders</div></div>
+            <div class="stat"><div class="stat-ico">⭐</div><div class="stat-n">4.9</div><div class="stat-l">Rating</div></div>
+            <div class="stat"><div class="stat-ico">🧁</div><div class="stat-n">120</div><div class="stat-l">Items</div></div>
+            <div class="stat"><div class="stat-ico">⏱</div><div class="stat-n">15m</div><div class="stat-l">Ready</div></div>
           </div>
-          <div class="icon-row">
-            <div class="icon-tile"><div class="ic" style="background:#ffe8cc"><svg viewBox="0 0 24 24" fill="#e8923a"><path d="M4 16c2-6 6-9 8-9s6 3 8 9H4z"/><circle cx="9" cy="13" r="1.2"/><circle cx="14" cy="12" r="1"/></svg></div>Pie</div>
-            <div class="icon-tile"><div class="ic" style="background:#ffe8cc"><svg viewBox="0 0 24 24" fill="#e8923a"><path d="M6 16c0-4 2.5-8 6-8s6 4 6 8H6z"/><path d="M8 16h8v2a2 2 0 01-2 2h-4a2 2 0 01-2-2v-2z" opacity=".7"/></svg></div>Bake</div>
-            <div class="icon-tile"><div class="ic" style="background:#ffe8cc"><svg viewBox="0 0 24 24" fill="#e8923a"><circle cx="12" cy="12" r="7"/><circle cx="10" cy="10" r="1.3" fill="#c45"/><circle cx="14" cy="13" r="1.1" fill="#c45"/></svg></div>Loaf</div>
-            <div class="icon-tile"><div class="ic" style="background:#ffe8cc"><svg viewBox="0 0 24 24" fill="none" stroke="#e8923a" stroke-width="1.6"><rect x="5" y="7" width="14" height="11" rx="2"/><path d="M5 11h14"/></svg></div>Box</div>
+          <div class="icon-grid">
+            <div class="ig"><div class="ig-c">🍕</div><div class="ig-l">Pizza</div></div>
+            <div class="ig"><div class="ig-c">🍔</div><div class="ig-l">Burger</div></div>
+            <div class="ig"><div class="ig-c">🌮</div><div class="ig-l">Tacos</div></div>
+            <div class="ig"><div class="ig-c">🥗</div><div class="ig-l">Salad</div></div>
+            <div class="ig"><div class="ig-c">🍩</div><div class="ig-l">Donut</div></div>
+            <div class="ig"><div class="ig-c">🍰</div><div class="ig-l">Cake</div></div>
+            <div class="ig"><div class="ig-c">☕</div><div class="ig-l">Coffee</div></div>
+            <div class="ig"><div class="ig-c">🧃</div><div class="ig-l">Drinks</div></div>
+            <div class="ig"><div class="ig-c">🍝</div><div class="ig-l">Pasta</div></div>
+            <div class="ig"><div class="ig-c">🍜</div><div class="ig-l">Ramen</div></div>
+            <div class="ig"><div class="ig-c">🍦</div><div class="ig-l">Ice</div></div>
+            <div class="ig"><div class="ig-c">🥐</div><div class="ig-l">Bakery</div></div>
           </div>
-          <div class="icon-row">
-            <div class="icon-tile solid"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l2 5h5l-4 3.5 1.5 5L12 14.5 7.5 17.5 9 12.5 5 9h5z"/></svg></div>Top</div>
-            <div class="icon-tile solid"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>Hot</div>
-            <div class="icon-tile solid"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="8" width="12" height="9" rx="2"/></svg></div>Pack</div>
-            <div class="icon-tile solid"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 8h10v10H7z"/><path d="M9 8V6a3 3 0 016 0v2" fill="none" stroke="#fff" stroke-width="1.5"/></svg></div>Bag</div>
-          </div>
-          <div class="icon-row">
-            <div class="icon-tile outline"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 9v10M12 5v14M16 11v8"/></svg></div>Drink</div>
-            <div class="icon-tile outline"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 8h10l-1 11H8L7 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg></div>Blend</div>
-            <div class="icon-tile outline"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9h12v2a6 6 0 01-12 0V9z"/><path d="M9 9V7a3 3 0 016 0v2"/></svg></div>Cup</div>
-            <div class="icon-tile outline"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="7"/><path d="M12 8v8M9 12h6"/></svg></div>More</div>
-          </div>
-          <div class="foot-row">
-            <span class="sub">N. Recipe story</span>
-            <span class="price-tag">$20</span>
+          <div class="bottom-cta">
+            <div class="avatar-stack" aria-hidden="true">
+              <span class="av"></span><span class="av" style="background:linear-gradient(135deg,#e07a3a,#c45a2a)"></span><span class="av" style="background:linear-gradient(135deg,#f0c04b,#e8943a)"></span>
+            </div>
+            <button class="cta-btn" type="button">Order Now · $20</button>
           </div>
         </div>
-      </div>
+      </article>
     </div>
 
     <!-- COL 2 -->
     <div class="col">
-      <div class="phone c2-prod">
-        <div class="phone-inner">
-          <div class="topbar">
-            <span class="section-title">Product</span>
-            <button class="icon-btn orange" type="button" aria-label="add">+</button>
+      <article class="phone c2a">
+        <div class="pi" style="padding:10px 12px">
+          <div class="top">
+            <span class="sec-title">Popular</span>
+            <span class="pill-tag">Hot</span>
           </div>
-          <div class="item-grid">
-            <div class="item-card">
-              <div class="pic"><div class="food thumb-a" role="img" aria-label="Croissant"><img src="../inspo/crops/pizza_kit.jpg" alt="" /></div></div>
-              <h4>Croissant</h4>
-              <div class="meta"><span>$4.50</span><button class="plus" type="button">+</button></div>
+          <div class="prod-row">
+            <div class="th op-tl"><img alt="" src="../inspo/crops/pizza_kit.jpg" /></div>
+            <div class="prod-info">
+              <div class="prod-name">Cheese Balls</div>
+              <div class="prod-meta">$4.50 · 120 cal</div>
             </div>
-            <div class="item-card">
-              <div class="pic"><div class="food thumb-b" role="img" aria-label="Bun"><img src="../inspo/crops/pizza_kit.jpg" alt="" /></div></div>
-              <h4>Bun</h4>
-              <div class="meta"><span>$3.20</span><button class="plus" type="button">+</button></div>
+            <button class="plus" type="button" aria-label="add">+</button>
+          </div>
+          <div class="prod-row">
+            <div class="th op-tr"><img alt="" src="../inspo/crops/pizza_kit.jpg" /></div>
+            <div class="prod-info">
+              <div class="prod-name">Garlic Knots</div>
+              <div class="prod-meta">$3.80 · 90 cal</div>
             </div>
+            <button class="plus" type="button" aria-label="add">+</button>
           </div>
         </div>
-      </div>
+      </article>
 
-      <div class="phone c2-tray">
-        <div class="phone-inner">
-          <div class="food tray-dark" role="img" aria-label="Pepperoni tray bake">
-            <img src="../inspo/crops/pizza_kit.jpg" alt="" />
-          </div>
+      <article class="phone c2b">
+        <div class="pi" style="padding:8px 10px">
+          <div class="tray op-tray"><img alt="tray pizza" src="../inspo/crops/pizza_kit.jpg" /></div>
         </div>
-      </div>
+      </article>
 
-      <div class="phone c2-daily">
-        <div class="phone-inner">
-          <div class="topbar">
-            <span class="section-title">Daily Fresh</span>
-            <span class="sub">See all</span>
+      <article class="phone c2c">
+        <div class="pi">
+          <div class="top">
+            <span class="sec-title">Daily Picks</span>
+            <span class="status">See all</span>
           </div>
-          <div class="food breads" role="img" aria-label="Fresh breads">
-            <img src="../inspo/crops/pizza_kit.jpg" alt="" />
+          <div class="hero-food op-bread" style="flex:0 0 42%">
+            <img alt="breads" src="../inspo/crops/pizza_kit.jpg" />
           </div>
-          <div class="list-line">
-            <div class="t"><div class="food thumb-pastry" role="img" aria-label="Pastry"></div></div>
-            <div class="info"><h4>Pastry box</h4><p>Fresh batch · 6 pcs</p></div>
-            <span class="amt">$12</span>
+          <div class="prod-row">
+            <div class="th op-ml"><img alt="" src="../inspo/crops/pizza_kit.jpg" /></div>
+            <div class="prod-info">
+              <div class="prod-name">Pastry Box</div>
+              <div class="prod-meta">$6.20</div>
+            </div>
+            <button class="plus" type="button" aria-label="add">+</button>
+          </div>
+          <div class="prod-row">
+            <div class="th op-br"><img alt="" src="../inspo/crops/pizza_kit.jpg" /></div>
+            <div class="prod-info">
+              <div class="prod-name">Panini Set</div>
+              <div class="prod-meta">$7.40</div>
+            </div>
+            <button class="plus" type="button" aria-label="add">+</button>
           </div>
         </div>
-      </div>
+      </article>
 
-      <div class="phone c2-pastry">
-        <div class="phone-inner">
-          <div class="topbar">
-            <span class="section-title">Pastry box</span>
-            <button class="icon-btn orange" type="button" style="width:20px;height:20px;font-size:0.7rem" aria-label="add">+</button>
-          </div>
-          <div class="list-line">
-            <div class="t"><div class="food thumb-pastry"></div></div>
-            <div class="info"><h4>Butter roll</h4><p>Morning bake</p></div>
-            <button class="plus" type="button">+</button>
-          </div>
-          <div class="list-line">
-            <div class="t"><div class="food thumb-cr"></div></div>
-            <div class="info"><h4>Croissant</h4><p>Classic</p></div>
-            <button class="plus" type="button">+</button>
+      <article class="phone c2d">
+        <div class="pi" style="padding:8px 10px">
+          <div class="hero-food op-half">
+            <img alt="half pizza" src="../inspo/crops/pizza_kit.jpg" />
           </div>
         </div>
-      </div>
-
-      <div class="phone c2-half">
-        <div class="phone-inner">
-          <div class="food half-pie" role="img" aria-label="Half pizza">
-            <img src="../inspo/crops/pizza_kit.jpg" alt="" />
-          </div>
-        </div>
-      </div>
+      </article>
     </div>
 
     <!-- COL 3 -->
     <div class="col">
-      <div class="phone c3-select">
-        <div class="phone-inner">
-          <div class="topbar">
-            <span class="section-title">Select type</span>
-            <button class="icon-btn" type="button" style="width:24px;height:24px" aria-label="more">⋯</button>
+      <article class="phone c3a">
+        <div class="pi">
+          <div class="top">
+            <span class="sec-title">Sauce Epic</span>
+            <span class="ico" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 7h16M4 12h10M4 17h14"/></svg>
+            </span>
           </div>
-          <div class="pill-row">
-            <button class="pill on" type="button">All</button>
-            <button class="pill" type="button">Hot</button>
-            <button class="pill" type="button">Cold</button>
+          <div class="tabs">
+            <button class="tab on" type="button">All</button>
+            <button class="tab" type="button">Veg</button>
+            <button class="tab" type="button">Meat</button>
           </div>
-          <div class="section-title" style="font-size:0.72rem">Craft list</div>
-          <div class="item-grid">
-            <div class="item-card">
-              <div class="pic"><div class="food thumb-pizza" role="img" aria-label="Margherita"></div></div>
-              <h4>Margherita</h4>
-              <div class="meta"><span>$14</span><button class="plus" type="button">+</button></div>
+          <div class="menu-list">
+            <div class="menu-item">
+              <div class="th op-c"><img alt="" src="../inspo/crops/pizza_kit.jpg" /></div>
+              <div class="mi-txt"><div class="mi-name">Classic Pie</div><div class="mi-price">$11.00</div></div>
+              <button class="mi-add" type="button">+</button>
             </div>
-            <div class="item-card">
-              <div class="pic"><div class="food thumb-pep" role="img" aria-label="Pepperoni"></div></div>
-              <h4>Pepperoni</h4>
-              <div class="meta"><span>$16</span><button class="plus" type="button">+</button></div>
+            <div class="menu-item">
+              <div class="th op-tr"><img alt="" src="../inspo/crops/pizza_kit.jpg" /></div>
+              <div class="mi-txt"><div class="mi-name">Extra Hot</div><div class="mi-price">$12.50</div></div>
+              <button class="mi-add" type="button">+</button>
             </div>
-            <div class="item-card">
-              <div class="pic"><div class="food thumb-tray" role="img" aria-label="Tray bake"></div></div>
-              <h4>Tray bake</h4>
-              <div class="meta"><span>$22</span><button class="plus" type="button">+</button></div>
+            <div class="menu-item">
+              <div class="th op-ml"><img alt="" src="../inspo/crops/pizza_kit.jpg" /></div>
+              <div class="mi-txt"><div class="mi-name">Garden Fresh</div><div class="mi-price">$10.00</div></div>
+              <button class="mi-add" type="button">+</button>
             </div>
-            <div class="item-card">
-              <div class="pic"><div class="food thumb-foc" role="img" aria-label="Focaccia"></div></div>
-              <h4>Focaccia</h4>
-              <div class="meta"><span>$11</span><button class="plus" type="button">+</button></div>
+            <div class="menu-item">
+              <div class="th op-mr"><img alt="" src="../inspo/crops/pizza_kit.jpg" /></div>
+              <div class="mi-txt"><div class="mi-name">Meat Feast</div><div class="mi-price">$13.20</div></div>
+              <button class="mi-add" type="button">+</button>
             </div>
-          </div>
-          <div class="section-title" style="font-size:0.72rem">Gourmet</div>
-          <div class="gourmet-row">
-            <div class="t"><div class="food thumb-round" role="img" aria-label="Truffle pie"></div></div>
-            <div class="info" style="flex:1">
-              <h4 style="font-size:0.66rem;font-weight:700">Truffle pie</h4>
-              <p class="sub">Chef special</p>
+            <div class="menu-item">
+              <div class="th op-bl"><img alt="" src="../inspo/crops/pizza_kit.jpg" /></div>
+              <div class="mi-txt"><div class="mi-name">White Sauce</div><div class="mi-price">$11.80</div></div>
+              <button class="mi-add" type="button">+</button>
             </div>
-            <button class="plus" type="button">+</button>
           </div>
         </div>
-      </div>
+      </article>
 
-      <div class="phone c3-tray">
-        <div class="phone-inner">
-          <div class="food tray-white" role="img" aria-label="Deep dish pizza tray">
-            <img src="../inspo/crops/pizza_kit.jpg" alt="" />
-          </div>
+      <article class="phone c3b">
+        <div class="pi" style="padding:8px 10px">
+          <div class="tray light op-white"><img alt="white tray pizza" src="../inspo/crops/pizza_kit.jpg" /></div>
         </div>
-      </div>
+      </article>
 
-      <div class="phone c3-cr">
-        <div class="phone-inner">
-          <div class="food croissant" role="img" aria-label="Golden croissant">
-            <img src="../inspo/crops/pizza_kit.jpg" alt="" />
+      <article class="phone c3c">
+        <div class="pi">
+          <div class="hero-food op-croi" style="flex:1">
+            <img alt="croissant" src="../inspo/crops/pizza_kit.jpg" />
           </div>
-          <div class="center-label">
-            <div class="section-title">Creek rye</div>
-            <div class="price-inline">
-              <span class="stars-mini">★★★★</span>
-              <span>$8.50</span>
-            </div>
-          </div>
+          <div class="caption">Croissant Flaky <span>· $3.50</span></div>
         </div>
-      </div>
+      </article>
 
-      <div class="phone c3-pie">
-        <div class="phone-inner">
-          <div class="food full-pie" role="img" aria-label="Sliced pizza">
-            <img src="../inspo/crops/pizza_kit.jpg" alt="" />
+      <article class="phone c3d">
+        <div class="pi">
+          <div class="hero-food op-pie" style="flex:1">
+            <img alt="sliced pizza" src="../inspo/crops/pizza_kit.jpg" />
           </div>
+          <div class="caption">Whole Pie <span>· $14.00</span></div>
         </div>
-      </div>
+      </article>
     </div>
 
-    <!-- COL 4: dark browse + checkout -->
+    <!-- COL 4 -->
     <div class="col">
-      <div class="phone dark c4-dark">
-        <div class="phone-inner">
-          <div class="topbar">
-            <span class="brand" style="font-size:0.88rem;color:#f5ebe0">Browse</span>
-            <span class="sub">Filter ▾</span>
+      <article class="phone dark c4a">
+        <div class="pi">
+          <div class="top">
+            <span class="status">9:41</span>
+            <div class="ico-row" style="color:rgba(245,235,224,0.5)">
+              <span style="font-size:9px">●●●</span>
+            </div>
           </div>
-          <div class="search-tabs">
-            <button type="button" class="on">Near me</button>
-            <button type="button">Popular</button>
+          <div class="dark-title">Order Menu</div>
+          <div class="seg" role="tablist">
+            <button class="on" type="button" data-seg>Delivery</button>
+            <button type="button" data-seg>Pickup</button>
           </div>
-          <div class="search-bar">
-            <span aria-hidden="true">⌕</span>
-            <input type="search" placeholder="Find dishes…" aria-label="Search dishes" />
+          <div class="search-d">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>
+            Search food…
           </div>
-          <button class="chip-orange" type="button" style="width:100%">Today's pick · Free delivery</button>
-          <div class="cat-list">
-            <div class="cat-row">
-              <div class="thumb"><div class="food thumb-round"></div></div>
-              <span class="name">Pizza</span>
-              <span class="price">$14+</span>
+          <div class="d-list">
+            <div class="d-item">
+              <div class="th op-tl"><img alt="" src="../inspo/crops/pizza_kit.jpg" /></div>
+              <div><div class="d-name">Tomato Basil</div><div class="d-meta">Fresh · 28cm</div></div>
+              <span class="d-price">$9</span>
             </div>
-            <div class="cat-row">
-              <div class="thumb"><div class="food thumb-cr"></div></div>
-              <span class="name">Pastry</span>
-              <span class="price">$4+</span>
+            <div class="d-item">
+              <div class="th op-tr"><img alt="" src="../inspo/crops/pizza_kit.jpg" /></div>
+              <div><div class="d-name">Edge Crisp</div><div class="d-meta">Thin crust</div></div>
+              <span class="d-price">$10</span>
             </div>
-            <div class="cat-row">
-              <div class="thumb"><div class="food thumb-bread"></div></div>
-              <span class="name">Bread</span>
-              <span class="price">$6+</span>
+            <div class="d-item">
+              <div class="th op-c"><img alt="" src="../inspo/crops/pizza_kit.jpg" /></div>
+              <div><div class="d-name">Lemon Zest</div><div class="d-meta">Light · herb</div></div>
+              <span class="d-price">$11</span>
             </div>
-            <div class="cat-row">
-              <div class="thumb"><div class="food thumb-foc"></div></div>
-              <span class="name">Loaves</span>
-              <span class="price">$9+</span>
+            <div class="d-item">
+              <div class="th op-ml"><img alt="" src="../inspo/crops/pizza_kit.jpg" /></div>
+              <div><div class="d-name">Bacon BBQ</div><div class="d-meta">Smoky</div></div>
+              <span class="d-price">$12</span>
             </div>
-            <div class="cat-row">
-              <div class="thumb"><div class="food thumb-tray"></div></div>
-              <span class="name">Trays</span>
-              <span class="price">$18+</span>
+            <div class="d-item">
+              <div class="th op-br"><img alt="" src="../inspo/crops/pizza_kit.jpg" /></div>
+              <div><div class="d-name">Funghi</div><div class="d-meta">Mushroom</div></div>
+              <span class="d-price">$10</span>
             </div>
           </div>
         </div>
-      </div>
+      </article>
 
-      <div class="phone c4-cart">
-        <div class="phone-inner">
-          <div class="topbar">
-            <div style="display:flex;align-items:center;gap:6px">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V7z"/><path d="M8 7V5a4 4 0 018 0v2"/></svg>
-              <span class="section-title">Checkout</span>
-            </div>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h14"/></svg>
+      <article class="phone c4b">
+        <div class="pi">
+          <div class="cart-head">
+            <span class="cart-title">Cart</span>
+            <span class="ico" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M6 6L5 3H2"/></svg>
+            </span>
           </div>
-          <div class="list-line">
-            <div class="t"><div class="food thumb-round"></div></div>
-            <div class="info"><h4>Goods</h4><p>Margherita · L</p></div>
-            <span class="amt">$14.00</span>
+          <div class="cart-cols"><span>Goods</span><span style="text-align:right">Sum</span></div>
+          <div class="cart-row">
+            <div class="th op-tl"><img alt="" src="../inspo/crops/pizza_kit.jpg" /></div>
+            <span class="cart-name">Margherita</span>
+            <span class="cart-price">$8.50</span>
           </div>
-          <div class="list-line">
-            <div class="t"><div class="food thumb-cr"></div></div>
-            <div class="info"><h4>Croissant</h4><p>Butter ×2</p></div>
-            <span class="amt">$9.00</span>
+          <div class="cart-row">
+            <div class="th op-tr"><img alt="" src="../inspo/crops/pizza_kit.jpg" /></div>
+            <span class="cart-name">Garlic Knots</span>
+            <span class="cart-price">$3.80</span>
           </div>
-          <div class="list-line">
-            <div class="t"><div class="food thumb-foc"></div></div>
-            <div class="info"><h4>Focaccia</h4><p>Share</p></div>
-            <span class="amt">$8.50</span>
+          <div class="cart-row">
+            <div class="th op-c"><img alt="" src="../inspo/crops/pizza_kit.jpg" /></div>
+            <span class="cart-name">Croissant</span>
+            <span class="cart-price">$3.50</span>
           </div>
-          <div class="list-line">
-            <div class="t"><div class="food thumb-pastry"></div></div>
-            <div class="info"><h4>Pastry</h4><p>Box · 6</p></div>
-            <span class="amt">$12.00</span>
+          <div class="cart-row">
+            <div class="th op-pie"><img alt="" src="../inspo/crops/pizza_kit.jpg" /></div>
+            <span class="cart-name">Whole Pie</span>
+            <span class="cart-price">$14.00</span>
           </div>
-          <div class="list-line">
-            <div class="t"><div class="food thumb-bread"></div></div>
-            <div class="info"><h4>Rye loaf</h4><p>Half</p></div>
-            <span class="amt">$6.50</span>
-          </div>
-          <button class="cta" type="button">Checkout</button>
+          <button class="btn-full" type="button">Checkout · $29.80</button>
         </div>
-      </div>
+      </article>
     </div>
   </div>
 
   <script>
-    document.querySelectorAll('.menu-row').forEach(row => {
-      row.addEventListener('click', () => {
-        document.querySelectorAll('.menu-row').forEach(r => {
-          r.classList.remove('active');
-          r.querySelector('.dot')?.classList.remove('on');
-        });
-        row.classList.add('active');
-        row.querySelector('.dot')?.classList.add('on');
+    // Segment toggle on dark phone
+    document.querySelectorAll('[data-seg]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        btn.parentElement.querySelectorAll('button').forEach(function (b) { b.classList.remove('on'); });
+        btn.classList.add('on');
       });
     });
-    document.querySelectorAll('.pill-row').forEach(group => {
-      group.querySelectorAll('.pill').forEach(pill => {
-        pill.addEventListener('click', () => {
-          group.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
-          pill.classList.add('on');
+    // Tabs
+    document.querySelectorAll('.tabs').forEach(function (tabs) {
+      tabs.querySelectorAll('.tab').forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          tabs.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('on'); });
+          tab.classList.add('on');
         });
       });
     });
-    document.querySelectorAll('.search-tabs').forEach(tabs => {
-      tabs.querySelectorAll('button').forEach(btn => {
-        btn.addEventListener('click', () => {
-          tabs.querySelectorAll('button').forEach(b => b.classList.remove('on'));
-          btn.classList.add('on');
-        });
-      });
+    // Checkboxes
+    document.querySelectorAll('.chk').forEach(function (c) {
+      c.addEventListener('click', function () { c.classList.toggle('on'); });
     });
-    document.querySelectorAll('.plus, .icon-btn.orange, .cta, .chip-orange').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        if (btn.classList.contains('plus')) {
-          e.stopPropagation();
-          const prev = btn.textContent;
-          btn.textContent = '✓';
-          setTimeout(() => { btn.textContent = prev || '+'; }, 600);
-        }
+    // Plus buttons — brief pulse
+    document.querySelectorAll('.plus, .mi-add, .btn-cart, .cta-btn, .btn-full').forEach(function (b) {
+      b.addEventListener('click', function () {
+        b.style.transform = 'scale(0.94)';
+        setTimeout(function () { b.style.transform = ''; }, 120);
       });
     });
   </script>
