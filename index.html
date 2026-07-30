@@ -3,102 +3,95 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aliens-made-this · pixel-perfect showcase</title>
-  <meta name="description" content="Inspiration → pixel-perfect HTML clones. Side-by-side reference images and live demos." />
+  <title>aliens-made-this</title>
+  <meta name="description" content="Preview site for pixel-perfect HTML experiments — AI UI inspo turned into real pages." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0b0c10;
-      --bg-elev: #12141c;
-      --bg-card: #161922;
-      --line: rgba(255, 255, 255, 0.08);
-      --text: #f4f1ea;
-      --muted: #9aa3b5;
+      --bg: #07080c;
+      --bg-elev: #0e1016;
+      --bg-card: #12151d;
+      --line: rgba(255, 255, 255, 0.09);
+      --text: #f3f0e8;
+      --muted: #8b93a7;
       --accent: #7dffb3;
       --accent-2: #ff8f6b;
       --accent-3: #8ab4ff;
-      --radius: 18px;
-      --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      --radius: 20px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
       font-family: "IBM Plex Mono", ui-monospace, monospace;
-      background:
-        radial-gradient(1200px 600px at 10% -10%, rgba(125, 255, 179, 0.08), transparent 60%),
-        radial-gradient(900px 500px at 100% 0%, rgba(138, 180, 255, 0.1), transparent 55%),
-        radial-gradient(800px 500px at 50% 100%, rgba(255, 143, 107, 0.06), transparent 50%),
-        var(--bg);
+      background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       line-height: 1.5;
     }
-
-    a { color: inherit; text-decoration: none; }
-
-    .wrap {
-      width: min(1200px, calc(100% - 2.5rem));
-      margin: 0 auto;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(900px 500px at 8% -5%, rgba(125, 255, 179, 0.09), transparent 55%),
+        radial-gradient(700px 420px at 100% 5%, rgba(138, 180, 255, 0.1), transparent 50%),
+        radial-gradient(600px 400px at 70% 100%, rgba(255, 143, 107, 0.06), transparent 45%);
     }
+    body > * { position: relative; z-index: 1; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
 
-    /* Header */
+    .wrap { width: min(1240px, calc(100% - 2rem)); margin: 0 auto; }
+
+    /* Nav */
     header {
-      padding: 1.25rem 0;
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(12px);
       position: sticky;
       top: 0;
-      z-index: 20;
-      background: rgba(11, 12, 16, 0.75);
+      z-index: 40;
+      border-bottom: 1px solid var(--line);
+      background: rgba(7, 8, 12, 0.8);
+      backdrop-filter: blur(14px);
     }
-
     .nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
+      padding: 0.9rem 0;
     }
-
     .brand {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.7rem;
       font-family: Syne, system-ui, sans-serif;
       font-weight: 700;
       letter-spacing: -0.02em;
     }
-
     .brand-mark {
       width: 2rem;
       height: 2rem;
       border-radius: 999px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-3));
-      box-shadow: 0 0 0 3px rgba(125, 255, 179, 0.15);
       display: grid;
       place-items: center;
-      font-size: 0.9rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent-3));
+      box-shadow: 0 0 0 3px rgba(125, 255, 179, 0.12);
+      font-size: 0.95rem;
     }
-
-    .nav-links {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
+    .nav-links { display: flex; flex-wrap: wrap; gap: 0.25rem; }
     .nav-links a {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--muted);
-      padding: 0.4rem 0.75rem;
-      border: 1px solid transparent;
+      padding: 0.4rem 0.7rem;
       border-radius: 999px;
+      border: 1px solid transparent;
       transition: 0.15s ease;
     }
-
     .nav-links a:hover {
       color: var(--text);
       border-color: var(--line);
@@ -106,103 +99,137 @@
     }
 
     /* Hero */
-    .hero {
-      padding: 4.5rem 0 2.5rem;
-    }
-
+    .hero { padding: 3.5rem 0 2rem; }
     .eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 1rem;
     }
-
     .eyebrow::before {
       content: "";
-      width: 0.5rem;
-      height: 0.5rem;
+      width: 0.45rem;
+      height: 0.45rem;
       border-radius: 50%;
       background: var(--accent);
       box-shadow: 0 0 12px var(--accent);
     }
-
     h1 {
       font-family: Syne, system-ui, sans-serif;
-      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
       font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-      max-width: 16ch;
+      letter-spacing: -0.035em;
+      line-height: 1.02;
+      max-width: 14ch;
       margin-bottom: 1rem;
     }
-
     h1 em {
       font-style: normal;
-      background: linear-gradient(90deg, var(--accent), var(--accent-3), var(--accent-2));
+      background: linear-gradient(100deg, var(--accent), var(--accent-3) 45%, var(--accent-2));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
-
     .lede {
       color: var(--muted);
-      max-width: 52ch;
-      font-size: 0.95rem;
-      margin-bottom: 1.75rem;
+      max-width: 54ch;
+      font-size: 0.92rem;
+      margin-bottom: 1.5rem;
     }
-
-    .stats {
+    .lede a {
+      color: var(--accent-3);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
+      gap: 0.55rem;
+      margin-bottom: 1.5rem;
     }
-
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.6rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      transition: 0.15s ease;
+      background: transparent;
+    }
+    .btn:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .btn.primary {
+      background: var(--accent);
+      color: #052116;
+      border-color: transparent;
+      font-weight: 600;
+    }
+    .btn.primary:hover { filter: brightness(1.06); background: var(--accent); }
+    .btn.ghost { color: var(--muted); }
+    .stats { display: flex; flex-wrap: wrap; gap: 0.55rem; }
     .stat {
       border: 1px solid var(--line);
       background: rgba(255, 255, 255, 0.02);
       border-radius: 999px;
-      padding: 0.45rem 0.9rem;
-      font-size: 0.75rem;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.72rem;
       color: var(--muted);
     }
-
-    .stat strong {
-      color: var(--text);
-      font-weight: 600;
-    }
+    .stat strong { color: var(--text); font-weight: 600; }
 
     /* Section */
-    section { padding: 2rem 0 3.5rem; }
-
+    section { padding: 1.5rem 0 3rem; }
     .section-head {
       display: flex;
       align-items: end;
       justify-content: space-between;
       gap: 1rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
       flex-wrap: wrap;
     }
-
     .section-head h2 {
       font-family: Syne, system-ui, sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       font-weight: 700;
       letter-spacing: -0.02em;
     }
+    .section-head p { color: var(--muted); font-size: 0.78rem; }
 
-    .section-head p {
+    /* Filters */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+    .filter {
+      font-size: 0.7rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
       color: var(--muted);
-      font-size: 0.8rem;
+      transition: 0.15s ease;
+    }
+    .filter:hover, .filter.active {
+      color: var(--text);
+      border-color: rgba(125, 255, 179, 0.35);
+      background: rgba(125, 255, 179, 0.08);
     }
 
-    /* Showcase cards — inspo | demo */
+    /* Grid of preview cards */
     .grid {
       display: grid;
-      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.1rem;
     }
 
     .card {
@@ -210,311 +237,252 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       overflow: hidden;
-      box-shadow: var(--shadow);
-      transition: border-color 0.2s ease, transform 0.2s ease;
-    }
-
-    .card:hover {
-      border-color: rgba(125, 255, 179, 0.25);
-      transform: translateY(-2px);
-    }
-
-    .card-top {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 220px;
-    }
-
-    @media (max-width: 720px) {
-      .card-top { grid-template-columns: 1fr; }
-    }
-
-    .panel {
-      position: relative;
-      min-height: 220px;
-      background: var(--bg-elev);
-      overflow: hidden;
-    }
-
-    .panel + .panel { border-left: 1px solid var(--line); }
-    @media (max-width: 720px) {
-      .panel + .panel { border-left: none; border-top: 1px solid var(--line); }
-    }
-
-    .panel-label {
-      position: absolute;
-      top: 0.75rem;
-      left: 0.75rem;
-      z-index: 2;
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.3rem 0.55rem;
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.55);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(8px);
-      color: var(--muted);
-    }
-
-    .panel.inspo .panel-label { color: var(--accent-2); }
-    .panel.live .panel-label { color: var(--accent); }
-
-    .panel img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      display: block;
-      min-height: 220px;
-      max-height: 280px;
-      transition: transform 0.35s ease;
-    }
-
-    .card:hover .panel img { transform: scale(1.03); }
-
-    .panel.live {
-      display: grid;
-      place-items: center;
-      background:
-        linear-gradient(145deg, rgba(125, 255, 179, 0.08), transparent 50%),
-        var(--bg-elev);
-      padding: 1.5rem;
-      text-align: center;
-    }
-
-    .live-inner {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 0.85rem;
-      max-width: 16rem;
+      transition: border-color 0.2s var(--ease), transform 0.25s var(--ease);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+    }
+    .card:hover {
+      border-color: rgba(125, 255, 179, 0.28);
+      transform: translateY(-3px);
     }
 
-    .live-icon {
-      width: 3rem;
-      height: 3rem;
-      border-radius: 1rem;
-      display: grid;
-      place-items: center;
-      background: rgba(125, 255, 179, 0.12);
-      border: 1px solid rgba(125, 255, 179, 0.25);
-      font-size: 1.25rem;
-    }
-
-    .live-path {
-      font-size: 0.7rem;
-      color: var(--muted);
-      word-break: break-all;
-    }
-
-    .card-body {
-      padding: 1.15rem 1.25rem 1.25rem;
-      display: grid;
-      gap: 0.85rem;
-    }
-
-    .card-title-row {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    .card-title-row h3 {
-      font-family: Syne, system-ui, sans-serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-    }
-
-    .tag {
-      font-size: 0.65rem;
-      color: var(--muted);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 0.2rem 0.5rem;
-    }
-
-    .desc {
-      font-size: 0.8rem;
-      color: var(--muted);
-      max-width: 70ch;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.75rem;
-      font-weight: 500;
-      padding: 0.55rem 0.9rem;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      transition: 0.15s ease;
-      cursor: pointer;
-      background: transparent;
-      color: var(--text);
-    }
-
-    .btn:hover {
-      border-color: rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .btn.primary {
-      background: var(--accent);
-      color: #062116;
-      border-color: transparent;
-      font-weight: 600;
-    }
-
-    .btn.primary:hover {
-      filter: brightness(1.05);
-      background: var(--accent);
-    }
-
-    .btn.ghost { color: var(--muted); }
-
-    .no-inspo {
-      display: grid;
-      place-items: center;
-      min-height: 220px;
-      color: var(--muted);
-      font-size: 0.75rem;
-      padding: 1.5rem;
-      text-align: center;
-      background:
-        repeating-linear-gradient(
-          -45deg,
-          transparent,
-          transparent 8px,
-          rgba(255, 255, 255, 0.02) 8px,
-          rgba(255, 255, 255, 0.02) 16px
-        );
-    }
-
-    /* Uncloned inspo grid */
-    .inspo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 0.85rem;
-    }
-
-    .inspo-tile {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      overflow: hidden;
-      background: var(--bg-card);
-      cursor: pointer;
-      transition: 0.15s ease;
-    }
-
-    .inspo-tile:hover {
-      border-color: rgba(138, 180, 255, 0.35);
-      transform: translateY(-2px);
-    }
-
-    .inspo-tile img {
-      width: 100%;
-      aspect-ratio: 4/3;
-      object-fit: cover;
-      display: block;
+    /* Live scaled iframe preview */
+    .preview-frame {
+      position: relative;
+      aspect-ratio: 16 / 10;
       background: var(--bg-elev);
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
     }
-
-    .inspo-tile figcaption {
-      padding: 0.55rem 0.7rem 0.7rem;
-      font-size: 0.65rem;
-      color: var(--muted);
-      word-break: break-all;
-      line-height: 1.35;
-    }
-
-    /* Lightbox */
-    .lightbox {
-      position: fixed;
+    .preview-frame::after {
+      content: "";
+      position: absolute;
       inset: 0;
-      z-index: 100;
-      background: rgba(0, 0, 0, 0.88);
+      z-index: 2;
+      /* click catcher so iframe doesn't steal hover */
+    }
+    .preview-scaler {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1280px;
+      height: 800px;
+      transform-origin: top left;
+      pointer-events: none;
+    }
+    .preview-scaler iframe {
+      width: 1280px;
+      height: 800px;
+      border: 0;
+      background: #fff;
+      display: block;
+    }
+    .preview-badge {
+      position: absolute;
+      top: 0.65rem;
+      left: 0.65rem;
+      z-index: 3;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--accent);
+      backdrop-filter: blur(8px);
+    }
+    .preview-fallback {
+      position: absolute;
+      inset: 0;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
-      backdrop-filter: blur(6px);
+      background: var(--bg-elev);
+      z-index: 1;
     }
+    .preview-fallback img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .preview-fallback.shown { display: flex; }
 
-    .lightbox.open { display: flex; }
-
-    .lightbox-inner {
-      max-width: min(1100px, 100%);
-      max-height: 90vh;
+    .card-body {
+      padding: 1rem 1.1rem 1.15rem;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.65rem;
+      flex: 1;
     }
-
-    .lightbox img {
-      max-width: 100%;
-      max-height: 80vh;
-      object-fit: contain;
-      border-radius: 12px;
+    .card-title {
+      font-family: Syne, system-ui, sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+    .tag {
+      font-size: 0.62rem;
+      color: var(--muted);
       border: 1px solid var(--line);
-      background: #000;
+      border-radius: 999px;
+      padding: 0.18rem 0.45rem;
     }
-
-    .lightbox-meta {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
+    .desc {
       font-size: 0.75rem;
       color: var(--muted);
+      flex: 1;
+    }
+    .card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.15rem;
+    }
+    .card-actions .btn { padding: 0.45rem 0.75rem; font-size: 0.7rem; }
+
+    /* Lineage */
+    .lineage-card {
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.35rem 1.4rem;
+      display: grid;
+      gap: 0.85rem;
+    }
+    .lineage-card h3 {
+      font-family: Syne, system-ui, sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
     }
 
-    .lightbox-close {
+    /* Modal / stage */
+    .stage {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(4, 5, 8, 0.92);
+      backdrop-filter: blur(10px);
+      display: none;
+      flex-direction: column;
+      padding: 0.75rem;
+    }
+    .stage.open { display: flex; }
+    .stage-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      padding: 0.35rem 0.5rem 0.85rem;
+    }
+    .stage-title {
+      font-family: Syne, system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .stage-tabs {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+    .stage-tabs .btn.active {
+      background: rgba(125, 255, 179, 0.15);
+      border-color: rgba(125, 255, 179, 0.4);
+      color: var(--accent);
+    }
+    .stage-body {
+      flex: 1;
+      min-height: 0;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      background: #0a0b10;
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    .stage-body.split { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 900px) {
+      .stage-body.split { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+    }
+    .stage-pane {
+      position: relative;
+      min-height: 0;
+      overflow: hidden;
+      background: #111;
+    }
+    .stage-pane + .stage-pane { border-left: 1px solid var(--line); }
+    @media (max-width: 900px) {
+      .stage-pane + .stage-pane { border-left: none; border-top: 1px solid var(--line); }
+    }
+    .stage-pane iframe,
+    .stage-pane img {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: #fff;
+    }
+    .stage-pane img {
+      object-fit: contain;
+      background: #0a0b10;
+    }
+    .stage-pane .pane-label {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
+      top: 0.65rem;
+      left: 0.65rem;
+      z-index: 2;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--muted);
+      backdrop-filter: blur(8px);
+    }
+    .stage-pane.demo .pane-label { color: var(--accent); }
+    .stage-pane.inspo .pane-label { color: var(--accent-2); }
+    .stage-empty {
+      display: grid;
+      place-items: center;
+      height: 100%;
+      color: var(--muted);
+      font-size: 0.8rem;
+      padding: 2rem;
+      text-align: center;
     }
 
     footer {
       border-top: 1px solid var(--line);
-      padding: 2rem 0 3rem;
+      padding: 1.75rem 0 2.5rem;
       color: var(--muted);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       display: flex;
       justify-content: space-between;
       gap: 1rem;
       flex-wrap: wrap;
     }
-
     footer a { color: var(--accent-3); }
     footer a:hover { text-decoration: underline; }
+
+    body.stage-open { overflow: hidden; }
   </style>
 </head>
 <body>
   <header>
     <div class="wrap nav">
-      <div class="brand">
-        <div class="brand-mark" aria-hidden="true">👾</div>
+      <a class="brand" href="#">
+        <span class="brand-mark" aria-hidden="true">👾</span>
         <span>aliens-made-this</span>
-      </div>
+      </a>
       <nav class="nav-links">
-        <a href="#showcase">Showcase</a>
-        <a href="#inspo">Inspiration shelf</a>
+        <a href="#previews">Previews</a>
         <a href="#lineage">Lineage</a>
         <a href="https://alieninterfaces.com/" target="_blank" rel="noreferrer">Alien Interfaces ↗</a>
         <a href="https://github.com/kvnloo/aliens-made-this" target="_blank" rel="noreferrer">GitHub</a>
@@ -524,21 +492,38 @@
 
   <main>
     <div class="wrap hero">
-      <div class="eyebrow">inspired by Alien Interfaces · our own experiments</div>
+      <div class="eyebrow">live preview site</div>
       <h1>What can the <em>aliens</em> make?</h1>
       <p class="lede">
-        Sparked by
-        <a href="https://alieninterfaces.com/" target="_blank" rel="noreferrer" style="color:var(--accent-3);text-decoration:underline;text-underline-offset:3px">alieninterfaces.com</a>
-        and CJ Gammon’s YouTube series — not copies of their case studies, but a similar loop:
-        AI UI inspo → ship real static pages. Each card pairs a local mock with our implementation.
+        Static HTML experiments in the spirit of
+        <a href="https://alieninterfaces.com/" target="_blank" rel="noreferrer">Alien Interfaces</a>
+        — AI UI mocks turned into real pages. Click a card for a full live preview
+        (and the original inspo when we have one).
       </p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#previews">Browse previews</a>
+        <a class="btn" href="https://www.youtube.com/playlist?list=PL08jItIqOb2oMXWRZTPua0nC3oZ6Stoul" target="_blank" rel="noreferrer">YT series ↗</a>
+        <a class="btn ghost" href="https://github.com/kvnloo/aliens-made-this" target="_blank" rel="noreferrer">Source</a>
+      </div>
       <div class="stats">
-        <div class="stat"><strong id="stat-demos">—</strong> live demos</div>
-        <div class="stat"><strong id="stat-linked">—</strong> linked to inspo</div>
-        <div class="stat"><strong id="stat-shelf">—</strong> extra references</div>
-        <a class="stat" href="https://www.youtube.com/playlist?list=PL08jItIqOb2oMXWRZTPua0nC3oZ6Stoul" target="_blank" rel="noreferrer" style="color:var(--text)">YT playlist ↗</a>
+        <div class="stat"><strong id="stat-count">—</strong> demos</div>
+        <div class="stat"><strong id="stat-inspo">—</strong> with local inspo</div>
+        <div class="stat">no build · pure HTML</div>
       </div>
     </div>
+
+    <section id="previews">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Previews</h2>
+            <p>Live iframe thumbnails · open for full stage</p>
+          </div>
+        </div>
+        <div class="filters" id="filters" role="tablist" aria-label="Filter demos"></div>
+        <div class="grid" id="grid"></div>
+      </div>
+    </section>
 
     <section id="lineage">
       <div class="wrap">
@@ -548,276 +533,315 @@
             <p>Where this experiment came from</p>
           </div>
         </div>
-        <article class="card" style="padding:1.25rem 1.35rem">
-          <div class="card-body" style="padding:0;gap:0.75rem">
-            <h3 style="font-family:Syne,system-ui,sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:-0.02em">
-              Inspired by Alien Interfaces
-            </h3>
-            <p class="desc">
-              <a href="https://alieninterfaces.com/" target="_blank" rel="noreferrer" style="color:var(--accent)">alieninterfaces.com</a>
-              is CJ Gammon’s collection of interactive UIs designed and built with AI —
-              Midjourney (and friends) → real HTML/CSS, with walkthroughs on YouTube.
-              We didn’t recreate their projects; we ran a similar experiment on our own mocks
-              (fintech dashboards, landings, trading UIs, etc.) and put the results here.
-            </p>
-            <div class="actions">
-              <a class="btn primary" href="https://alieninterfaces.com/" target="_blank" rel="noreferrer">Visit Alien Interfaces</a>
-              <a class="btn" href="https://www.youtube.com/playlist?list=PL08jItIqOb2oMXWRZTPua0nC3oZ6Stoul" target="_blank" rel="noreferrer">YouTube playlist</a>
-              <a class="btn ghost" href="https://blog.cjgammon.com/alien-interfaces-ui-ux-created-with-ai/" target="_blank" rel="noreferrer">CJ’s write-up</a>
-              <a class="btn ghost" href="https://www.cjgammon.com" target="_blank" rel="noreferrer">cjgammon.com</a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="showcase">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <h2>Showcase</h2>
-            <p>Local inspo on the left · implementation on the right</p>
+        <div class="lineage-card">
+          <h3>Inspired by Alien Interfaces</h3>
+          <p class="desc" style="max-width:70ch">
+            <a href="https://alieninterfaces.com/" target="_blank" rel="noreferrer" style="color:var(--accent)">alieninterfaces.com</a>
+            is CJ Gammon’s collection of interactive UIs designed and built with AI,
+            with YouTube walkthroughs of Midjourney → real HTML.
+            This site is a personal playground in that spirit: some product-style clones,
+            some pixel-perfect builds from our own inspo folder — not ports of his case studies.
+          </p>
+          <div class="card-actions">
+            <a class="btn primary" href="https://alieninterfaces.com/" target="_blank" rel="noreferrer">Visit Alien Interfaces</a>
+            <a class="btn" href="https://www.youtube.com/playlist?list=PL08jItIqOb2oMXWRZTPua0nC3oZ6Stoul" target="_blank" rel="noreferrer">YouTube playlist</a>
+            <a class="btn ghost" href="https://blog.cjgammon.com/alien-interfaces-ui-ux-created-with-ai/" target="_blank" rel="noreferrer">CJ’s write-up</a>
           </div>
         </div>
-        <div class="grid" id="showcase-grid"></div>
-      </div>
-    </section>
-
-    <section id="inspo">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <h2>Inspiration shelf</h2>
-            <p>Other UI references in <code>inspo/</code> (not yet wired to a demo on this branch)</p>
-          </div>
-        </div>
-        <div class="inspo-grid" id="inspo-grid"></div>
       </div>
     </section>
   </main>
 
   <footer class="wrap">
-    <span>aliens-made-this · similar experiments, inspired by <a href="https://alieninterfaces.com/" target="_blank" rel="noreferrer">Alien Interfaces</a></span>
+    <span>aliens-made-this · static GH Pages · inspired by <a href="https://alieninterfaces.com/" target="_blank" rel="noreferrer">Alien Interfaces</a></span>
     <span>
       <a href="https://github.com/kvnloo/aliens-made-this">source</a>
       ·
       <a href="README.md">readme</a>
-      ·
-      <a href="https://www.youtube.com/playlist?list=PL08jItIqOb2oMXWRZTPua0nC3oZ6Stoul" target="_blank" rel="noreferrer">YT series</a>
     </span>
   </footer>
 
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Inspiration image">
-    <button class="btn lightbox-close" type="button" id="lightbox-close">Close ✕</button>
-    <div class="lightbox-inner">
-      <img id="lightbox-img" src="" alt="" />
-      <div class="lightbox-meta">
-        <span id="lightbox-caption"></span>
-        <a id="lightbox-open" href="#" target="_blank" rel="noreferrer">Open full image ↗</a>
+  <!-- Full-screen stage -->
+  <div class="stage" id="stage" role="dialog" aria-modal="true" aria-label="Demo preview">
+    <div class="stage-bar">
+      <div class="stage-title" id="stage-title">Preview</div>
+      <div class="stage-tabs">
+        <button type="button" class="btn active" data-mode="demo">Live demo</button>
+        <button type="button" class="btn" data-mode="split">Split with inspo</button>
+        <button type="button" class="btn" data-mode="inspo">Inspo only</button>
+        <a class="btn primary" id="stage-open" href="#" target="_blank" rel="noreferrer">Open in tab ↗</a>
+        <button type="button" class="btn ghost" id="stage-close">Close ✕</button>
+      </div>
+    </div>
+    <div class="stage-body" id="stage-body">
+      <div class="stage-pane demo" id="pane-demo">
+        <span class="pane-label">Live demo</span>
+        <iframe id="stage-iframe" title="Live demo" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+      </div>
+      <div class="stage-pane inspo" id="pane-inspo" hidden>
+        <span class="pane-label">Original inspo</span>
+        <img id="stage-inspo" alt="Inspiration" />
+        <div class="stage-empty" id="stage-inspo-empty" hidden>No local inspo image for this one<br/>(product-style / external ref)</div>
       </div>
     </div>
   </div>
 
   <script>
-    /**
-     * Demo ↔ original inspo mappings
-     * Sources: batch-implement pixel-perfect/README.md, style guides, visual match
-     */
-    const SHOWCASES = [
+    const PROJECTS = [
       {
         id: "dashboard",
         title: "Financial dashboard",
         demo: "pixel-perfect/dashboard.html",
         inspo: "inspo/original-a16c4c2967229fa52683443ee0c26903.webp",
-        tags: ["fintech", "desktop", "sage green"],
-        desc: "Hello, Carlic! — light property/finance dashboard with metric cards, balance chart, credit stack, transfers, and security CTA. Exact original reference restored.",
+        tags: ["fintech", "desktop"],
+        filter: "dashboard",
+        desc: "Hello, Carlic! — sage-green property/finance UI with metrics, balance chart, credit stack, transfers.",
       },
       {
         id: "dashboard-uied",
-        title: "Financial dashboard (UIED alt)",
+        title: "Financial dashboard (alt)",
         demo: "pixel-perfect/dashboard_uied.html",
         inspo: "inspo/original-a16c4c2967229fa52683443ee0c26903.webp",
-        tags: ["fintech", "fixed canvas", "alt pass"],
-        desc: "Same Carlic reference, alternate implementation pass (fixed 1066×800 canvas).",
+        tags: ["fintech", "fixed canvas"],
+        filter: "dashboard",
+        desc: "Same Carlic reference, alternate fixed-canvas implementation pass.",
       },
       {
         id: "data-viz",
-        title: "Landscape data-viz dashboard",
+        title: "Landscape data-viz",
         demo: "pixel-perfect/data-viz-dashboard.html",
         inspo: "inspo/Fjm_ePFVEAIb2zq.jpeg",
-        tags: ["dashboard", "chart.js", "mountains"],
-        desc: "Dark glass cards over a nature / mountain analytics kit — the landscape reference (not the whale HUD).",
+        tags: ["dashboard", "charts"],
+        filter: "dashboard",
+        desc: "Dark glass analytics cards with mountain landscape inspiration.",
       },
       {
         id: "glass",
-        title: "Glassmorphic mobile UI",
+        title: "Glassmorphic mobile",
         demo: "pixel-perfect/01.html",
         inspo: "inspo/01.jpg",
-        tags: ["mobile", "glass", "pastel"],
-        desc: "Pastel glass cards and mountain hero — matches inspo/01.jpg.",
+        tags: ["mobile", "glass"],
+        filter: "mobile",
+        desc: "Pastel glass cards over a mountain hero — mobile-first UI.",
       },
       {
         id: "isometric",
-        title: "Isometric 3D landing cards",
+        title: "Isometric 3D cards",
         demo: "pixel-perfect/isometric-landing-page.html",
         inspo: "inspo/Lookasz_use_colors_from_link_landing_page_with_buttons_and_larg_96dc354a-d397-461f-93a3-ef2ba1ad7f4e.png",
-        tags: ["landing", "3D gems", "neon"],
-        desc: "Dark cards with isometric crystals / geometric product tiles and neon CTAs.",
+        tags: ["landing", "3D"],
+        filter: "landing",
+        desc: "Dark landing with neon isometric gem / crystal product cards.",
       },
       {
         id: "motherduck",
-        title: "MotherDuck brutalist landing",
+        title: "MotherDuck brutalist",
         demo: "pixel-perfect/motherduck.html",
         inspo: null,
-        tags: ["brutalist", "landing", "live-site clone"],
-        desc: "Bold yellow/blue brutalist MotherDuck-style landing. Reference was the live product site (no local inspo screenshot).",
+        tags: ["landing", "brutalist"],
+        filter: "landing",
+        desc: "Bold yellow/blue MotherDuck-style marketing landing (product-inspired).",
       },
       {
         id: "trading",
         title: "Alpha Arena trading",
         demo: "pixel-perfect/trading.html",
         inspo: null,
-        tags: ["trading", "dense UI", "tables"],
-        desc: "AI trading portfolio tracker UI. No local inspo image checked in for this one.",
+        tags: ["trading", "dense"],
+        filter: "app",
+        desc: "AI trading portfolio tracker with dense tables and market UI.",
       },
       {
         id: "harness",
         title: "Harness-inspired SaaS",
         demo: "pixel-perfect/harness.html",
         inspo: null,
-        tags: ["enterprise", "saas", "live-site clone"],
-        desc: "Enterprise open-source platform marketing UI inspired by harness.io (no local inspo screenshot).",
+        tags: ["saas", "enterprise"],
+        filter: "landing",
+        desc: "Enterprise open-source platform marketing UI inspired by harness.io.",
       },
     ];
 
-    /** UI-looking inspo not already used as a primary showcase source */
-    const SHELF = [
-      { file: "inspo/Fjm_dssVIAAq4T2.jpg", note: "Sci-fi whale HUD (ocean-dashboard clone on other branch)" },
-      { file: "inspo/FjtjX_saEAAeA3u.jpeg", note: "Pasta / food nutrition dashboard" },
-      { file: "inspo/FjtjXt6aMAAKt_U.jpeg", note: "3D travel booking mobiles" },
-      { file: "inspo/FjtjYmaaAAAcDNC.jpeg", note: "Dark fantasy character select" },
-      { file: "inspo/Francesco.Svara_A_side_by_side_UIUx_design_screens_of_an_app_wh_8a755e3d-d655-4ee6-8520-4d542a66ff5b.png", note: "Fitness / health app" },
-      { file: "inspo/AbhigyanPatwari_UI_UX_design_side_by_side_Behance_Dribble_beaut_25f4f864-f958-4ca1-b5ad-2cef9e795633.png", note: "Dark finance orbs mobile" },
-      { file: "inspo/1_lKE4lwy3QcSqDh8-CBYijg.png", note: "Bakery / pizza multi-screen kit" },
-      { file: "inspo/UX-Design-Midjourney-008-980x980.jpg", note: "Pizza product + catalog" },
-      { file: "inspo/Ds_Beautiful_online_course_website_ui_ux_ui_ux_website_shallow__2a8acff8-57de-4994-a426-5a39ec7acf04.png", note: "Online course platform" },
-      { file: "inspo/jslowsky_landing_page_design_Desentralize_organization_high-qua_1c5bbb7c-1377-4887-b626-b86a886b6ea6.png", note: "Bold orange 3D landing" },
-      { file: "inspo/original-4e145bbd4a9682e9bbf3129051205edc.webp", note: "Travel / tropical booking pair" },
-      { file: "inspo/original-f57dd8ad033c42baf6dd16b817e0f3e3.webp", note: "Fishing / nature mobile" },
-      { file: "inspo/02.jpg", note: "Botanical mobile pair" },
-      { file: "inspo/03.jpg", note: "Abstract 3D mobile pair" },
+    const FILTERS = [
+      { id: "all", label: "All" },
+      { id: "dashboard", label: "Dashboards" },
+      { id: "landing", label: "Landings" },
+      { id: "mobile", label: "Mobile" },
+      { id: "app", label: "Apps" },
     ];
 
-    const showcaseGrid = document.getElementById("showcase-grid");
-    const inspoGrid = document.getElementById("inspo-grid");
-    const lightbox = document.getElementById("lightbox");
-    const lightboxImg = document.getElementById("lightbox-img");
-    const lightboxCaption = document.getElementById("lightbox-caption");
-    const lightboxOpen = document.getElementById("lightbox-open");
+    const grid = document.getElementById("grid");
+    const filtersEl = document.getElementById("filters");
+    let activeFilter = "all";
 
-    function openLightbox(src, caption) {
-      lightboxImg.src = src;
-      lightboxImg.alt = caption || "Inspiration";
-      lightboxCaption.textContent = caption || src;
-      lightboxOpen.href = src;
-      lightbox.classList.add("open");
-      document.body.style.overflow = "hidden";
+    /* Scale iframe thumbs to card width */
+    function scalePreview(frame) {
+      const scaler = frame.querySelector(".preview-scaler");
+      if (!scaler) return;
+      const w = frame.clientWidth;
+      const h = frame.clientHeight;
+      const sx = w / 1280;
+      const sy = h / 800;
+      const s = Math.max(sx, sy); // cover
+      scaler.style.transform = `scale(${s})`;
     }
 
-    function closeLightbox() {
-      lightbox.classList.remove("open");
-      lightboxImg.src = "";
-      document.body.style.overflow = "";
+    function scaleAll() {
+      document.querySelectorAll(".preview-frame").forEach(scalePreview);
     }
 
-    document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
-    lightbox.addEventListener("click", (e) => {
-      if (e.target === lightbox) closeLightbox();
-    });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeLightbox();
-    });
+    function renderFilters() {
+      filtersEl.innerHTML = "";
+      FILTERS.forEach((f) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "filter" + (f.id === activeFilter ? " active" : "");
+        b.textContent = f.label;
+        b.addEventListener("click", () => {
+          activeFilter = f.id;
+          renderFilters();
+          renderGrid();
+        });
+        filtersEl.appendChild(b);
+      });
+    }
 
-    function renderShowcase(item) {
-      const card = document.createElement("article");
-      card.className = "card";
-      card.id = item.id;
+    function renderGrid() {
+      grid.innerHTML = "";
+      const list = PROJECTS.filter(
+        (p) => activeFilter === "all" || p.filter === activeFilter
+      );
+      list.forEach((p) => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.dataset.id = p.id;
 
-      const inspoPanel = item.inspo
-        ? `<button type="button" class="panel inspo" data-lightbox="${item.inspo}" data-caption="${item.title} · original inspo" style="border:0;width:100%;padding:0;cursor:zoom-in;background:var(--bg-elev);">
-             <span class="panel-label">Original inspo</span>
-             <img src="${item.inspo}" alt="${item.title} inspiration" loading="lazy" />
-           </button>`
-        : `<div class="panel inspo">
-             <span class="panel-label">Original inspo</span>
-             <div class="no-inspo">No local screenshot<br/><span style="opacity:.7">cloned from live product / external ref</span></div>
-           </div>`;
+        const fallback = p.inspo
+          ? `<div class="preview-fallback" data-fallback><img src="${p.inspo}" alt="" loading="lazy" /></div>`
+          : `<div class="preview-fallback" data-fallback style="display:flex;color:var(--muted);font-size:0.7rem">Preview loading…</div>`;
 
-      card.innerHTML = `
-        <div class="card-top">
-          ${inspoPanel}
-          <div class="panel live">
-            <span class="panel-label">Live demo</span>
-            <div class="live-inner">
-              <div class="live-icon" aria-hidden="true">↗</div>
-              <div class="live-path">${item.demo}</div>
-              <a class="btn primary" href="${item.demo}" target="_blank" rel="noreferrer">Open demo</a>
+        card.innerHTML = `
+          <div class="preview-frame" data-open="${p.id}" title="Open full preview">
+            <span class="preview-badge">Live</span>
+            ${fallback}
+            <div class="preview-scaler">
+              <iframe src="${p.demo}" title="${p.title} preview" loading="lazy" tabindex="-1"
+                sandbox="allow-scripts allow-same-origin"></iframe>
             </div>
           </div>
-        </div>
-        <div class="card-body">
-          <div class="card-title-row">
-            <h3>${item.title}</h3>
-            <div class="tags">${item.tags.map((t) => `<span class="tag">${t}</span>`).join("")}</div>
+          <div class="card-body">
+            <div class="card-title">${p.title}</div>
+            <div class="tags">${p.tags.map((t) => `<span class="tag">${t}</span>`).join("")}</div>
+            <p class="desc">${p.desc}</p>
+            <div class="card-actions">
+              <button type="button" class="btn primary" data-open="${p.id}">Preview</button>
+              <a class="btn" href="${p.demo}" target="_blank" rel="noreferrer">Open raw</a>
+              ${
+                p.inspo
+                  ? `<a class="btn ghost" href="${p.inspo}" target="_blank" rel="noreferrer">Inspo</a>`
+                  : ""
+              }
+            </div>
           </div>
-          <p class="desc">${item.desc}</p>
-          <div class="actions">
-            <a class="btn primary" href="${item.demo}" target="_blank" rel="noreferrer">Open live demo</a>
-            ${
-              item.inspo
-                ? `<button type="button" class="btn" data-lightbox="${item.inspo}" data-caption="${item.title} · original inspo">View inspo full-size</button>
-                   <a class="btn ghost" href="${item.inspo}" target="_blank" rel="noreferrer">Raw image</a>`
-                : ""
-            }
-          </div>
-        </div>
-      `;
-      return card;
-    }
+        `;
+        grid.appendChild(card);
 
-    function renderShelfTile(item) {
-      const fig = document.createElement("figure");
-      fig.className = "inspo-tile";
-      fig.tabIndex = 0;
-      fig.setAttribute("role", "button");
-      const name = item.file.split("/").pop();
-      fig.innerHTML = `
-        <img src="${item.file}" alt="${item.note}" loading="lazy" />
-        <figcaption><strong style="color:var(--text);font-weight:500">${item.note}</strong><br/>${name}</figcaption>
-      `;
-      const open = () => openLightbox(item.file, `${item.note} · ${name}`);
-      fig.addEventListener("click", open);
-      fig.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          open();
+        const frame = card.querySelector(".preview-frame");
+        const iframe = frame.querySelector("iframe");
+        const fallbackEl = frame.querySelector("[data-fallback]");
+        // hide fallback once iframe paints (best-effort)
+        iframe.addEventListener("load", () => {
+          if (fallbackEl) fallbackEl.classList.remove("shown");
+          if (fallbackEl && !p.inspo) fallbackEl.style.display = "none";
+          scalePreview(frame);
+        });
+        // show inspo as soft underlay while loading if available
+        if (p.inspo && fallbackEl) {
+          fallbackEl.classList.add("shown");
+          fallbackEl.style.opacity = "0.35";
         }
+        requestAnimationFrame(() => scalePreview(frame));
       });
-      return fig;
+      scaleAll();
     }
 
-    SHOWCASES.forEach((item) => showcaseGrid.appendChild(renderShowcase(item)));
-    SHELF.forEach((item) => inspoGrid.appendChild(renderShelfTile(item)));
+    /* Stage modal */
+    const stage = document.getElementById("stage");
+    const stageBody = document.getElementById("stage-body");
+    const stageIframe = document.getElementById("stage-iframe");
+    const stageInspo = document.getElementById("stage-inspo");
+    const stageInspoEmpty = document.getElementById("stage-inspo-empty");
+    const paneInspo = document.getElementById("pane-inspo");
+    const stageTitle = document.getElementById("stage-title");
+    const stageOpen = document.getElementById("stage-open");
+    let current = null;
+    let mode = "demo";
 
-    document.getElementById("stat-demos").textContent = String(SHOWCASES.length);
-    document.getElementById("stat-linked").textContent = String(SHOWCASES.filter((s) => s.inspo).length);
-    document.getElementById("stat-shelf").textContent = String(SHELF.length);
+    function setMode(next) {
+      mode = next;
+      document.querySelectorAll(".stage-tabs [data-mode]").forEach((b) => {
+        b.classList.toggle("active", b.dataset.mode === mode);
+      });
+      const showInspo = mode === "inspo" || mode === "split";
+      const showDemo = mode === "demo" || mode === "split";
+      document.getElementById("pane-demo").hidden = !showDemo;
+      paneInspo.hidden = !showInspo;
+      stageBody.classList.toggle("split", mode === "split");
+    }
 
-    document.body.addEventListener("click", (e) => {
-      const t = e.target.closest("[data-lightbox]");
-      if (!t) return;
-      openLightbox(t.dataset.lightbox, t.dataset.caption || t.dataset.lightbox);
+    function openStage(id) {
+      const p = PROJECTS.find((x) => x.id === id);
+      if (!p) return;
+      current = p;
+      stageTitle.textContent = p.title;
+      stageOpen.href = p.demo;
+      stageIframe.src = p.demo;
+      if (p.inspo) {
+        stageInspo.hidden = false;
+        stageInspoEmpty.hidden = true;
+        stageInspo.src = p.inspo;
+        stageInspo.alt = p.title + " inspiration";
+      } else {
+        stageInspo.hidden = true;
+        stageInspo.removeAttribute("src");
+        stageInspoEmpty.hidden = false;
+      }
+      // default: split if inspo, else demo
+      setMode(p.inspo ? "split" : "demo");
+      stage.classList.add("open");
+      document.body.classList.add("stage-open");
+    }
+
+    function closeStage() {
+      stage.classList.remove("open");
+      document.body.classList.remove("stage-open");
+      stageIframe.src = "about:blank";
+      current = null;
+    }
+
+    document.getElementById("stage-close").addEventListener("click", closeStage);
+    document.querySelectorAll(".stage-tabs [data-mode]").forEach((b) => {
+      b.addEventListener("click", () => setMode(b.dataset.mode));
     });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && stage.classList.contains("open")) closeStage();
+    });
+    document.body.addEventListener("click", (e) => {
+      const t = e.target.closest("[data-open]");
+      if (!t) return;
+      e.preventDefault();
+      openStage(t.dataset.open);
+    });
+
+    window.addEventListener("resize", scaleAll);
+
+    document.getElementById("stat-count").textContent = String(PROJECTS.length);
+    document.getElementById("stat-inspo").textContent = String(
+      PROJECTS.filter((p) => p.inspo).length
+    );
+
+    renderFilters();
+    renderGrid();
   </script>
 </body>
 </html>
