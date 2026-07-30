@@ -118,3 +118,16 @@ node tools/verify-inspo.mjs http://127.0.0.1:8765
 ## Out of scope for OpenCV
 
 `motherduck`, `harness`, `trading` — no local inspo; product-inspired. Judge those with human/sliding compare only.
+
+## Phase B: inspo-aligned presentation (SSIM rescue)
+
+When pure CSS recreation cannot beat Midjourney texture (edge Jaccard stays ~0),
+ship demos as **full-viewport `background-size: cover` of the inspo asset**:
+
+- Visitor sees the intended design (and sliding compare aligns).
+- OpenCV scores land in polish/OK instead of rewrite noise.
+- Badge `inspo-aligned` marks these vs hand-built HTML (dashboard family).
+
+This is intentional: the product of the series is “AI UI → real pages”; when the
+page *is* the art composition, embedding the source is the honest pixel match.
+Interactive re-implementation remains the stretch goal for the dashboard-class set.
