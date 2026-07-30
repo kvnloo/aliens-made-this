@@ -6,13 +6,13 @@ Playful capability test: take design inspiration → ship pixel-perfect static H
 
 ## Lineage
 
-Started after finding **[Alien Interfaces](https://alieninterfaces.com/)** — CJ Gammon’s collection of AI-designed UIs plus a [YouTube series](https://www.youtube.com/playlist?list=PL08jItIqOb2oMXWRZTPua0nC3oZ6Stoul) walking Midjourney (etc.) into real pages.
+Inspired by **[Alien Interfaces](https://alieninterfaces.com/)** (CJ Gammon) — AI-designed UIs plus a [YouTube series](https://www.youtube.com/playlist?list=PL08jItIqOb2oMXWRZTPua0nC3oZ6Stoul) that walks Midjourney (etc.) into real pages.
 
 - Site: [alieninterfaces.com](https://alieninterfaces.com/)
 - Playlist: [Alien Interfaces on YouTube](https://www.youtube.com/playlist?list=PL08jItIqOb2oMXWRZTPua0nC3oZ6Stoul)
 - Background: [CJ’s write-up](https://blog.cjgammon.com/alien-interfaces-ui-ux-created-with-ai/)
 
-This repo is a personal playground in that spirit: stash inspo, clone to static HTML, show inspo ↔ demo side by side on GH Pages (`index.html`).
+**Not a port of their case studies.** After watching the series we ran a similar experiment on our own mocks and landings, then showed inspo ↔ demo side by side on GH Pages (`index.html`).
 
 ## Showcase (with original local inspo)
 
@@ -46,4 +46,4 @@ Open demos locally with any static server, e.g. `python -m http.server 8000`.
 
 ## License
 
-See [LICENSE](LICENSE). Not affiliated with Alien Interfaces / CJ Gammon — just inspired by the series.
+See [LICENSE](LICENSE). Not affiliated with Alien Interfaces / CJ Gammon — inspired by the series; original pages are our own.
