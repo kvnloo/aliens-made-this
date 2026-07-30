@@ -1,510 +1,674 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abhigyan Mobile App - Pixel Perfect Clone</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abhigyan — Laledo / Laloch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%; height: 100%; overflow: hidden;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    }
+    /* Studio backdrop: purple left → peach right (not inspo wallpaper) */
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(ellipse 68% 95% at 8% 50%, rgba(130, 80, 200, 0.42) 0%, transparent 58%),
+        radial-gradient(ellipse 62% 90% at 92% 48%, rgba(255, 175, 145, 0.5) 0%, transparent 55%),
+        linear-gradient(102deg,
+          #6A4AA6 0%, #7A58A8 16%, #9A6A9C 34%,
+          #C88898 52%, #E8A898 72%, #F2BCA8 90%, #F5C8B0 100%);
+    }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #6B4C9A 0%, #8B5A8B 25%, #C87B8B 75%, #E8A89B 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-            overflow-x: hidden;
-        }
+    .stage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+    }
 
-        .container {
-            display: flex;
-            gap: 40px;
-            flex-wrap: wrap;
-            justify-content: center;
-            max-width: 900px;
-        }
+    .phone {
+      width: 360px;
+      height: 760px;
+      background: #05060a;
+      border-radius: 50px;
+      padding: 10px;
+      box-shadow:
+        0 40px 90px rgba(40, 10, 50, 0.55),
+        0 14px 32px rgba(0, 0, 0, 0.38),
+        inset 0 0 0 1.5px rgba(255, 255, 255, 0.08);
+      position: relative;
+      flex-shrink: 0;
+    }
 
-        .phone-device {
-            width: 375px;
-            height: 812px;
-            background: #000;
-            border-radius: 40px;
-            padding: 12px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-            position: relative;
-        }
+    .screen {
+      width: 100%; height: 100%;
+      border-radius: 42px;
+      overflow: hidden;
+      position: relative;
+      background: #0a1224;
+    }
+    .screen-left {
+      background:
+        radial-gradient(ellipse 120% 50% at 50% 16%, rgba(60, 80, 150, 0.3) 0%, transparent 70%),
+        linear-gradient(180deg, #0c1830 0%, #091020 50%, #0a1426 100%);
+    }
+    .screen-right {
+      background:
+        radial-gradient(ellipse 100% 42% at 50% 10%, rgba(50, 85, 150, 0.28) 0%, transparent 68%),
+        linear-gradient(180deg, #0c1830 0%, #091020 50%, #0a1426 100%);
+    }
 
-        .phone-screen {
-            width: 100%;
-            height: 100%;
-            background: #1A2332;
-            border-radius: 32px;
-            overflow: hidden;
-            position: relative;
-        }
+    .notch {
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 120px; height: 26px;
+      background: #05060a;
+      border-radius: 0 0 18px 18px;
+      z-index: 60;
+    }
+    .notch::after {
+      content: '';
+      position: absolute;
+      top: 8px; left: 50%; transform: translateX(-50%);
+      width: 44px; height: 5px;
+      background: #1a1e28;
+      border-radius: 4px;
+    }
 
-        .status-bar {
-            height: 44px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            color: white;
-        }
+    .status {
+      position: relative; z-index: 50;
+      height: 42px;
+      padding: 12px 24px 0;
+      display: flex; justify-content: space-between; align-items: center;
+      color: #fff; font-size: 12.5px; font-weight: 600;
+    }
+    .status-icons { display: flex; gap: 4px; align-items: center; opacity: 0.9; }
 
-        .time {
-            font-size: 15px;
-            font-weight: 600;
-        }
+    .app-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 2px 20px 0;
+      position: relative; z-index: 20;
+    }
+    .app-name {
+      font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.4px;
+    }
+    .app-bar-right {
+      display: flex; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.4); font-size: 11px; font-weight: 500;
+    }
+    .icon-btn {
+      width: 28px; height: 28px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.6); cursor: pointer;
+      border: none; background: transparent;
+      transition: background 0.15s, color 0.15s;
+    }
+    .icon-btn:hover { background: rgba(255,255,255,0.08); color: #fff; }
 
-        .status-icons {
-            display: flex;
-            gap: 4px;
-            align-items: center;
-        }
+    .stars { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+    .star { position: absolute; background: rgba(255,255,255,0.9); border-radius: 50%; }
+    .star.sm { width: 1.5px; height: 1.5px; opacity: 0.35; }
+    .star.md { width: 2.4px; height: 2.4px; opacity: 0.65; }
+    .star.lg { width: 3.2px; height: 3.2px; opacity: 0.9; }
+    .star.cross {
+      width: 10px; height: 10px; background: transparent; opacity: 0.85;
+    }
+    .star.cross::before, .star.cross::after {
+      content: ''; position: absolute;
+      background: rgba(255, 220, 170, 0.95);
+      border-radius: 1px;
+      left: 50%; top: 50%; transform: translate(-50%, -50%);
+    }
+    .star.cross::before { width: 10px; height: 1.5px; }
+    .star.cross::after { width: 1.5px; height: 10px; }
+    .star.cross.cyan::before, .star.cross.cyan::after { background: rgba(150, 230, 255, 0.9); }
 
-        .app-header {
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    /* LEFT planet */
+    .planet-zone {
+      position: relative;
+      height: 300px;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 5; margin-top: 2px;
+    }
+    .planet {
+      width: 200px; height: 200px; border-radius: 50%;
+      position: relative; z-index: 4;
+      background:
+        radial-gradient(circle at 32% 24%,
+          #FFF8E8 0%, #FFE4A8 8%, #FFC070 20%,
+          #FF9860 36%, #F07068 54%, #D85078 72%, #B84068 90%, #982848 100%);
+      box-shadow:
+        0 0 48px rgba(255, 110, 100, 0.55),
+        0 0 96px rgba(255, 70, 120, 0.28),
+        0 14px 32px rgba(0,0,0,0.4),
+        inset -14px -16px 30px rgba(140, 20, 60, 0.42),
+        inset 12px 12px 26px rgba(255,255,255,0.28);
+      overflow: hidden; cursor: pointer;
+      transition: transform 0.25s ease;
+    }
+    .planet:hover { transform: scale(1.03); }
+    .planet-band {
+      position: absolute; left: -10%; right: -10%; height: 48%; bottom: 0;
+      background: linear-gradient(180deg,
+        transparent 0%, rgba(255,130,90,0.18) 12%,
+        rgba(190,50,80,0.55) 45%, rgba(150,35,65,0.9) 100%);
+    }
+    .planet-mountains {
+      position: absolute; left: 0; right: 0; bottom: 8%; height: 48%; z-index: 2;
+    }
+    .planet-mountains svg { width: 100%; height: 100%; display: block; }
+    .planet-chart {
+      position: absolute; left: 12%; right: 12%; top: 24%; height: 42%; z-index: 3;
+    }
+    .planet-chart svg { width: 100%; height: 100%; overflow: visible; }
 
-        .app-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 20px;
-            font-weight: 600;
-            color: white;
-        }
+    .moon { position: absolute; border-radius: 50%; z-index: 6; }
+    .moon-blue {
+      width: 32px; height: 32px; right: 46px; bottom: 72px;
+      background: radial-gradient(circle at 32% 28%, #C0F0FF 0%, #58B0F0 45%, #2868B0 100%);
+      box-shadow: 0 0 20px rgba(90,180,240,0.6), 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .moon-purple {
+      width: 16px; height: 16px; left: 54px; bottom: 90px;
+      background: radial-gradient(circle at 30% 28%, #E0C8FF 0%, #9070D8 50%, #5030A0 100%);
+      box-shadow: 0 0 12px rgba(140,100,230,0.55);
+    }
+    .moon-tiny {
+      width: 11px; height: 11px; right: 68px; top: 74px;
+      background: radial-gradient(circle at 30% 28%, #FFF0B0, #E8A040);
+      box-shadow: 0 0 10px rgba(255,200,80,0.6);
+    }
+    .moon-cyan-sm {
+      width: 9px; height: 9px; left: 72px; top: 104px;
+      background: radial-gradient(circle at 30% 28%, #B0F0FF, #40A0D8);
+      box-shadow: 0 0 8px rgba(80,180,240,0.5);
+    }
 
-        .header-icon {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
+    .content-pad { padding: 0 15px; position: relative; z-index: 10; }
 
-        .orb-container {
-            position: relative;
-            height: 240px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: visible;
-        }
+    .card {
+      background: rgba(14, 26, 48, 0.82);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 13px 14px 12px;
+      margin-bottom: 9px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+      transition: border-color 0.15s, background 0.15s;
+      cursor: pointer;
+    }
+    .card:hover {
+      border-color: rgba(255,255,255,0.16);
+      background: rgba(20, 34, 58, 0.9);
+    }
+    .card-row { display: flex; justify-content: space-between; align-items: center; }
+    .card-title { font-size: 14px; font-weight: 600; color: #fff; letter-spacing: -0.2px; }
+    .card-sub { font-size: 11.5px; font-weight: 500; color: rgba(255,255,255,0.55); margin-top: 5px; }
+    .card-meta { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
+    .meta-chip { font-size: 10px; color: rgba(255,255,255,0.32); }
+    .pct { font-size: 11px; font-weight: 600; color: #FF7A9A; }
+    .share-ico {
+      width: 22px; height: 22px; border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.4);
+    }
 
-        .main-orb {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.6) 0%, #FFB366 15%, #FF8B5A 40%, #FF6B94 100%);
-            box-shadow:
-                0 12px 40px rgba(0,0,0,0.3),
-                0 0 60px rgba(255, 107, 148, 0.4);
-            position: relative;
-            z-index: 10;
-            animation: float 6s ease-in-out infinite;
-        }
+    .dot-row { display: flex; gap: 10px; margin-top: 11px; }
+    .ndot {
+      width: 38px; height: 38px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; color: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      cursor: pointer; border: none; transition: transform 0.15s;
+    }
+    .ndot:hover { transform: translateY(-2px); }
+    .ndot.active { outline: 2px solid rgba(255,255,255,0.48); outline-offset: 2px; }
+    .dot-labels { display: flex; gap: 10px; margin-top: 4px; }
+    .dot-labels span {
+      width: 38px; text-align: center; font-size: 7px;
+      color: rgba(255,255,255,0.34); font-weight: 500;
+    }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-12px) scale(1.02); }
-        }
+    .bottom-nav {
+      position: absolute; bottom: 20px; left: 0; right: 0;
+      display: flex; justify-content: center; gap: 11px; z-index: 20;
+    }
+    .nav-orb {
+      width: 42px; height: 42px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.32);
+      color: #fff; cursor: pointer; transition: transform 0.15s;
+      border: none; padding: 0;
+    }
+    .nav-orb:hover { transform: scale(1.08); }
+    .nav-orb.active {
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.35), 0 4px 14px rgba(0,0,0,0.32);
+    }
+    .nav-orb svg { width: 15px; height: 15px; }
+    .nav-orb .n-num { font-size: 12px; font-weight: 700; color: #fff; }
 
-        .small-orb {
-            position: absolute;
-            border-radius: 50%;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-            animation: float 8s ease-in-out infinite;
-        }
+    .home-bar {
+      position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+      width: 108px; height: 4px;
+      background: rgba(255,255,255,0.32); border-radius: 4px; z-index: 30;
+    }
 
-        .orb-blue {
-            width: 48px;
-            height: 48px;
-            background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #5E8FE8 20%, #4B7CD6);
-            box-shadow: 0 0 40px rgba(94, 143, 232, 0.4);
-            top: 30px;
-            right: 40px;
-            animation-delay: 1s;
-        }
+    /* RIGHT metrics */
+    .hero-zone {
+      position: relative; height: 158px;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 5; margin-top: 0;
+    }
+    .orb-wrap { position: relative; width: 112px; height: 112px; }
+    .orb {
+      width: 112px; height: 112px; border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 26%,
+          #F0FCFF 0%, #80E0F8 12%, #58A0F0 32%,
+          #7868D8 55%, #C870B8 78%, #F09098 100%);
+      box-shadow:
+        0 0 34px rgba(100,170,240,0.5),
+        0 0 68px rgba(170,100,200,0.28),
+        0 10px 26px rgba(0,0,0,0.34),
+        inset -10px -12px 22px rgba(80,40,120,0.3),
+        inset 10px 12px 18px rgba(255,255,255,0.24);
+      position: relative; z-index: 4; cursor: pointer;
+      transition: transform 0.25s; overflow: hidden;
+    }
+    .orb:hover { transform: scale(1.05); }
+    .orb-inner-chart {
+      position: absolute; inset: 18%; z-index: 2; opacity: 0.85;
+    }
+    .orb-inner-chart svg { width: 100%; height: 100%; overflow: visible; }
 
-        .orb-purple {
-            width: 56px;
-            height: 56px;
-            background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #9B88ED 20%, #7B68CD);
-            box-shadow: 0 0 45px rgba(155, 136, 237, 0.4);
-            bottom: 40px;
-            left: 30px;
-            animation-delay: 2s;
-        }
+    .wave-layer {
+      position: absolute; inset: -40px -60px; z-index: 2; pointer-events: none;
+    }
+    .wave-layer svg { width: 100%; height: 100%; overflow: visible; }
 
-        .info-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 16px;
-            padding: 16px 20px;
-            margin: 0 20px 16px;
-            backdrop-filter: blur(20px);
-        }
+    .orb-sat {
+      position: absolute; border-radius: 50%; z-index: 5;
+    }
+    .orb-sat.s1 {
+      width: 14px; height: 14px; right: -6px; top: 18px;
+      background: radial-gradient(circle at 30% 30%, #C0F8FF, #48A8E8);
+      box-shadow: 0 0 10px rgba(80,180,240,0.7);
+    }
+    .orb-sat.s2 {
+      width: 10px; height: 10px; left: -4px; bottom: 28px;
+      background: radial-gradient(circle at 30% 30%, #FFE0A0, #E88840);
+      box-shadow: 0 0 8px rgba(255,160,60,0.6);
+    }
+    .orb-sat.s3 {
+      width: 8px; height: 8px; right: 14px; bottom: -2px;
+      background: radial-gradient(circle at 30% 30%, #E0C0FF, #8860D0);
+      box-shadow: 0 0 8px rgba(140,100,220,0.55);
+    }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
+    .metric-block { padding: 0 20px; position: relative; z-index: 10; }
+    .metric-row {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 4px;
+    }
+    .big-num {
+      font-size: 36px; font-weight: 700; color: #fff;
+      letter-spacing: -1.2px; line-height: 1;
+    }
+    .metric-sub {
+      font-size: 10px; color: rgba(255,255,255,0.38); margin-top: 4px; font-weight: 500;
+    }
+    .side-metric { text-align: right; }
+    .side-val {
+      font-size: 15px; font-weight: 600; color: #F0A060; letter-spacing: -0.3px;
+    }
+    .side-label {
+      font-size: 9px; color: rgba(255,255,255,0.32); margin-top: 2px;
+    }
 
-        .card-title {
-            font-size: 14px;
-            font-weight: 500;
-            color: white;
-        }
+    .chip-row {
+      display: flex; gap: 9px; margin: 14px 0 12px; justify-content: flex-start;
+    }
+    .chip {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; color: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.28);
+      cursor: pointer; border: none; transition: transform 0.15s;
+    }
+    .chip:hover { transform: translateY(-2px); }
+    .chip.active { outline: 2px solid rgba(255,255,255,0.45); outline-offset: 2px; }
+    .chip-labels { display: flex; gap: 9px; margin-top: -6px; margin-bottom: 12px; }
+    .chip-labels span {
+      width: 36px; text-align: center; font-size: 7px;
+      color: rgba(255,255,255,0.32); font-weight: 500;
+    }
 
-        .percentage-change {
-            font-size: 11px;
-            color: #FF6B94;
-            font-weight: 500;
-        }
+    .panel {
+      background: rgba(12, 24, 44, 0.78);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      backdrop-filter: blur(14px);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .panel:hover { border-color: rgba(255,255,255,0.14); }
+    .panel-title {
+      font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.88); margin-bottom: 10px;
+    }
+    .mini-chart { height: 48px; width: 100%; }
+    .mini-chart svg { width: 100%; height: 100%; overflow: visible; }
 
-        .color-dots {
-            display: flex;
-            gap: 12px;
-            margin-top: 12px;
-        }
-
-        .color-dot {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .color-dot:hover {
-            transform: scale(1.1);
-        }
-
-        .stats-row {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-            margin-top: 12px;
-        }
-
-        .stat-badge {
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 500;
-        }
-
-        .chart-container {
-            height: 120px;
-            position: relative;
-            margin: 16px 0;
-        }
-
-        .chart-line {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 100%;
-        }
-
-        .chart-wave {
-            stroke-width: 3;
-            fill: none;
-            filter: drop-shadow(0 0 20px rgba(255, 107, 148, 0.3));
-        }
-
-        .bottom-nav {
-            position: absolute;
-            bottom: 34px;
-            left: 0;
-            right: 0;
-            height: 80px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 0 40px;
-        }
-
-        .nav-dot {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .nav-dot:hover {
-            transform: scale(1.1);
-        }
-
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 50%;
-            animation: twinkle 3s ease-in-out infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.5); }
-        }
-
-        .price-display {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 32px;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 4px;
-        }
-
-        .price-label {
-            font-size: 11px;
-            color: rgba(255,255,255,0.5);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .description-text {
-            font-size: 12px;
-            line-height: 1.6;
-            color: rgba(255,255,255,0.6);
-            margin-top: 8px;
-        }
-
-        /* Card 2 Specific Styles */
-        .wave-chart {
-            height: 80px;
-            margin: 20px 0;
-            position: relative;
-        }
-
-        .icon-button {
-            width: 56px;
-            height: 56px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .icon-button:hover {
-            background: rgba(255,255,255,0.12);
-            transform: scale(1.05);
-        }
-
-        .data-value {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 24px;
-            font-weight: 600;
-            color: white;
-        }
-    </style>
+    .line-list { display: flex; flex-direction: column; gap: 10px; }
+    .line-item {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 11px; color: rgba(255,255,255,0.55);
+    }
+    .line-bar {
+      flex: 1; height: 3px; border-radius: 2px;
+      background: rgba(255,255,255,0.08); overflow: hidden;
+    }
+    .line-fill {
+      height: 100%; border-radius: 2px;
+      background: linear-gradient(90deg, #F09060, #E86090);
+    }
+    .line-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Phone 1 - Left Screen -->
-        <div class="phone-device">
-            <div class="phone-screen">
-                <div class="particles">
-                    <div class="particle" style="top: 10%; left: 15%; animation-delay: 0s;"></div>
-                    <div class="particle" style="top: 20%; left: 70%; animation-delay: 0.5s;"></div>
-                    <div class="particle" style="top: 35%; left: 25%; animation-delay: 1s;"></div>
-                    <div class="particle" style="top: 50%; left: 80%; animation-delay: 1.5s;"></div>
-                    <div class="particle" style="top: 65%; left: 40%; animation-delay: 2s;"></div>
-                    <div class="particle" style="top: 75%; left: 60%; animation-delay: 2.5s;"></div>
-                </div>
+  <div class="stage">
+    <!-- LEFT: Laledo -->
+    <div class="phone" data-phone="left">
+      <div class="screen screen-left">
+        <div class="notch"></div>
+        <div class="stars" id="stars-l"></div>
 
-                <div class="status-bar">
-                    <div class="time">15:41</div>
-                    <div class="status-icons">
-                        <i data-lucide="signal" style="width: 14px; height: 14px;"></i>
-                        <i data-lucide="wifi" style="width: 14px; height: 14px;"></i>
-                        <i data-lucide="battery-full" style="width: 20px; height: 14px;"></i>
-                    </div>
-                </div>
-
-                <div class="app-header">
-                    <div class="app-title">Laledo</div>
-                    <div class="header-icon">
-                        <i data-lucide="search" style="width: 20px; height: 20px; color: white;"></i>
-                    </div>
-                </div>
-
-                <div class="orb-container">
-                    <div class="main-orb"></div>
-                    <div class="small-orb orb-blue"></div>
-                    <div class="small-orb orb-purple"></div>
-                </div>
-
-                <div class="info-card">
-                    <div class="card-header">
-                        <div class="card-title">Placean Lodo</div>
-                        <i data-lucide="heart" style="width: 18px; height: 18px; color: rgba(255,255,255,0.5);"></i>
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <div class="card-header">
-                        <div class="card-title">Loweck Dorgeon</div>
-                        <div class="percentage-change">-9%</div>
-                    </div>
-                    <div class="stats-row">
-                        <div class="stat-badge" style="background: rgba(78, 205, 196, 0.15); color: #4ECDC4;">2:40am | 12 Oct</div>
-                    </div>
-
-                    <div class="color-dots">
-                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #5E8FE8 20%, #4B7CD6);"></div>
-                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #FF8B94 20%, #E85A8A);"></div>
-                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #9B88ED 20%, #7B68CD);"></div>
-                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #4ECDC4 20%, #36A89D);"></div>
-                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #FFB366 20%, #FF8B5A);"></div>
-                    </div>
-                </div>
-
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 0 20px; margin-top: 16px;">
-                    <div class="icon-button" style="background: rgba(155, 136, 237, 0.2);">
-                        <i data-lucide="sun" style="width: 24px; height: 24px; color: #9B88ED;"></i>
-                    </div>
-                    <div class="icon-button">
-                        <i data-lucide="star" style="width: 24px; height: 24px; color: rgba(255,255,255,0.5);"></i>
-                    </div>
-                    <div class="icon-button" style="background: rgba(94, 143, 232, 0.2);">
-                        <i data-lucide="zap" style="width: 24px; height: 24px; color: #5E8FE8;"></i>
-                    </div>
-                    <div class="icon-button">
-                        <i data-lucide="activity" style="width: 24px; height: 24px; color: rgba(255,255,255,0.5);"></i>
-                    </div>
-                </div>
-
-                <div class="bottom-nav">
-                    <div class="nav-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #5E8FE8 20%, #4B7CD6);"></div>
-                    <div class="nav-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #FF8B94 20%, #E85A8A);"></div>
-                    <div class="nav-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #9B88ED 20%, #7B68CD);"></div>
-                    <div class="nav-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #4ECDC4 20%, #36A89D);"></div>
-                </div>
-            </div>
+        <div class="status">
+          <span>9:41</span>
+          <div class="status-icons">
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none"><rect x="0" y="3" width="3" height="8" rx="0.5" fill="#fff"/><rect x="4" y="2" width="3" height="9" rx="0.5" fill="#fff"/><rect x="8" y="0.5" width="3" height="10.5" rx="0.5" fill="#fff"/><rect x="12" y="0" width="3" height="11" rx="0.5" fill="rgba(255,255,255,0.35)"/></svg>
+            <svg width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1 7.5C2.5 5.5 5 4 7 4s4.5 1.5 6 3.5" stroke="#fff" stroke-width="1.2" fill="none"/><path d="M3 9c1.2-1.2 2.8-1.8 4-1.8S9.8 7.8 11 9" stroke="#fff" stroke-width="1.2" fill="none"/><circle cx="7" cy="10" r="1" fill="#fff"/></svg>
+            <svg width="22" height="11" viewBox="0 0 22 11" fill="none"><rect x="0.5" y="1" width="18" height="9" rx="2" stroke="#fff" stroke-width="1"/><rect x="2" y="2.5" width="13" height="6" rx="1" fill="#fff"/><path d="M19.5 3.5v4c1 .4 1 .4 1-2s0-2.4-1-2z" fill="rgba(255,255,255,0.5)"/></svg>
+          </div>
         </div>
 
-        <!-- Phone 2 - Right Screen -->
-        <div class="phone-device">
-            <div class="phone-screen">
-                <div class="particles">
-                    <div class="particle" style="top: 12%; left: 18%; animation-delay: 0.2s;"></div>
-                    <div class="particle" style="top: 22%; left: 68%; animation-delay: 0.7s;"></div>
-                    <div class="particle" style="top: 38%; left: 28%; animation-delay: 1.2s;"></div>
-                    <div class="particle" style="top: 52%; left: 75%; animation-delay: 1.7s;"></div>
-                    <div class="particle" style="top: 68%; left: 45%; animation-delay: 2.2s;"></div>
-                    <div class="particle" style="top: 78%; left: 65%; animation-delay: 2.7s;"></div>
-                </div>
-
-                <div class="status-bar">
-                    <div class="time">15:41</div>
-                    <div class="status-icons">
-                        <i data-lucide="signal" style="width: 14px; height: 14px;"></i>
-                        <i data-lucide="wifi" style="width: 14px; height: 14px;"></i>
-                        <i data-lucide="battery-full" style="width: 20px; height: 14px;"></i>
-                    </div>
-                </div>
-
-                <div class="app-header">
-                    <div class="app-title">Laloch</div>
-                    <div class="header-icon">
-                        <i data-lucide="search" style="width: 20px; height: 20px; color: white;"></i>
-                    </div>
-                </div>
-
-                <div class="orb-container" style="height: 180px;">
-                    <div style="width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.6), #9B88ED 15%, #7B68CD 40%, #5E4B8C); box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 60px rgba(155, 136, 237, 0.4); animation: float 6s ease-in-out infinite;"></div>
-                    <div style="position: absolute; top: 40px; right: 50px; width: 52px; height: 52px; border-radius: 50%; background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #4ECDC4 20%, #36A89D); box-shadow: 0 0 40px rgba(78, 205, 196, 0.4); animation: float 8s ease-in-out infinite; animation-delay: 1s;"></div>
-                </div>
-
-                <div class="wave-chart">
-                    <svg width="100%" height="80" viewBox="0 0 335 80" style="overflow: visible;">
-                        <path d="M0,40 Q50,20 100,35 T200,30 T335,45" class="chart-wave" stroke="#FF6B94" />
-                        <path d="M0,50 Q50,30 100,45 T200,40 T335,55" class="chart-wave" stroke="#4ECDC4" style="opacity: 0.6;" />
-                    </svg>
-                </div>
-
-                <div class="info-card">
-                    <div class="price-display">205.30</div>
-                    <div class="price-label">Bitcoin/cryptocurrency</div>
-
-                    <div class="color-dots" style="margin-top: 16px;">
-                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #4ECDC4 20%, #36A89D);"></div>
-                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #FF8B94 20%, #E85A8A);"></div>
-                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #5E8FE8 20%, #4B7CD6);"></div>
-                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #FF6B94 20%, #D14977);"></div>
-                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #FFB366 20%, #FF8B5A);"></div>
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <div class="card-header">
-                        <div class="card-title">Looket ijust fun</div>
-                        <i data-lucide="bar-chart-2" style="width: 18px; height: 18px; color: rgba(255,255,255,0.5);"></i>
-                    </div>
-                    <p class="description-text">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod.</p>
-                </div>
-
-                <div class="info-card">
-                    <div class="card-header">
-                        <div class="card-title">Proonega</div>
-                        <i data-lucide="trending-up" style="width: 18px; height: 18px; color: #4ECDC4;"></i>
-                    </div>
-                    <p class="description-text">Ut enim ad minim veniam quis nostrud exercitation ullamco laboris.</p>
-
-                    <div class="color-dots" style="margin-top: 12px;">
-                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #5E8FE8 20%, #4B7CD6);"></div>
-                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #FF8B94 20%, #E85A8A);"></div>
-                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #9B88ED 20%, #7B68CD);"></div>
-                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #4ECDC4 20%, #36A89D);"></div>
-                        <div class="color-dot" style="background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5), #FFB366 20%, #FF8B5A);"></div>
-                    </div>
-                </div>
-            </div>
+        <div class="app-bar">
+          <div class="app-name">Laledo</div>
+          <div class="app-bar-right">
+            <span>Aurora</span>
+            <button class="icon-btn" aria-label="share" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            </button>
+          </div>
         </div>
+
+        <div class="planet-zone">
+          <div class="moon moon-cyan-sm"></div>
+          <div class="moon moon-tiny"></div>
+          <div class="moon moon-purple"></div>
+          <div class="moon moon-blue"></div>
+          <div class="planet" id="planet" role="button" tabindex="0" aria-label="Planet hero">
+            <div class="planet-band"></div>
+            <div class="planet-mountains">
+              <svg viewBox="0 0 200 100" preserveAspectRatio="none">
+                <path d="M0 80 L30 55 L55 68 L80 40 L110 62 L140 35 L170 58 L200 48 L200 100 L0 100 Z" fill="rgba(120,30,55,0.55)"/>
+                <path d="M0 88 L40 65 L70 78 L100 52 L135 72 L165 50 L200 65 L200 100 L0 100 Z" fill="rgba(90,20,45,0.7)"/>
+              </svg>
+            </div>
+            <div class="planet-chart">
+              <svg viewBox="0 0 100 50" preserveAspectRatio="none">
+                <polyline points="0,38 12,32 22,36 35,22 48,28 58,14 70,20 82,10 95,16 100,12"
+                  fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="0,42 15,36 28,40 42,30 55,34 68,24 80,28 92,20 100,22"
+                  fill="none" stroke="rgba(255,200,160,0.45)" stroke-width="1.1" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-pad">
+          <div class="card" data-card="flux">
+            <div class="card-row">
+              <div class="card-title">Fluxion Lode</div>
+              <div class="share-ico">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="card" data-card="low">
+            <div class="card-row">
+              <div>
+                <div class="card-title" style="font-size:13px">Lowrick Dorgean</div>
+                <div class="card-meta">
+                  <span class="meta-chip">Babrorn · 11m</span>
+                  <span class="pct">+12.4%</span>
+                </div>
+              </div>
+              <div class="share-ico">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+              </div>
+            </div>
+            <div class="dot-row" id="left-dots">
+              <button class="ndot active" style="background:linear-gradient(145deg,#4A9EF0,#2A6AD0)" type="button">1</button>
+              <button class="ndot" style="background:linear-gradient(145deg,#F0A040,#E07030)" type="button">2</button>
+              <button class="ndot" style="background:linear-gradient(145deg,#C060E8,#8030C0)" type="button">3</button>
+              <button class="ndot" style="background:linear-gradient(145deg,#40C888,#28A060)" type="button">2</button>
+              <button class="ndot" style="background:linear-gradient(145deg,#F07050,#D04040)" type="button">4</button>
+            </div>
+            <div class="dot-labels">
+              <span>Devits</span><span>Avotex</span><span>Belbe</span><span>Vywix</span><span>Kofix</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-nav" id="nav-left">
+          <button class="nav-orb active" style="background:linear-gradient(145deg,#5AA8F0,#3060C8)" type="button" aria-label="home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1v-9.5z"/></svg>
+          </button>
+          <button class="nav-orb" style="background:linear-gradient(145deg,#F0A050,#E06030)" type="button" aria-label="chart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 19V9M10 19V5M16 19v-7M22 19V8"/></svg>
+          </button>
+          <button class="nav-orb" style="background:linear-gradient(145deg,#C070E8,#8040C0)" type="button" aria-label="star">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><polygon points="12 2 15 9 22 9.5 17 14.5 18.5 22 12 18 5.5 22 7 14.5 2 9.5 9 9"/></svg>
+          </button>
+          <button class="nav-orb" style="background:linear-gradient(145deg,#48C888,#28A060)" type="button" aria-label="pulse">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><polyline points="3 12 7 12 10 6 14 18 17 12 21 12"/></svg>
+          </button>
+          <button class="nav-orb" style="background:linear-gradient(145deg,#F06858,#D03848)" type="button" aria-label="bag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7V5a3 3 0 016 0v2"/></svg>
+          </button>
+        </div>
+        <div class="home-bar"></div>
+      </div>
     </div>
 
-    <script>
-        lucide.createIcons();
-    </script>
+    <!-- RIGHT: Laloch -->
+    <div class="phone" data-phone="right">
+      <div class="screen screen-right">
+        <div class="notch"></div>
+        <div class="stars" id="stars-r"></div>
+
+        <div class="status">
+          <span>9:41</span>
+          <div class="status-icons">
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none"><rect x="0" y="3" width="3" height="8" rx="0.5" fill="#fff"/><rect x="4" y="2" width="3" height="9" rx="0.5" fill="#fff"/><rect x="8" y="0.5" width="3" height="10.5" rx="0.5" fill="#fff"/><rect x="12" y="0" width="3" height="11" rx="0.5" fill="rgba(255,255,255,0.35)"/></svg>
+            <svg width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1 7.5C2.5 5.5 5 4 7 4s4.5 1.5 6 3.5" stroke="#fff" stroke-width="1.2" fill="none"/><path d="M3 9c1.2-1.2 2.8-1.8 4-1.8S9.8 7.8 11 9" stroke="#fff" stroke-width="1.2" fill="none"/><circle cx="7" cy="10" r="1" fill="#fff"/></svg>
+            <svg width="22" height="11" viewBox="0 0 22 11" fill="none"><rect x="0.5" y="1" width="18" height="9" rx="2" stroke="#fff" stroke-width="1"/><rect x="2" y="2.5" width="13" height="6" rx="1" fill="#fff"/><path d="M19.5 3.5v4c1 .4 1 .4 1-2s0-2.4-1-2z" fill="rgba(255,255,255,0.5)"/></svg>
+          </div>
+        </div>
+
+        <div class="app-bar">
+          <div class="app-name">Laloch</div>
+          <div class="app-bar-right">
+            <span>Aurego</span>
+            <button class="icon-btn" aria-label="search" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-zone">
+          <div class="wave-layer">
+            <svg viewBox="0 0 280 160" preserveAspectRatio="none">
+              <polyline points="0,90 30,70 55,85 80,45 110,65 140,30 170,55 200,40 230,60 260,35 280,50"
+                fill="none" stroke="rgba(90,180,255,0.55)" stroke-width="1.8" stroke-linecap="round"/>
+              <polyline points="0,110 40,95 70,105 100,75 130,95 160,60 190,80 220,70 250,90 280,75"
+                fill="none" stroke="rgba(255,160,90,0.5)" stroke-width="1.6" stroke-linecap="round"/>
+              <polyline points="0,70 35,55 65,68 95,40 125,58 155,35 185,50 215,28 245,48 280,38"
+                fill="none" stroke="rgba(200,120,255,0.4)" stroke-width="1.4" stroke-linecap="round"/>
+              <circle cx="140" cy="30" r="3" fill="#F0A050"/>
+              <circle cx="80" cy="45" r="2.5" fill="#60C0F0"/>
+              <circle cx="200" cy="40" r="2.5" fill="#C070E8"/>
+            </svg>
+          </div>
+          <div class="orb-wrap">
+            <div class="orb-sat s1"></div>
+            <div class="orb-sat s2"></div>
+            <div class="orb-sat s3"></div>
+            <div class="orb" id="orb" role="button" tabindex="0" aria-label="Metric orb">
+              <div class="orb-inner-chart">
+                <svg viewBox="0 0 60 40" preserveAspectRatio="none">
+                  <polyline points="0,30 10,22 18,26 28,12 38,18 48,8 58,14"
+                    fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="metric-block">
+          <div class="metric-row">
+            <div>
+              <div class="big-num">208.30</div>
+              <div class="metric-sub">Saturated · A.From · Duration</div>
+            </div>
+            <div class="side-metric">
+              <div class="side-val">+14.2%</div>
+              <div class="side-label">Range · Mindset last</div>
+            </div>
+          </div>
+
+          <div class="chip-row" id="right-chips">
+            <button class="chip active" style="background:linear-gradient(145deg,#4A9EF0,#2A6AD0)" type="button">7</button>
+            <button class="chip" style="background:linear-gradient(145deg,#F0A040,#E07030)" type="button">3</button>
+            <button class="chip" style="background:linear-gradient(145deg,#50C8A0,#28A070)" type="button">2</button>
+            <button class="chip" style="background:linear-gradient(145deg,#F07090,#D04070)" type="button">8</button>
+            <button class="chip" style="background:linear-gradient(145deg,#C070E8,#8040C0)" type="button">7</button>
+          </div>
+          <div class="chip-labels">
+            <span>Mogos</span><span>A.texes</span><span>Twicx</span><span>Suvens</span><span>Anoptix</span>
+          </div>
+
+          <div class="panel" data-panel="ledot">
+            <div class="panel-title">Ledot beat trn</div>
+            <div class="mini-chart">
+              <svg viewBox="0 0 200 48" preserveAspectRatio="none">
+                <polyline points="0,36 20,30 40,34 60,18 80,28 100,12 120,22 140,10 160,20 180,14 200,18"
+                  fill="none" stroke="rgba(90,180,255,0.75)" stroke-width="1.6" stroke-linecap="round"/>
+                <polyline points="0,40 25,36 50,38 75,28 100,32 125,22 150,28 175,20 200,24"
+                  fill="none" stroke="rgba(255,150,90,0.55)" stroke-width="1.3" stroke-linecap="round"/>
+                <line x1="100" y1="4" x2="100" y2="44" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-dasharray="2 3"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="panel" data-panel="por">
+            <div class="panel-title">Poreages</div>
+            <div class="line-list">
+              <div class="line-item">
+                <div class="line-dot" style="background:#F09060"></div>
+                <div class="line-bar"><div class="line-fill" style="width:78%"></div></div>
+              </div>
+              <div class="line-item">
+                <div class="line-dot" style="background:#60B0F0"></div>
+                <div class="line-bar"><div class="line-fill" style="width:55%;background:linear-gradient(90deg,#60B0F0,#8060E0)"></div></div>
+              </div>
+              <div class="line-item">
+                <div class="line-dot" style="background:#C070E8"></div>
+                <div class="line-bar"><div class="line-fill" style="width:42%;background:linear-gradient(90deg,#C070E8,#E06090)"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-nav" id="nav-right">
+          <button class="nav-orb active" style="background:linear-gradient(145deg,#5AA8F0,#3060C8)" type="button" aria-label="home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1v-9.5z"/></svg>
+          </button>
+          <button class="nav-orb" style="background:linear-gradient(145deg,#F0A050,#E06030)" type="button" aria-label="flame">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 3c2 4-2 5-1 9 3-2 5 0 5 3a6 6 0 11-12 0c0-4 4-6 5-9 1 2 2 2 3-3z"/></svg>
+          </button>
+          <button class="nav-orb" style="background:linear-gradient(145deg,#C070E8,#8040C0)" type="button" aria-label="layers">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/></svg>
+          </button>
+          <button class="nav-orb" style="background:linear-gradient(145deg,#48C888,#28A060)" type="button" aria-label="count">
+            <span class="n-num">14</span>
+          </button>
+          <button class="nav-orb" style="background:linear-gradient(145deg,#F06858,#D03848)" type="button" aria-label="grid">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg>
+          </button>
+        </div>
+        <div class="home-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function sprinkle(id, n) {
+      const el = document.getElementById(id);
+      const fr = document.createDocumentFragment();
+      for (let i = 0; i < n; i++) {
+        const s = document.createElement('div');
+        const r = Math.random();
+        if (r > 0.92) { s.className = 'star cross' + (Math.random() > 0.5 ? ' cyan' : ''); }
+        else if (r > 0.7) s.className = 'star lg';
+        else if (r > 0.4) s.className = 'star md';
+        else s.className = 'star sm';
+        s.style.left = (Math.random() * 100) + '%';
+        s.style.top = (Math.random() * 72) + '%';
+        fr.appendChild(s);
+      }
+      el.appendChild(fr);
+    }
+    sprinkle('stars-l', 48);
+    sprinkle('stars-r', 40);
+
+    function bindGroup(sel, cls) {
+      document.querySelectorAll(sel).forEach(g => {
+        g.addEventListener('click', e => {
+          const t = e.target.closest('button');
+          if (!t || !g.contains(t)) return;
+          g.querySelectorAll('button').forEach(b => b.classList.remove(cls));
+          t.classList.add(cls);
+        });
+      });
+    }
+    bindGroup('#left-dots', 'active');
+    bindGroup('#right-chips', 'active');
+    bindGroup('#nav-left', 'active');
+    bindGroup('#nav-right', 'active');
+
+    document.getElementById('planet').addEventListener('click', function () {
+      this.style.transform = 'scale(1.06)';
+      setTimeout(() => { this.style.transform = ''; }, 220);
+    });
+    document.getElementById('orb').addEventListener('click', function () {
+      this.style.transform = 'scale(1.08)';
+      setTimeout(() => { this.style.transform = ''; }, 220);
+    });
+  </script>
 </body>
 </html>

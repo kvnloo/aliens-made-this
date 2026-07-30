@@ -1,291 +1,828 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SweeDly - Food Delivery App</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        * {
-            font-family: 'Inter', sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SweeDly — Food App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --peach: #efc5a0;
+      --peach-mid: #ecc197;
+      --cream: #faf7f2;
+      --card: #fffdf9;
+      --ink: #2a2218;
+      --muted: #8a7a68;
+      --line: #efe6da;
+      --orange: #f0a04b;
+      --brown: #2c2118;
+      --shadow: 0 18px 40px rgba(90, 50, 20, 0.18), 0 3px 8px rgba(90, 50, 20, 0.08);
+      --kit: url("../inspo/crops/pizza_kit.jpg");
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: linear-gradient(165deg, #f0c8a0 0%, #ecc197 45%, #e8ba8e 100%);
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px 16px;
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
 
-        body {
-            background: linear-gradient(135deg, #FFE4C4 0%, #FFDAB9 100%);
-        }
+    /* 4-col collage matching inspo capture framing */
+    .stage {
+      width: min(1120px, 96vw);
+      height: min(820px, 92vh);
+      display: grid;
+      grid-template-columns: 1.05fr 1fr 1fr 1.05fr;
+      gap: 14px 16px;
+      align-items: start;
+    }
+    .col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 0;
+      height: 100%;
+    }
 
-        .custom-shadow {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
+    .phone {
+      background: var(--cream);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    .phone.dark {
+      background: var(--brown);
+      color: #f5ebe0;
+    }
+    .phone-inner {
+      padding: 14px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      height: 100%;
+    }
 
-        .food-card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
+    /* Column height splits — mirror inspo vertical blocks */
+    .c1-top { flex: 0 0 46%; min-height: 0; }
+    .c1-bot { flex: 1 1 auto; min-height: 0; }
+    .c2-prod { flex: 0 0 18%; }
+    .c2-tray { flex: 0 0 12%; }
+    .c2-daily { flex: 0 0 28%; }
+    .c2-pastry { flex: 0 0 16%; }
+    .c2-half { flex: 1 1 auto; }
+    .c3-select { flex: 0 0 42%; }
+    .c3-tray { flex: 0 0 14%; }
+    .c3-cr { flex: 0 0 22%; }
+    .c3-pie { flex: 1 1 auto; }
+    .c4-dark { flex: 0 0 58%; }
+    .c4-cart { flex: 1 1 auto; }
 
-        .food-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-        }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .brand {
+      font-weight: 800;
+      font-size: 1.18rem;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+    .icon-btn {
+      width: 32px; height: 32px;
+      border-radius: 10px;
+      border: none;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      display: grid; place-items: center;
+      cursor: pointer;
+      color: var(--ink);
+      flex-shrink: 0;
+    }
+    .dark .icon-btn { background: #4a3a2c; color: #f5ebe0; }
+    .icon-btn.orange {
+      background: var(--orange);
+      color: #fff;
+      border-radius: 50%;
+      width: 26px; height: 26px;
+      box-shadow: 0 3px 8px rgba(240,160,75,0.4);
+    }
 
-        .scroll-container {
-            overflow-x: auto;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
+    .stars {
+      color: var(--orange);
+      font-size: 0.65rem;
+      letter-spacing: 0.5px;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .stars .rating { color: var(--muted); font-size: 0.7rem; font-weight: 500; letter-spacing: 0; }
 
-        .scroll-container::-webkit-scrollbar {
-            display: none;
-        }
-    </style>
+    .menu-row {
+      background: #fff;
+      border-radius: 14px;
+      padding: 11px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 6px rgba(80,40,10,0.04);
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      transition: border-color .15s, transform .15s;
+    }
+    .menu-row:hover { transform: translateY(-1px); }
+    .menu-row.active { border-color: var(--orange); }
+    .menu-row .left {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 600; font-size: 0.84rem;
+    }
+    .dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      border: 2px solid #cfc3b4;
+      background: transparent;
+      flex-shrink: 0;
+    }
+    .dot.on { background: var(--orange); border-color: var(--orange); }
+    .menu-row .price { color: var(--muted); font-size: 0.76rem; font-weight: 500; }
+
+    .pill-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .pill {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #fff;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .pill.on {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+    }
+
+    .section-title {
+      font-weight: 700;
+      font-size: 0.92rem;
+      letter-spacing: -0.02em;
+    }
+    .sub { color: var(--muted); font-size: 0.68rem; }
+    .dark .sub { color: #cbb8a4; }
+
+    /* Food crops from pizza_kit — inside chrome only */
+    .food {
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      background-color: #f3e8d8;
+      background-image: var(--kit);
+      background-repeat: no-repeat;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .food.tray-dark {
+      height: 100%;
+      min-height: 72px;
+      background-size: 420% auto;
+      background-position: 36% 28%;
+      border-radius: 12px;
+      box-shadow: inset 0 0 0 4px #2a2420;
+    }
+    .food.tray-white {
+      height: 100%;
+      min-height: 88px;
+      background-size: 400% auto;
+      background-position: 62% 54%;
+      border-radius: 12px;
+      box-shadow: inset 0 0 0 6px #ebe7df;
+    }
+    .food.breads {
+      flex: 1;
+      min-height: 70px;
+      background-size: 380% auto;
+      background-position: 38% 50%;
+      border-radius: 12px;
+    }
+    .food.half-pie {
+      height: 100%;
+      min-height: 70px;
+      background-size: 340% auto;
+      background-position: 38% 88%;
+      border-radius: 16px;
+    }
+    .food.croissant {
+      flex: 1;
+      min-height: 80px;
+      background-size: 420% auto;
+      background-position: 62% 72%;
+      border-radius: 14px;
+    }
+    .food.full-pie {
+      height: 100%;
+      min-height: 90px;
+      background-size: 360% auto;
+      background-position: 62% 90%;
+      border-radius: 16px;
+      background-color: #faf6f0;
+    }
+    .food.thumb-a { width:100%; height:100%; border-radius:10px; background-size:1000% auto; background-position:36% 14%; }
+    .food.thumb-b { width:100%; height:100%; border-radius:10px; background-size:1000% auto; background-position:43% 14%; }
+    .food.thumb-pizza { width:100%; height:100%; border-radius:10px; background-size:900% auto; background-position:56% 18%; }
+    .food.thumb-pep { width:100%; height:100%; border-radius:10px; background-size:900% auto; background-position:66% 18%; }
+    .food.thumb-tray { width:100%; height:100%; border-radius:10px; background-size:800% auto; background-position:37% 30%; }
+    .food.thumb-foc { width:100%; height:100%; border-radius:10px; background-size:800% auto; background-position:38% 51%; }
+    .food.thumb-pastry { width:100%; height:100%; border-radius:8px; background-size:950% auto; background-position:38% 68%; }
+    .food.thumb-slice { width:100%; height:100%; border-radius:8px; background-size:800% auto; background-position:38% 88%; }
+    .food.thumb-round { width:100%; height:100%; border-radius:10px; background-size:850% auto; background-position:62% 90%; }
+    .food.thumb-cr { width:100%; height:100%; border-radius:10px; background-size:950% auto; background-position:62.5% 73%; }
+    .food.thumb-bread { width:100%; height:100%; border-radius:10px; background-size:850% auto; background-position:38% 52%; }
+
+    .item-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      flex: 1;
+      min-height: 0;
+    }
+    .item-card {
+      background: #fff;
+      border-radius: 13px;
+      padding: 7px;
+      box-shadow: 0 2px 6px rgba(80,40,10,0.05);
+      cursor: pointer;
+      transition: transform .15s;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .item-card:hover { transform: translateY(-2px); }
+    .item-card .pic {
+      flex: 1;
+      min-height: 48px;
+      border-radius: 10px;
+      background: #f5ebe0;
+      margin-bottom: 5px;
+      overflow: hidden;
+    }
+    .item-card h4 { font-size: 0.68rem; font-weight: 700; }
+    .item-card .meta {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 3px; font-size: 0.64rem; color: var(--muted);
+    }
+    .plus {
+      width: 20px; height: 20px; border-radius: 7px;
+      background: var(--orange); color: #fff; border: none;
+      font-weight: 700; cursor: pointer; line-height: 1;
+      font-size: 0.85rem;
+      display: grid; place-items: center;
+      font-family: inherit;
+    }
+
+    .cat-list { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .cat-row {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 8px 10px;
+      cursor: pointer;
+    }
+    .cat-row .thumb {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: #4a3a2c; overflow: hidden; flex-shrink: 0;
+    }
+    .cat-row .name { flex: 1; font-size: 0.8rem; font-weight: 600; }
+    .cat-row .price { font-size: 0.7rem; opacity: 0.7; }
+
+    .search-bar {
+      display: flex; gap: 8px; align-items: center;
+      background: #4a3a2c; border-radius: 12px; padding: 9px 11px;
+      font-size: 0.72rem; color: #cbb8a4;
+    }
+    .search-bar input {
+      flex: 1; background: transparent; border: none; outline: none;
+      color: #f5ebe0; font-size: 0.74rem; font-family: inherit;
+    }
+    .chip-orange {
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-weight: 700;
+      font-size: 0.74rem;
+      cursor: pointer;
+      font-family: inherit;
+      text-align: center;
+    }
+
+    .stat-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
+      text-align: center;
+    }
+    .stat-grid .n { font-weight: 800; font-size: 0.82rem; }
+    .stat-grid .l { font-size: 0.54rem; color: var(--muted); }
+
+    .icon-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+    }
+    .icon-tile {
+      background: #fff;
+      border-radius: 12px;
+      padding: 8px 2px 6px;
+      text-align: center;
+      font-size: 0.52rem;
+      font-weight: 600;
+      color: var(--muted);
+      box-shadow: 0 2px 5px rgba(80,40,10,0.05);
+      cursor: pointer;
+    }
+    .icon-tile .ic {
+      width: 28px; height: 28px;
+      margin: 0 auto 4px;
+      border-radius: 8px;
+      display: grid; place-items: center;
+      background: #fff4e8;
+      color: var(--orange);
+    }
+    .icon-tile .ic svg { width: 16px; height: 16px; }
+    .icon-tile.solid .ic {
+      background: var(--orange);
+      color: #fff;
+      border-radius: 50%;
+    }
+    .icon-tile.outline .ic {
+      background: transparent;
+      border: 1.5px solid var(--orange);
+      border-radius: 50%;
+      color: var(--orange);
+    }
+
+    .list-line {
+      display: flex; align-items: center; gap: 8px;
+      padding: 5px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .list-line:last-child { border-bottom: none; }
+    .list-line .t {
+      width: 36px; height: 36px; border-radius: 9px;
+      background: #f3e8d8; overflow: hidden; flex-shrink: 0;
+    }
+    .list-line .info { flex: 1; min-width: 0; }
+    .list-line .info h4 { font-size: 0.72rem; font-weight: 700; }
+    .list-line .info p { font-size: 0.58rem; color: var(--muted); }
+    .list-line .amt { font-weight: 700; font-size: 0.72rem; }
+
+    .cta {
+      margin-top: auto;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 14px;
+      background: var(--orange);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.86rem;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(240,160,75,0.35);
+      font-family: inherit;
+      transition: transform .15s, filter .15s;
+    }
+    .cta:hover { filter: brightness(1.05); transform: translateY(-1px); }
+    .cta:active { transform: scale(0.98); }
+
+    .price-tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #fff; border-radius: 999px; padding: 4px 10px;
+      font-weight: 700; font-size: 0.74rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    .search-tabs { display: flex; gap: 6px; }
+    .search-tabs button {
+      flex: 1; padding: 8px; border-radius: 10px; border: none;
+      background: #4a3a2c; color: #cbb8a4; font-size: 0.68rem;
+      font-weight: 600; cursor: pointer; font-family: inherit;
+    }
+    .search-tabs button.on { background: var(--orange); color: #fff; }
+
+    .foot-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 4px;
+    }
+
+    .center-label { text-align: center; margin-top: 4px; }
+    .center-label .section-title { font-size: 0.84rem; }
+    .price-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 700;
+      font-size: 0.78rem;
+    }
+    .price-inline .stars-mini { color: var(--orange); font-size: 0.6rem; }
+
+    .gourmet-row {
+      display: flex; align-items: center; gap: 8px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 7px 8px;
+      box-shadow: 0 2px 5px rgba(80,40,10,0.04);
+    }
+    .gourmet-row .t {
+      width: 36px; height: 36px; border-radius: 9px;
+      overflow: hidden; background: #f5ebe0; flex-shrink: 0;
+    }
+
+    /* Compact product phone: fill height */
+    .c2-prod .phone-inner,
+    .c2-tray .phone-inner,
+    .c2-half .phone-inner,
+    .c3-tray .phone-inner,
+    .c3-pie .phone-inner { padding: 10px; }
+
+    .c2-daily .phone-inner { gap: 7px; }
+    .c3-select .phone-inner { gap: 7px; }
+    .c3-cr .phone-inner { gap: 6px; }
+
+    @media (max-width: 980px) {
+      .stage { grid-template-columns: 1fr 1fr; height: auto; max-width: 560px; }
+      body { overflow: auto; }
+    }
+    @media (max-width: 520px) {
+      .stage { grid-template-columns: 1fr; max-width: 300px; }
+    }
+  </style>
 </head>
-<body class="min-h-screen p-4">
-    <!-- Main Container - Mobile Screens Layout -->
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<body>
+  <div class="stage" id="app" role="main" aria-label="SweeDly food app UI kit">
 
-        <!-- Screen 1: Main Menu -->
-        <div class="bg-[#FFECD9] rounded-3xl p-6 custom-shadow max-w-md mx-auto w-full">
-            <!-- Header -->
-            <div class="flex items-center justify-between mb-6">
-                <div class="flex items-center gap-3">
-                    <button class="w-10 h-10 bg-white rounded-xl flex items-center justify-center custom-shadow">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
-                    </button>
-                    <h1 class="text-2xl font-bold text-[#2D2419]">SweeDly</h1>
-                </div>
-                <button class="w-10 h-10 bg-white rounded-xl flex items-center justify-center custom-shadow">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                        </svg>
-                </button>
+    <!-- COL 1: SweeDly menu + Browse bakery -->
+    <div class="col">
+      <div class="phone c1-top">
+        <div class="phone-inner">
+          <div class="topbar">
+            <div style="display:flex;align-items:center;gap:7px">
+              <button class="icon-btn" aria-label="menu" type="button">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 4h9M2.5 7h9M2.5 10h9"/></svg>
+              </button>
+              <span class="brand">SweeDly</span>
             </div>
-
-            <!-- Stars Rating -->
-            <div class="flex gap-1 mb-4">
-                <span class="text-yellow-500">★★★★★</span>
-            </div>
-
-            <!-- Menu Items -->
-            <div class="space-y-3 mb-6">
-                <div class="bg-white rounded-2xl p-4 flex items-center justify-between custom-shadow">
-                    <div class="flex items-center gap-3">
-                        <div class="w-3 h-3 bg-[#FF9B5E] rounded-full"></div>
-                        <span class="font-semibold text-[#2D2419]">Breakfast</span>
-                    </div>
-                    <span class="text-sm text-[#8B7355]">120</span>
-                </div>
-
-                <div class="bg-white rounded-2xl p-4 flex items-center justify-between custom-shadow">
-                    <div class="flex items-center gap-3">
-                        <div class="w-3 h-3 bg-transparent border-2 border-gray-300 rounded-full"></div>
-                        <span class="font-semibold text-[#2D2419]">Lunch</span>
-                    </div>
-                    <span class="text-sm text-[#8B7355]">60</span>
-                </div>
-
-                <div class="bg-white rounded-2xl p-4 flex items-center justify-between custom-shadow">
-                    <div class="flex items-center gap-3">
-                        <div class="w-3 h-3 bg-transparent border-2 border-gray-300 rounded-full"></div>
-                        <span class="font-semibold text-[#2D2419]">Dinner</span>
-                    </div>
-                    <span class="text-sm text-[#8B7355]">90</span>
-                </div>
-
-                <div class="bg-white rounded-2xl p-4 flex items-center justify-between custom-shadow">
-                    <div class="flex items-center gap-3">
-                        <div class="w-3 h-3 bg-transparent border-2 border-gray-300 rounded-full"></div>
-                        <span class="font-semibold text-[#2D2419]">Day coffee</span>
-                    </div>
-                    <span class="text-sm text-[#8B7355]">100</span>
-                </div>
-            </div>
+            <button class="icon-btn" aria-label="profile" type="button">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="5.5" r="2.2"/><path d="M2.5 12c.9-2.2 2.6-3.1 4.5-3.1S10.6 9.8 11.5 12"/></svg>
+            </button>
+          </div>
+          <div class="stars">★★★★★ <span class="rating">4.9</span></div>
+          <div class="menu-row active" data-meal="breakfast">
+            <div class="left"><span class="dot on"></span> Breakfast</div>
+            <span class="price">$20</span>
+          </div>
+          <div class="menu-row" data-meal="lunch">
+            <div class="left"><span class="dot"></span> Lunch</div>
+            <span class="price">$18</span>
+          </div>
+          <div class="menu-row" data-meal="dinner">
+            <div class="left"><span class="dot"></span> Dinner</div>
+            <span class="price">$24</span>
+          </div>
+          <div class="menu-row" data-meal="coffee">
+            <div class="left"><span class="dot"></span> Day coffee</div>
+            <span class="price">$8</span>
+          </div>
+          <div class="pill-row" style="margin-top:2px">
+            <button class="pill on" type="button">Popular</button>
+            <button class="pill" type="button">New</button>
+            <button class="pill" type="button">Vegan</button>
+          </div>
+          <div class="foot-row">
+            <span class="sub">N. Recipe story</span>
+            <span class="price-tag">$20</span>
+          </div>
         </div>
+      </div>
 
-        <!-- Screen 2: Product List -->
-        <div class="bg-[#FFECD9] rounded-3xl p-6 custom-shadow max-w-md mx-auto w-full">
-            <!-- Header -->
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-xl font-bold text-[#2D2419]">Product</h2>
-                <button class="w-10 h-10 bg-white rounded-xl flex items-center justify-center custom-shadow">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
-                </button>
-            </div>
-
-            <!-- Product Cards -->
-            <div class="space-y-4">
-                <!-- Pizza Card -->
-                <div class="bg-white rounded-3xl p-4 custom-shadow food-card">
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="font-bold text-[#2D2419]">Pizza</h3>
-                        <button class="w-8 h-8 bg-[#FFECD9] rounded-full flex items-center justify-center">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="bg-[#FFF5E6] rounded-2xl h-32 flex items-center justify-center mb-3 overflow-hidden">
-                        <div class="text-6xl">🍕</div>
-                    </div>
-                </div>
-
-                <!-- Croissant Card -->
-                <div class="bg-white rounded-3xl p-4 custom-shadow food-card">
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="font-bold text-[#2D2419]">Korean Pizza</h3>
-                        <button class="w-8 h-8 bg-[#FFECD9] rounded-full flex items-center justify-center">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="bg-[#FF9B5E] rounded-2xl h-32 flex items-center justify-center mb-3">
-                        <div class="text-white text-sm font-semibold">Image</div>
-                    </div>
-                </div>
-            </div>
+      <div class="phone c1-bot">
+        <div class="phone-inner">
+          <div class="section-title">Browse the bakery</div>
+          <div class="stat-grid">
+            <div><div class="n">120</div><div class="l">Items</div></div>
+            <div><div class="n">48</div><div class="l">Chefs</div></div>
+            <div><div class="n">16k</div><div class="l">Orders</div></div>
+            <div><div class="n">4.9</div><div class="l">Rating</div></div>
+          </div>
+          <div class="icon-row">
+            <div class="icon-tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M10 18h4"/></svg></div>App</div>
+            <div class="icon-tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M9 8h6M9 12h6"/></svg></div>Menu</div>
+            <div class="icon-tile"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/><circle cx="9" cy="10" r="1.2" fill="#fff"/><circle cx="15" cy="11" r="1" fill="#fff"/><circle cx="11" cy="14" r="1.1" fill="#fff"/></svg></div>Pizza</div>
+            <div class="icon-tile"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="14" rx="7" ry="5"/><path d="M7 12c1-3 3-5 5-5s4 2 5 5" fill="none" stroke="#c87830" stroke-width="1"/></svg></div>Bowl</div>
+          </div>
+          <div class="icon-row">
+            <div class="icon-tile"><div class="ic" style="background:#ffe8cc"><svg viewBox="0 0 24 24" fill="#e8923a"><path d="M4 16c2-6 6-9 8-9s6 3 8 9H4z"/><circle cx="9" cy="13" r="1.2"/><circle cx="14" cy="12" r="1"/></svg></div>Pie</div>
+            <div class="icon-tile"><div class="ic" style="background:#ffe8cc"><svg viewBox="0 0 24 24" fill="#e8923a"><path d="M6 16c0-4 2.5-8 6-8s6 4 6 8H6z"/><path d="M8 16h8v2a2 2 0 01-2 2h-4a2 2 0 01-2-2v-2z" opacity=".7"/></svg></div>Bake</div>
+            <div class="icon-tile"><div class="ic" style="background:#ffe8cc"><svg viewBox="0 0 24 24" fill="#e8923a"><circle cx="12" cy="12" r="7"/><circle cx="10" cy="10" r="1.3" fill="#c45"/><circle cx="14" cy="13" r="1.1" fill="#c45"/></svg></div>Loaf</div>
+            <div class="icon-tile"><div class="ic" style="background:#ffe8cc"><svg viewBox="0 0 24 24" fill="none" stroke="#e8923a" stroke-width="1.6"><rect x="5" y="7" width="14" height="11" rx="2"/><path d="M5 11h14"/></svg></div>Box</div>
+          </div>
+          <div class="icon-row">
+            <div class="icon-tile solid"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l2 5h5l-4 3.5 1.5 5L12 14.5 7.5 17.5 9 12.5 5 9h5z"/></svg></div>Top</div>
+            <div class="icon-tile solid"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>Hot</div>
+            <div class="icon-tile solid"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="8" width="12" height="9" rx="2"/></svg></div>Pack</div>
+            <div class="icon-tile solid"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 8h10v10H7z"/><path d="M9 8V6a3 3 0 016 0v2" fill="none" stroke="#fff" stroke-width="1.5"/></svg></div>Bag</div>
+          </div>
+          <div class="icon-row">
+            <div class="icon-tile outline"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 9v10M12 5v14M16 11v8"/></svg></div>Drink</div>
+            <div class="icon-tile outline"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 8h10l-1 11H8L7 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg></div>Blend</div>
+            <div class="icon-tile outline"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9h12v2a6 6 0 01-12 0V9z"/><path d="M9 9V7a3 3 0 016 0v2"/></svg></div>Cup</div>
+            <div class="icon-tile outline"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="7"/><path d="M12 8v8M9 12h6"/></svg></div>More</div>
+          </div>
+          <div class="foot-row">
+            <span class="sub">N. Recipe story</span>
+            <span class="price-tag">$20</span>
+          </div>
         </div>
-
-        <!-- Screen 3: Pizza Detail -->
-        <div class="bg-[#FFECD9] rounded-3xl p-6 custom-shadow max-w-md mx-auto w-full">
-            <!-- Header -->
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-xl font-bold text-[#2D2419]">Seafood Python..</h2>
-                <div class="flex gap-2">
-                    <button class="w-10 h-10 bg-white rounded-xl flex items-center justify-center custom-shadow">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                        </svg>
-                    </button>
-                    <button class="w-10 h-10 bg-white rounded-xl flex items-center justify-center custom-shadow">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Large Pizza Image -->
-            <div class="bg-white rounded-3xl p-8 mb-6 custom-shadow">
-                <div class="text-9xl text-center">🍕</div>
-            </div>
-
-            <!-- Quick Info -->
-            <div class="space-y-3">
-                <div class="bg-white rounded-2xl p-4 custom-shadow">
-                    <h3 class="font-semibold text-[#2D2419] mb-2">Quick Info</h3>
-                    <p class="text-sm text-[#8B7355]">Delicious pizza with seafood toppings</p>
-                </div>
-
-                <div class="bg-white rounded-2xl p-4 custom-shadow">
-                    <div class="flex items-center justify-between">
-                        <span class="font-semibold text-[#2D2419]">Check or Fry</span>
-                        <span class="text-sm text-[#8B7355]">→ 23 tM</span>
-                    </div>
-                </div>
-
-                <!-- Orange Pizza Circle -->
-                <div class="flex justify-center my-6">
-                    <div class="w-32 h-32 bg-[#FF9B5E] rounded-full flex items-center justify-center text-5xl">
-                        🍕
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Screen 4: Dark Theme Menu -->
-        <div class="bg-[#4A3728] rounded-3xl p-6 custom-shadow max-w-md mx-auto w-full">
-            <!-- Header -->
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-xl font-bold text-white">Food Menu</h2>
-                <div class="flex gap-2">
-                    <button class="px-4 py-2 bg-transparent border border-[#FF9B5E] text-[#FF9B5E] rounded-full text-sm font-semibold">
-                        Stacks
-                    </button>
-                    <button class="px-4 py-2 bg-[#FF9B5E] text-white rounded-full text-sm font-semibold">
-                        Pancake
-                    </button>
-                </div>
-            </div>
-
-            <!-- Menu Items -->
-            <div class="space-y-3">
-                <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-white/10 transition cursor-pointer">
-                    <div class="text-3xl">🍕</div>
-                    <div class="flex-1">
-                        <h4 class="text-white font-semibold">Pizza</h4>
-                    </div>
-                    <span class="text-[#FF9B5E] font-semibold">$12</span>
-                </div>
-
-                <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-white/10 transition cursor-pointer">
-                    <div class="text-3xl">🍕</div>
-                    <div class="flex-1">
-                        <h4 class="text-white font-semibold">Italian</h4>
-                    </div>
-                    <span class="text-[#FF9B5E] font-semibold">$15</span>
-                </div>
-
-                <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-white/10 transition cursor-pointer">
-                    <div class="text-3xl">🥖</div>
-                    <div class="flex-1">
-                        <h4 class="text-white font-semibold">Baguette</h4>
-                    </div>
-                    <span class="text-[#FF9B5E] font-semibold">$8</span>
-                </div>
-
-                <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-white/10 transition cursor-pointer">
-                    <div class="text-3xl">🥐</div>
-                    <div class="flex-1">
-                        <h4 class="text-white font-semibold">Croissant</h4>
-                    </div>
-                    <span class="text-[#FF9B5E] font-semibold">$6</span>
-                </div>
-
-                <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-white/10 transition cursor-pointer">
-                    <div class="text-3xl">🍞</div>
-                    <div class="flex-1">
-                        <h4 class="text-white font-semibold">Bread</h4>
-                    </div>
-                    <span class="text-[#FF9B5E] font-semibold">$4</span>
-                </div>
-            </div>
-
-            <!-- Cart Summary (Bottom Card) -->
-            <div class="mt-8 bg-[#FFF5E6] rounded-3xl p-6">
-                <h3 class="text-lg font-bold text-[#2D2419] mb-4">Catalogue</h3>
-
-                <div class="space-y-3 mb-4">
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm text-[#8B7355]">Croissant</span>
-                        <span class="font-semibold text-[#2D2419]">$6.00</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm text-[#8B7355]">Carrot</span>
-                        <span class="font-semibold text-[#2D2419]">$10.00</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm text-[#8B7355]">Bread</span>
-                        <span class="font-semibold text-[#2D2419]">$8.50</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm text-[#8B7355]">Bread</span>
-                        <span class="font-semibold text-[#2D2419]">$12.50</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm text-[#8B7355]">Carrot</span>
-                        <span class="font-semibold text-[#2D2419]">$20.00</span>
-                    </div>
-                </div>
-
-                <button class="w-full bg-[#FF9B5E] text-white py-4 rounded-full font-semibold hover:bg-[#FF8A4D] transition">
-                    Confirm
-                </button>
-            </div>
-        </div>
+      </div>
     </div>
+
+    <!-- COL 2: Product, tray, Daily Fresh, pastry, half pie -->
+    <div class="col">
+      <div class="phone c2-prod">
+        <div class="phone-inner">
+          <div class="topbar">
+            <span class="section-title">Product</span>
+            <button class="icon-btn orange" type="button" aria-label="add">+</button>
+          </div>
+          <div class="item-grid">
+            <div class="item-card">
+              <div class="pic"><div class="food thumb-a" role="img" aria-label="Croissant"></div></div>
+              <h4>Croissant</h4>
+              <div class="meta"><span>$4.50</span><button class="plus" type="button">+</button></div>
+            </div>
+            <div class="item-card">
+              <div class="pic"><div class="food thumb-b" role="img" aria-label="Bun"></div></div>
+              <h4>Bun</h4>
+              <div class="meta"><span>$3.20</span><button class="plus" type="button">+</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phone c2-tray">
+        <div class="phone-inner">
+          <div class="food tray-dark" role="img" aria-label="Pepperoni tray bake"></div>
+        </div>
+      </div>
+
+      <div class="phone c2-daily">
+        <div class="phone-inner">
+          <div class="topbar">
+            <span class="section-title">Daily Fresh</span>
+            <span class="sub">See all</span>
+          </div>
+          <div class="food breads" role="img" aria-label="Fresh breads"></div>
+          <div class="list-line">
+            <div class="t"><div class="food thumb-pastry" role="img" aria-label="Pastry"></div></div>
+            <div class="info"><h4>Pastry box</h4><p>Fresh batch · 6 pcs</p></div>
+            <span class="amt">$12</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="phone c2-pastry">
+        <div class="phone-inner">
+          <div class="topbar">
+            <span class="section-title">Pastry box</span>
+            <button class="icon-btn orange" type="button" style="width:22px;height:22px;font-size:0.75rem" aria-label="add">+</button>
+          </div>
+          <div class="list-line">
+            <div class="t"><div class="food thumb-pastry"></div></div>
+            <div class="info"><h4>Butter roll</h4><p>Morning bake</p></div>
+            <button class="plus" type="button">+</button>
+          </div>
+          <div class="list-line">
+            <div class="t"><div class="food thumb-cr"></div></div>
+            <div class="info"><h4>Croissant</h4><p>Classic</p></div>
+            <button class="plus" type="button">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="phone c2-half">
+        <div class="phone-inner">
+          <div class="food half-pie" role="img" aria-label="Half pizza"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 3: Select type, white tray, croissant, full pie -->
+    <div class="col">
+      <div class="phone c3-select">
+        <div class="phone-inner">
+          <div class="topbar">
+            <span class="section-title">Select type</span>
+            <button class="icon-btn" type="button" style="width:26px;height:26px" aria-label="more">⋯</button>
+          </div>
+          <div class="pill-row">
+            <button class="pill on" type="button">All</button>
+            <button class="pill" type="button">Hot</button>
+            <button class="pill" type="button">Cold</button>
+          </div>
+          <div class="section-title" style="font-size:0.78rem">Craft list</div>
+          <div class="item-grid">
+            <div class="item-card">
+              <div class="pic"><div class="food thumb-pizza" role="img" aria-label="Margherita"></div></div>
+              <h4>Margherita</h4>
+              <div class="meta"><span>$14</span><button class="plus" type="button">+</button></div>
+            </div>
+            <div class="item-card">
+              <div class="pic"><div class="food thumb-pep" role="img" aria-label="Pepperoni"></div></div>
+              <h4>Pepperoni</h4>
+              <div class="meta"><span>$16</span><button class="plus" type="button">+</button></div>
+            </div>
+            <div class="item-card">
+              <div class="pic"><div class="food thumb-tray" role="img" aria-label="Tray bake"></div></div>
+              <h4>Tray bake</h4>
+              <div class="meta"><span>$22</span><button class="plus" type="button">+</button></div>
+            </div>
+            <div class="item-card">
+              <div class="pic"><div class="food thumb-foc" role="img" aria-label="Focaccia"></div></div>
+              <h4>Focaccia</h4>
+              <div class="meta"><span>$11</span><button class="plus" type="button">+</button></div>
+            </div>
+          </div>
+          <div class="section-title" style="font-size:0.78rem">Gourmet</div>
+          <div class="gourmet-row">
+            <div class="t"><div class="food thumb-round" role="img" aria-label="Truffle pie"></div></div>
+            <div class="info" style="flex:1">
+              <h4 style="font-size:0.72rem;font-weight:700">Truffle pie</h4>
+              <p class="sub">Chef special</p>
+            </div>
+            <button class="plus" type="button">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="phone c3-tray">
+        <div class="phone-inner">
+          <div class="food tray-white" role="img" aria-label="Deep dish pizza tray"></div>
+        </div>
+      </div>
+
+      <div class="phone c3-cr">
+        <div class="phone-inner">
+          <div class="food croissant" role="img" aria-label="Golden croissant"></div>
+          <div class="center-label">
+            <div class="section-title">Creek rye</div>
+            <div class="price-inline">
+              <span class="stars-mini">★★★★</span>
+              <span>$8.50</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phone c3-pie">
+        <div class="phone-inner">
+          <div class="food full-pie" role="img" aria-label="Sliced pizza"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 4: Dark browse + checkout -->
+    <div class="col">
+      <div class="phone dark c4-dark">
+        <div class="phone-inner">
+          <div class="topbar">
+            <span class="brand" style="font-size:0.95rem;color:#f5ebe0">Browse</span>
+            <span class="sub">Filter ▾</span>
+          </div>
+          <div class="search-tabs">
+            <button type="button" class="on">Near me</button>
+            <button type="button">Popular</button>
+          </div>
+          <div class="search-bar">
+            <span aria-hidden="true">⌕</span>
+            <input type="search" placeholder="Find dishes…" aria-label="Search dishes" />
+          </div>
+          <button class="chip-orange" type="button" style="width:100%">Today's pick · Free delivery</button>
+          <div class="cat-list">
+            <div class="cat-row">
+              <div class="thumb"><div class="food thumb-round"></div></div>
+              <span class="name">Pizza</span>
+              <span class="price">$14+</span>
+            </div>
+            <div class="cat-row">
+              <div class="thumb"><div class="food thumb-cr"></div></div>
+              <span class="name">Pastry</span>
+              <span class="price">$4+</span>
+            </div>
+            <div class="cat-row">
+              <div class="thumb"><div class="food thumb-bread"></div></div>
+              <span class="name">Bread</span>
+              <span class="price">$6+</span>
+            </div>
+            <div class="cat-row">
+              <div class="thumb"><div class="food thumb-foc"></div></div>
+              <span class="name">Loaves</span>
+              <span class="price">$9+</span>
+            </div>
+            <div class="cat-row">
+              <div class="thumb"><div class="food thumb-tray"></div></div>
+              <span class="name">Trays</span>
+              <span class="price">$18+</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phone c4-cart">
+        <div class="phone-inner">
+          <div class="topbar">
+            <div style="display:flex;align-items:center;gap:6px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V7z"/><path d="M8 7V5a4 4 0 018 0v2"/></svg>
+              <span class="section-title">Checkout</span>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h14"/></svg>
+          </div>
+          <div class="list-line">
+            <div class="t"><div class="food thumb-round"></div></div>
+            <div class="info"><h4>Goods</h4><p>Margherita · L</p></div>
+            <span class="amt">$14.00</span>
+          </div>
+          <div class="list-line">
+            <div class="t"><div class="food thumb-cr"></div></div>
+            <div class="info"><h4>Croissant</h4><p>Butter ×2</p></div>
+            <span class="amt">$9.00</span>
+          </div>
+          <div class="list-line">
+            <div class="t"><div class="food thumb-foc"></div></div>
+            <div class="info"><h4>Focaccia</h4><p>Share</p></div>
+            <span class="amt">$8.50</span>
+          </div>
+          <div class="list-line">
+            <div class="t"><div class="food thumb-pastry"></div></div>
+            <div class="info"><h4>Pastry</h4><p>Box · 6</p></div>
+            <span class="amt">$12.00</span>
+          </div>
+          <div class="list-line">
+            <div class="t"><div class="food thumb-bread"></div></div>
+            <div class="info"><h4>Rye loaf</h4><p>Half</p></div>
+            <span class="amt">$6.50</span>
+          </div>
+          <button class="cta" type="button">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.menu-row').forEach(row => {
+      row.addEventListener('click', () => {
+        document.querySelectorAll('.menu-row').forEach(r => {
+          r.classList.remove('active');
+          r.querySelector('.dot')?.classList.remove('on');
+        });
+        row.classList.add('active');
+        row.querySelector('.dot')?.classList.add('on');
+      });
+    });
+    document.querySelectorAll('.pill-row').forEach(group => {
+      group.querySelectorAll('.pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          group.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
+          pill.classList.add('on');
+        });
+      });
+    });
+    document.querySelectorAll('.search-tabs').forEach(tabs => {
+      tabs.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabs.querySelectorAll('button').forEach(b => b.classList.remove('on'));
+          btn.classList.add('on');
+        });
+      });
+    });
+    document.querySelectorAll('.plus').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const prev = btn.textContent;
+        btn.textContent = '✓';
+        setTimeout(() => { btn.textContent = prev || '+'; }, 600);
+      });
+    });
+  </script>
 </body>
 </html>
