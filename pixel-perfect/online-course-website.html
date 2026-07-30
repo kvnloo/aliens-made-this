@@ -11,62 +11,52 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
       width: 100%; height: 100%; overflow: hidden;
-      background: #010100;
+      background: #000;
       font-family: 'DM Sans', system-ui, sans-serif;
     }
 
+    /* Scene: dark room, warm lamp RIGHT, oak desk bottom — matches inspo photo */
     .scene {
       position: relative;
       width: 100vw; height: 100vh;
       overflow: hidden;
       background:
-        radial-gradient(ellipse 42% 72% at 102% 28%, #f0a028 0%, rgba(230,140,28,0.72) 16%, rgba(160,80,18,0.32) 40%, transparent 60%),
-        radial-gradient(ellipse 20% 32% at 96% 16%, rgba(255,230,150,0.5) 0%, transparent 48%),
-        radial-gradient(ellipse 48% 70% at -2% 42%, #000 0%, transparent 50%),
+        radial-gradient(ellipse 42% 75% at 100% 18%, #f0a828 0%, rgba(220,130,28,0.85) 12%, rgba(140,70,16,0.4) 32%, transparent 55%),
+        radial-gradient(ellipse 20% 30% at 96% 10%, rgba(255,230,150,0.55) 0%, transparent 50%),
+        radial-gradient(ellipse 55% 80% at 0% 45%, #000 0%, transparent 50%),
         linear-gradient(105deg,
-          #000000 0%,
-          #040302 18%,
-          #0a0805 36%,
-          #18100a 54%,
-          #4a2c12 72%,
-          #c07020 88%,
-          #e89828 100%);
+          #000 0%, #020201 12%, #080604 28%,
+          #151008 48%, #3a2410 66%, #a87020 84%, #e8a028 100%);
     }
     .vignette {
-      position: absolute; inset: 0; z-index: 50; pointer-events: none;
-      background:
-        radial-gradient(ellipse 76% 70% at 48% 40%, transparent 26%, rgba(0,0,0,0.38) 70%, rgba(0,0,0,0.78) 100%);
-      box-shadow: inset 0 0 90px 28px rgba(0,0,0,0.48);
+      position: absolute; inset: 0; z-index: 60; pointer-events: none;
+      background: radial-gradient(ellipse 76% 70% at 48% 40%, transparent 22%, rgba(0,0,0,0.38) 66%, rgba(0,0,0,0.85) 100%);
+      box-shadow: inset 0 0 90px 28px rgba(0,0,0,0.5);
     }
     .lamp {
-      position: absolute; right: -8%; top: -10%;
-      width: 52%; height: 90%;
+      position: absolute; right: -8%; top: -15%;
+      width: 58%; height: 100%;
       z-index: 1; pointer-events: none;
-      background: radial-gradient(ellipse at 78% 26%,
-        rgba(255,215,100,0.62) 0%,
-        rgba(255,150,35,0.3) 26%,
-        rgba(150,75,12,0.08) 50%,
-        transparent 68%);
-      filter: blur(14px);
+      background: radial-gradient(ellipse at 85% 20%,
+        rgba(255,215,100,0.7) 0%,
+        rgba(255,145,30,0.35) 22%,
+        rgba(140,70,12,0.1) 45%,
+        transparent 65%);
+      filter: blur(18px);
     }
 
-    /* Oak desk — lower third */
     .desk {
       position: absolute; left: 0; right: 0; bottom: 0;
-      height: 29.5%;
+      height: 28.5%;
       z-index: 5;
       background:
         linear-gradient(180deg,
-          #f2d8a8 0%,
-          #e2bc80 10%,
-          #d2a868 26%,
-          #c29654 50%,
-          #a87c40 74%,
-          #8c6430 100%);
+          #f6deb4 0%, #e8c890 8%, #d6b070 20%,
+          #c49a58 45%, #a87e40 70%, #8c6430 100%);
       box-shadow:
-        inset 0 20px 40px rgba(255,235,190,0.16),
-        inset 0 1px 0 rgba(255,248,220,0.48),
-        0 -24px 60px rgba(0,0,0,0.55);
+        inset 0 20px 40px rgba(255,235,190,0.2),
+        inset 0 1px 0 rgba(255,248,220,0.55),
+        0 -24px 56px rgba(0,0,0,0.55);
     }
     .desk::before {
       content: '';
@@ -77,148 +67,115 @@
           rgba(90,50,15,0.1) 52px, rgba(90,50,15,0.1) 54px),
         repeating-linear-gradient(0deg,
           transparent 0, transparent 3px,
-          rgba(70,40,10,0.05) 3px, rgba(70,40,10,0.05) 4px);
+          rgba(70,40,10,0.06) 3px, rgba(70,40,10,0.06) 4px);
     }
     .desk-edge {
       position: absolute; left: 0; right: 0; bottom: 0;
-      height: 4.2%;
-      z-index: 6;
+      height: 3.5%; z-index: 6;
       background: linear-gradient(180deg, #6a4a28 0%, #3a2410 55%, #1a1008 100%);
     }
 
-    /* Left plants */
+    /* Left foliage */
     .plants {
-      position: absolute;
-      left: 0.8%;
-      bottom: 26.5%;
-      width: 14vw;
-      height: 32vh;
-      z-index: 20;
-      pointer-events: none;
+      position: absolute; left: 0.8%; bottom: 26%;
+      width: 14.5vw; height: 36vh; z-index: 22; pointer-events: none;
     }
     .p-tall { position: absolute; left: 0; bottom: 0; width: 72%; height: 100%; }
     .p-short { position: absolute; right: 0; bottom: 0; width: 42%; height: 52%; }
     .pot {
-      position: absolute; bottom: 0; left: 22%;
-      width: 50%; height: 16%;
+      position: absolute; bottom: 0; left: 18%;
+      width: 54%; height: 14%;
       background: linear-gradient(180deg, #7a5634 0%, #4a3018 55%, #2e1c0c 100%);
       border-radius: 3px 3px 6px 6px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,210,150,0.12);
     }
-    .p-short .pot {
-      left: 24%; width: 50%; height: 22%;
-      background: linear-gradient(180deg, #8a6240, #4a3018);
-    }
+    .p-short .pot { left: 20%; width: 54%; height: 20%; background: linear-gradient(180deg, #8a6240, #4a3018); }
     .leaf {
-      position: absolute;
-      border-radius: 55% 45% 50% 50%;
+      position: absolute; border-radius: 55% 45% 50% 50%;
       background: linear-gradient(150deg, #3a6a48, #1a3426);
       box-shadow: inset -4px -5px 10px rgba(0,0,0,0.35);
     }
-    .p-tall .a { width: 50%; height: 44%; left: 0; bottom: 18%; transform: rotate(-36deg); background: linear-gradient(150deg,#2c5638,#163024); }
-    .p-tall .b { width: 54%; height: 52%; left: 16%; bottom: 22%; transform: rotate(-10deg); background: linear-gradient(155deg,#3c704a,#224030); z-index:2; }
-    .p-tall .c { width: 48%; height: 48%; left: 38%; bottom: 20%; transform: rotate(16deg); background: linear-gradient(150deg,#356848,#1e3a2a); }
-    .p-tall .d { width: 42%; height: 40%; left: 50%; bottom: 16%; transform: rotate(40deg); background: linear-gradient(145deg,#2a5038,#183028); }
-    .p-tall .e { width: 38%; height: 36%; left: 20%; bottom: 46%; transform: rotate(-4deg); background: linear-gradient(160deg,#4a8058,#2a5038); z-index:3; }
-    .p-tall .f { width: 32%; height: 30%; left: 36%; bottom: 50%; transform: rotate(24deg); background: linear-gradient(150deg,#3a6844,#244030); z-index:2; }
+    .p-tall .a { width: 50%; height: 44%; left: 0; bottom: 16%; transform: rotate(-36deg); background: linear-gradient(150deg,#2c5638,#163024); }
+    .p-tall .b { width: 54%; height: 52%; left: 14%; bottom: 20%; transform: rotate(-10deg); background: linear-gradient(155deg,#3c704a,#224030); z-index:2; }
+    .p-tall .c { width: 48%; height: 48%; left: 36%; bottom: 18%; transform: rotate(16deg); background: linear-gradient(150deg,#356848,#1e3a2a); }
+    .p-tall .d { width: 42%; height: 40%; left: 48%; bottom: 14%; transform: rotate(40deg); background: linear-gradient(145deg,#2a5038,#183028); }
+    .p-tall .e { width: 38%; height: 36%; left: 18%; bottom: 44%; transform: rotate(-4deg); background: linear-gradient(160deg,#4a8058,#2a5038); z-index:3; }
+    .p-tall .f { width: 32%; height: 30%; left: 34%; bottom: 48%; transform: rotate(24deg); background: linear-gradient(150deg,#3a6844,#244030); z-index:2; }
     .p-short .a { width: 56%; height: 54%; left: 2%; bottom: 18%; transform: rotate(-26deg); }
-    .p-short .b { width: 52%; height: 50%; left: 30%; bottom: 20%; transform: rotate(18deg); background: linear-gradient(150deg,#3a6244,#244030); }
+    .p-short .b { width: 52%; height: 50%; left: 28%; bottom: 20%; transform: rotate(18deg); background: linear-gradient(150deg,#3a6244,#244030); }
 
     .tiny-bowl {
-      position: absolute;
-      left: 10%; bottom: 26.2%;
-      width: 2.1vw; min-width: 16px;
-      height: 1.3vw; min-height: 11px;
-      z-index: 18;
-      border-radius: 45% 45% 50% 50%;
+      position: absolute; left: 11%; bottom: 25.5%;
+      width: 2.2vw; min-width: 14px; height: 1.3vw; min-height: 10px;
+      z-index: 18; border-radius: 45% 45% 50% 50%;
       background: linear-gradient(160deg, #3a3228, #14100c);
       box-shadow: 0 3px 8px rgba(0,0,0,0.45);
     }
 
-    /* iMac — silver, slightly left-of-center */
+    /* iMac — large, upper center */
     .imac {
       position: absolute;
-      left: 48%;
-      top: 3.5%;
+      left: 50%; top: 1.5%;
       transform: translateX(-50%);
       width: min(56vw, 760px);
       z-index: 12;
-      filter: drop-shadow(0 28px 50px rgba(0,0,0,0.7));
+      filter: drop-shadow(0 28px 50px rgba(0,0,0,0.75));
     }
     .imac-bezel {
-      background: linear-gradient(180deg, #f8f8fa 0%, #e6e6ea 40%, #d0d0d6 75%, #bcbcc2 100%);
-      border-radius: 14px 14px 2px 2px;
-      padding: 9px 9px 0;
-      box-shadow:
-        inset 0 1px 0 #fff,
-        inset 0 -1px 0 rgba(0,0,0,0.06),
-        0 1px 4px rgba(0,0,0,0.18);
+      background: linear-gradient(180deg, #fafafc 0%, #e8e8ec 40%, #d2d2d8 75%, #bebec4 100%);
+      border-radius: 18px 18px 2px 2px;
+      padding: 11px 11px 0;
+      box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.18);
     }
     .imac-screen {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 10.1;
-      border-radius: 2px;
-      overflow: hidden;
-      background: #1e2e26;
+      position: relative; width: 100%; aspect-ratio: 16 / 10;
+      border-radius: 3px; overflow: hidden; background: #1e2e26;
       box-shadow: inset 0 0 0 1px rgba(0,0,0,0.55);
     }
     .imac-cam {
-      position: absolute;
-      top: 3px; left: 50%;
-      transform: translateX(-50%);
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: #101012;
-      z-index: 20;
+      position: absolute; top: 3px; left: 50%; transform: translateX(-50%);
+      width: 5px; height: 5px; border-radius: 50%; background: #101012; z-index: 20;
     }
     .imac-chin {
-      height: 20px;
-      margin: 0 -9px;
-      background: linear-gradient(180deg, #eeeef2, #cacad0 65%, #b6b6bc);
+      height: 24px; margin: 0 -11px;
+      background: linear-gradient(180deg, #f0f0f4, #ceced4 65%, #babac0);
       display: flex; align-items: center; justify-content: center;
     }
     .imac-logo {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #ddd, #888);
-      opacity: 0.45;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ddd, #888); opacity: 0.4;
     }
     .imac-neck {
-      width: 72px; height: 42px;
-      margin: 0 auto;
+      width: 80px; height: 48px; margin: 0 auto;
       background: linear-gradient(90deg, #888890, #c4c4cc 26%, #f2f2f6 50%, #b8b8c0 74%, #7a7a82);
       clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%);
     }
     .imac-base {
-      width: 148px; height: 9px;
-      margin: -1px auto 0;
+      width: 160px; height: 11px; margin: -1px auto 0;
       background: linear-gradient(180deg, #e4e4e8, #a8a8ae);
       border-radius: 1px 1px 40% 40%;
       box-shadow: 0 4px 14px rgba(0,0,0,0.42);
     }
 
-    /* Desktop UI — misty sage atmospheric course landing */
+    /* Desktop UI — misty sage product-course landing */
     .ui-d {
-      position: absolute; inset: 0;
-      overflow: hidden;
-      color: #d4e0d6;
+      position: absolute; inset: 0; overflow: hidden; color: #d4e0d6;
       background:
-        radial-gradient(ellipse 55% 58% at 60% 48%, rgba(120,155,128,0.5) 0%, transparent 58%),
-        radial-gradient(ellipse 30% 34% at 80% 20%, rgba(170,190,160,0.24) 0%, transparent 52%),
-        radial-gradient(ellipse 36% 42% at 16% 74%, rgba(35,55,45,0.55) 0%, transparent 58%),
-        linear-gradient(148deg, #1a2a22 0%, #2f4438 34%, #283c32 60%, #18261e 100%);
+        radial-gradient(ellipse 60% 62% at 60% 48%, rgba(140,175,145,0.58) 0%, transparent 58%),
+        radial-gradient(ellipse 34% 38% at 80% 16%, rgba(190,210,180,0.3) 0%, transparent 52%),
+        radial-gradient(ellipse 36% 42% at 12% 74%, rgba(30,50,40,0.55) 0%, transparent 58%),
+        linear-gradient(148deg, #182820 0%, #2e463a 32%, #263c32 58%, #15241c 100%);
     }
     .ui-d::before {
       content: '';
       position: absolute; inset: 0; z-index: 1; pointer-events: none;
       background:
-        radial-gradient(ellipse 48% 40% at 58% 46%, rgba(210,230,200,0.12) 0%, transparent 58%),
-        radial-gradient(ellipse 100% 100% at 50% 50%, transparent 45%, rgba(8,14,10,0.42) 100%);
+        radial-gradient(ellipse 48% 40% at 58% 46%, rgba(210,230,200,0.16) 0%, transparent 58%),
+        radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(8,14,10,0.48) 100%);
     }
     .ui-d::after {
       content: '';
-      position: absolute; inset: 0; z-index: 2; pointer-events: none;
-      opacity: 0.45;
+      position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0.55;
       background-image:
         radial-gradient(1.2px 1.2px at 22% 28%, rgba(255,230,150,0.55), transparent),
         radial-gradient(1px 1px at 42% 16%, rgba(255,230,160,0.4), transparent),
@@ -232,462 +189,380 @@
     .ui-nav {
       position: relative; z-index: 10;
       display: flex; justify-content: space-between; align-items: center;
-      padding: 2.8% 4% 0;
+      padding: 2.8% 4.2% 0;
     }
     .ui-logo {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 700;
-      font-size: clamp(6px, 0.85vw, 11px);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #eef2ee;
+      font-family: 'Outfit', sans-serif; font-weight: 700;
+      font-size: clamp(6px, 0.85vw, 12px);
+      letter-spacing: 0.24em; text-transform: uppercase; color: #eef2ee;
     }
-    .ui-nav ul {
-      display: flex;
-      gap: clamp(12px, 1.8vw, 24px);
-      list-style: none;
-    }
+    .ui-nav ul { display: flex; gap: clamp(14px, 2vw, 28px); list-style: none; }
     .ui-nav a {
-      color: rgba(180,200,185,0.5);
-      text-decoration: none;
-      font-size: clamp(5px, 0.62vw, 8px);
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      transition: color 0.2s;
+      color: rgba(180,200,185,0.45); text-decoration: none;
+      font-size: clamp(5px, 0.62vw, 9px); font-weight: 500;
+      letter-spacing: 0.04em; transition: color 0.2s;
     }
-    .ui-nav a:hover { color: #fff; }
+    .ui-nav a:hover, .ui-nav a.active { color: #fff; }
 
     .ui-main {
       position: relative; z-index: 6;
-      display: grid;
-      grid-template-columns: 0.95fr 1.45fr 0.9fr;
-      gap: 1%;
-      padding: 2% 4% 2%;
-      height: calc(100% - 12%);
-      align-items: center;
+      display: grid; grid-template-columns: 0.95fr 1.45fr 0.9fr;
+      gap: 1.5%; padding: 1.2% 3.8% 2%;
+      height: calc(100% - 12%); align-items: center;
     }
 
     .ui-copy { position: relative; z-index: 8; }
     .ui-copy h1 {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 700;
-      font-size: clamp(9px, 1.35vw, 17px);
-      line-height: 1.12;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: #f0f4f0;
-      margin-bottom: 6%;
+      font-family: 'Outfit', sans-serif; font-weight: 700;
+      font-size: clamp(10px, 1.35vw, 18px); line-height: 1.08;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: #f0f4f0; margin-bottom: 7%;
       text-shadow: 0 2px 12px rgba(0,0,0,0.28);
     }
     .ui-copy p {
-      font-size: clamp(4px, 0.5vw, 7px);
-      line-height: 1.55;
-      color: #7a9080;
-      margin-bottom: 8%;
-      max-width: 94%;
+      font-size: clamp(4px, 0.5vw, 7px); line-height: 1.55;
+      color: #7a9080; margin-bottom: 9%; max-width: 95%;
     }
     .ui-cta {
-      display: inline-flex; align-items: center; gap: 4px;
-      padding: 0.5em 1.1em;
-      border: none; border-radius: 999px;
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 0.55em 1.2em; border: none; border-radius: 999px;
       background: linear-gradient(135deg, #f0d0a0, #d4a86a 55%, #c49858);
-      color: #2a2010;
-      font-family: inherit;
-      font-weight: 700;
-      font-size: clamp(5px, 0.6vw, 8px);
-      cursor: pointer;
-      box-shadow: 0 4px 14px rgba(200,150,60,0.38);
+      color: #2a2010; font-family: inherit; font-weight: 700;
+      font-size: clamp(5px, 0.6vw, 8px); cursor: pointer;
+      box-shadow: 0 4px 14px rgba(200,150,60,0.4);
       transition: transform 0.15s, box-shadow 0.15s;
     }
-    .ui-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(200,150,60,0.48); }
+    .ui-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(200,150,60,0.5); }
     .ui-cta:active { transform: scale(0.97); }
 
     .glass-stack {
-      position: absolute;
-      left: 4%; bottom: 8%;
-      z-index: 12;
-      display: flex; flex-direction: column; gap: 6px;
-      width: 26%;
+      position: absolute; left: 3.8%; bottom: 8%; z-index: 12;
+      display: flex; flex-direction: column; gap: 6px; width: 26%;
     }
     .glass {
-      display: flex; align-items: center; gap: 7px;
-      padding: 7px 10px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.13);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      box-shadow: 0 5px 16px rgba(0,0,0,0.16);
-      cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 10px; border-radius: 11px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 5px 16px rgba(0,0,0,0.18);
+      cursor: pointer; transition: background 0.2s, transform 0.15s;
     }
-    .glass:hover { background: rgba(255,255,255,0.16); transform: translateX(2px); }
+    .glass:hover { background: rgba(255,255,255,0.2); transform: translateX(2px); }
     .glass-ico {
-      width: 20px; height: 20px;
-      border-radius: 6px;
-      flex-shrink: 0;
+      width: 20px; height: 20px; border-radius: 6px; flex-shrink: 0;
       display: grid; place-items: center;
-      background: rgba(255,255,255,0.1);
-      font-size: 9px;
-      color: #d8c898;
+      background: rgba(255,255,255,0.1); font-size: 9px; color: #d8c898;
     }
     .glass strong {
-      display: block;
-      font-size: clamp(4.5px, 0.52vw, 7px);
-      color: #eef2ee;
-      font-weight: 600;
+      display: block; font-size: clamp(4.5px, 0.52vw, 7.5px);
+      color: #eef2ee; font-weight: 600;
     }
-    .glass span {
-      font-size: clamp(3.5px, 0.4vw, 5.5px);
-      color: #7a9080;
-    }
+    .glass span { font-size: clamp(3.5px, 0.4vw, 5.5px); color: #7a9080; }
 
-    /* Isometric 3D hero cluster */
+    /* Isometric 3D product cluster — gold crate + teal unit + plant */
     .iso {
-      position: relative;
-      width: 100%; height: 100%;
+      position: relative; width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
-      perspective: 600px;
     }
-    .iso-cluster {
-      position: relative;
-      width: 78%; height: 78%;
-      transform: rotateX(8deg) rotateY(-6deg);
-      transform-style: preserve-3d;
+    .iso-cluster { position: relative; width: 96%; height: 92%; }
+    .iso-glow {
+      position: absolute; left: 18%; right: 12%; top: 12%; bottom: 8%;
+      background: radial-gradient(ellipse at 55% 45%, rgba(180,210,170,0.35), transparent 65%);
+      filter: blur(8px); z-index: 0;
     }
     .iso-floor {
-      position: absolute;
-      left: 8%; right: 8%; bottom: 8%;
-      height: 42%;
-      background: linear-gradient(180deg, rgba(60,90,70,0.15), rgba(30,50,40,0.35));
-      border-radius: 8px;
+      position: absolute; left: 12%; right: 10%; bottom: 4%; height: 36%;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 40%, rgba(90,120,95,0.28), transparent 70%),
+        linear-gradient(180deg, rgba(50,80,60,0.14), rgba(20,40,30,0.42));
+      border-radius: 14px;
       border: 1px solid rgba(180,200,170,0.12);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      z-index: 1;
     }
     .iso-box {
-      position: absolute;
-      border-radius: 4px;
-      box-shadow: 4px 8px 16px rgba(0,0,0,0.35);
+      position: absolute; border-radius: 6px;
+      box-shadow: 6px 12px 24px rgba(0,0,0,0.42);
     }
     .iso-box.gold {
-      left: 18%; top: 12%;
-      width: 28%; height: 32%;
-      background: linear-gradient(145deg, #f0c878, #c89040 50%, #a07030);
-      transform: rotate(-8deg);
+      left: 20%; top: 6%; width: 32%; height: 40%;
+      background: linear-gradient(145deg, #f6d490 0%, #d8a450 38%, #a87828 100%);
+      transform: rotate(-11deg) skewY(-2deg); z-index: 5;
+    }
+    .iso-box.gold::before {
+      content: ''; position: absolute; inset: 14% 16%;
+      border: 1.5px solid rgba(80,50,15,0.28); border-radius: 3px;
     }
     .iso-box.gold::after {
-      content: '';
-      position: absolute; top: -18%; left: 12%; right: 12%; height: 22%;
-      background: linear-gradient(180deg, #e8b868, #c88838);
-      border-radius: 3px 3px 0 0;
-      transform: perspective(40px) rotateX(25deg);
-      transform-origin: bottom;
+      content: ''; position: absolute; top: -22%; left: 8%; right: 8%; height: 26%;
+      background: linear-gradient(180deg, #f2cc80, #c88838);
+      border-radius: 5px 5px 2px 2px;
+      transform: perspective(60px) rotateX(30deg); transform-origin: bottom;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.22);
+    }
+    .iso-lid-label {
+      position: absolute; top: 22%; left: 50%; transform: translateX(-50%) rotate(-11deg);
+      width: 22%; height: 10%; z-index: 6;
+      background: rgba(40,60,50,0.35); border-radius: 2px;
+      font-size: 0; pointer-events: none;
     }
     .iso-box.teal {
-      left: 42%; top: 28%;
-      width: 22%; height: 26%;
-      background: linear-gradient(145deg, #5a8a78, #2a4a40 60%, #1a3028);
-      transform: rotate(6deg);
+      left: 50%; top: 24%; width: 26%; height: 32%;
+      background: linear-gradient(145deg, #72a490, #2e5248 55%, #1a3028);
+      transform: rotate(9deg); z-index: 6; border-radius: 7px;
+    }
+    .iso-box.teal::after {
+      content: ''; position: absolute; left: 16%; right: 16%; top: 20%; bottom: 20%;
+      border: 1px solid rgba(180,220,200,0.22); border-radius: 4px;
     }
     .iso-box.dark {
-      left: 52%; top: 48%;
-      width: 30%; height: 18%;
-      background: linear-gradient(145deg, #3a4a42, #1a2820);
-      border-radius: 50% 50% 40% 40%;
-      transform: rotate(-4deg);
+      left: 56%; top: 52%; width: 34%; height: 22%;
+      background: linear-gradient(145deg, #4a5a52, #1a2820);
+      border-radius: 50% 50% 42% 42%;
+      transform: rotate(-6deg); z-index: 3;
+      box-shadow: 4px 8px 16px rgba(0,0,0,0.45), inset 0 4px 8px rgba(255,255,255,0.06);
+    }
+    .iso-box.bench {
+      left: 16%; top: 58%; width: 30%; height: 13%;
+      background: linear-gradient(180deg, #c89858, #8a6030);
+      border-radius: 3px; transform: rotate(-4deg); z-index: 2;
+      box-shadow: 3px 6px 12px rgba(0,0,0,0.35);
     }
     .iso-plant {
-      position: absolute;
-      right: 12%; top: 18%;
-      width: 18%; height: 40%;
+      position: absolute; right: 4%; top: 8%; width: 24%; height: 52%; z-index: 7;
     }
     .iso-plant .stem {
-      position: absolute; bottom: 0; left: 40%;
-      width: 3px; height: 55%;
-      background: #3a6048;
+      position: absolute; bottom: 0; left: 42%;
+      width: 3px; height: 58%;
+      background: linear-gradient(180deg, #4a7058, #2a4838); border-radius: 2px;
     }
     .iso-plant .l {
-      position: absolute;
-      width: 55%; height: 40%;
-      border-radius: 60% 40%;
+      position: absolute; width: 58%; height: 42%; border-radius: 60% 40%;
       background: linear-gradient(140deg, #4a8060, #2a5040);
+      box-shadow: inset -2px -2px 6px rgba(0,0,0,0.25);
     }
-    .iso-plant .l1 { left: 0; top: 10%; transform: rotate(-30deg); }
-    .iso-plant .l2 { right: 0; top: 0; transform: rotate(25deg); }
-    .iso-plant .l3 { left: 20%; top: 30%; transform: rotate(5deg); width: 45%; }
+    .iso-plant .l1 { left: -5%; top: 8%; transform: rotate(-32deg); }
+    .iso-plant .l2 { right: -8%; top: -4%; transform: rotate(28deg); background: linear-gradient(140deg,#5a9070,#305848); }
+    .iso-plant .l3 { left: 18%; top: 28%; transform: rotate(6deg); width: 48%; height: 36%; }
+    .iso-orb {
+      position: absolute; left: 6%; top: 20%; width: 13%; height: 13%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #e8c878, #a07030 60%, #604018);
+      box-shadow: 2px 4px 10px rgba(0,0,0,0.35); z-index: 4;
+    }
+    .iso-orb2 {
+      position: absolute; left: 36%; top: 2%; width: 10%; height: 10%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #f0d898, #c09040);
+      box-shadow: 0 0 14px rgba(255,200,100,0.4); z-index: 8;
+    }
+    .iso-spark {
+      position: absolute; width: 4px; height: 4px; border-radius: 50%;
+      background: #ffe8a0; box-shadow: 0 0 8px #ffd060; z-index: 9;
+    }
+    .iso-spark.s1 { left: 48%; top: 10%; }
+    .iso-spark.s2 { left: 72%; top: 22%; width: 3px; height: 3px; }
+    .iso-spark.s3 { left: 28%; top: 18%; width: 2px; height: 2px; }
 
     .side-card {
       position: relative; z-index: 8;
-      background: rgba(250,248,240,0.92);
-      border-radius: 10px;
-      padding: 10% 9%;
-      box-shadow: 0 10px 28px rgba(0,0,0,0.28);
-      color: #2a2820;
+      background: rgba(252,250,242,0.95);
+      border-radius: 12px; padding: 12% 11%;
+      box-shadow: 0 14px 36px rgba(0,0,0,0.32); color: #2a2820;
     }
     .side-card h3 {
       font-family: 'Outfit', sans-serif;
-      font-size: clamp(5px, 0.62vw, 8px);
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 8%;
-      color: #1a1810;
+      font-size: clamp(5px, 0.62vw, 8.5px); font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 9%; color: #1a1810;
     }
     .side-card .row {
-      display: flex; align-items: center; gap: 6px;
-      margin-bottom: 7%;
-      font-size: clamp(4px, 0.45vw, 6px);
-      color: #5a5848;
+      display: flex; align-items: center; gap: 6px; margin-bottom: 7%;
+      font-size: clamp(4px, 0.46vw, 6.5px); color: #5a5848;
     }
     .side-card .dot {
       width: 8px; height: 8px; border-radius: 50%;
-      background: linear-gradient(135deg, #e8c878, #c09040);
-      flex-shrink: 0;
+      background: linear-gradient(135deg, #e8c878, #c09040); flex-shrink: 0;
     }
     .side-card .price {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 700;
-      font-size: clamp(8px, 0.95vw, 12px);
-      color: #1a1810;
-      margin: 6% 0 8%;
+      font-family: 'Outfit', sans-serif; font-weight: 700;
+      font-size: clamp(8px, 1vw, 13px); color: #1a1810; margin: 6% 0 9%;
     }
     .side-cta {
-      width: 100%;
-      padding: 0.55em;
-      border: none; border-radius: 6px;
+      width: 100%; padding: 0.6em; border: none; border-radius: 7px;
       background: linear-gradient(135deg, #2a3a30, #1a2820);
-      color: #e8e4d8;
-      font-size: clamp(4.5px, 0.5vw, 6.5px);
-      font-weight: 600;
-      cursor: pointer;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      color: #e8e4d8; font-size: clamp(4.5px, 0.52vw, 7px); font-weight: 600;
+      cursor: pointer; letter-spacing: 0.06em; text-transform: uppercase;
       transition: background 0.2s;
     }
     .side-cta:hover { background: linear-gradient(135deg, #3a4a40, #2a3830); }
 
-    /* Tablet — black, front-center on desk */
+    /* Tablet — black, lower-left front of monitor */
     .tablet {
       position: absolute;
-      left: 50%;
-      bottom: 18%;
-      transform: translateX(-52%) rotate(-2deg);
-      width: min(32vw, 420px);
-      z-index: 25;
-      filter: drop-shadow(0 18px 36px rgba(0,0,0,0.65));
+      left: 40%; bottom: 15%;
+      transform: translateX(-52%) rotate(-1.8deg);
+      width: min(35vw, 460px);
+      z-index: 28;
+      filter: drop-shadow(0 22px 42px rgba(0,0,0,0.72));
     }
     .tablet-bezel {
-      background: linear-gradient(160deg, #2a2a2e 0%, #121214 40%, #0a0a0c 100%);
-      border-radius: 18px;
-      padding: 10px 10px 12px;
+      background: linear-gradient(160deg, #2c2c30 0%, #141416 40%, #0a0a0c 100%);
+      border-radius: 22px; padding: 12px 12px 15px;
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,0.08),
         inset 0 0 0 1px rgba(0,0,0,0.6),
         0 2px 8px rgba(0,0,0,0.4);
     }
     .tablet-screen {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      border-radius: 4px;
-      overflow: hidden;
-      background: #1a2820;
+      position: relative; width: 100%; aspect-ratio: 16 / 11;
+      border-radius: 4px; overflow: hidden; background: #1a2820;
       box-shadow: inset 0 0 0 1px rgba(0,0,0,0.5);
     }
     .tablet-cam {
-      position: absolute;
-      top: 4px; left: 50%;
-      transform: translateX(-50%);
-      width: 4px; height: 4px;
-      border-radius: 50%;
-      background: #1a1a1c;
-      z-index: 5;
+      position: absolute; top: 4px; left: 50%; transform: translateX(-50%);
+      width: 4px; height: 4px; border-radius: 50%; background: #1a1a1c; z-index: 5;
     }
 
-    /* Tablet UI */
     .ui-t {
-      position: absolute; inset: 0;
-      overflow: hidden;
-      color: #d4e0d6;
+      position: absolute; inset: 0; overflow: hidden; color: #d4e0d6;
       background:
-        radial-gradient(ellipse 50% 50% at 70% 40%, rgba(100,140,115,0.4) 0%, transparent 55%),
-        linear-gradient(155deg, #16221c 0%, #243830 45%, #1a2820 100%);
+        radial-gradient(ellipse 55% 55% at 74% 36%, rgba(100,145,120,0.45) 0%, transparent 55%),
+        linear-gradient(155deg, #122018 0%, #22362e 45%, #16241e 100%);
     }
     .ui-t-nav {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 5% 5% 2%;
+      padding: 4.5% 5% 1.5%;
     }
     .ui-t-logo {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 700;
+      font-family: 'Outfit', sans-serif; font-weight: 700;
       font-size: clamp(5px, 0.7vw, 9px);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #eef2ee;
+      letter-spacing: 0.18em; text-transform: uppercase; color: #eef2ee;
     }
-    .ui-t-nav span {
-      font-size: clamp(4px, 0.48vw, 6px);
-      color: rgba(180,200,185,0.45);
-    }
+    .ui-t-nav span { font-size: clamp(4px, 0.48vw, 6.5px); color: rgba(180,200,185,0.42); }
     .ui-t-body {
-      display: grid;
-      grid-template-columns: 1fr 1.1fr;
-      gap: 4%;
-      padding: 2% 5% 4%;
-      height: calc(100% - 18%);
+      display: grid; grid-template-columns: 1.05fr 1fr; gap: 4%;
+      padding: 1.5% 5% 4%; height: calc(100% - 16%);
     }
     .ui-t-copy h2 {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 700;
-      font-size: clamp(7px, 0.95vw, 12px);
-      line-height: 1.15;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: #f0f4f0;
-      margin-bottom: 5%;
+      font-family: 'Outfit', sans-serif; font-weight: 700;
+      font-size: clamp(7px, 0.95vw, 13px); line-height: 1.1;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      color: #f0f4f0; margin-bottom: 4%;
     }
     .ui-t-copy p {
-      font-size: clamp(3.5px, 0.42vw, 5.5px);
-      line-height: 1.45;
-      color: #6a8070;
-      margin-bottom: 6%;
+      font-size: clamp(3.5px, 0.42vw, 5.5px); line-height: 1.45;
+      color: #6a8070; margin-bottom: 5%;
     }
-    .ui-t-stats {
-      display: flex; gap: 8%;
-      margin-top: 4%;
-    }
+    .ui-t-stats { display: flex; gap: 12%; margin-top: 4%; }
     .ui-t-stats div strong {
-      display: block;
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(7px, 0.9vw, 11px);
-      color: #eef2ee;
-      font-weight: 700;
+      display: block; font-family: 'Outfit', sans-serif;
+      font-size: clamp(7px, 0.9vw, 12px); color: #eef2ee; font-weight: 700;
     }
     .ui-t-stats div span {
-      font-size: clamp(3px, 0.35vw, 5px);
-      color: #6a8070;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+      font-size: clamp(3px, 0.36vw, 5px); color: #6a8070;
+      text-transform: uppercase; letter-spacing: 0.06em;
     }
+    .ui-t-cards { display: flex; flex-direction: column; gap: 8%; height: 100%; }
     .ui-t-card {
-      background: rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.07);
       border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      padding: 8%;
+      border-radius: 9px; padding: 7% 8%;
       backdrop-filter: blur(8px);
-      display: flex; flex-direction: column;
-      justify-content: space-between;
+      display: flex; gap: 8%; align-items: center; flex: 1;
+      cursor: pointer; transition: background 0.2s;
     }
+    .ui-t-card:hover { background: rgba(255,255,255,0.13); }
     .ui-t-card .thumb {
-      width: 100%;
-      aspect-ratio: 16/10;
-      border-radius: 5px;
+      width: 38%; aspect-ratio: 1.1; border-radius: 5px;
       background:
-        linear-gradient(145deg, rgba(200,160,80,0.35), transparent 50%),
+        linear-gradient(145deg, rgba(200,160,80,0.42), transparent 50%),
         linear-gradient(200deg, #3a5a48, #1a3028);
-      margin-bottom: 8%;
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden; flex-shrink: 0;
     }
     .ui-t-card .thumb::after {
-      content: '';
-      position: absolute;
-      right: 12%; bottom: 10%;
-      width: 28%; height: 55%;
+      content: ''; position: absolute; right: 14%; bottom: 12%;
+      width: 36%; height: 58%;
       background: linear-gradient(160deg, #e0b060, #a07830);
-      border-radius: 3px;
-      transform: rotate(-8deg);
+      border-radius: 3px; transform: rotate(-10deg);
       box-shadow: 2px 3px 8px rgba(0,0,0,0.3);
     }
+    .ui-t-card .thumb.alt::after {
+      background: linear-gradient(160deg, #5a8a78, #2a4a40); width: 42%; border-radius: 4px;
+    }
     .ui-t-card h4 {
-      font-size: clamp(4.5px, 0.52vw, 7px);
-      color: #eef2ee;
-      font-weight: 600;
-      margin-bottom: 3%;
+      font-size: clamp(4.5px, 0.52vw, 7.5px); color: #eef2ee;
+      font-weight: 600; margin-bottom: 3%;
     }
-    .ui-t-card .meta {
-      font-size: clamp(3px, 0.38vw, 5px);
-      color: #6a8070;
+    .ui-t-card p { font-size: clamp(3px, 0.36vw, 5px); color: #6a8070; line-height: 1.35; }
+    .ui-t-card .btn {
+      margin-top: 6%; display: inline-block;
+      padding: 0.35em 0.7em; border-radius: 4px;
+      background: rgba(232,200,120,0.2); color: #e8d0a0;
+      font-size: clamp(3px, 0.36vw, 5px); font-weight: 600;
+      border: 1px solid rgba(232,200,120,0.3);
     }
-    .ui-t-btn {
-      margin-top: 6%;
-      align-self: flex-start;
-      padding: 0.4em 0.9em;
-      border: none; border-radius: 999px;
-      background: linear-gradient(135deg, #e8c888, #c49850);
-      color: #2a2010;
-      font-size: clamp(3.5px, 0.42vw, 5.5px);
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.15s;
-    }
-    .ui-t-btn:hover { transform: scale(1.04); }
 
-    /* Right: wooden box + white mouse */
-    .box {
-      position: absolute;
-      right: 11%;
-      bottom: 27%;
-      width: min(9.5vw, 120px);
-      height: min(7.5vw, 95px);
-      z-index: 16;
-      background:
-        linear-gradient(160deg, #b88850 0%, #8a6030 45%, #6a4820 100%);
+    /* Right props: wood crate + tape rolls */
+    .crate {
+      position: absolute; right: 6%; bottom: 26%;
+      width: min(9vw, 110px); height: min(7vw, 86px);
+      z-index: 20; pointer-events: none;
+      background: linear-gradient(160deg, #8a6238 0%, #5a3a1c 50%, #3a2410 100%);
       border-radius: 3px;
-      box-shadow:
-        0 10px 24px rgba(0,0,0,0.5),
-        inset 0 1px 0 rgba(255,220,160,0.2),
-        inset -2px -2px 6px rgba(0,0,0,0.2);
-      transform: rotate(3deg);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,210,150,0.12);
     }
-    .box::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 18%;
-      background: linear-gradient(180deg, #c89858, #a07838);
-      border-radius: 3px 3px 0 0;
-      box-shadow: inset 0 1px 0 rgba(255,230,180,0.25);
+    .crate::before {
+      content: ''; position: absolute; inset: 8% 10%;
+      border: 1px solid rgba(0,0,0,0.2);
+      background: repeating-linear-gradient(90deg,
+        transparent 0, transparent 8px, rgba(0,0,0,0.08) 8px, rgba(0,0,0,0.08) 9px);
     }
-    .box::after {
-      content: '';
-      position: absolute;
-      left: 12%; right: 12%; top: 28%;
-      height: 1px;
-      background: rgba(60,35,10,0.35);
-      box-shadow: 0 14px 0 rgba(60,35,10,0.25), 0 28px 0 rgba(60,35,10,0.2);
+    .tapes {
+      position: absolute; right: 7.5%; bottom: 33%;
+      width: min(7vw, 90px); height: min(4vw, 50px);
+      z-index: 21; pointer-events: none;
+    }
+    .tape {
+      position: absolute; border-radius: 50%;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+    }
+    .tape.a {
+      width: 48%; height: 70%; left: 0; bottom: 0;
+      background:
+        radial-gradient(circle at 50% 50%, transparent 28%, #c8b898 30%, #a89070 55%, #6a5840 100%);
+    }
+    .tape.b {
+      width: 42%; height: 62%; right: 4%; bottom: 8%;
+      background:
+        radial-gradient(circle at 50% 50%, transparent 28%, #d0c0a0 30%, #b0a080 55%, #706050 100%);
     }
 
+    /* Mouse */
     .mouse {
-      position: absolute;
-      right: 22%;
-      bottom: 24.5%;
-      width: min(4.2vw, 52px);
-      height: min(2.6vw, 32px);
-      z-index: 17;
-      background: linear-gradient(160deg, #f4f4f6 0%, #e0e0e4 50%, #c8c8ce 100%);
-      border-radius: 50% 50% 48% 48% / 60% 60% 40% 40%;
-      box-shadow:
-        0 4px 12px rgba(0,0,0,0.4),
-        inset 0 1px 0 #fff,
-        inset 0 -2px 4px rgba(0,0,0,0.08);
-      transform: rotate(-12deg);
+      position: absolute; right: 28%; bottom: 22%;
+      width: 3.2vw; min-width: 28px; height: 2vw; min-height: 18px;
+      z-index: 19;
+      background: linear-gradient(160deg, #f4f4f6, #c8c8ce 60%, #a0a0a8);
+      border-radius: 45% 45% 40% 40%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+      transform: rotate(-8deg);
     }
-    .mouse::before {
-      content: '';
-      position: absolute;
-      top: 18%; left: 50%;
-      transform: translateX(-50%);
-      width: 18%; height: 28%;
-      background: linear-gradient(180deg, #d0d0d4, #b0b0b6);
-      border-radius: 2px;
+    .mouse::after {
+      content: ''; position: absolute; top: 18%; left: 50%; transform: translateX(-50%);
+      width: 18%; height: 28%; border-radius: 2px;
+      background: rgba(0,0,0,0.12);
     }
 
-    /* Optional inspo crop inside chrome (not body wallpaper) */
-    .screen-glow {
-      position: absolute; inset: 0; pointer-events: none; z-index: 15;
-      box-shadow: inset 0 0 30px rgba(0,0,0,0.25);
+    .toast {
+      position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: rgba(20,28,24,0.92); color: #e8e4d8;
+      padding: 10px 18px; border-radius: 999px;
+      font-size: 13px; opacity: 0; pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s; z-index: 100;
+      border: 1px solid rgba(255,255,255,0.1);
     }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   </style>
 </head>
 <body>
@@ -696,23 +571,18 @@
 
     <div class="plants" aria-hidden="true">
       <div class="p-tall">
-        <div class="leaf a"></div>
-        <div class="leaf b"></div>
-        <div class="leaf c"></div>
-        <div class="leaf d"></div>
-        <div class="leaf e"></div>
-        <div class="leaf f"></div>
+        <div class="leaf a"></div><div class="leaf b"></div><div class="leaf c"></div>
+        <div class="leaf d"></div><div class="leaf e"></div><div class="leaf f"></div>
         <div class="pot"></div>
       </div>
       <div class="p-short">
-        <div class="leaf a"></div>
-        <div class="leaf b"></div>
+        <div class="leaf a"></div><div class="leaf b"></div>
         <div class="pot"></div>
       </div>
     </div>
     <div class="tiny-bowl" aria-hidden="true"></div>
 
-    <!-- iMac with course website -->
+    <!-- Desktop iMac -->
     <div class="imac">
       <div class="imac-bezel">
         <div class="imac-screen">
@@ -721,98 +591,105 @@
             <nav class="ui-nav">
               <div class="ui-logo">De Aradia Studio</div>
               <ul>
-                <li><a href="#">Courses</a></li>
+                <li><a href="#" class="active">Courses</a></li>
                 <li><a href="#">Library</a></li>
-                <li><a href="#">Pricing</a></li>
-                <li><a href="#">About</a></li>
+                <li><a href="#">Community</a></li>
               </ul>
             </nav>
             <div class="ui-main">
               <div class="ui-copy">
-                <h1>Master<br/>Digital<br/>Craft</h1>
-                <p>Guided lessons, live feedback, and a studio toolkit for modern creators.</p>
-                <button class="ui-cta" type="button">Start learning →</button>
+                <h1>Master<br/>Product<br/>Craft</h1>
+                <p>Learn packaging design, brand systems, and 3D product storytelling with guided studio courses.</p>
+                <button class="ui-cta" type="button" data-toast="Enrollment opened">Start learning →</button>
               </div>
               <div class="iso">
                 <div class="iso-cluster">
+                  <div class="iso-glow"></div>
                   <div class="iso-floor"></div>
+                  <div class="iso-orb"></div>
                   <div class="iso-box gold"></div>
+                  <div class="iso-lid-label"></div>
                   <div class="iso-box teal"></div>
                   <div class="iso-box dark"></div>
+                  <div class="iso-box bench"></div>
                   <div class="iso-plant">
+                    <div class="l l1"></div><div class="l l2"></div><div class="l l3"></div>
                     <div class="stem"></div>
-                    <div class="l l1"></div>
-                    <div class="l l2"></div>
-                    <div class="l l3"></div>
                   </div>
+                  <div class="iso-orb2"></div>
+                  <div class="iso-spark s1"></div>
+                  <div class="iso-spark s2"></div>
+                  <div class="iso-spark s3"></div>
                 </div>
               </div>
               <div class="side-card">
-                <h3>Pro Bundle</h3>
-                <div class="row"><span class="dot"></span> 48 video lessons</div>
-                <div class="row"><span class="dot"></span> Project files</div>
-                <div class="row"><span class="dot"></span> Certificate</div>
+                <h3>Featured track</h3>
+                <div class="row"><span class="dot"></span> 12 modules</div>
+                <div class="row"><span class="dot"></span> Live critiques</div>
+                <div class="row"><span class="dot"></span> Asset kit</div>
                 <div class="price">$89</div>
-                <button class="side-cta" type="button">Enroll now</button>
+                <button class="side-cta" type="button" data-toast="Added to cart">Enroll now</button>
               </div>
             </div>
             <div class="glass-stack">
-              <div class="glass" role="button" tabindex="0">
-                <div class="glass-ico">◈</div>
-                <div>
-                  <strong>UI Systems</strong>
-                  <span>12 modules · 6h</span>
-                </div>
+              <div class="glass" data-toast="Lesson: Form &amp; finish">
+                <div class="glass-ico">◆</div>
+                <div><strong>Form studies</strong><span>Module 01 · 24 min</span></div>
               </div>
-              <div class="glass" role="button" tabindex="0">
-                <div class="glass-ico">◇</div>
-                <div>
-                  <strong>Motion Craft</strong>
-                  <span>8 modules · 4h</span>
-                </div>
+              <div class="glass" data-toast="Lesson: Color systems">
+                <div class="glass-ico">◎</div>
+                <div><strong>Color systems</strong><span>Module 02 · 18 min</span></div>
               </div>
-              <div class="glass" role="button" tabindex="0">
-                <div class="glass-ico">○</div>
-                <div>
-                  <strong>Brand Lab</strong>
-                  <span>10 modules · 5h</span>
-                </div>
+              <div class="glass" data-toast="Lesson: 3D packaging">
+                <div class="glass-ico">▣</div>
+                <div><strong>3D packaging</strong><span>Module 03 · 32 min</span></div>
               </div>
             </div>
           </div>
-          <div class="screen-glow"></div>
         </div>
+        <div class="imac-chin"><div class="imac-logo"></div></div>
       </div>
-      <div class="imac-chin"><div class="imac-logo"></div></div>
       <div class="imac-neck"></div>
       <div class="imac-base"></div>
     </div>
 
-    <!-- Tablet dashboard -->
+    <!-- Tablet -->
     <div class="tablet">
       <div class="tablet-bezel">
         <div class="tablet-cam"></div>
         <div class="tablet-screen">
           <div class="ui-t">
             <div class="ui-t-nav">
-              <div class="ui-t-logo">Studio Course</div>
-              <span>Dashboard</span>
+              <div class="ui-t-logo">Studio Craft</div>
+              <span>My courses</span>
             </div>
             <div class="ui-t-body">
               <div class="ui-t-copy">
-                <h2>Build Better<br/>Visual Work</h2>
-                <p>Track progress across design tracks and ship weekly projects.</p>
+                <h2>Build better<br/>visual kits</h2>
+                <p>Continue your product design path with short studio lessons on mobile.</p>
                 <div class="ui-t-stats">
-                  <div><strong>24</strong><span>Lessons</span></div>
-                  <div><strong>8.2h</strong><span>Watched</span></div>
-                  <div><strong>92%</strong><span>Score</span></div>
+                  <div><strong>12</strong><span>Lessons</span></div>
+                  <div><strong>4.9</strong><span>Rating</span></div>
+                  <div><strong>2.1k</strong><span>Students</span></div>
                 </div>
               </div>
-              <div class="ui-t-card">
-                <div class="thumb"></div>
-                <h4>Packaging Systems</h4>
-                <div class="meta">Module 04 · 42 min</div>
-                <button class="ui-t-btn" type="button">Continue</button>
+              <div class="ui-t-cards">
+                <div class="ui-t-card" data-toast="Opened: Packaging 101">
+                  <div class="thumb"></div>
+                  <div>
+                    <h4>Packaging 101</h4>
+                    <p>Structure, materials, print-ready systems.</p>
+                    <span class="btn">Resume</span>
+                  </div>
+                </div>
+                <div class="ui-t-card" data-toast="Opened: Brand objects">
+                  <div class="thumb alt"></div>
+                  <div>
+                    <h4>Brand objects</h4>
+                    <p>3D mockups for retail storytelling.</p>
+                    <span class="btn">Start</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -820,22 +697,45 @@
       </div>
     </div>
 
-    <div class="box" aria-hidden="true"></div>
+    <div class="crate" aria-hidden="true"></div>
+    <div class="tapes" aria-hidden="true">
+      <div class="tape a"></div>
+      <div class="tape b"></div>
+    </div>
     <div class="mouse" aria-hidden="true"></div>
 
-    <div class="desk" aria-hidden="true"></div>
-    <div class="desk-edge" aria-hidden="true"></div>
-    <div class="vignette" aria-hidden="true"></div>
+    <div class="desk"></div>
+    <div class="desk-edge"></div>
+    <div class="vignette"></div>
   </div>
 
+  <div class="toast" id="toast" role="status"></div>
+
   <script>
-    document.querySelectorAll('.glass, .ui-cta, .side-cta, .ui-t-btn').forEach(el => {
-      el.addEventListener('click', () => {
-        el.style.transition = 'transform 0.12s';
-        el.style.transform = 'scale(0.96)';
-        setTimeout(() => { el.style.transform = ''; }, 140);
+    (function () {
+      var toast = document.getElementById('toast');
+      var t;
+      function show(msg) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(t);
+        t = setTimeout(function () { toast.classList.remove('show'); }, 1800);
+      }
+      document.querySelectorAll('[data-toast]').forEach(function (el) {
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          show(el.getAttribute('data-toast'));
+        });
       });
-    });
+      document.querySelectorAll('.ui-nav a').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          e.preventDefault();
+          document.querySelectorAll('.ui-nav a').forEach(function (x) { x.classList.remove('active'); });
+          a.classList.add('active');
+          show('Nav · ' + a.textContent);
+        });
+      });
+    })();
   </script>
 </body>
 </html>

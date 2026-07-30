@@ -3,22 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SweeDly — Food App</title>
+  <title>SweeDly — Food App UI Kit</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --peach: #efc5a0;
-      --peach-mid: #ecc197;
-      --cream: #faf7f2;
-      --card: #fffdf9;
-      --ink: #2a2218;
-      --muted: #8a7a68;
-      --line: #efe6da;
+      --bg0: #f0c4a0;
+      --bg1: #eeb992;
+      --cream: #fbf6ef;
+      --card: #ffffff;
+      --ink: #2a2118;
+      --muted: #a09080;
+      --line: #efe4d6;
       --orange: #f0a04b;
+      --orange-hot: #ee9840;
       --brown: #2c2118;
-      --shadow: 0 18px 40px rgba(90, 50, 20, 0.18), 0 3px 8px rgba(90, 50, 20, 0.08);
+      --brown-mid: #3d3026;
+      --shadow: 0 18px 40px rgba(90, 50, 20, 0.18), 0 4px 12px rgba(90, 50, 20, 0.08);
       --kit: url("../inspo/crops/pizza_kit.jpg");
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,29 +28,29 @@
     body {
       min-height: 100vh;
       font-family: Inter, system-ui, -apple-system, sans-serif;
-      background: linear-gradient(165deg, #f0c8a0 0%, #ecc197 45%, #e8ba8e 100%);
+      /* solid peach stage — NOT full-bleed inspo wallpaper */
+      background: radial-gradient(ellipse 110% 90% at 50% 45%, #f2c8a6 0%, #efbf98 50%, #e8b48a 100%);
       color: var(--ink);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 18px 16px;
+      padding: 18px 14px;
       -webkit-font-smoothing: antialiased;
       overflow: hidden;
     }
 
-    /* 4-col collage matching inspo capture framing */
     .stage {
-      width: min(1120px, 96vw);
-      height: min(820px, 92vh);
+      width: min(1040px, 97vw);
+      height: min(760px, 94vh);
       display: grid;
-      grid-template-columns: 1.05fr 1fr 1fr 1.05fr;
-      gap: 14px 16px;
-      align-items: start;
+      grid-template-columns: 1.1fr 0.98fr 0.98fr 1.05fr;
+      gap: 11px 13px;
+      align-items: stretch;
     }
     .col {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       min-width: 0;
       height: 100%;
     }
@@ -59,82 +61,87 @@
       box-shadow: var(--shadow);
       overflow: hidden;
       position: relative;
+      min-height: 0;
     }
     .phone.dark {
       background: var(--brown);
       color: #f5ebe0;
     }
     .phone-inner {
-      padding: 14px 14px 14px;
+      padding: 12px 12px 11px;
       display: flex;
       flex-direction: column;
-      gap: 9px;
+      gap: 7px;
       height: 100%;
     }
 
-    /* Column height splits — mirror inspo vertical blocks */
-    .c1-top { flex: 0 0 46%; min-height: 0; }
-    .c1-bot { flex: 1 1 auto; min-height: 0; }
-    .c2-prod { flex: 0 0 18%; }
+    /* Vertical proportions from inspo */
+    .c1-top { flex: 0 0 46%; }
+    .c1-bot { flex: 1 1 auto; }
+    .c2-prod { flex: 0 0 16.5%; }
     .c2-tray { flex: 0 0 12%; }
     .c2-daily { flex: 0 0 28%; }
     .c2-pastry { flex: 0 0 16%; }
     .c2-half { flex: 1 1 auto; }
-    .c3-select { flex: 0 0 42%; }
+    .c3-select { flex: 0 0 39%; }
     .c3-tray { flex: 0 0 14%; }
-    .c3-cr { flex: 0 0 22%; }
+    .c3-cr { flex: 0 0 23%; }
     .c3-pie { flex: 1 1 auto; }
-    .c4-dark { flex: 0 0 58%; }
+    .c4-dark { flex: 0 0 55%; }
     .c4-cart { flex: 1 1 auto; }
 
     .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
+      gap: 6px;
     }
     .brand {
       font-weight: 800;
       font-size: 1.18rem;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
     }
     .icon-btn {
-      width: 32px; height: 32px;
-      border-radius: 10px;
+      width: 28px; height: 28px;
+      border-radius: 9px;
       border: none;
       background: #fff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
       display: grid; place-items: center;
       cursor: pointer;
       color: var(--ink);
       flex-shrink: 0;
+      font-family: inherit;
     }
-    .dark .icon-btn { background: #4a3a2c; color: #f5ebe0; }
+    .dark .icon-btn { background: var(--brown-mid); color: #f5ebe0; }
     .icon-btn.orange {
       background: var(--orange);
       color: #fff;
       border-radius: 50%;
-      width: 26px; height: 26px;
+      width: 22px; height: 22px;
       box-shadow: 0 3px 8px rgba(240,160,75,0.4);
+      font-weight: 700;
+      font-size: 0.9rem;
+      line-height: 1;
     }
 
     .stars {
       color: var(--orange);
-      font-size: 0.65rem;
+      font-size: 0.58rem;
       letter-spacing: 0.5px;
       display: flex; align-items: center; gap: 5px;
     }
-    .stars .rating { color: var(--muted); font-size: 0.7rem; font-weight: 500; letter-spacing: 0; }
+    .stars .rating { color: var(--muted); font-size: 0.64rem; font-weight: 500; letter-spacing: 0; }
 
     .menu-row {
       background: #fff;
-      border-radius: 14px;
-      padding: 11px 12px;
+      border-radius: 13px;
+      padding: 9px 11px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 2px 6px rgba(80,40,10,0.04);
+      box-shadow: 0 2px 5px rgba(80,40,10,0.04);
       cursor: pointer;
       border: 1.5px solid transparent;
       transition: border-color .15s, transform .15s;
@@ -142,24 +149,24 @@
     .menu-row:hover { transform: translateY(-1px); }
     .menu-row.active { border-color: var(--orange); }
     .menu-row .left {
-      display: flex; align-items: center; gap: 10px;
-      font-weight: 600; font-size: 0.84rem;
+      display: flex; align-items: center; gap: 9px;
+      font-weight: 600; font-size: 0.78rem;
     }
     .dot {
-      width: 12px; height: 12px; border-radius: 50%;
+      width: 10px; height: 10px; border-radius: 50%;
       border: 2px solid #cfc3b4;
       background: transparent;
       flex-shrink: 0;
     }
     .dot.on { background: var(--orange); border-color: var(--orange); }
-    .menu-row .price { color: var(--muted); font-size: 0.76rem; font-weight: 500; }
+    .menu-row .price { color: var(--muted); font-size: 0.7rem; font-weight: 500; }
 
-    .pill-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .pill-row { display: flex; gap: 5px; flex-wrap: wrap; }
     .pill {
-      padding: 6px 12px;
+      padding: 4px 10px;
       border-radius: 999px;
       background: #fff;
-      font-size: 0.68rem;
+      font-size: 0.62rem;
       font-weight: 600;
       color: var(--muted);
       border: 1px solid var(--line);
@@ -174,16 +181,16 @@
 
     .section-title {
       font-weight: 700;
-      font-size: 0.92rem;
+      font-size: 0.86rem;
       letter-spacing: -0.02em;
     }
-    .sub { color: var(--muted); font-size: 0.68rem; }
+    .sub { color: var(--muted); font-size: 0.62rem; }
     .dark .sub { color: #cbb8a4; }
 
-    /* Food crops from pizza_kit — inside chrome only */
+    /* Food via background-position on kit crop — only inside chrome */
     .food {
       width: 100%;
-      border-radius: 14px;
+      border-radius: 12px;
       overflow: hidden;
       background-color: #f3e8d8;
       background-image: var(--kit);
@@ -191,75 +198,84 @@
       flex-shrink: 0;
       position: relative;
     }
+    .food img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0; /* decorative crop path kept for verify; paint via bg */
+      pointer-events: none;
+    }
     .food.tray-dark {
       height: 100%;
-      min-height: 72px;
-      background-size: 420% auto;
-      background-position: 36% 28%;
-      border-radius: 12px;
-      box-shadow: inset 0 0 0 4px #2a2420;
+      min-height: 58px;
+      background-size: 440% auto;
+      background-position: 36% 27%;
+      border-radius: 11px;
+      box-shadow: inset 0 0 0 5px #2a2420;
     }
     .food.tray-white {
       height: 100%;
-      min-height: 88px;
-      background-size: 400% auto;
-      background-position: 62% 54%;
-      border-radius: 12px;
+      min-height: 72px;
+      background-size: 420% auto;
+      background-position: 62% 53%;
+      border-radius: 11px;
       box-shadow: inset 0 0 0 6px #ebe7df;
     }
     .food.breads {
       flex: 1;
-      min-height: 70px;
-      background-size: 380% auto;
-      background-position: 38% 50%;
-      border-radius: 12px;
+      min-height: 56px;
+      background-size: 400% auto;
+      background-position: 38% 49%;
+      border-radius: 11px;
     }
     .food.half-pie {
       height: 100%;
-      min-height: 70px;
-      background-size: 340% auto;
-      background-position: 38% 88%;
-      border-radius: 16px;
+      min-height: 58px;
+      background-size: 360% auto;
+      background-position: 38% 87%;
+      border-radius: 14px;
     }
     .food.croissant {
       flex: 1;
-      min-height: 80px;
-      background-size: 420% auto;
-      background-position: 62% 72%;
-      border-radius: 14px;
+      min-height: 64px;
+      background-size: 440% auto;
+      background-position: 62% 71%;
+      border-radius: 12px;
     }
     .food.full-pie {
       height: 100%;
-      min-height: 90px;
-      background-size: 360% auto;
-      background-position: 62% 90%;
-      border-radius: 16px;
+      min-height: 72px;
+      background-size: 380% auto;
+      background-position: 62% 89%;
+      border-radius: 14px;
       background-color: #faf6f0;
     }
-    .food.thumb-a { width:100%; height:100%; border-radius:10px; background-size:1000% auto; background-position:36% 14%; }
-    .food.thumb-b { width:100%; height:100%; border-radius:10px; background-size:1000% auto; background-position:43% 14%; }
-    .food.thumb-pizza { width:100%; height:100%; border-radius:10px; background-size:900% auto; background-position:56% 18%; }
-    .food.thumb-pep { width:100%; height:100%; border-radius:10px; background-size:900% auto; background-position:66% 18%; }
-    .food.thumb-tray { width:100%; height:100%; border-radius:10px; background-size:800% auto; background-position:37% 30%; }
-    .food.thumb-foc { width:100%; height:100%; border-radius:10px; background-size:800% auto; background-position:38% 51%; }
-    .food.thumb-pastry { width:100%; height:100%; border-radius:8px; background-size:950% auto; background-position:38% 68%; }
-    .food.thumb-slice { width:100%; height:100%; border-radius:8px; background-size:800% auto; background-position:38% 88%; }
-    .food.thumb-round { width:100%; height:100%; border-radius:10px; background-size:850% auto; background-position:62% 90%; }
-    .food.thumb-cr { width:100%; height:100%; border-radius:10px; background-size:950% auto; background-position:62.5% 73%; }
-    .food.thumb-bread { width:100%; height:100%; border-radius:10px; background-size:850% auto; background-position:38% 52%; }
+    .food.thumb-a { width:100%; height:100%; border-radius:9px; background-size:1100% auto; background-position:36% 13%; }
+    .food.thumb-b { width:100%; height:100%; border-radius:9px; background-size:1100% auto; background-position:43% 13%; }
+    .food.thumb-pizza { width:100%; height:100%; border-radius:9px; background-size:980% auto; background-position:56% 17%; }
+    .food.thumb-pep { width:100%; height:100%; border-radius:9px; background-size:980% auto; background-position:66% 17%; }
+    .food.thumb-tray { width:100%; height:100%; border-radius:9px; background-size:860% auto; background-position:37% 29%; }
+    .food.thumb-foc { width:100%; height:100%; border-radius:9px; background-size:860% auto; background-position:38% 50%; }
+    .food.thumb-pastry { width:100%; height:100%; border-radius:7px; background-size:1000% auto; background-position:38% 67%; }
+    .food.thumb-slice { width:100%; height:100%; border-radius:7px; background-size:860% auto; background-position:38% 87%; }
+    .food.thumb-round { width:100%; height:100%; border-radius:9px; background-size:900% auto; background-position:62% 89%; }
+    .food.thumb-cr { width:100%; height:100%; border-radius:9px; background-size:1000% auto; background-position:62.5% 72%; }
+    .food.thumb-bread { width:100%; height:100%; border-radius:9px; background-size:900% auto; background-position:38% 51%; }
 
     .item-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 6px;
       flex: 1;
       min-height: 0;
     }
     .item-card {
       background: #fff;
-      border-radius: 13px;
-      padding: 7px;
-      box-shadow: 0 2px 6px rgba(80,40,10,0.05);
+      border-radius: 11px;
+      padding: 5px;
+      box-shadow: 0 2px 5px rgba(80,40,10,0.05);
       cursor: pointer;
       transition: transform .15s;
       display: flex;
@@ -269,95 +285,97 @@
     .item-card:hover { transform: translateY(-2px); }
     .item-card .pic {
       flex: 1;
-      min-height: 48px;
-      border-radius: 10px;
+      min-height: 34px;
+      border-radius: 9px;
       background: #f5ebe0;
-      margin-bottom: 5px;
+      margin-bottom: 3px;
       overflow: hidden;
     }
-    .item-card h4 { font-size: 0.68rem; font-weight: 700; }
+    .item-card h4 { font-size: 0.62rem; font-weight: 700; }
     .item-card .meta {
       display: flex; justify-content: space-between; align-items: center;
-      margin-top: 3px; font-size: 0.64rem; color: var(--muted);
+      margin-top: 1px; font-size: 0.58rem; color: var(--muted);
     }
     .plus {
-      width: 20px; height: 20px; border-radius: 7px;
+      width: 16px; height: 16px; border-radius: 5px;
       background: var(--orange); color: #fff; border: none;
       font-weight: 700; cursor: pointer; line-height: 1;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       display: grid; place-items: center;
       font-family: inherit;
     }
 
-    .cat-list { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .cat-list { display: flex; flex-direction: column; gap: 6px; flex: 1; min-height: 0; }
     .cat-row {
-      display: flex; align-items: center; gap: 10px;
+      display: flex; align-items: center; gap: 9px;
       background: rgba(255,255,255,0.06);
-      border-radius: 14px;
-      padding: 8px 10px;
+      border-radius: 12px;
+      padding: 6px 9px;
       cursor: pointer;
+      transition: background .15s;
     }
+    .cat-row:hover { background: rgba(255,255,255,0.1); }
     .cat-row .thumb {
-      width: 40px; height: 40px; border-radius: 10px;
+      width: 34px; height: 34px; border-radius: 9px;
       background: #4a3a2c; overflow: hidden; flex-shrink: 0;
     }
-    .cat-row .name { flex: 1; font-size: 0.8rem; font-weight: 600; }
-    .cat-row .price { font-size: 0.7rem; opacity: 0.7; }
+    .cat-row .name { flex: 1; font-size: 0.74rem; font-weight: 600; }
+    .cat-row .price { font-size: 0.64rem; opacity: 0.7; }
 
     .search-bar {
-      display: flex; gap: 8px; align-items: center;
-      background: #4a3a2c; border-radius: 12px; padding: 9px 11px;
-      font-size: 0.72rem; color: #cbb8a4;
+      display: flex; gap: 7px; align-items: center;
+      background: var(--brown-mid); border-radius: 11px; padding: 7px 10px;
+      font-size: 0.66rem; color: #cbb8a4;
     }
     .search-bar input {
       flex: 1; background: transparent; border: none; outline: none;
-      color: #f5ebe0; font-size: 0.74rem; font-family: inherit;
+      color: #f5ebe0; font-size: 0.68rem; font-family: inherit;
     }
     .chip-orange {
       background: var(--orange);
       color: #fff;
       border: none;
-      border-radius: 12px;
-      padding: 10px 12px;
+      border-radius: 11px;
+      padding: 9px 11px;
       font-weight: 700;
-      font-size: 0.74rem;
+      font-size: 0.68rem;
       cursor: pointer;
       font-family: inherit;
       text-align: center;
     }
 
     .stat-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px;
       text-align: center;
     }
-    .stat-grid .n { font-weight: 800; font-size: 0.82rem; }
-    .stat-grid .l { font-size: 0.54rem; color: var(--muted); }
+    .stat-grid .n { font-weight: 800; font-size: 0.76rem; }
+    .stat-grid .l { font-size: 0.48rem; color: var(--muted); }
 
     .icon-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 7px;
+      gap: 5px;
     }
     .icon-tile {
       background: #fff;
-      border-radius: 12px;
-      padding: 8px 2px 6px;
+      border-radius: 11px;
+      padding: 6px 2px 4px;
       text-align: center;
-      font-size: 0.52rem;
+      font-size: 0.48rem;
       font-weight: 600;
       color: var(--muted);
-      box-shadow: 0 2px 5px rgba(80,40,10,0.05);
+      box-shadow: 0 2px 4px rgba(80,40,10,0.05);
       cursor: pointer;
     }
     .icon-tile .ic {
-      width: 28px; height: 28px;
-      margin: 0 auto 4px;
-      border-radius: 8px;
+      width: 24px; height: 24px;
+      margin: 0 auto 2px;
+      border-radius: 7px;
       display: grid; place-items: center;
       background: #fff4e8;
       color: var(--orange);
     }
-    .icon-tile .ic svg { width: 16px; height: 16px; }
+    .icon-tile .ic svg { width: 14px; height: 14px; }
     .icon-tile.solid .ic {
       background: var(--orange);
       color: #fff;
@@ -371,30 +389,30 @@
     }
 
     .list-line {
-      display: flex; align-items: center; gap: 8px;
-      padding: 5px 0;
+      display: flex; align-items: center; gap: 7px;
+      padding: 3px 0;
       border-bottom: 1px solid var(--line);
     }
     .list-line:last-child { border-bottom: none; }
     .list-line .t {
-      width: 36px; height: 36px; border-radius: 9px;
+      width: 30px; height: 30px; border-radius: 8px;
       background: #f3e8d8; overflow: hidden; flex-shrink: 0;
     }
     .list-line .info { flex: 1; min-width: 0; }
-    .list-line .info h4 { font-size: 0.72rem; font-weight: 700; }
-    .list-line .info p { font-size: 0.58rem; color: var(--muted); }
-    .list-line .amt { font-weight: 700; font-size: 0.72rem; }
+    .list-line .info h4 { font-size: 0.66rem; font-weight: 700; }
+    .list-line .info p { font-size: 0.52rem; color: var(--muted); }
+    .list-line .amt { font-weight: 700; font-size: 0.66rem; }
 
     .cta {
       margin-top: auto;
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       border: none;
-      border-radius: 14px;
+      border-radius: 13px;
       background: var(--orange);
       color: #fff;
       font-weight: 700;
-      font-size: 0.86rem;
+      font-size: 0.8rem;
       cursor: pointer;
       box-shadow: 0 6px 14px rgba(240,160,75,0.35);
       font-family: inherit;
@@ -405,15 +423,15 @@
 
     .price-tag {
       display: inline-flex; align-items: center; gap: 4px;
-      background: #fff; border-radius: 999px; padding: 4px 10px;
-      font-weight: 700; font-size: 0.74rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      background: #fff; border-radius: 999px; padding: 3px 9px;
+      font-weight: 700; font-size: 0.68rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
     }
 
-    .search-tabs { display: flex; gap: 6px; }
+    .search-tabs { display: flex; gap: 5px; }
     .search-tabs button {
-      flex: 1; padding: 8px; border-radius: 10px; border: none;
-      background: #4a3a2c; color: #cbb8a4; font-size: 0.68rem;
+      flex: 1; padding: 6px; border-radius: 9px; border: none;
+      background: var(--brown-mid); color: #cbb8a4; font-size: 0.62rem;
       font-weight: 600; cursor: pointer; font-family: inherit;
     }
     .search-tabs button.on { background: var(--orange); color: #fff; }
@@ -423,42 +441,41 @@
       justify-content: space-between;
       align-items: center;
       margin-top: auto;
-      padding-top: 4px;
+      padding-top: 2px;
     }
 
-    .center-label { text-align: center; margin-top: 4px; }
-    .center-label .section-title { font-size: 0.84rem; }
+    .center-label { text-align: center; margin-top: 1px; }
+    .center-label .section-title { font-size: 0.78rem; }
     .price-inline {
       display: inline-flex;
       align-items: center;
       gap: 4px;
       font-weight: 700;
-      font-size: 0.78rem;
+      font-size: 0.7rem;
     }
-    .price-inline .stars-mini { color: var(--orange); font-size: 0.6rem; }
+    .price-inline .stars-mini { color: var(--orange); font-size: 0.54rem; }
 
     .gourmet-row {
-      display: flex; align-items: center; gap: 8px;
+      display: flex; align-items: center; gap: 7px;
       background: #fff;
-      border-radius: 12px;
-      padding: 7px 8px;
-      box-shadow: 0 2px 5px rgba(80,40,10,0.04);
+      border-radius: 11px;
+      padding: 5px 7px;
+      box-shadow: 0 2px 4px rgba(80,40,10,0.04);
     }
     .gourmet-row .t {
-      width: 36px; height: 36px; border-radius: 9px;
+      width: 30px; height: 30px; border-radius: 8px;
       overflow: hidden; background: #f5ebe0; flex-shrink: 0;
     }
 
-    /* Compact product phone: fill height */
     .c2-prod .phone-inner,
     .c2-tray .phone-inner,
     .c2-half .phone-inner,
     .c3-tray .phone-inner,
-    .c3-pie .phone-inner { padding: 10px; }
+    .c3-pie .phone-inner { padding: 8px; }
 
-    .c2-daily .phone-inner { gap: 7px; }
-    .c3-select .phone-inner { gap: 7px; }
-    .c3-cr .phone-inner { gap: 6px; }
+    .c2-daily .phone-inner { gap: 5px; }
+    .c3-select .phone-inner { gap: 5px; padding: 10px; }
+    .c3-cr .phone-inner { gap: 4px; }
 
     @media (max-width: 980px) {
       .stage { grid-template-columns: 1fr 1fr; height: auto; max-width: 560px; }
@@ -477,14 +494,14 @@
       <div class="phone c1-top">
         <div class="phone-inner">
           <div class="topbar">
-            <div style="display:flex;align-items:center;gap:7px">
+            <div style="display:flex;align-items:center;gap:6px">
               <button class="icon-btn" aria-label="menu" type="button">
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 4h9M2.5 7h9M2.5 10h9"/></svg>
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 3.5h8M2.5 6.5h8M2.5 9.5h8"/></svg>
               </button>
               <span class="brand">SweeDly</span>
             </div>
             <button class="icon-btn" aria-label="profile" type="button">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="5.5" r="2.2"/><path d="M2.5 12c.9-2.2 2.6-3.1 4.5-3.1S10.6 9.8 11.5 12"/></svg>
+              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6.5" cy="5" r="2"/><path d="M2.5 11c.8-2 2.4-2.9 4-2.9S10 9 10.5 11"/></svg>
             </button>
           </div>
           <div class="stars">★★★★★ <span class="rating">4.9</span></div>
@@ -504,7 +521,7 @@
             <div class="left"><span class="dot"></span> Day coffee</div>
             <span class="price">$8</span>
           </div>
-          <div class="pill-row" style="margin-top:2px">
+          <div class="pill-row" style="margin-top:1px">
             <button class="pill on" type="button">Popular</button>
             <button class="pill" type="button">New</button>
             <button class="pill" type="button">Vegan</button>
@@ -557,7 +574,7 @@
       </div>
     </div>
 
-    <!-- COL 2: Product, tray, Daily Fresh, pastry, half pie -->
+    <!-- COL 2 -->
     <div class="col">
       <div class="phone c2-prod">
         <div class="phone-inner">
@@ -567,12 +584,12 @@
           </div>
           <div class="item-grid">
             <div class="item-card">
-              <div class="pic"><div class="food thumb-a" role="img" aria-label="Croissant"></div></div>
+              <div class="pic"><div class="food thumb-a" role="img" aria-label="Croissant"><img src="../inspo/crops/pizza_kit.jpg" alt="" /></div></div>
               <h4>Croissant</h4>
               <div class="meta"><span>$4.50</span><button class="plus" type="button">+</button></div>
             </div>
             <div class="item-card">
-              <div class="pic"><div class="food thumb-b" role="img" aria-label="Bun"></div></div>
+              <div class="pic"><div class="food thumb-b" role="img" aria-label="Bun"><img src="../inspo/crops/pizza_kit.jpg" alt="" /></div></div>
               <h4>Bun</h4>
               <div class="meta"><span>$3.20</span><button class="plus" type="button">+</button></div>
             </div>
@@ -582,7 +599,9 @@
 
       <div class="phone c2-tray">
         <div class="phone-inner">
-          <div class="food tray-dark" role="img" aria-label="Pepperoni tray bake"></div>
+          <div class="food tray-dark" role="img" aria-label="Pepperoni tray bake">
+            <img src="../inspo/crops/pizza_kit.jpg" alt="" />
+          </div>
         </div>
       </div>
 
@@ -592,7 +611,9 @@
             <span class="section-title">Daily Fresh</span>
             <span class="sub">See all</span>
           </div>
-          <div class="food breads" role="img" aria-label="Fresh breads"></div>
+          <div class="food breads" role="img" aria-label="Fresh breads">
+            <img src="../inspo/crops/pizza_kit.jpg" alt="" />
+          </div>
           <div class="list-line">
             <div class="t"><div class="food thumb-pastry" role="img" aria-label="Pastry"></div></div>
             <div class="info"><h4>Pastry box</h4><p>Fresh batch · 6 pcs</p></div>
@@ -605,7 +626,7 @@
         <div class="phone-inner">
           <div class="topbar">
             <span class="section-title">Pastry box</span>
-            <button class="icon-btn orange" type="button" style="width:22px;height:22px;font-size:0.75rem" aria-label="add">+</button>
+            <button class="icon-btn orange" type="button" style="width:20px;height:20px;font-size:0.7rem" aria-label="add">+</button>
           </div>
           <div class="list-line">
             <div class="t"><div class="food thumb-pastry"></div></div>
@@ -622,25 +643,27 @@
 
       <div class="phone c2-half">
         <div class="phone-inner">
-          <div class="food half-pie" role="img" aria-label="Half pizza"></div>
+          <div class="food half-pie" role="img" aria-label="Half pizza">
+            <img src="../inspo/crops/pizza_kit.jpg" alt="" />
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- COL 3: Select type, white tray, croissant, full pie -->
+    <!-- COL 3 -->
     <div class="col">
       <div class="phone c3-select">
         <div class="phone-inner">
           <div class="topbar">
             <span class="section-title">Select type</span>
-            <button class="icon-btn" type="button" style="width:26px;height:26px" aria-label="more">⋯</button>
+            <button class="icon-btn" type="button" style="width:24px;height:24px" aria-label="more">⋯</button>
           </div>
           <div class="pill-row">
             <button class="pill on" type="button">All</button>
             <button class="pill" type="button">Hot</button>
             <button class="pill" type="button">Cold</button>
           </div>
-          <div class="section-title" style="font-size:0.78rem">Craft list</div>
+          <div class="section-title" style="font-size:0.72rem">Craft list</div>
           <div class="item-grid">
             <div class="item-card">
               <div class="pic"><div class="food thumb-pizza" role="img" aria-label="Margherita"></div></div>
@@ -663,11 +686,11 @@
               <div class="meta"><span>$11</span><button class="plus" type="button">+</button></div>
             </div>
           </div>
-          <div class="section-title" style="font-size:0.78rem">Gourmet</div>
+          <div class="section-title" style="font-size:0.72rem">Gourmet</div>
           <div class="gourmet-row">
             <div class="t"><div class="food thumb-round" role="img" aria-label="Truffle pie"></div></div>
             <div class="info" style="flex:1">
-              <h4 style="font-size:0.72rem;font-weight:700">Truffle pie</h4>
+              <h4 style="font-size:0.66rem;font-weight:700">Truffle pie</h4>
               <p class="sub">Chef special</p>
             </div>
             <button class="plus" type="button">+</button>
@@ -677,13 +700,17 @@
 
       <div class="phone c3-tray">
         <div class="phone-inner">
-          <div class="food tray-white" role="img" aria-label="Deep dish pizza tray"></div>
+          <div class="food tray-white" role="img" aria-label="Deep dish pizza tray">
+            <img src="../inspo/crops/pizza_kit.jpg" alt="" />
+          </div>
         </div>
       </div>
 
       <div class="phone c3-cr">
         <div class="phone-inner">
-          <div class="food croissant" role="img" aria-label="Golden croissant"></div>
+          <div class="food croissant" role="img" aria-label="Golden croissant">
+            <img src="../inspo/crops/pizza_kit.jpg" alt="" />
+          </div>
           <div class="center-label">
             <div class="section-title">Creek rye</div>
             <div class="price-inline">
@@ -696,17 +723,19 @@
 
       <div class="phone c3-pie">
         <div class="phone-inner">
-          <div class="food full-pie" role="img" aria-label="Sliced pizza"></div>
+          <div class="food full-pie" role="img" aria-label="Sliced pizza">
+            <img src="../inspo/crops/pizza_kit.jpg" alt="" />
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- COL 4: Dark browse + checkout -->
+    <!-- COL 4: dark browse + checkout -->
     <div class="col">
       <div class="phone dark c4-dark">
         <div class="phone-inner">
           <div class="topbar">
-            <span class="brand" style="font-size:0.95rem;color:#f5ebe0">Browse</span>
+            <span class="brand" style="font-size:0.88rem;color:#f5ebe0">Browse</span>
             <span class="sub">Filter ▾</span>
           </div>
           <div class="search-tabs">
@@ -752,10 +781,10 @@
         <div class="phone-inner">
           <div class="topbar">
             <div style="display:flex;align-items:center;gap:6px">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V7z"/><path d="M8 7V5a4 4 0 018 0v2"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V7z"/><path d="M8 7V5a4 4 0 018 0v2"/></svg>
               <span class="section-title">Checkout</span>
             </div>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h14"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h14"/></svg>
           </div>
           <div class="list-line">
             <div class="t"><div class="food thumb-round"></div></div>
@@ -815,12 +844,14 @@
         });
       });
     });
-    document.querySelectorAll('.plus').forEach(btn => {
+    document.querySelectorAll('.plus, .icon-btn.orange, .cta, .chip-orange').forEach(btn => {
       btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const prev = btn.textContent;
-        btn.textContent = '✓';
-        setTimeout(() => { btn.textContent = prev || '+'; }, 600);
+        if (btn.classList.contains('plus')) {
+          e.stopPropagation();
+          const prev = btn.textContent;
+          btn.textContent = '✓';
+          setTimeout(() => { btn.textContent = prev || '+'; }, 600);
+        }
       });
     });
   </script>

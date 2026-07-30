@@ -9,7 +9,7 @@ Living backlog for `inspo-html-loop`. Update after every OpenCV round.
 
 | Field | Value |
 |-------|--------|
-| when | 2026-07-30T21:05:48.546Z (`tools/verify-out/REPORT.md` + `report.json`) |
+| when | 2026-07-30T21:12:40.028Z (`tools/verify-out/REPORT.md` + `report.json`) |
 | command | `node tools/verify-inspo.mjs` |
 | pass_score | **0.55** |
 | fail_count | **16** / 19 |
@@ -23,10 +23,10 @@ Scores quoted from `tools/verify-out/report.json` (`score` field).
 
 | Priority | id | Score | Tag | Residual |
 |----------|-----|-------|-----|----------|
-| P0 | data-viz | 0.346 | A | rewrite — mountain analytics; SSIM 0.337 / edge 0.043 / hist 0.364 |
-| P0 | course | 0.366 | A/C | rewrite — desk/monitor/tablet isometric hero density vs inspo; hist 0.200 |
-| P0 | pizza | 0.388 | C | rewrite — food photography density vs flat UI; edge 0.047 |
-| P0 | abhigyan | 0.388 | A | rewrite — dark finance orbs dual-phone; hist 0.098 |
+| P0 | data-viz | 0.307 | A | rewrite — mountain analytics; SSIM 0.298 / edge 0.040 / hist 0.289 |
+| P0 | course | 0.376 | A/C | rewrite — desk/monitor/tablet isometric hero density vs inspo; hist 0.207 |
+| P0 | abhigyan | 0.395 | A | rewrite — dark finance orbs dual-phone; hist 0.132 |
+| P0 | pizza | 0.399 | C | rewrite — food photography density vs flat UI; edge 0.052 |
 | P1 | ocean | 0.464 | A/C | layered landscape / HUD density; edge 0.019 |
 | P1 | nature-mobile | 0.465 | A | botanical dual phones vs inspo/02.jpg composition |
 | P1 | boahat | 0.467 | A/C | photoreal travel dual-phone mass vs thin HTML finance board |
