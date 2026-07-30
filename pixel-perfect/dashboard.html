@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background: #F5F5F0;
+            --card-bg: #FFFFFF;
+            --primary: #6B9080;
+            --primary-dark: #5A7A6E;
+            --accent: #FF9B71;
+            --text-primary: #2D3748;
+            --text-secondary: #718096;
+            --text-muted: #A0AEC0;
+            --success: #48BB78;
+            --danger: #F56565;
+            --sidebar-width: 60px;
+            --grid-gap: 20px;
+            --card-radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            background: var(--background) !important;
+            color: var(--text-primary) !important;
+            overflow-x: hidden;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            border-right: 1px solid #E5E5E5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+        }
+
+        .sidebar-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-bottom: 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-secondary);
+        }
+
+        .sidebar-icon:hover {
+            background: #F7FAFC;
+        }
+
+        .sidebar-icon.active {
+            background: var(--text-primary);
+            color: white;
+        }
+
+        .sidebar-logo {
+            margin-bottom: 32px;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+        .sidebar-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-top: 24px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 32px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .header-left h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .header-left p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .header-right {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .search-input {
+            background: white;
+            border: 1px solid #E5E5E5;
+            border-radius: 12px;
+            padding: 10px 20px;
+            width: 300px;
+            font-size: 14px;
+        }
+
+        .icon-button {
+            width: 44px;
+            height: 44px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .icon-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .icon-button.search-btn {
+            background: var(--text-primary);
+            color: white;
+        }
+
+        .icon-button .notification-dot {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background: #F56565;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        /* Grid Layout */
+        .dashboard-grid {
+            display: flex;
+            flex-direction: column;
+            gap: var(--grid-gap);
+        }
+
+        .grid-row {
+            display: grid;
+            gap: var(--grid-gap);
+        }
+
+        .grid-row-1 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .grid-row-2, .grid-row-3 {
+            grid-template-columns: 6fr 3fr 3fr;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .card.green-bg {
+            background: var(--primary);
+            color: white;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .card-icon.money { background: #FFF5F5; color: #F56565; }
+        .card-icon.users { background: #F0F4FF; color: #4C6FFF; }
+        .card-icon.earnings { background: #FFF8E6; color: #FFA928; }
+
+        .card-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .green-bg .card-label {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .card-value {
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .green-bg .card-value {
+            color: white;
+        }
+
+        .mini-chart {
+            height: 40px;
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .mini-chart-bar {
+            flex: 1;
+            background: var(--primary);
+            border-radius: 2px;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .mini-chart-bar:hover {
+            opacity: 1;
+        }
+
+        .green-bg .mini-chart-bar {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .wave-chart {
+            height: 40px;
+            position: relative;
+        }
+
+        .wave-chart svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Balance Card */
+        .balance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .balance-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: var(--success);
+        }
+
+        .dropdown-btn {
+            padding: 8px 16px;
+            background: #F7FAFC;
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border: none;
+        }
+
+        .balance-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 24px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .stat-change {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .stat-change.positive {
+            color: var(--success);
+        }
+
+        .stat-change.negative {
+            color: var(--danger);
+        }
+
+        .line-chart {
+            height: 120px;
+            background: #F7FAFC;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        /* Earnings Card */
+        .earnings-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .earnings-subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .earnings-value {
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .earnings-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .progress-circle {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .progress-circle svg {
+            transform: rotate(-90deg);
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        /* Profile Card */
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            overflow: hidden;
+            background: #F0E6D8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .profile-email {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            text-align: center;
+        }
+
+        .profile-stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .profile-stat-value {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        /* Credit Card */
+        .credit-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .credit-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .credit-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .credit-cards-stack {
+            position: relative;
+            height: 180px;
+            margin-bottom: 20px;
+        }
+
+        .credit-card-3d {
+            width: 100%;
+            height: 140px;
+            border-radius: 16px;
+            position: absolute;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .credit-card-3d:nth-child(1) {
+            background: linear-gradient(135deg, #6B9080 0%, #5A7A6E 100%);
+            transform: translateY(0) rotate(0deg);
+            z-index: 3;
+        }
+
+        .credit-card-3d:nth-child(2) {
+            background: linear-gradient(135deg, #9CA3AF 0%, #6B7280 100%);
+            transform: translateY(8px) translateX(8px) rotate(2deg);
+            z-index: 2;
+        }
+
+        .credit-card-3d:nth-child(3) {
+            background: linear-gradient(135deg, #374151 0%, #1F2937 100%);
+            transform: translateY(16px) translateX(16px) rotate(4deg);
+            z-index: 1;
+        }
+
+        .card-chip {
+            width: 40px;
+            height: 32px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border-radius: 6px;
+            position: absolute;
+            top: 20px;
+            left: 24px;
+        }
+
+        .card-number {
+            position: absolute;
+            bottom: 50px;
+            left: 24px;
+            color: white;
+            font-size: 16px;
+            letter-spacing: 2px;
+            font-family: var(--font-mono);
+        }
+
+        .card-logo {
+            position: absolute;
+            bottom: 20px;
+            right: 24px;
+            width: 50px;
+            height: 30px;
+            display: flex;
+            gap: 4px;
+        }
+
+        .card-logo-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+        }
+
+        .card-logo-circle.mastercard-red {
+            background: #EB001B;
+        }
+
+        .card-logo-circle.mastercard-yellow {
+            background: #FFA500;
+            margin-left: -8px;
+        }
+
+        .add-card-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .add-card-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Transfers Card */
+        .transfers-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .transfer-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-left: 3px solid #E5E5E5;
+            padding-left: 16px;
+            margin-bottom: 12px;
+        }
+
+        .transfer-info {
+            flex: 1;
+        }
+
+        .transfer-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .transfer-time {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .transfer-change {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .transfer-change.positive {
+            color: var(--success);
+        }
+
+        .transfer-change.negative {
+            color: var(--danger);
+        }
+
+        /* Security Card */
+        .security-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+        }
+
+        .security-title {
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .security-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .security-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .security-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="3" fill="#6B9080"/>
+                    <circle cx="16" cy="16" r="12" stroke="#6B9080" stroke-width="2" stroke-dasharray="4 4"/>
+                </svg>
+            </div>
+
+            <div class="sidebar-icon active">
+                <i data-lucide="grid-3x3" width="20" height="20"></i>
+            </div>
+            <div class="sidebar-icon">
+                <i data-lucide="credit-card" width="20" height="20"></i>
+            </div>
+            <div class="sidebar-icon">
+                <i data-lucide="bar-chart-3" width="20" height="20"></i>
+            </div>
+            <div class="sidebar-icon">
+                <i data-lucide="store" width="20" height="20"></i>
+            </div>
+            <div class="sidebar-icon">
+                <i data-lucide="users" width="20" height="20"></i>
+            </div>
+            <div class="sidebar-icon">
+                <i data-lucide="calendar" width="20" height="20"></i>
+            </div>
+
+            <div class="sidebar-bottom">
+                <div class="sidebar-icon">
+                    <i data-lucide="settings" width="20" height="20"></i>
+                </div>
+                <div class="sidebar-icon">
+                    <i data-lucide="log-out" width="20" height="20"></i>
+                </div>
+                <div class="sidebar-avatar">
+                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #6B9080 0%, #FF9B71 100%); border-radius: 50%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <h1>Hello, Carlic!</h1>
+                    <p>Explore information and activity about your property</p>
+                </div>
+                <div class="header-right">
+                    <input type="text" class="search-input" placeholder="Search...">
+                    <div class="icon-button search-btn">
+                        <i data-lucide="search" width="20" height="20"></i>
+                    </div>
+                    <div class="icon-button">
+                        <i data-lucide="message-square" width="20" height="20"></i>
+                        <span class="notification-dot"></span>
+                    </div>
+                    <div class="icon-button">
+                        <i data-lucide="bell" width="20" height="20"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Row 1: 4 Metric Cards -->
+                <div class="grid-row grid-row-1">
+                    <!-- Spent this month -->
+                    <div class="card">
+                        <div class="card-icon money">
+                            <i data-lucide="dollar-sign" width="24" height="24"></i>
+                        </div>
+                        <div class="card-label">Spent this month</div>
+                        <div class="card-value">$682.5</div>
+                        <div class="mini-chart">
+                            <div class="mini-chart-bar" style="height: 60%;"></div>
+                            <div class="mini-chart-bar" style="height: 40%;"></div>
+                            <div class="mini-chart-bar" style="height: 80%;"></div>
+                            <div class="mini-chart-bar" style="height: 50%;"></div>
+                            <div class="mini-chart-bar" style="height: 70%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- New clients -->
+                    <div class="card">
+                        <div class="card-icon users">
+                            <i data-lucide="users" width="24" height="24"></i>
+                        </div>
+                        <div class="card-label">New clients</div>
+                        <div class="card-value">321</div>
+                        <div class="mini-chart">
+                            <div class="mini-chart-bar" style="height: 50%;"></div>
+                            <div class="mini-chart-bar" style="height: 65%;"></div>
+                            <div class="mini-chart-bar" style="height: 55%;"></div>
+                            <div class="mini-chart-bar" style="height: 75%;"></div>
+                            <div class="mini-chart-bar" style="height: 60%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Earnings -->
+                    <div class="card">
+                        <div class="card-icon earnings">
+                            <i data-lucide="coins" width="24" height="24"></i>
+                        </div>
+                        <div class="card-label">Earnings</div>
+                        <div class="card-value">$350.40</div>
+                    </div>
+
+                    <!-- Activity -->
+                    <div class="card green-bg">
+                        <div class="card-label">Activity</div>
+                        <div class="card-value">$540.50</div>
+                        <div class="wave-chart">
+                            <svg viewBox="0 0 200 40" preserveAspectRatio="none">
+                                <path d="M0,20 Q25,10 50,20 T100,20 T150,20 T200,20"
+                                      fill="none"
+                                      stroke="rgba(255,255,255,0.5)"
+                                      stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 2: Balance, Earnings, Profile -->
+                <div class="grid-row grid-row-2">
+                    <!-- Balance Card -->
+                    <div class="card">
+                        <div class="balance-header">
+                            <div class="balance-title">
+                                Balance
+                                <span class="status-badge">
+                                    <i data-lucide="check-circle" width="14" height="14"></i>
+                                    On track
+                                </span>
+                            </div>
+                            <button class="dropdown-btn">
+                                Monthly <i data-lucide="chevron-down" width="16" height="16" style="display: inline;"></i>
+                            </button>
+                        </div>
+                        <div class="balance-stats">
+                            <div class="stat-item">
+                                <div class="stat-label">Saves</div>
+                                <div class="stat-value">43.50%</div>
+                                <div class="stat-change positive">+2.45%</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Balance</div>
+                                <div class="stat-value">$52,422</div>
+                                <div class="stat-change negative">-4.75%</div>
+                            </div>
+                        </div>
+                        <div class="line-chart">
+                            <svg width="100%" height="120" style="display: block;">
+                                <polyline
+                                    points="0,80 50,60 100,70 150,40 200,50 250,35 300,45 350,50 400,40 450,55 500,45 550,50"
+                                    fill="none"
+                                    stroke="#6B9080"
+                                    stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Earnings Card -->
+                    <div class="card">
+                        <div class="earnings-title">Earnings</div>
+                        <div class="earnings-subtitle">Total Expense</div>
+                        <div class="earnings-value">$6078.76</div>
+                        <div class="earnings-description">Profit is 34% More than last Month</div>
+                        <div class="progress-circle">
+                            <svg width="140" height="140">
+                                <circle cx="70" cy="70" r="60" fill="none" stroke="#E5E5E5" stroke-width="12"/>
+                                <circle cx="70" cy="70" r="60" fill="none" stroke="#6B9080" stroke-width="12"
+                                        stroke-dasharray="301.59" stroke-dashoffset="60.32" stroke-linecap="round"/>
+                            </svg>
+                            <div class="progress-text">80%</div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Card -->
+                    <div class="card">
+                        <div class="profile-avatar">
+                            <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                                <circle cx="30" cy="22" r="10" fill="#8B6F47"/>
+                                <path d="M10,50 Q10,35 30,35 T50,50" fill="#8B6F47"/>
+                            </svg>
+                        </div>
+                        <div class="profile-name">Carlic Bolomboy</div>
+                        <div class="profile-email">carlic@gmai.com</div>
+                        <div class="profile-stats">
+                            <div>
+                                <div class="profile-stat-label">Projects</div>
+                                <div class="profile-stat-value">26</div>
+                            </div>
+                            <div>
+                                <div class="profile-stat-label">Followers</div>
+                                <div class="profile-stat-value">356</div>
+                            </div>
+                            <div>
+                                <div class="profile-stat-label">Following</div>
+                                <div class="profile-stat-value">68</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 3: Credit, Transfers, Security -->
+                <div class="grid-row grid-row-3">
+                    <!-- Available Credit Card -->
+                    <div class="card">
+                        <div class="credit-title">Available Credit</div>
+                        <div class="credit-subtitle">Card in Wallet</div>
+                        <div class="credit-description">
+                            Lorem ipsum dolor sit amet consectetur. Facilisis id hendrerit eros massa. Sit egestas risus id auctor.
+                        </div>
+                        <div class="credit-cards-stack">
+                            <div class="credit-card-3d">
+                                <div class="card-chip"></div>
+                                <div class="card-number">•••• •••• •••• 1234</div>
+                                <div class="card-logo">
+                                    <div class="card-logo-circle mastercard-red"></div>
+                                    <div class="card-logo-circle mastercard-yellow"></div>
+                                </div>
+                            </div>
+                            <div class="credit-card-3d"></div>
+                            <div class="credit-card-3d"></div>
+                        </div>
+                        <button class="add-card-btn">
+                            <i data-lucide="plus" width="20" height="20"></i>
+                            Add New Card
+                        </button>
+                    </div>
+
+                    <!-- Your Transfers Card -->
+                    <div class="card">
+                        <div class="transfers-title">Your Transfers</div>
+                        <div class="transfer-item">
+                            <div class="transfer-info">
+                                <div class="transfer-name">From Anna Jones</div>
+                                <div class="transfer-time">Today, 14:24</div>
+                            </div>
+                            <div class="transfer-change positive">+2.45%</div>
+                        </div>
+                        <div class="transfer-item">
+                            <div class="transfer-info">
+                                <div class="transfer-name">To Carlos Brown III</div>
+                                <div class="transfer-time">Today, 12:42</div>
+                            </div>
+                            <div class="transfer-change negative">-4.75%</div>
+                        </div>
+                        <div class="transfer-item">
+                            <div class="transfer-info">
+                                <div class="transfer-name">From Joel Cannan</div>
+                                <div class="transfer-time">Today, 17:54</div>
+                            </div>
+                            <div class="transfer-change positive">+2.45%</div>
+                        </div>
+                    </div>
+
+                    <!-- Security Card -->
+                    <div class="card">
+                        <div class="security-icon">
+                            <i data-lucide="fingerprint" width="64" height="64"></i>
+                        </div>
+                        <div class="security-title">Keep you safe!</div>
+                        <div class="security-description">Update your security password</div>
+                        <button class="security-btn">Update Your Security</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harness Open Source - The End-To-End Open Source Software Delivery Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ========================================
+           DESIGN TOKENS & CSS VARIABLES
+           ======================================== */
+        :root {
+            /* Colors - VERIFIED from style guide */
+            --bg-primary: #0d0e12;
+            --text-primary: #ffffff;
+            --text-grey-70: #9ca3af;
+            --text-color-gray-70: #a3a3a3;
+            --accent-bluegreen: #22d3ee;
+            --accent-purple: #a78bfa;
+            --gradient-build: linear-gradient(135deg, rgba(34, 211, 238, 0.1) 0%, rgba(167, 139, 250, 0.1) 100%);
+
+            /* Spacing */
+            --container-width: 1200px;
+            --section-padding: 80px;
+            --section-padding-large: 120px;
+            --section-padding-medium: 60px;
+            --section-padding-small: 40px;
+
+            /* Typography */
+            --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        /* ========================================
+           RESET & BASE STYLES
+           ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary) !important;
+            background-color: var(--bg-primary) !important;
+            color: var(--text-primary) !important;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* ========================================
+           TYPOGRAPHY SYSTEM - VERIFIED CLASSES
+           ======================================== */
+        .heading-xlarge {
+            font-size: 72px;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .heading-large {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+
+        .heading_regular {
+            font-size: 32px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .module_h4 {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .body_subtitle {
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .body_paragraph {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .inter_subtitle._300-light {
+            font-size: 18px;
+            font-weight: 300;
+            line-height: 1.5;
+        }
+
+        .text-grey-70 {
+            color: var(--text-grey-70) !important;
+        }
+
+        .text-color-gray-70 {
+            color: var(--text-color-gray-70) !important;
+        }
+
+        .text-white {
+            color: var(--text-primary) !important;
+        }
+
+        /* ========================================
+           LAYOUT SYSTEM - VERIFIED CLASSES
+           ======================================== */
+        .background-wrapper {
+            background-color: var(--bg-primary);
+            min-height: 100vh;
+        }
+
+        .content_section {
+            padding: var(--section-padding) 0;
+            position: relative;
+        }
+
+        .content_section.top-padding-400 {
+            padding-top: var(--section-padding-large);
+        }
+
+        .content_section.top-padding-150 {
+            padding-top: var(--section-padding-medium);
+        }
+
+        .content_section.top-padding-50 {
+            padding-top: var(--section-padding-small);
+        }
+
+        .content_section.no-padding {
+            padding: 0;
+        }
+
+        .module_container--1200,
+        .content-container_1200 {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .container-large-v1 {
+            max-width: 100%;
+            padding: 0 24px;
+        }
+
+        /* ========================================
+           GRID & FLEX LAYOUTS - VERIFIED
+           ======================================== */
+        .gitness_grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .gitness_flex-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .gitness_group-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .gitness_grid-heading-wrapper {
+            margin-bottom: 48px;
+        }
+
+        .gitness_heading-wrapper {
+            max-width: 800px;
+        }
+
+        /* ========================================
+           COMPONENT 1: NAVIGATION - VERIFIED
+           ======================================== */
+        .navbar_parent--dark-mode {
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+            background-color: rgba(13, 14, 18, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav_section {
+            padding: 16px 0;
+        }
+
+        .nav_container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav_logo {
+            height: 32px;
+        }
+
+        .nav_menu {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav_link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav_link:hover {
+            color: var(--accent-bluegreen);
+        }
+
+        .nav_dropdown {
+            position: relative;
+        }
+
+        .nav_dropdown_toggle {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-dropdown_list-wrapper {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 16px;
+            background-color: #1a1b23;
+            border-radius: 8px;
+            padding: 16px;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav_dropdown:hover .nav-dropdown_list-wrapper {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .nav_cta-button {
+            background-color: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .nav_cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .nav_menu-button {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* ========================================
+           COMPONENT 2: HERO SECTION - VERIFIED
+           ======================================== */
+        .gitness-hero_section {
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hoss_hero-layout {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 24px;
+            text-align: center;
+        }
+
+        .gitness-gradient-heading {
+            background: linear-gradient(135deg, #22d3ee 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+        }
+
+        .gitness_subhero-image-section {
+            margin-top: 64px;
+            position: relative;
+        }
+
+        /* ========================================
+           EYEBROW LABELS - VERIFIED
+           ======================================== */
+        .gitness-eyebrow--bluegreen {
+            color: var(--accent-bluegreen);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+        }
+
+        .gitness-eyebrow--purple {
+            color: var(--accent-purple);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+        }
+
+        /* ========================================
+           COMPONENT 3: FEATURE CARDS - VERIFIED
+           ======================================== */
+        .gitness_card-wrapper--border {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .gitness_card-wrapper--border.linear-border-fade {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gitness_card-bg-color {
+            background-color: #1a1b23;
+            padding: 40px;
+            border-radius: 16px;
+            height: 100%;
+            transition: transform 0.3s;
+        }
+
+        .gitness_card-bg-color.build.commit {
+            background: var(--gradient-build);
+            background-color: #1a1b23;
+        }
+
+        .gitness_card-bg-color._2-column_card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .gitness_card-wrapper--border:hover .gitness_card-bg-color {
+            transform: translateY(-4px);
+        }
+
+        .gitness_card-bg-color.bg-color-0d0e12 {
+            background-color: var(--bg-primary);
+        }
+
+        /* ========================================
+           COMPONENT 4: FEATURE PILLS - VERIFIED
+           ======================================== */
+        .gitness_pill-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 24px;
+            background-color: #1a1b23;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .gitness_pill-wrapper:hover {
+            background-color: #22232b;
+            border-color: var(--accent-bluegreen);
+        }
+
+        .gitness_pill-logo {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* ========================================
+           COMPONENT 8: GROUP LAYOUT - VERIFIED
+           ======================================== */
+        .gitness-group_content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .gitness_large-image {
+            width: 100%;
+            border-radius: 12px;
+        }
+
+        /* ========================================
+           COMPONENT 10: FOOTER CTA - VERIFIED
+           ======================================== */
+        .gitness-new-footer_cta-animation-group {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .gitness_cta-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .gitness_footer-image-wrapper {
+            margin-top: 48px;
+            position: relative;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ========================================
+           COMPONENT 11: FOOTER - VERIFIED
+           ======================================== */
+        .footer-section.footer_bg--color {
+            background-color: #0a0b0f;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer_main-bg-color {
+            padding: 64px 0 32px;
+        }
+
+        .footer_links-column-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer_column {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer_link {
+            color: var(--text-grey-70);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer_link:hover {
+            color: var(--text-primary);
+        }
+
+        .subscribe_footer-wrapper {
+            max-width: 400px;
+        }
+
+        .subscribe_input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .subscribe_button {
+            width: 100%;
+            padding: 12px 24px;
+            background-color: var(--text-primary);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .subscribe_button:hover {
+            transform: translateY(-2px);
+        }
+
+        .sub_footer-wrapper {
+            padding: 32px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* ========================================
+           ANIMATION PLACEHOLDERS - VERIFIED
+           ======================================== */
+        .riv_hos {
+            position: relative;
+            width: 100%;
+            height: auto;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* ========================================
+           RESPONSIVE DESIGN - VERIFIED
+           ======================================== */
+        @media (max-width: 991px) {
+            .heading-xlarge {
+                font-size: 48px;
+            }
+
+            .heading-large {
+                font-size: 36px;
+            }
+
+            .nav_menu {
+                display: none;
+            }
+
+            .nav_menu-button {
+                display: block;
+            }
+
+            .gitness-group_content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .gitness_grid-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .gitness_card-bg-color._2-column_card {
+                grid-template-columns: 1fr;
+            }
+
+            .hide-mobile-landscape {
+                display: none;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .heading-xlarge {
+                font-size: 36px;
+            }
+
+            .heading-large {
+                font-size: 28px;
+            }
+
+            .content_section {
+                padding: 48px 0;
+            }
+
+            .show-on-mobile {
+                display: block !important;
+            }
+
+            .mobile-image {
+                display: block;
+            }
+        }
+
+        /* ========================================
+           UTILITY CLASSES
+           ======================================== */
+        .w-nav, .w-dropdown, .w-button {
+            /* Webflow compatibility classes */
+        }
+    </style>
+</head>
+<body>
+    <div class="background-wrapper">
+
+        <!-- ============================================
+             COMPONENT 1: NAVIGATION BAR
+             ============================================ -->
+        <nav class="navbar_parent--dark-mode" role="navigation" aria-label="Main navigation">
+            <div class="nav_section w-nav">
+                <div class="nav_container">
+                    <a href="/" aria-label="Harness Home">
+                        <img src="https://placehold.co/120x32/22d3ee/ffffff?text=Harness" alt="Harness Logo" class="nav_logo">
+                    </a>
+
+                    <ul class="nav_menu" role="menubar">
+                        <li class="nav_dropdown w-dropdown" role="none">
+                            <div class="nav_dropdown_toggle" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                                <span class="nav_link">Products</span>
+                                <span>▾</span>
+                            </div>
+                            <div class="nav-dropdown_list-wrapper" role="menu" aria-labelledby="products-menu">
+                                <a href="#" class="footer_link" role="menuitem">Repositories</a>
+                                <a href="#" class="footer_link" role="menuitem">Pipelines</a>
+                                <a href="#" class="footer_link" role="menuitem">Cloud Development</a>
+                                <a href="#" class="footer_link" role="menuitem">Artifact Registry</a>
+                            </div>
+                        </li>
+                        <li role="none">
+                            <a href="#" class="nav_link" role="menuitem">Developers</a>
+                        </li>
+                        <li role="none">
+                            <a href="#" class="nav_link" role="menuitem">Community</a>
+                        </li>
+                        <li role="none">
+                            <a href="#" class="nav_link" role="menuitem">Docs</a>
+                        </li>
+                    </ul>
+
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <a href="#" class="nav_link">Sign In</a>
+                        <a href="#" class="nav_cta-button w-button">Get Started</a>
+                    </div>
+
+                    <button class="nav_menu-button w-nav-button" aria-label="Menu" aria-expanded="false">
+                        ☰
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- ============================================
+             COMPONENT 2: HERO SECTION
+             ============================================ -->
+        <section class="gitness-hero_section" role="banner">
+            <div class="hoss_hero-layout">
+                <div class="gitness-eyebrow--bluegreen">Open Source Software Delivery</div>
+                <h1 class="heading-xlarge gitness-gradient-heading">
+                    The End-To-End<br>Open Source<br>Software Delivery Platform
+                </h1>
+                <p class="body_subtitle text-grey-70" style="max-width: 700px; margin: 24px auto 48px;">
+                    Harness Open Source brings together code repositories, pipelines, cloud development environments, and artifact registries into a single, powerful platform.
+                </p>
+                <div style="display: flex; gap: 16px; justify-content: center;">
+                    <a href="#" class="nav_cta-button w-button" style="display: inline-block;">Start Coding</a>
+                    <a href="#" class="nav_cta-button w-button" style="display: inline-block; background: transparent; border: 1px solid #fff; color: #fff;">View Docs</a>
+                </div>
+
+                <div class="gitness_subhero-image-section">
+                    <div class="riv_hos build" data-animation-type="rive" data-rive-autoplay="true">
+                        <img src="https://placehold.co/1200x600/1a1b23/22d3ee?text=Hero+Animation" alt="Harness Platform Interface" style="border-radius: 16px;">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             COMPONENT 3: REPOSITORIES FEATURE
+             ============================================ -->
+        <section class="content_section top-padding-150">
+            <div class="module_container--1200">
+                <div class="gitness_grid-heading-wrapper">
+                    <div class="gitness_heading-wrapper">
+                        <div class="gitness-eyebrow--bluegreen">Git Repositories</div>
+                        <h2 class="heading-large">Familiar Git Experience.<br>Packed With Essential Features.</h2>
+                        <p class="body_paragraph text-grey-70">
+                            A complete code hosting platform with branching, merging, webhooks, and everything developers expect from modern version control.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="gitness_grid-layout">
+                    <div class="gitness_card-wrapper--border gitness_new linear-border-fade">
+                        <div class="gitness_card-bg-color build commit">
+                            <h3 class="heading_regular">Commit. Branch. Merge.</h3>
+                            <p class="body_paragraph text-grey-70">
+                                Full Git functionality with intuitive branching workflows, pull requests, and code review features built for team collaboration.
+                            </p>
+                            <div class="riv_hos" style="margin-top: 32px;">
+                                <img src="https://placehold.co/400x250/0d0e12/22d3ee?text=Git+Workflow" alt="Git workflow visualization">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gitness_card-wrapper--border linear-border-fade">
+                        <div class="gitness_card-bg-color bg-color-0d0e12">
+                            <h3 class="heading_regular">Pull Requests</h3>
+                            <p class="body_paragraph text-grey-70">
+                                Streamlined code review with inline comments, approval workflows, and automated checks before merging.
+                            </p>
+                            <div style="margin-top: 32px;">
+                                <img src="https://placehold.co/400x250/1a1b23/a78bfa?text=Pull+Request+UI" alt="Pull request interface">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gitness_card-wrapper--border linear-border-fade">
+                        <div class="gitness_card-bg-color bg-color-0d0e12">
+                            <h3 class="heading_regular">Webhooks & APIs</h3>
+                            <p class="body_paragraph text-grey-70">
+                                Integrate with your existing tools through powerful webhooks and comprehensive REST APIs.
+                            </p>
+                            <div style="margin-top: 32px;">
+                                <img src="https://placehold.co/400x250/1a1b23/22d3ee?text=API+Integration" alt="API integration">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             COMPONENT 4: FEATURES/CAPABILITIES PILLS
+             ============================================ -->
+        <section class="content_section top-padding-150">
+            <div class="module_container--1200">
+                <div class="gitness_grid-heading-wrapper">
+                    <div class="gitness_heading-wrapper">
+                        <div class="gitness-eyebrow--bluegreen">Platform Capabilities</div>
+                        <h2 class="heading-large">Everything You Need To Ship Faster</h2>
+                    </div>
+                </div>
+
+                <div class="gitness_flex-layout">
+                    <div class="gitness_pill-wrapper">
+                        <img src="https://placehold.co/32x32/22d3ee/ffffff?text=CI" alt="CI/CD icon" class="gitness_pill-logo">
+                        <div class="body_paragraph">CI/CD Pipelines</div>
+                    </div>
+                    <div class="gitness_pill-wrapper">
+                        <img src="https://placehold.co/32x32/a78bfa/ffffff?text=CD" alt="Cloud Dev icon" class="gitness_pill-logo">
+                        <div class="body_paragraph">Cloud Development</div>
+                    </div>
+                    <div class="gitness_pill-wrapper">
+                        <img src="https://placehold.co/32x32/22d3ee/ffffff?text=AR" alt="Artifact icon" class="gitness_pill-logo">
+                        <div class="body_paragraph">Artifact Registry</div>
+                    </div>
+                    <div class="gitness_pill-wrapper">
+                        <img src="https://placehold.co/32x32/a78bfa/ffffff?text=SC" alt="Security icon" class="gitness_pill-logo">
+                        <div class="body_paragraph">Security Scanning</div>
+                    </div>
+                    <div class="gitness_pill-wrapper">
+                        <img src="https://placehold.co/32x32/22d3ee/ffffff?text=CR" alt="Code Review icon" class="gitness_pill-logo">
+                        <div class="body_paragraph">Code Review</div>
+                    </div>
+                    <div class="gitness_pill-wrapper">
+                        <img src="https://placehold.co/32x32/a78bfa/ffffff?text=WH" alt="Webhooks icon" class="gitness_pill-logo">
+                        <div class="body_paragraph">Webhooks</div>
+                    </div>
+                    <div class="gitness_pill-wrapper">
+                        <img src="https://placehold.co/32x32/22d3ee/ffffff?text=AP" alt="API icon" class="gitness_pill-logo">
+                        <div class="body_paragraph">REST APIs</div>
+                    </div>
+                    <div class="gitness_pill-wrapper">
+                        <img src="https://placehold.co/32x32/a78bfa/ffffff?text=OS" alt="Open Source icon" class="gitness_pill-logo">
+                        <div class="body_paragraph">100% Open Source</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             COMPONENT 5: CLOUD DEVELOPMENT ENVIRONMENTS
+             ============================================ -->
+        <section class="content_section top-padding-400">
+            <div class="module_container--1200">
+                <div class="gitness_grid-heading-wrapper">
+                    <div class="gitness_heading-wrapper">
+                        <div class="gitness-eyebrow--purple">Cloud Development Environments</div>
+                        <h2 class="heading-large">Start Coding.<br>No Setup Required.</h2>
+                        <p class="body_paragraph text-grey-70">
+                            Launch fully-configured development environments in seconds. Code from anywhere with cloud-powered workspaces.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="gitness_card-wrapper--border linear-border-fade _2-col-cards">
+                    <div class="gitness_card-bg-color _2-column_card">
+                        <div>
+                            <h3 class="heading_regular">Instant Environments</h3>
+                            <p class="body_paragraph text-grey-70">
+                                Pre-configured development environments with your dependencies, tools, and settings ready to go.
+                            </p>
+                            <ul style="margin-top: 24px; list-style: none; display: flex; flex-direction: column; gap: 12px;">
+                                <li class="body_paragraph">✓ VS Code in browser</li>
+                                <li class="body_paragraph">✓ Pre-built dependencies</li>
+                                <li class="body_paragraph">✓ Collaborative coding</li>
+                                <li class="body_paragraph">✓ Cloud-powered compute</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <img src="https://placehold.co/500x400/1a1b23/a78bfa?text=Cloud+IDE" alt="Cloud IDE interface" style="border-radius: 8px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             COMPONENT 6: PIPELINES FEATURE
+             ============================================ -->
+        <section class="content_section top-padding-400">
+            <div class="module_container--1200">
+                <div class="gitness_grid-heading-wrapper">
+                    <div class="gitness_heading-wrapper">
+                        <div class="gitness-eyebrow--bluegreen">CI/CD Pipelines</div>
+                        <h2 class="heading-large">Ship Code Fast.<br>Automate Everything.</h2>
+                        <p class="body_paragraph text-grey-70">
+                            Build, test, and deploy with powerful pipelines that scale with your team.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="gitness_grid-layout" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="gitness_card-wrapper--border linear-border-fade">
+                        <div class="gitness_card-bg-color">
+                            <div class="gitness-eyebrow--bluegreen">Build</div>
+                            <h3 class="heading_regular">Fast Builds</h3>
+                            <p class="body_paragraph text-grey-70">
+                                Optimized build pipelines with intelligent caching and parallel execution.
+                            </p>
+                            <div class="riv_hos" style="margin-top: 24px;">
+                                <img src="https://placehold.co/350x200/0d0e12/22d3ee?text=Build+Pipeline" alt="Build pipeline">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gitness_card-wrapper--border linear-border-fade">
+                        <div class="gitness_card-bg-color">
+                            <div class="gitness-eyebrow--purple">Test</div>
+                            <h3 class="heading_regular">Automated Testing</h3>
+                            <p class="body_paragraph text-grey-70">
+                                Run comprehensive test suites automatically on every commit.
+                            </p>
+                            <div style="margin-top: 24px;">
+                                <img src="https://placehold.co/350x200/1a1b23/a78bfa?text=Test+Results" alt="Test results">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gitness_card-wrapper--border linear-border-fade">
+                        <div class="gitness_card-bg-color">
+                            <div class="gitness-eyebrow--bluegreen">Deploy</div>
+                            <h3 class="heading_regular">One-Click Deploys</h3>
+                            <p class="body_paragraph text-grey-70">
+                                Deploy to any environment with confidence and rollback capabilities.
+                            </p>
+                            <div style="margin-top: 24px;">
+                                <img src="https://placehold.co/350x200/1a1b23/22d3ee?text=Deploy+Status" alt="Deployment status">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gitness_card-wrapper--border linear-border-fade">
+                        <div class="gitness_card-bg-color build commit">
+                            <div class="gitness-eyebrow--purple">Monitor</div>
+                            <h3 class="heading_regular">Real-Time Insights</h3>
+                            <p class="body_paragraph text-grey-70">
+                                Track deployments, monitor performance, and get instant alerts.
+                            </p>
+                            <div style="margin-top: 24px;">
+                                <img src="https://placehold.co/350x200/0d0e12/a78bfa?text=Monitoring+Dashboard" alt="Monitoring dashboard">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             COMPONENT 7: ARTIFACT REGISTRY
+             ============================================ -->
+        <section class="content_section top-padding-400">
+            <div class="module_container--1200">
+                <div class="gitness_card-wrapper--border linear-border-fade">
+                    <div class="gitness_card-bg-color _2-column_card build commit">
+                        <div>
+                            <div class="gitness-eyebrow--bluegreen">Artifact Registry</div>
+                            <h2 class="heading-large">Streamline Artifact<br>Management</h2>
+                            <p class="body_paragraph text-grey-70">
+                                Centralize your artifacts with support for Docker, npm, Maven, and more. Secure, versioned, and fast.
+                            </p>
+                            <a href="#" class="nav_cta-button w-button" style="display: inline-block; margin-top: 32px;">Learn More</a>
+                        </div>
+                        <div>
+                            <img src="https://placehold.co/500x400/0d0e12/22d3ee?text=Artifact+Registry" alt="Artifact registry interface" style="border-radius: 8px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             COMPONENT 8: MAIN CTA SECTION
+             ============================================ -->
+        <section class="content_section top-padding-400">
+            <div class="container-large-v1">
+                <div class="gitness_group-layout">
+                    <div class="gitness-group_content">
+                        <div class="gitness_heading-wrapper">
+                            <h2 class="heading-xlarge">Your Code.<br>Your Language.<br>Your Platform.</h2>
+                            <p class="body_subtitle text-grey-70">
+                                Harness works with any language, framework, or cloud provider. Build the way you want with the flexibility of open source.
+                            </p>
+                            <div style="display: flex; gap: 16px; margin-top: 40px;">
+                                <a href="#" class="nav_cta-button w-button">Get Started Free</a>
+                                <a href="#" class="nav_cta-button w-button" style="background: transparent; border: 1px solid #fff; color: #fff;">View on GitHub</a>
+                            </div>
+                        </div>
+                        <div>
+                            <img src="https://placehold.co/600x500/1a1b23/22d3ee?text=Platform+Overview" alt="Platform overview" class="gitness_large-image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             COMPONENT 9: YAML CONFIGURATION
+             ============================================ -->
+        <section class="content_section top-padding-400">
+            <div class="module_container--1200">
+                <div class="gitness_grid-heading-wrapper">
+                    <div class="gitness_heading-wrapper" style="text-align: center; max-width: 800px; margin: 0 auto;">
+                        <div class="gitness-eyebrow--purple">Configuration</div>
+                        <h2 class="heading-large">Templatize<br>And Standardize</h2>
+                        <p class="body_paragraph text-grey-70">
+                            Define pipelines, environments, and workflows as code. Version control your infrastructure with simple YAML configuration.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="gitness_card-wrapper--border linear-border-fade">
+                    <div class="gitness_card-bg-color" style="background-color: #0a0b0f; padding: 48px;">
+                        <pre style="color: #22d3ee; font-family: 'Courier New', monospace; overflow-x: auto; line-height: 1.8;">
+<span style="color: #a78bfa;">kind:</span> pipeline
+<span style="color: #a78bfa;">spec:</span>
+  <span style="color: #a78bfa;">stages:</span>
+    - <span style="color: #a78bfa;">name:</span> build
+      <span style="color: #a78bfa;">type:</span> ci
+      <span style="color: #a78bfa;">spec:</span>
+        <span style="color: #a78bfa;">steps:</span>
+          - <span style="color: #a78bfa;">name:</span> build_app
+            <span style="color: #a78bfa;">type:</span> run
+            <span style="color: #a78bfa;">spec:</span>
+              <span style="color: #a78bfa;">container:</span> node:18
+              <span style="color: #a78bfa;">script:</span> npm run build
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             COMPONENT 10: FOOTER CTA WITH ANIMATION
+             ============================================ -->
+        <section class="content_section top-padding-400">
+            <div class="gitness-new-footer_cta-animation-group">
+                <div class="gitness_cta-container">
+                    <h2 class="heading-xlarge gitness-gradient-heading">Get Started In 30 Seconds</h2>
+                    <p class="body_subtitle text-grey-70" style="margin: 24px 0 40px;">
+                        Join thousands of developers building better software with Harness Open Source.
+                    </p>
+                    <a href="#" class="nav_cta-button w-button" style="display: inline-block; font-size: 18px; padding: 16px 48px;">Start Building Now</a>
+                </div>
+
+                <div class="gitness_footer-image-wrapper">
+                    <canvas id="canvas_footer-animation" width="1376" height="400">
+                        <img src="https://placehold.co/1200x400/1a1b23/22d3ee?text=Animated+Visualization" alt="Platform animation">
+                    </canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             COMPONENT 11: FOOTER
+             ============================================ -->
+        <footer class="footer-section footer_bg--color" role="contentinfo">
+            <div class="footer_main-bg-color">
+                <div class="module_container--1200">
+                    <div class="footer_links-column-wrapper">
+                        <div class="footer_column">
+                            <h4 class="module_h4">Products</h4>
+                            <a href="#" class="footer_link">Repositories</a>
+                            <a href="#" class="footer_link">Pipelines</a>
+                            <a href="#" class="footer_link">Cloud Development</a>
+                            <a href="#" class="footer_link">Artifact Registry</a>
+                        </div>
+
+                        <div class="footer_column">
+                            <h4 class="module_h4">Developers</h4>
+                            <a href="#" class="footer_link">Documentation</a>
+                            <a href="#" class="footer_link">API Reference</a>
+                            <a href="#" class="footer_link">CLI Tools</a>
+                            <a href="#" class="footer_link">SDKs</a>
+                        </div>
+
+                        <div class="footer_column">
+                            <h4 class="module_h4">Community</h4>
+                            <a href="#" class="footer_link">GitHub</a>
+                            <a href="#" class="footer_link">Discord</a>
+                            <a href="#" class="footer_link">Slack</a>
+                            <a href="#" class="footer_link">Forum</a>
+                        </div>
+
+                        <div class="footer_column">
+                            <h4 class="module_h4">Company</h4>
+                            <a href="#" class="footer_link">About</a>
+                            <a href="#" class="footer_link">Blog</a>
+                            <a href="#" class="footer_link">Careers</a>
+                            <a href="#" class="footer_link">Contact</a>
+                        </div>
+
+                        <div class="subscribe_footer-wrapper">
+                            <h4 class="module_h4">Subscribe to Updates</h4>
+                            <p class="body_paragraph text-grey-70" style="margin-bottom: 16px;">
+                                Get the latest news and updates from Harness.
+                            </p>
+                            <form>
+                                <input type="email" placeholder="Enter your email" class="subscribe_input" aria-label="Email address">
+                                <button type="submit" class="subscribe_button">Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="sub_footer-wrapper">
+                        <div>
+                            <p class="body_paragraph text-grey-70">
+                                © 2025 Harness Inc. All rights reserved.
+                            </p>
+                        </div>
+                        <div style="display: flex; gap: 24px;">
+                            <a href="#" class="footer_link">Privacy Policy</a>
+                            <a href="#" class="footer_link">Terms of Service</a>
+                            <a href="#" class="footer_link">Security</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.nav_menu-button')?.addEventListener('click', function() {
+            const menu = document.querySelector('.nav_menu');
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !isExpanded);
+            menu.style.display = isExpanded ? 'none' : 'flex';
+        });
+
+        // Dropdown functionality
+        document.querySelectorAll('.nav_dropdown').forEach(dropdown => {
+            const toggle = dropdown.querySelector('.nav_dropdown_toggle');
+            const list = dropdown.querySelector('.nav-dropdown_list-wrapper');
+
+            toggle?.addEventListener('click', () => {
+                const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+                toggle.setAttribute('aria-expanded', !isExpanded);
+            });
+        });
+
+        // Simple canvas animation placeholder
+        const canvas = document.getElementById('canvas_footer-animation');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let frame = 0;
+
+            function animate() {
+                ctx.fillStyle = '#1a1b23';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Simple particle effect
+                for (let i = 0; i < 50; i++) {
+                    const x = (Math.sin(frame * 0.02 + i) * 200) + canvas.width / 2;
+                    const y = (Math.cos(frame * 0.01 + i) * 100) + canvas.height / 2;
+                    const size = Math.sin(frame * 0.03 + i) * 3 + 3;
+
+                    ctx.fillStyle = i % 2 === 0 ? '#22d3ee' : '#a78bfa';
+                    ctx.globalAlpha = 0.6;
+                    ctx.beginPath();
+                    ctx.arc(x, y, size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                ctx.globalAlpha = 1;
+                frame++;
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        }
+    </script>
+</body>
+</html>
