@@ -267,16 +267,16 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 1280px;
-      height: 800px;
+      width: 1440px;
+      height: 900px;
       transform-origin: top left;
       pointer-events: none;
     }
     .preview-scaler iframe {
-      width: 1280px;
-      height: 800px;
+      width: 1440px;
+      height: 900px;
       border: 0;
-      background: #fff;
+      background: #111;
       display: block;
     }
     .preview-badge {
@@ -398,19 +398,53 @@
     }
     .stage-hint strong { color: var(--text); font-weight: 500; }
 
-    /* Compare viewport */
+    /* Compare viewport — fixed capture frame (like Chrome device mode desktop) */
     .stage-body {
       flex: 1;
       min-height: 0;
       border: 1px solid var(--line);
       border-radius: 16px;
       overflow: hidden;
-      background: #0a0b10;
+      background: #05060a;
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /*
+     * Capture frame matches tools/verify-inspo.mjs (1440×900).
+     * Live iframe is always that size so mobile browsers cannot reflow demos.
+     * compare-sizer = layout box after scale (so mobile doesn't clip off-screen).
+     * compare-frame = real 1440×900, transform-origin top-left, scaled down.
+     */
+    .compare-sizer {
+      position: relative;
+      flex-shrink: 0;
+      /* JS sets width/height to CAPTURE * scale */
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+      overflow: hidden;
+    }
+    .compare-frame {
+      --capture-w: 1440px;
+      --capture-h: 900px;
+      --frame-scale: 1;
+      width: var(--capture-w);
+      height: var(--capture-h);
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: scale(var(--frame-scale));
+      transform-origin: top left;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 24px 80px rgba(0, 0, 0, 0.55);
+      background: #0a0b10;
     }
     .compare {
       position: absolute;
       inset: 0;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
       user-select: none;
       touch-action: none;
@@ -430,54 +464,67 @@
     }
     .compare-layer.inspo {
       z-index: 2;
-      /* width set by JS / CSS var --pos */
       width: var(--pos, 50%);
       border-right: 0;
     }
+    /* Fixed desktop viewport inside iframe (not 100% of phone chrome) */
+    .compare-layer.demo .demo-frame {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: var(--capture-w);
+      height: var(--capture-h);
+      overflow: hidden;
+    }
     .compare-layer iframe {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      top: 0;
+      left: 0;
+      width: 1440px;
+      height: 900px;
       border: 0;
-      background: #fff;
+      background: #111;
       display: block;
-      /* disabled while comparing so drag works over the full stage */
       pointer-events: none;
     }
     .compare.no-inspo .compare-layer iframe {
       pointer-events: auto;
     }
-    .compare-layer.inspo img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw; /* full stage width so image doesn't squash as clip shrinks */
-      max-width: none;
-      height: 100%;
-      object-fit: contain;
-      object-position: center center;
-      background: #0a0b10;
-      display: block;
-      pointer-events: none;
-    }
-    /* Keep inspo image spanning the full compare box, not the clipped width */
+    /* Inspo fills same 1440×900 box as the iframe — cover for seamless wipe */
     .compare-layer.inspo .inspo-fill {
       position: absolute;
       top: 0;
       left: 0;
-      width: var(--stage-w, 100vw);
-      height: 100%;
-      display: grid;
-      place-items: center;
+      width: var(--capture-w);
+      height: var(--capture-h);
       background: #0a0b10;
+      overflow: hidden;
     }
     .compare-layer.inspo .inspo-fill img {
-      position: static;
-      width: 100%;
-      height: 100%;
-      max-width: 100%;
-      object-fit: contain;
+      display: block;
+      width: 1440px;
+      height: 900px;
+      max-width: none;
+      object-fit: cover;
+      object-position: center center;
+      pointer-events: none;
+    }
+    .frame-meta {
+      position: absolute;
+      bottom: 0.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 8;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid var(--line);
+      padding: 0.28rem 0.6rem;
+      border-radius: 999px;
+      pointer-events: none;
+      white-space: nowrap;
     }
 
     .compare-label {
@@ -745,7 +792,7 @@
     <div class="stage-bar">
       <div class="stage-title" id="stage-title">Preview</div>
       <div class="stage-tabs">
-        <span class="stage-hint" id="stage-hint">Drag handle · left = <strong>inspo</strong> · right = <strong>live</strong></span>
+        <span class="stage-hint" id="stage-hint">Forced <strong>1440×900</strong> desktop frame · left = <strong>inspo</strong> · right = <strong>live</strong></span>
         <button type="button" class="btn" id="stage-reset" title="Reset slider to 50%">50 / 50</button>
         <button type="button" class="btn" id="stage-inspo-only" title="Show only inspiration">Inspo</button>
         <button type="button" class="btn" id="stage-demo-only" title="Show only live demo">Live</button>
@@ -754,22 +801,35 @@
       </div>
     </div>
     <div class="stage-body" id="stage-body">
-      <div class="compare" id="compare" style="--pos: 50%">
-        <div class="compare-layer demo">
-          <iframe id="stage-iframe" title="Live demo" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
-        </div>
-        <div class="compare-layer inspo" id="layer-inspo">
-          <div class="inspo-fill">
-            <img id="stage-inspo" alt="Inspiration" />
+      <div class="compare-sizer" id="compare-sizer">
+        <div class="compare-frame" id="compare-frame">
+          <div class="compare" id="compare" style="--pos: 50%">
+            <div class="compare-layer demo">
+              <div class="demo-frame">
+                <iframe
+                  id="stage-iframe"
+                  title="Live demo"
+                  width="1440"
+                  height="900"
+                  sandbox="allow-scripts allow-same-origin allow-forms"
+                ></iframe>
+              </div>
+            </div>
+            <div class="compare-layer inspo" id="layer-inspo">
+              <div class="inspo-fill">
+                <img id="stage-inspo" alt="Inspiration" width="1440" height="900" />
+              </div>
+            </div>
+            <span class="compare-label inspo">Original inspo</span>
+            <span class="compare-label demo">Live demo</span>
+            <div class="compare-handle" id="compare-handle" aria-hidden="true">
+              <div class="compare-knob" id="compare-knob" title="Drag to compare">⟷</div>
+            </div>
+            <div class="stage-empty" id="stage-inspo-empty">No local inspo for this one — showing live demo only.<br/><span style="opacity:.7">Product-style / external reference.</span></div>
           </div>
         </div>
-        <span class="compare-label inspo">Original inspo</span>
-        <span class="compare-label demo">Live demo</span>
-        <div class="compare-handle" id="compare-handle" aria-hidden="true">
-          <div class="compare-knob" id="compare-knob" title="Drag to compare">⟷</div>
-        </div>
-        <div class="stage-empty" id="stage-inspo-empty">No local inspo for this one — showing live demo only.<br/><span style="opacity:.7">Product-style / external reference.</span></div>
       </div>
+      <div class="frame-meta" id="frame-meta">1440×900 desktop · scaled to fit</div>
     </div>
     <div class="stage-slider-bar" id="stage-slider-bar">
       <span class="inspo-end">Inspo</span>
@@ -996,15 +1056,20 @@
     const filtersEl = document.getElementById("filters");
     let activeFilter = "all";
 
-    /* Scale iframe thumbs to card width */
+    /* Card thumbs use same capture size as stage (1440×900), cover-scaled */
+    const CAPTURE_W = 1440;
+    const CAPTURE_H = 900;
+
     function scalePreview(frame) {
       const scaler = frame.querySelector(".preview-scaler");
       if (!scaler) return;
       const w = frame.clientWidth;
       const h = frame.clientHeight;
-      const sx = w / 1280;
-      const sy = h / 800;
+      const sx = w / CAPTURE_W;
+      const sy = h / CAPTURE_H;
       const s = Math.max(sx, sy); // cover
+      scaler.style.width = CAPTURE_W + "px";
+      scaler.style.height = CAPTURE_H + "px";
       scaler.style.transform = `scale(${s})`;
     }
 
@@ -1046,8 +1111,10 @@
           <div class="preview-frame" data-open="${p.id}" title="Open full preview">
             <span class="preview-badge">Live</span>
             ${fallback}
-            <div class="preview-scaler">
+            <div class="preview-scaler" style="width:1440px;height:900px">
               <iframe src="${p.demo}" title="${p.title} preview" loading="lazy" tabindex="-1"
+                width="1440" height="900"
+                style="width:1440px;height:900px;border:0;display:block"
                 sandbox="allow-scripts allow-same-origin"></iframe>
             </div>
           </div>
@@ -1087,9 +1154,11 @@
       scaleAll();
     }
 
-    /* Stage modal — sliding window compare (inspo | live) */
+    /* Stage modal — fixed 1440×900 capture frame, scaled to fit (device-mode style) */
     const stage = document.getElementById("stage");
     const stageBody = document.getElementById("stage-body");
+    const compareSizer = document.getElementById("compare-sizer");
+    const compareFrame = document.getElementById("compare-frame");
     const compare = document.getElementById("compare");
     const stageIframe = document.getElementById("stage-iframe");
     const stageInspo = document.getElementById("stage-inspo");
@@ -1099,13 +1168,26 @@
     const stageRange = document.getElementById("stage-range");
     const stageSliderBar = document.getElementById("stage-slider-bar");
     const stageHint = document.getElementById("stage-hint");
+    const frameMeta = document.getElementById("frame-meta");
     let current = null;
     let pos = 50; // % of width showing inspo (left side)
     let dragging = false;
 
-    function setStageWidthVar() {
-      const w = stageBody.clientWidth || window.innerWidth;
-      compare.style.setProperty("--stage-w", w + "px");
+    function scaleCaptureFrame() {
+      if (!compareFrame || !stageBody || !compareSizer) return;
+      const pad = 12;
+      const availW = Math.max(120, stageBody.clientWidth - pad);
+      const availH = Math.max(120, stageBody.clientHeight - pad);
+      // fit entire 1440×900 inside stage (contain), never reflow the iframe
+      const s = Math.min(availW / CAPTURE_W, availH / CAPTURE_H);
+      compareFrame.style.setProperty("--frame-scale", String(s));
+      // layout box = visual size after scale (critical on phone — transform alone overflows)
+      compareSizer.style.width = Math.round(CAPTURE_W * s) + "px";
+      compareSizer.style.height = Math.round(CAPTURE_H * s) + "px";
+      if (frameMeta) {
+        frameMeta.textContent =
+          CAPTURE_W + "×" + CAPTURE_H + " desktop · scale " + Math.round(s * 100) + "%";
+      }
     }
 
     function setPos(pct) {
@@ -1121,6 +1203,11 @@
       current = p;
       stageTitle.textContent = p.title;
       stageOpen.href = p.demo;
+      // Fixed desktop iframe size so demos never reflow to phone CSS
+      stageIframe.width = String(CAPTURE_W);
+      stageIframe.height = String(CAPTURE_H);
+      stageIframe.style.width = CAPTURE_W + "px";
+      stageIframe.style.height = CAPTURE_H + "px";
       stageIframe.src = p.demo;
 
       const hasInspo = Boolean(p.inspo);
@@ -1144,7 +1231,10 @@
 
       stage.classList.add("open");
       document.body.classList.add("stage-open");
-      requestAnimationFrame(setStageWidthVar);
+      requestAnimationFrame(() => {
+        scaleCaptureFrame();
+        requestAnimationFrame(scaleCaptureFrame);
+      });
     }
 
     function closeStage() {
@@ -1158,8 +1248,10 @@
     }
 
     function posFromEvent(e) {
+      // Use visual (scaled) bounds so drag tracks finger/cursor on mobile
       const rect = compare.getBoundingClientRect();
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      if (rect.width <= 0) return pos;
       return ((clientX - rect.left) / rect.width) * 100;
     }
 
@@ -1216,8 +1308,13 @@
 
     window.addEventListener("resize", () => {
       scaleAll();
-      if (stage.classList.contains("open")) setStageWidthVar();
+      if (stage.classList.contains("open")) scaleCaptureFrame();
     });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", () => {
+        if (stage.classList.contains("open")) scaleCaptureFrame();
+      });
+    }
 
     document.getElementById("stat-count").textContent = String(PROJECTS.length);
     document.getElementById("stat-inspo").textContent = String(
